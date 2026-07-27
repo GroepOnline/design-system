@@ -244,7 +244,31 @@
 <p>Typografie- en icon-regels: DESIGN.md §11-§13 (schaal-tokens verplicht,</p>
 <p>sprite-svg&#x27;s altijd fill:none + stroke:currentColor).</p>
 <h2>Bestandskaart</h2>
-<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting)</td></tr><tr><td><code>components/icons.svg</code></td><td>29 Lucide symbols (<code>&lt;use href=&quot;...#i-*&quot;&gt;</code>)</td></tr><tr><td><code>components/lib.js</code></td><td>thema deep-link + switch-gedrag voor varianten</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td></tr><tr><td><code>motion-spec.md</code></td><td>motion-fysica (gelockt)</td></tr><tr><td><code>new-project.sh</code></td><td>scaffold nieuw product vanuit dit systeem</td></tr></tbody></table></div>
+<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting)</td></tr><tr><td><code>components/icons.svg</code></td><td>29 Lucide symbols (<code>&lt;use href=&quot;...#i-*&quot;&gt;</code>)</td></tr><tr><td><code>components/lib.js</code></td><td>thema deep-link + switch-gedrag voor varianten</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td></tr><tr><td><code>motion-spec.md</code></td><td>motion-fysica (gelockt)</td></tr><tr><td><code>new-project.sh</code></td><td>scaffold nieuw product vanuit dit systeem</td></tr></tbody></table>
+<h2>Cursor Cloud specific instructions</h2>
+<p>Standalone static design-system. No package manager, no third-party deps: the</p>
+<p><code>ds</code> CLI is pure Python 3.12 stdlib. Nothing to install; the update script is a</p>
+<p>no-op runtime check.</p>
+<ul>
+<li>Lint/validate: <code>python3 ds check</code> (source of truth for the <code>check</code> CI step).</li>
+<p>Warnings (non-URL sources, em-dashes) are expected and do not fail; only</p>
+<p><code>errors</code> matter.</p>
+<li>Build/generate: <code>python3 ds build</code>. Generated output (<code>components/*/index.html</code>,</li>
+<p><code>components/index.html</code>, <code>docs/</code>, <code>taste-site/</code>) is committed. CI&#x27;s</p>
+<p><code>python3 ds build --check</code> step is effectively a plain build (the <code>--check</code></p>
+<p>arg is ignored by <code>main()</code>), so after any <code>ds</code> mutation keep the tree</p>
+<p>idempotent: run <code>python3 ds build</code> and confirm <code>git diff</code> is empty.</p>
+<li>Run/serve (dev): serve from the repo root, e.g.</li>
+<p><code>python3 -m http.server 8765 --bind 127.0.0.1</code>, then open</p>
+<p><code>http://127.0.0.1:8765/components/</code>. You MUST serve from root, not <code>file://</code>:</p>
+<p>generated pages use root-absolute asset paths (<code>/tokens.css</code>,</p>
+<p><code>/components/icons.svg#…</code>, <code>/components/lib.js</code>).</p>
+<li>Theme/style are URL deep-links handled by <code>components/lib.js</code> (<code>?theme=dark</code>,</li>
+<p><code>?style=strak</code>). The bottom-left toggle switches the current page only; the</p>
+<p>choice does not persist across navigation between component pages by design.</p>
+<li>Fonts load from external CDNs (Fontshare/Google); offline the layout still</li>
+<p>works with fallback fonts.</p>
+</ul></div>
 <div class="gen">gegenereerd uit AGENTS.md op 2026-07-28 · bewerk de .md, niet deze pagina</div>
 
 </div></main>

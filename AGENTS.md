@@ -83,3 +83,28 @@ sprite-svg's altijd fill:none + stroke:currentColor).
 | `surfaces/` | per-surface briefs |
 | `motion-spec.md` | motion-fysica (gelockt) |
 | `new-project.sh` | scaffold nieuw product vanuit dit systeem |
+
+## Cursor Cloud specific instructions
+
+Standalone static design-system. No package manager, no third-party deps: the
+`ds` CLI is pure Python 3.12 stdlib. Nothing to install; the update script is a
+no-op runtime check.
+
+- Lint/validate: `python3 ds check` (source of truth for the `check` CI step).
+  Warnings (non-URL sources, em-dashes) are expected and do not fail; only
+  `errors` matter.
+- Build/generate: `python3 ds build`. Generated output (`components/*/index.html`,
+  `components/index.html`, `docs/`, `taste-site/`) is committed. CI's
+  `python3 ds build --check` step is effectively a plain build (the `--check`
+  arg is ignored by `main()`), so after any `ds` mutation keep the tree
+  idempotent: run `python3 ds build` and confirm `git diff` is empty.
+- Run/serve (dev): serve from the repo root, e.g.
+  `python3 -m http.server 8765 --bind 127.0.0.1`, then open
+  `http://127.0.0.1:8765/components/`. You MUST serve from root, not `file://`:
+  generated pages use root-absolute asset paths (`/tokens.css`,
+  `/components/icons.svg#…`, `/components/lib.js`).
+- Theme/style are URL deep-links handled by `components/lib.js` (`?theme=dark`,
+  `?style=strak`). The bottom-left toggle switches the current page only; the
+  choice does not persist across navigation between component pages by design.
+- Fonts load from external CDNs (Fontshare/Google); offline the layout still
+  works with fallback fonts.
