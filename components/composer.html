@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: composer</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; max-width: 780px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .group { margin-bottom: 34px; }
+  .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+
+  /* ==== COMPONENT CSS ==== */
+  .composer {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-lg);
+    padding: 12px 12px 8px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .composer:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .composer textarea {
+    width: 100%; border: none; outline: none; resize: none;
+    font-family: var(--font); font-size: 14.5px; line-height: 1.5;
+    background: transparent; color: var(--text);
+    min-height: 22px; max-height: 140px; display: block;
+  }
+  .composer textarea::placeholder { color: var(--text-faint); }
+  .composer-bar { display: flex; align-items: center; gap: 4px; margin-top: 7px; }
+  .composer-bar .right { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .model-chip {
+    font-size: 12px; color: var(--text-muted);
+    padding: 4px 9px; border-radius: var(--r-md);
+    cursor: pointer; display: flex; gap: 5px; align-items: center;
+    transition: background 0.15s;
+  }
+  .model-chip:hover { background: var(--hover); }
+  .queued-chip {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--accent-soft); color: var(--accent-ink);
+    border-radius: var(--r-md); padding: 6px 12px; font-size: 12.5px;
+    margin-bottom: 8px;
+  }
+  /* ==== /COMPONENT CSS ==== */
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / composer — typen, Enter = sturen, tijdens run = wachtrij</div>
+
+<div class="group">
+  <div class="lbl">idle + focus (klik erin)</div>
+  <div class="composer">
+    <textarea rows="1" placeholder="Vraag om features te bouwen, bugs te fixen, of aan je code te werken" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"></textarea>
+    <div class="composer-bar">
+      <button class="gbtn" title="Bijlage"><svg class="ic lg"><use href="icons.svg#i-plus"/></svg></button>
+      <div class="right">
+        <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="icons.svg#i-chevrons-updown"/></svg></div>
+        <button class="gbtn" title="Spraak"><svg class="ic"><use href="icons.svg#i-mic"/></svg></button>
+        <button class="gbtn solid" title="Stuur"><svg class="ic"><use href="icons.svg#i-arrow-up"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">tijdens run: wachtrij-chip erboven</div>
+  <div class="queued-chip"><svg class="ic sm"><use href="icons.svg#i-queue"/></svg>In wachtrij. Wordt gestuurd zodra de run klaar is</div>
+  <div class="composer">
+    <textarea rows="1" placeholder="Stuur bij om te sturen, Enter voor wachtrij"></textarea>
+    <div class="composer-bar">
+      <button class="gbtn"><svg class="ic lg"><use href="icons.svg#i-plus"/></svg></button>
+      <div class="right">
+        <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="icons.svg#i-chevrons-updown"/></svg></div>
+        <button class="gbtn"><svg class="ic"><use href="icons.svg#i-mic"/></svg></button>
+        <button class="gbtn solid"><svg class="ic"><use href="icons.svg#i-arrow-up"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTRACT
+  focus = accent border + 3px soft ring. autogrow tot 140px.
+  send = .gbtn.solid. model-chip is een select, geen knop.
+  wachtrij = accent-soft chip boven de composer, nooit een toast.
+-->
+</body>
+</html>

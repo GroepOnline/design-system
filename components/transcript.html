@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: transcript (user-pill, prose, meta-row)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; max-width: 780px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .group { margin-bottom: 34px; }
+  .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+
+  /* ==== COMPONENT CSS ==== */
+  .msg { margin-bottom: 16px; }
+  .msg-user {
+    background: var(--surface-sunk); border-radius: var(--r-lg);
+    padding: 10px 15px; font-size: 14.5px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .msg-user .txt { flex: 1; }
+  .avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    flex-shrink: 0; display: grid; place-items: center;
+    font-size: 11px; font-weight: 600;
+  }
+  .msg-agent { font-size: 14.5px; line-height: 1.6; }
+  .msg-agent p + p { margin-top: 8px; }
+  .meta-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text-muted);
+    padding: 5px 9px; margin: 4px 0;
+    border-radius: var(--r-md); cursor: pointer; user-select: none;
+  }
+  .meta-row:hover { background: var(--hover); }
+  .meta-row .chev { transition: transform 0.22s var(--ease-out); display: inline-flex; color: var(--text-faint); }
+  .meta-row.open .chev { transform: rotate(90deg); }
+  .attach {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1px solid var(--line); border-radius: var(--r-md);
+    padding: 5px 11px; font-family: var(--mono); font-size: 12px;
+    color: var(--text-muted); cursor: pointer; background: var(--surface);
+    transition: border-color 0.15s;
+  }
+  .attach:hover { border-color: var(--line-strong); }
+  .status-line {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text-faint);
+  }
+  /* ==== /COMPONENT CSS ==== */
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / transcript</div>
+
+<div class="group">
+  <div class="lbl">user-pill (grijze bubble, avatar rechts)</div>
+  <div class="msg msg-user">
+    <div class="txt">Migreer alle gradient-tekst naar #317CFF in beide repo's, en test daarna</div>
+    <div class="avatar">J</div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">agent prose (kaal, geen achtergrond)</div>
+  <div class="msg msg-agent">
+    <p>Ik migreer alle gradient-tekst naar #317CFF in zowel cognition-website als devin-website, en test daarna de wijzigingen. Ik begin nu.</p>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">meta-row (inklapbaar, klik)</div>
+  <div class="meta-row" onclick="this.classList.toggle('open')">
+    <span class="chev"><svg class="ic sm"><use href="icons.svg#i-chevron"/></svg></span>
+    <svg class="ic sm"><use href="icons.svg#i-book"/></svg>
+    Playbook gebruikt: Test
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">bijlage-chip + statuslijn</div>
+  <div class="msg"><span class="attach"><svg class="ic sm"><use href="icons.svg#i-file"/></svg>test_gradient_migration.md</span></div>
+  <div class="status-line"><svg class="ic sm"><use href="icons.svg#i-sparkle"/></svg>Klaar voor instructies</div>
+</div>
+
+<!-- CONTRACT
+  user = sunk pill + avatar. agent = kale prose 14.5/1.6.
+  meta-rows zijn inklapbaar, chev roteert 90deg.
+  bijlage = outline chip, mono. statuslijn = faint + sparkle, geen animatie.
+-->
+</body>
+</html>

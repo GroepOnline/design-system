@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: badge</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .group { margin-bottom: 28px; }
+  .group .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / badge</div>
+
+<div class="group">
+  <div class="lbl">git-status (groen is gereserveerd voor git)</div>
+  <div class="row">
+    <span class="badge green"><svg class="ic sm"><use href="icons.svg#i-git-pr"/></svg>Open</span>
+    <span class="badge green"><svg class="ic sm"><use href="icons.svg#i-git-pr"/></svg>#357 +1</span>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">outline (meta)</div>
+  <div class="row">
+    <span class="badge outline">6 files</span>
+    <span class="badge outline mono" style="font-size:11px">main</span>
+    <span class="badge outline"><svg class="ic sm"><use href="icons.svg#i-clock"/></svg>4m 13s</span>
+  </div>
+</div>
+
+<!-- CONTRACT
+  .badge         pill r200, 12px/500, pad 2.5px 10px
+  .badge.green   git-status only (open/merged) — nooit decoratief
+  .badge.outline meta-info
+-->
+</body>
+</html>

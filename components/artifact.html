@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: artifact (before/after + rapport)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; max-width: 480px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .group { margin-bottom: 34px; }
+  .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+
+  /* ==== COMPONENT CSS ==== */
+  .artifact-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 13px; border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12.5px; color: var(--text-muted);
+  }
+  .artifact-head .acts { margin-left: auto; display: flex; gap: 2px; }
+  .artifact-head .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
+  .artifact-body h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin: 14px 0 9px; }
+  .artifact-body p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 11px; }
+  .artifact-body p code {
+    font-family: var(--mono); font-size: 12px;
+    background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px;
+  }
+  .artifact-body h3 { font-size: 14px; font-weight: 600; margin: 17px 0 8px; }
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+  .ba-cell { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .ba-cell .lbl { font-size: 11px; color: var(--text-faint); padding: 5px 9px; border-bottom: 1px solid var(--line); background: var(--bg); }
+  .ba-cell .body { padding: 13px 10px; font-size: 18px; font-weight: 600; letter-spacing: -0.02em; text-align: center; }
+  .ba-cell .foot { font-size: 10.5px; color: var(--text-faint); padding: 5px 9px; border-top: 1px solid var(--line); background: var(--bg); }
+  /* ==== /COMPONENT CSS ==== */
+  .grad-text { background: linear-gradient(90deg, #5B8DEF, #7A5CFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .solid-text { color: #317CFF; }
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / artifact-pane</div>
+
+<div class="group" style="border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden">
+  <div class="artifact-head">
+    <svg class="ic sm"><use href="icons.svg#i-file"/></svg>
+    test_gradient_migration.md
+    <div class="acts">
+      <button class="gbtn"><svg class="ic sm"><use href="icons.svg#i-copy"/></svg></button>
+      <button class="gbtn"><svg class="ic sm"><use href="icons.svg#i-download"/></svg></button>
+      <button class="gbtn"><svg class="ic sm"><use href="icons.svg#i-x"/></svg></button>
+    </div>
+  </div>
+  <div class="artifact-body" style="padding:0 17px 17px">
+    <h2>Testrapport: gradient-tekst migreren</h2>
+    <p>PR's: <code>devin-website #357</code> | <code>cognition-website #167</code></p>
+    <h3>Homepage</h3>
+    <div class="ba-grid">
+      <div class="ba-cell">
+        <div class="lbl">Voor · productie</div>
+        <div class="body grad-text">Secure,<br>Private</div>
+        <div class="foot">Gradient op tekst</div>
+      </div>
+      <div class="ba-cell">
+        <div class="lbl">Na · localhost</div>
+        <div class="body solid-text">Secure,<br>Private</div>
+        <div class="foot">Effen blauw</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTRACT
+  bewijs boven verhaal: before/after als identieke cellen naast elkaar.
+  lbl boven, body midden, foot onder. hairlines, geen shadows.
+  NB: grad-text hier is DEMO-content (het oude ontwerp dat gemigreerd wordt) — gradient is geen UI-element.
+-->
+</body>
+</html>

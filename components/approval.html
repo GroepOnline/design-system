@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: approval</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; max-width: 780px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .group { margin-bottom: 34px; }
+  .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+
+  /* ==== COMPONENT CSS ==== */
+  .approval {
+    background: var(--surface);
+    border: 1px solid var(--hold-line);
+    border-radius: var(--r-lg);
+    padding: 12px 15px;
+    animation: fadeSlide 0.32s var(--ease-out);
+  }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(-4px); } }
+  .approval .kind {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 12px; color: var(--amber); font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .approval .cmd {
+    font-family: var(--mono); font-size: 12.5px;
+    background: var(--surface-sunk); border-radius: 6px;
+    padding: 7px 10px; margin-bottom: 10px; overflow-x: auto; white-space: nowrap;
+  }
+  .approval .btns { display: flex; gap: 7px; flex-wrap: wrap; }
+  /* ==== /COMPONENT CSS ==== */
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / approval — wacht op jou (toetsen 1/2/3)</div>
+
+<div class="group">
+  <div class="lbl">extern commando</div>
+  <div class="approval">
+    <div class="kind"><svg class="ic"><use href="icons.svg#i-alert"/></svg>Wacht op jou: test draaien op productie-domein</div>
+    <div class="cmd">curl -sI https://cognition.ai | grep -i x-gradient && pnpm test:visual</div>
+    <div class="btns">
+      <button class="btn primary">Een keer <kbd>1</kbd></button>
+      <button class="btn">Altijd in deze map <kbd>2</kbd></button>
+      <button class="btn">Weigeren <kbd>3</kbd></button>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">destructief (weigeren wordt primair-achtig)</div>
+  <div class="approval" style="border-color:rgba(207,34,46,.35)">
+    <div class="kind" style="color:var(--red)"><svg class="ic"><use href="icons.svg#i-alert"/></svg>Wacht op jou: 14 bestanden verwijderen</div>
+    <div class="cmd">rm -rf dist/ node_modules/.cache coverage/</div>
+    <div class="btns">
+      <button class="btn primary">Een keer <kbd>1</kbd></button>
+      <button class="btn">Weigeren <kbd>3</kbd></button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTRACT
+  inline in transcript, nooit modal. amber = wachten, rood = destructief.
+  toetsen 1/2/3 als kbd in de knop. command in mono op sunk.
+-->
+</body>
+</html>

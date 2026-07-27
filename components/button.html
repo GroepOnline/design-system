@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: button</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .group { margin-bottom: 28px; }
+  .group .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / button</div>
+
+<div class="group">
+  <div class="lbl">variants</div>
+  <div class="row">
+    <button class="btn">Standaard</button>
+    <button class="btn primary">Primaire actie</button>
+    <button class="btn" disabled style="opacity:.45;cursor:default">Uitgeschakeld</button>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">met toetsenbord-hint (approval-patroon)</div>
+  <div class="row">
+    <button class="btn primary">Een keer <kbd>1</kbd></button>
+    <button class="btn">Altijd in deze map <kbd>2</kbd></button>
+    <button class="btn">Weigeren <kbd>3</kbd></button>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">ghost icon buttons (.gbtn)</div>
+  <div class="row">
+    <button class="gbtn"><svg class="ic"><use href="icons.svg#i-plus"/></svg></button>
+    <button class="gbtn"><svg class="ic"><use href="icons.svg#i-mic"/></svg></button>
+    <button class="gbtn"><svg class="ic"><use href="icons.svg#i-search"/></svg></button>
+    <button class="gbtn solid"><svg class="ic"><use href="icons.svg#i-arrow-up"/></svg></button>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">met icoon</div>
+  <div class="row">
+    <button class="btn"><svg class="ic sm"><use href="icons.svg#i-play"/></svg>Run</button>
+    <button class="btn"><svg class="ic sm"><use href="icons.svg#i-download"/></svg>Download</button>
+    <button class="btn"><svg class="ic sm"><use href="icons.svg#i-external"/></svg>Open in GitHub</button>
+  </div>
+</div>
+
+<!-- CONTRACT
+  .btn          h32 px13 r8 border--line-strong, hover bg--surface-sunk, active scale .97
+  .btn.primary  text<->bg omgekeerd, hover opacity .87
+  .gbtn         28px ghost, hover --hover wash, active scale .92
+  .gbtn.solid   send-acties
+  kbd           mono 10px, border currentColor 55%
+-->
+</body>
+</html>

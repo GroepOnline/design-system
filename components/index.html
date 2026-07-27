@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>components — design-system</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 28px 26px; max-width: 1200px; margin: 0 auto; }
+  header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+  .sub { color: var(--text-muted); font-size: 13.5px; margin-bottom: 22px; }
+  .bar { display: flex; gap: 8px; align-items: center; margin-bottom: 24px; }
+  .bar .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 16px; }
+  .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+  .cell .cell-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border-bottom: 1px solid var(--line);
+    font-size: 13px; font-weight: 500; background: var(--bg);
+  }
+  .cell .cell-head .open { margin-left: auto; }
+  .cell .cell-head .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
+  .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell.wide { grid-column: 1 / -1; }
+  a.back { color: var(--accent-ink); text-decoration: none; font-size: 13.5px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Components</h1>
+  <a class="back" href="../index.html">← design-system</a>
+</header>
+<div class="sub">Elk component is standalone, copy-paste-klaar, met contract-comment onderaan. Thema-schakelaar geldt voor alle previews tegelijk.</div>
+
+<div class="bar">
+  <div class="seg" id="themeSeg">
+    <button class="on" data-t="">Licht</button>
+    <button data-t="dark">Donker</button>
+  </div>
+  <div class="right">
+    <span style="font-family:var(--mono);font-size:11px;color:var(--text-faint)">tokens.css + icons.svg + lib.js</span>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const components = [
+  { file: "worked-row.html",  name: "worked-row", desc: "signatuur: activiteit zonder spinner", h: 300, wide: true },
+  { file: "button.html",      name: "button",     desc: "btn + gbtn + kbd", h: 380 },
+  { file: "badge.html",       name: "badge",      desc: "git-status + meta", h: 240 },
+  { file: "composer.html",    name: "composer",   desc: "invoer + wachtrij", h: 420, wide: true },
+  { file: "approval.html",    name: "approval",   desc: "wacht-op-jou, toetsen 1/2/3", h: 360 },
+  { file: "pr-card.html",     name: "pr-card",    desc: "bewijs van werk", h: 330 },
+  { file: "transcript.html",  name: "transcript", desc: "user-pill, prose, meta", h: 480 },
+  { file: "nav.html",         name: "nav",        desc: "sidebar-onderdelen", h: 520 },
+  { file: "artifact.html",    name: "artifact",   desc: "before/after bewijs", h: 480 },
+  { file: "settings.html",    name: "settings",   desc: "volledige instellingen-surface", h: 640, wide: true },
+];
+const grid = document.getElementById("grid");
+components.forEach(c => {
+  const cell = document.createElement("div");
+  cell.className = "cell" + (c.wide ? " wide" : "");
+  cell.innerHTML = `
+    <div class="cell-head">
+      ${c.name}
+      <span style="color:var(--text-faint);font-weight:400;font-size:12px">${c.desc}</span>
+      <a class="open gbtn" href="${c.file}" target="_blank" title="Open standalone"><svg class="ic sm"><use href="icons.svg#i-external"/></svg></a>
+    </div>
+    <iframe src="${c.file}" style="height:${c.h}px" loading="lazy"></iframe>`;
+  grid.appendChild(cell);
+});
+// theme seg → postMessage naar alle iframes + eigen thema
+const seg = document.getElementById("themeSeg");
+seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+  seg.querySelectorAll("button").forEach(x => x.classList.remove("on"));
+  b.classList.add("on");
+  document.documentElement.dataset.theme = b.dataset.t;
+  document.querySelectorAll("iframe").forEach(f => {
+    try { f.contentWindow.postMessage({ dsTheme: b.dataset.t }, "*"); } catch(e) {}
+    // fallback: direct DOM (same-origin)
+    try { f.contentDocument.documentElement.dataset.theme = b.dataset.t; } catch(e) {}
+  });
+}));
+// deep link
+if (new URLSearchParams(location.search).get("theme") === "dark") {
+  document.documentElement.dataset.theme = "dark";
+  seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === "dark"));
+  window.addEventListener("load", () => {
+    document.querySelectorAll("iframe").forEach(f => {
+      try { f.contentDocument.documentElement.dataset.theme = "dark"; } catch(e) {}
+    });
+  });
+}
+</script>
+</body>
+</html>

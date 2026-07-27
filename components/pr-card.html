@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: pr-card</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; max-width: 780px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+
+  /* ==== COMPONENT CSS (copy vanaf hier) ==== */
+  .pr-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .pr-card:hover { border-color: var(--line-strong); }
+  .pr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .pr-repo { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
+  .pr-num { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
+  .pr-actions { margin-left: auto; display: flex; gap: 3px; }
+  .pr-actions .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
+  .pr-title { font-size: 14.5px; font-weight: 500; margin-bottom: 7px; }
+  .pr-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-faint); }
+  .pr-meta .branch {
+    font-family: var(--mono); font-size: 11px;
+    background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px;
+    max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
+  .pr-meta .diff .add { color: var(--open-green); }
+  .pr-meta .diff .del { color: var(--red); }
+  /* entrance (optioneel, voor live verschijnen) */
+  .pr-card.enter { opacity: 0; transform: translateY(10px) scale(0.985); }
+  .pr-card.enter.shown { opacity: 1; transform: none; transition: opacity .42s var(--ease-out), transform .42s var(--ease-out), border-color .2s; }
+  /* ==== /COMPONENT CSS ==== */
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / pr-card</div>
+
+<div class="pr-card">
+  <div class="pr-head">
+    <span class="badge green"><svg class="ic sm"><use href="icons.svg#i-git-pr"/></svg>Open</span>
+    <span class="pr-repo">cognition/cognition-website</span>
+    <span class="pr-num">#167</span>
+    <div class="pr-actions">
+      <button class="gbtn"><svg class="ic sm"><use href="icons.svg#i-git-branch"/></svg></button>
+      <button class="gbtn"><svg class="ic sm"><use href="icons.svg#i-external"/></svg></button>
+    </div>
+  </div>
+  <div class="pr-title">Alle gradient-tekst naar #317CFF</div>
+  <div class="pr-meta">
+    <span class="branch">devin/USA-938-1765942251</span>
+    <svg class="ic sm" style="width:10px"><use href="icons.svg#i-chevron"/></svg>
+    <span class="branch">main</span>
+    <span>6 files</span>
+    <span class="diff"><span class="add">+21</span> <span class="del">−123</span></span>
+  </div>
+</div>
+
+<div class="pr-card">
+  <div class="pr-head">
+    <span class="badge green"><svg class="ic sm"><use href="icons.svg#i-git-pr"/></svg>Open</span>
+    <span class="pr-repo">cognition/devin-website</span>
+    <span class="pr-num">#357</span>
+    <div class="pr-actions">
+      <button class="gbtn"><svg class="ic sm"><use href="icons.svg#i-git-branch"/></svg></button>
+      <button class="gbtn"><svg class="ic sm"><use href="icons.svg#i-external"/></svg></button>
+    </div>
+  </div>
+  <div class="pr-title">Alle gradient-tekst naar #317CFF</div>
+  <div class="pr-meta">
+    <span class="branch">devin/USA-938-1765942252</span>
+    <svg class="ic sm" style="width:10px"><use href="icons.svg#i-chevron"/></svg>
+    <span class="branch">main</span>
+    <span>2 files</span>
+    <span class="diff"><span class="add">+4</span> <span class="del">−8</span></span>
+  </div>
+</div>
+
+<!-- CONTRACT
+  kaart = bewijs van werk. r12, hairline, geen shadow.
+  entrance: .enter + .shown (stagger 120 + i*140ms) als de agent hem live maakt.
+  groen badge alleen voor git-status. diff: add groen / del rood, mono 11.5.
+-->
+</body>
+</html>

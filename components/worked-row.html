@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: worked-row (signatuur)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 40px 32px; max-width: 780px; }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .group { margin-bottom: 34px; }
+  .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+
+  /* ==== COMPONENT CSS (copy vanaf hier) ==== */
+  .worked {
+    display: flex; align-items: center; gap: 9px;
+    padding: 6px 10px 6px 13px;
+    position: relative; cursor: pointer; user-select: none;
+    font-size: 13px; color: var(--text-muted);
+    border-radius: var(--r-md);
+  }
+  .worked:hover { background: var(--hover); }
+  .worked::before {
+    content: ""; position: absolute; left: 0; top: 6px; bottom: 6px;
+    width: 2px; border-radius: 1px;
+    background: var(--line-strong); transition: background 0.4s;
+  }
+  .worked.live::before { background: var(--accent); }
+  .worked .chev { transition: transform 0.22s var(--ease-out); display: inline-flex; color: var(--text-faint); }
+  .worked.open .chev { transform: rotate(90deg); }
+  .worked .timer { font-family: var(--mono); font-size: 12.5px; color: var(--text); font-variant-numeric: tabular-nums; }
+  .worked .diff { font-family: var(--mono); font-size: 11.5px; }
+  .worked .diff .add { color: var(--open-green); }
+  .worked .diff .del { color: var(--red); }
+  .worked .tools { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+
+  .ripple { width: 18px; height: 10px; position: relative; }
+  .ripple::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 4px; height: 2px;
+    background: currentColor; border-radius: 1px; opacity: 0.35;
+  }
+  .ripple.on::before { animation: rippleflow 1.1s linear infinite; opacity: 0.9; }
+  @keyframes rippleflow {
+    0% { transform: scaleX(0.15); transform-origin: left; }
+    45% { transform: scaleX(1); transform-origin: left; }
+    46% { transform-origin: right; }
+    100% { transform: scaleX(0.15); transform-origin: right; }
+  }
+  .ripple.r { color: var(--accent); }
+  .ripple.w { color: var(--open-green); }
+  .ripple.x { color: var(--amber); }
+
+  .worked-detail {
+    padding: 0 10px 0 25px;
+    font-family: var(--mono); font-size: 12px; color: var(--text-muted);
+    display: none;
+  }
+  .worked-detail.open { display: block; animation: fadeSlide 0.28s var(--ease-out); }
+  .worked-detail .step { padding: 3px 0; display: flex; gap: 8px; align-items: center; }
+  .worked-detail .step .st { color: var(--text-faint); width: 52px; flex-shrink: 0; }
+  .worked-detail .step .ic { width: 12px; height: 12px; }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(-4px); } }
+  /* ==== /COMPONENT CSS ==== */
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">← components</a> / worked-row — de activiteitsindicator (geen spinners)</div>
+
+<div class="group">
+  <div class="lbl">live (klik = uitklappen, knoppen = tool-ripples)</div>
+  <div class="worked live open" id="w1" onclick="this.classList.toggle('open');document.getElementById('d1').classList.toggle('open')">
+    <span class="chev"><svg class="ic sm"><use href="icons.svg#i-chevron"/></svg></span>
+    <span>Aan het werk</span>
+    <span class="timer" id="t1">0m 00s</span>
+    <div class="tools" id="tools1"></div>
+  </div>
+  <div class="worked-detail open" id="d1"></div>
+  <div class="row" style="margin-top:10px;display:flex;gap:6px">
+    <button class="btn" onclick="rip('r')"><svg class="ic sm"><use href="icons.svg#i-file"/></svg>read</button>
+    <button class="btn" onclick="rip('w')"><svg class="ic sm"><use href="icons.svg#i-pencil"/></svg>write</button>
+    <button class="btn" onclick="rip('x')"><svg class="ic sm"><use href="icons.svg#i-terminal"/></svg>extern</button>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">klaar (statisch, diff zichtbaar)</div>
+  <div class="worked" onclick="this.classList.toggle('open');document.getElementById('d2').classList.toggle('open')">
+    <span class="chev"><svg class="ic sm"><use href="icons.svg#i-chevron"/></svg></span>
+    <span>Gewerkt</span>
+    <span class="timer">4m 13s</span>
+    <span class="diff"><span class="add">+25</span> <span class="del">−131</span></span>
+  </div>
+  <div class="worked-detail" id="d2">
+    <div class="step"><span class="st">0m 04s</span><svg class="ic"><use href="icons.svg#i-file"/></svg><span>lees src/styles/*.scss</span></div>
+    <div class="step"><span class="st">1m 52s</span><svg class="ic"><use href="icons.svg#i-pencil"/></svg><span>schrijf _text-gradient.scss</span></div>
+    <div class="step"><span class="st">4m 13s</span><svg class="ic"><use href="icons.svg#i-check"/></svg><span>run afgerond, diff gereed</span></div>
+  </div>
+</div>
+
+<script>
+const start = performance.now();
+const steps = [];
+function fmt(ms){const s=Math.floor(ms/1000);return `${Math.floor(s/60)}m ${String(s%60).padStart(2,"0")}s`}
+(function tick(){document.getElementById("t1").textContent=fmt(performance.now()-start);requestAnimationFrame(tick)})();
+const icons={r:"#i-file",w:"#i-pencil",x:"#i-terminal"};
+const labels={r:"lees src/styles/*.scss",w:"schrijf _text-gradient.scss",x:"curl productie-domein"};
+function rip(kind){
+  const box=document.getElementById("tools1");
+  const el=document.createElement("span");
+  el.className=`ripple ${kind} on`;box.appendChild(el);
+  steps.push({kind,t:fmt(performance.now()-start)});
+  document.getElementById("d1").innerHTML=steps.map(s=>
+    `<div class="step"><span class="st">${s.t}</span><svg class="ic"><use href="${icons[s.kind]}"/></svg><span>${labels[s.kind]}</span></div>`).join("");
+  setTimeout(()=>{el.classList.remove("on");setTimeout(()=>el.remove(),400)},2600);
+}
+</script>
+
+<!-- CONTRACT
+  live: streep links = accent, timer tabular mono, chev roteert bij open.
+  ripples: 1.1s eenmalig heen-weer per tool-call. r=lees(blauw) w=schrijf(groen) x=extern(amber).
+  klaar: streep neutral, "Gewerkt" + diff. Nooit een spinner.
+-->
+</body>
+</html>

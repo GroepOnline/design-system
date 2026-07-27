@@ -137,6 +137,68 @@ body {
 .ic.sm { width: 12px; height: 12px; }
 .ic.lg { width: 17px; height: 17px; }
 
+/* ---- toggle switch ---- */
+.switch {
+  position: relative; width: 36px; height: 20px; flex-shrink: 0;
+  border-radius: 200px; border: 1px solid var(--line-strong);
+  background: var(--surface-sunk); cursor: pointer; padding: 0;
+  transition: background 180ms var(--ease-out), border-color 180ms;
+}
+.switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform 180ms var(--ease-out), background 180ms;
+}
+.switch[aria-checked="true"] { background: var(--accent); border-color: var(--accent); }
+.switch[aria-checked="true"]::after { transform: translateX(16px); background: #fff; }
+
+/* ---- segmented control ---- */
+.seg {
+  display: inline-flex; gap: 2px; padding: 2px;
+  background: var(--surface-sunk); border-radius: var(--r-md);
+}
+.seg button {
+  height: 26px; padding: 0 12px; border: none; border-radius: 6px;
+  background: transparent; color: var(--text-muted);
+  font-family: var(--font); font-size: 12.5px; font-weight: 500;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+  transition: background 140ms, color 140ms;
+}
+.seg button:hover { color: var(--text); }
+.seg button.on {
+  background: var(--surface); color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+/* ---- input / select ---- */
+.input, .select {
+  height: 32px; padding: 0 11px;
+  font-family: var(--font); font-size: 13px; color: var(--text);
+  background: var(--surface); border: 1px solid var(--line-strong);
+  border-radius: var(--r-md); outline: none;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.input:focus, .select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.input::placeholder { color: var(--text-faint); }
+.select { appearance: none; padding-right: 28px; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 15px) 50%, calc(100% - 10px) 50%;
+  background-size: 5px 5px; background-repeat: no-repeat;
+}
+
+/* ---- setting row ---- */
+.setting {
+  display: flex; align-items: flex-start; gap: 18px;
+  padding: 13px 2px; border-bottom: 1px solid var(--line);
+}
+.setting:last-child { border-bottom: none; }
+.setting .st-txt { flex: 1; min-width: 0; }
+.setting .st-label { font-size: 14px; font-weight: 500; }
+.setting .st-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; max-width: 420px; }
+.setting .st-state { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+.setting .st-control { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding-top: 2px; }
+
 /* reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
