@@ -12,5 +12,21 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "alle agent-invoer",
+      "autogrow tot 140px",
+      "wachtrij-chip erboven tijdens run"
+    ],
+    "avoid": [
+      "send-knop buiten de composer",
+      "marketing-placeholders"
+    ],
+    "contract": [
+      "focus = accent border + 3px soft ring",
+      "send = .gbtn.solid",
+      "model-chip is select, geen knop"
+    ]
+  }
 }

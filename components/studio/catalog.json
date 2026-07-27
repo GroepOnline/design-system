@@ -10,7 +10,24 @@
       "source": null,
       "status": "active",
       "added": "2026-07-27",
-      "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+      "note": "volledige visuele editor — open fullscreen voor echt gebruik",
+      "h": 860
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "non-designers afstellen zonder code",
+      "preset kiezen, dan bijstellen",
+      "exporteren via Kopieer tokens"
+    ],
+    "avoid": [
+      "gereserveerde kleuren aanbieden als accent (groen/amber/rood)",
+      "CSS-jargon in labels"
+    ],
+    "contract": [
+      "elke wijziging live in preview",
+      "export = complete :root CSS",
+      "accent-keuzes volgen taste-rules"
+    ]
+  }
 }

@@ -12,5 +12,21 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "inline in transcript bij externe of destructieve acties",
+      "altijd exact command tonen",
+      "toetsen 1/2/3"
+    ],
+    "avoid": [
+      "modal of popup",
+      "vage omschrijving van wat er gaat gebeuren"
+    ],
+    "contract": [
+      "amber = wachten, rood = destructief",
+      "cmd mono op sunk",
+      "primary btn = eerste optie"
+    ]
+  }
 }

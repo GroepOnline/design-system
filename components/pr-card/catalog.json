@@ -12,5 +12,20 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "bewijs van git-werk na een run",
+      "diff-stats altijd zichtbaar"
+    ],
+    "avoid": [
+      "cards-in-cards",
+      "shadow op product-cards"
+    ],
+    "contract": [
+      "r12 hairline, hover line-strong",
+      "badge.green Open",
+      "branch→main in mono chips"
+    ]
+  }
 }

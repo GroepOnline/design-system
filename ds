@@ -3,7 +3,7 @@
 
 Model:
   components/<naam>/
-    catalog.json      manifest (entries: id, file, origin, source, status, added, note)
+    catalog.json      manifest (entries + docs) — DE ENIGE BRON
     self/             zelf-ontworpen varianten (ook aangepaste externe)
     external/         externe varianten (shadcn, devin-observed, ...)
     index.html        GEGENEREERD door `ds build` — niet handmatig bewerken
@@ -15,11 +15,13 @@ Statussen:
 Experimenten horen in playground/. Promoveren: ds <c> add.
 Selecteren:      ds <c> select <id>   (demote huidige active automatisch)
 Verwijderen:     ds <c> remove <id>   (expliciet)
+
+Web is desktop-first app-shell; CLI en web lezen hetzelfde manifest.
 """
+import html as htmlmod
 import json
 import os
 import re
-import shutil
 import sys
 from datetime import date
 
@@ -36,8 +38,7 @@ def load_manifest(c):
         return json.load(f)
 
 def save_manifest(c, m):
-    p = os.path.join(COMP, c, "catalog.json")
-    with open(p, "w") as f:
+    with open(os.path.join(COMP, c, "catalog.json"), "w") as f:
         json.dump(m, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
@@ -47,7 +48,6 @@ def components():
                   and os.path.exists(os.path.join(COMP, d, "catalog.json")))
 
 def rewrite_paths(text):
-    """Maak paden root-absoluut zodat varianten overal staan."""
     text = re.sub(r'href="(?:\.\./)+tokens\.css"', 'href="/tokens.css"', text)
     text = re.sub(r'href="(?:\.\./)*components/icons\.svg#', 'href="/components/icons.svg#', text)
     text = re.sub(r'src="(?:\.\./)*components/lib\.js"', 'src="/components/lib.js"', text)
@@ -66,7 +66,11 @@ def cmd_list():
 
 def cmd_clist(c):
     m = load_manifest(c)
-    print(f"{m.get('title', c)} — {m.get('desc','')}\n")
+    print(f"{m.get('title', c)} — {m.get('desc','')}")
+    d = m.get("docs", {})
+    if d.get("use"): print(f"  gebruik:  {d['use']}")
+    if d.get("avoid"): print(f"  vermijd:  {d['avoid']}")
+    print()
     print(f"{'status':<8} {'origin':<14} {'id':<22} {'source':<14} note")
     for e in m["entries"]:
         st = "ACTIEF" if e["status"] == "active" else "vast"
@@ -123,58 +127,157 @@ def cmd_remove(c, eid, yes=False):
     cmd_build(only=c)
     print(f"✓ {c}/{eid} verwijderd uit catalogus")
 
-# ---------- web generator ----------
+# ---------- web generator (desktop-first app-shell) ----------
 
-PAGE = """<!DOCTYPE html>
+SHELL_HEAD = """<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{title} — catalogus</title>
+<title>{title} — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/tokens.css">
 <style>
-  body {{ padding: 26px 24px; max-width: 1100px; margin: 0 auto; }}
-  header {{ display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }}
-  h1 {{ font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }}
-  .sub {{ color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }}
-  a.back {{ color: var(--accent-ink); text-decoration: none; font-size: 13px; }}
-  .legend {{ display: flex; gap: 8px; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--text-faint); flex-wrap: wrap; }}
-  .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 14px; }}
-  .cell {{ border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }}
-  .cell.active {{ border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }}
-  .cell .ch {{ display: flex; align-items: center; gap: 7px; padding: 8px 11px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 12.5px; }}
-  .cell .ch .id {{ font-weight: 500; }}
-  .cell .ch .note {{ color: var(--text-faint); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
-  .cell .ch .right {{ margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }}
-  .st {{ font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 200px; letter-spacing: 0.04em; }}
-  .st.active {{ background: var(--open-green-bg); color: var(--open-green); }}
-  .st.locked {{ border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }}
-  .org {{ font-size: 10.5px; padding: 2px 8px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }}
-  .org.external {{ color: var(--accent-ink); }}
-  .cell iframe {{ width: 100%; border: none; display: block; background: var(--bg); }}
-  .cell .cf {{ display: flex; gap: 8px; padding: 6px 11px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }}
-  .cell .cf a {{ color: var(--accent-ink); text-decoration: none; margin-left: auto; }}
-  .gen {{ margin-top: 26px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }}
+  html, body { height: 100%; }
+  body { display: flex; overflow: hidden; }
+  /* ---- app-shell sidebar ---- */
+  .rail {
+    width: 248px; flex-shrink: 0; border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; background: var(--bg);
+    overflow-y: auto; padding: 12px 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 6px 9px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
+  .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+  .rail .lbl { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); margin: 14px 9px 5px; }
+  .rail a.it {
+    display: flex; align-items: baseline; gap: 8px; padding: 6px 9px;
+    border-radius: var(--r-md); font-size: 13.5px; color: var(--text-muted);
+    text-decoration: none;
+  }
+  .rail a.it:hover { background: var(--hover); }
+  .rail a.it.on { background: var(--surface-sunk); color: var(--text); font-weight: 500; }
+  .rail a.it .n { margin-left: auto; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .rail a.it .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; align-self: center; }
+  .rail .foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
+  .rail .foot .seg { flex: 1; }
+  .rail .foot .seg button { flex: 1; font-size: 12px; }
+  /* ---- content ---- */
+  .main { flex: 1; overflow-y: auto; min-width: 0; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 30px 38px 60px; }
+  h1 { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; }
+  .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: 12.5px; color: var(--text-faint); flex-wrap: wrap; }
+  .legend code { font-family: var(--mono); font-size: 11px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  /* ---- docs card ---- */
+  .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
+  .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; background: var(--surface); }
+  .doc .dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .doc.use .dt { color: var(--open-green); }
+  .doc.avoid .dt { color: var(--red); }
+  .doc.contract .dt { color: var(--accent-ink); }
+  .doc p, .doc li { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .doc ul { padding-left: 16px; }
+  .doc code { font-family: var(--mono); font-size: 11.5px; background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+  /* ---- variant grid ---- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
+  .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+  .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 13px; }
+  .cell .ch .id { font-weight: 500; }
+  .cell .ch .note { color: var(--text-faint); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+  .st { font-family: var(--mono); font-size: 10px; padding: 2.5px 9px; border-radius: 200px; letter-spacing: 0.04em; }
+  .st.active { background: var(--open-green-bg); color: var(--open-green); }
+  .st.locked { border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }
+  .org { font-size: 10.5px; padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
+  .org.external { color: var(--accent-ink); }
+  .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .cf { display: flex; gap: 10px; align-items: center; padding: 7px 13px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell .cf a { color: var(--accent-ink); text-decoration: none; }
+  .cell details { border-top: 1px solid var(--line); }
+  .cell summary { padding: 7px 13px; font-size: 12px; color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; }
+  .cell summary:hover { color: var(--text); }
+  .cell summary .copy { margin-left: auto; }
+  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.5; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
+  .gen { margin-top: 30px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  @media (max-width: 860px) {
+    body { flex-direction: column; overflow: auto; }
+    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
+    .rail .lbl, .rail a.it .n { display: none; }
+    .rail .foot { margin: 0 0 0 auto; border: none; padding: 0; }
+    .main { overflow: visible; }
+    .wrap { padding: 20px 16px 40px; }
+    .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<header><h1>{title}</h1><a class="back" href="/components/">← alle componenten</a></header>
-<div class="sub">{desc} · {nself} zelf · {next} extern</div>
-<div class="legend">
-  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
-  <span style="margin-left:10px"><span class="st locked"><svg class="ic" style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in catalogus, wijzigt alleen via <span style="font-family:var(--mono)">ds {name} select|remove</span></span>
-</div>
-<div class="grid">
-{cells}
-</div>
-<div class="gen">gegenereerd door ds build op {today} — catalog.json is de bron, dit bestand niet bewerken</div>
+<aside class="rail">
+  <a class="brand" href="/"><span class="logo">d</span>design-system</a>
+  <div class="lbl">Componenten</div>
+{nav}
+  <div class="lbl">Systeem</div>
+  <a class="it{on_studio}" href="/components/studio/">studio<span class="n">visueel</span></a>
+  <a class="it" href="/DESIGN.md">DESIGN.md<span class="n">taal</span></a>
+  <a class="it" href="/WORKFLOW.md">WORKFLOW.md<span class="n">proces</span></a>
+  <a class="it" href="/AGENTS.md">AGENTS.md<span class="n">voor ai</span></a>
+  <a class="it" href="/references/">references<span class="n">shots</span></a>
+  <div class="foot">
+    <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
+  </div>
+</aside>
+<main class="main"><div class="wrap">
+"""
+
+SHELL_FOOT = """
+</div></main>
+<script>
+const seg = document.getElementById("themeSeg");
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
+  document.querySelectorAll("iframe").forEach(f => {
+    try { f.contentDocument.documentElement.dataset.theme = t; } catch(e) {}
+  });
+}
+seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setTheme(b.dataset.t)));
+if (new URLSearchParams(location.search).get("theme") === "dark") {
+  window.addEventListener("load", () => setTheme("dark"));
+  setTheme("dark");
+}
+document.querySelectorAll("[data-copy]").forEach(btn => {
+  btn.addEventListener("click", async e => {
+    e.preventDefault();
+    const pre = btn.closest("details").querySelector("pre");
+    try { await navigator.clipboard.writeText(pre.textContent); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
+  });
+});
+</script>
 </body>
 </html>
 """
 
-CELL = """  <div class="cell{cls}">
+CATALOG_BODY = """<h1>{title}</h1>
+<div class="sub">{desc} · {n} varianten: {nself} zelf, {next} extern · manifest: <span class="mono" style="font-size:12px">components/{name}/catalog.json</span></div>
+<div class="legend">
+  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
+  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
+  <span>wijzigt alleen via <code>ds {name} select|remove</code> · experimenten in <code>playground/</code></span>
+</div>
+{docs}
+<div class="grid">
+{cells}
+</div>
+<div class="gen">gegenereerd door ds build op {today} · catalog.json is de bron · dit bestand niet bewerken</div>
+"""
+
+DOCS_CARD = """<div class="docs">
+  {use}{avoid}{contract}
+</div>
+"""
+
+CELL = """  <div class="cell{cls}"{wide}>
     <div class="ch">
       <span class="id">{eid}</span>
       <span class="note">{note}</span>
@@ -184,96 +287,129 @@ CELL = """  <div class="cell{cls}">
       </span>
     </div>
     <iframe src="{file}" style="height:{h}px" loading="lazy"></iframe>
-    <div class="cf">{file} · toegevoegd {added}<a href="{file}" target="_blank">open ↗</a></div>
+    <div class="cf"><span>{file}</span><span>toegevoegd {added}</span><a href="{file}" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>{src}</pre></details>
   </div>"""
 
-GALLERY_ITEM = """  <a class="item" href="/components/{name}/">
-    <span class="name">{title}</span>
-    <span class="desc">{desc} · {n} varianten ({ns} zelf, {nx} extern)</span>
-    <span class="tag">{active}</span>
-  </a>"""
-
-GALLERY = """<!DOCTYPE html>
-<html lang="nl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>components — design-system</title>
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/tokens.css">
-<style>
-  body {{ padding: 28px 26px; max-width: 860px; margin: 0 auto; }}
-  h1 {{ font-size: 22px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }}
-  .sub {{ color: var(--text-muted); font-size: 13.5px; margin-bottom: 8px; }}
-  .rule {{ font-size: 12.5px; color: var(--text-faint); margin-bottom: 24px; }}
-  .rule code {{ font-family: var(--mono); font-size: 11.5px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }}
-  .row {{ display: flex; flex-direction: column; gap: 2px; }}
-  a.item {{ display: flex; align-items: baseline; gap: 12px; padding: 11px 14px; border-radius: var(--r-md); text-decoration: none; color: var(--text); border: 1px solid transparent; transition: background 140ms, border-color 140ms; }}
-  a.item:hover {{ background: var(--surface); border-color: var(--line); }}
-  a.item .name {{ font-weight: 500; font-size: 14.5px; min-width: 130px; }}
-  a.item .desc {{ color: var(--text-faint); font-size: 13px; }}
-  a.item .tag {{ margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--open-green); }}
-  a.back {{ color: var(--accent-ink); text-decoration: none; font-size: 13px; }}
-  .gen {{ margin-top: 24px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }}
-</style>
-</head>
-<body>
-<h1>Components</h1>
-<div class="sub"><a class="back" href="/">← design-system</a></div>
-<div class="rule">Catalogus-model: per component een map met <code>self/</code> + <code>external/</code> varianten.
-Alles in de catalogus is <b>vast</b> tot expliciete <code>ds select</code> of <code>ds remove</code>.
-Experimenten: <code>playground/</code>.</div>
-<div class="row">
+GALLERY_BODY = """<h1>Components</h1>
+<div class="sub">Per component een catalogus met alle varianten ooit: onze eigen (self) en externe referenties (external). Alles is vast tot expliciete select of remove via de CLI.</div>
+<div class="legend">
+  <span class="st active">ACTIEF</span> in gebruik
+  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> bewaard
+  <span>CLI: <code>./ds list</code> · <code>./ds &lt;component&gt; list|select|add|remove</code></span>
+</div>
+<div class="grid" style="grid-template-columns:1fr">
 {items}
 </div>
 <div class="gen">gegenereerd door ds build op {today}</div>
-</body>
-</html>
 """
 
-def cmd_build(only=None):
-    today = str(date.today())
-    comps = [only] if only else components()
-    for c in comps:
+GALLERY_ITEM = """  <a class="cell" href="/components/{name}/" style="display:flex;align-items:center;gap:14px;padding:14px 17px;text-decoration:none;color:var(--text)">
+    <span style="font-weight:500;font-size:15px;min-width:130px">{title}</span>
+    <span style="color:var(--text-faint);font-size:13px;flex:1">{desc}</span>
+    <span class="org">{nself} zelf</span>
+    <span class="org external">{nx} extern</span>
+    <span class="mono" style="font-family:var(--mono);font-size:11px;color:var(--open-green)">{active}</span>
+  </a>"""
+
+def nav_html(current=None):
+    out = []
+    for c in components():
+        if c == "studio":
+            continue
         m = load_manifest(c)
-        cells = []
-        for e in m["entries"]:
-            act = e["status"] == "active"
-            orgtxt = {"self": "zelf", "self-modified": "zelf (aangepast)", "external": "extern"}.get(e["origin"], e["origin"])
-            if e.get("source"):
-                orgtxt += f" · {e['source']}"
-            cells.append(CELL.format(
-                cls=" active" if act else "",
-                eid=e["id"], note=e.get("note", ""),
-                orgcls="external" if e["origin"] == "external" else "",
-                orgtxt=orgtxt,
-                stbadge='<span class="st active">ACTIEF</span>' if act else '<span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>',
-                file=e["file"], h=e.get("h", 220), added=e.get("added", "?"),
-            ))
-        page = PAGE.format(
-            title=m.get("title", c), name=c, desc=m.get("desc", ""),
+        on = " on" if c == current else ""
+        acts = any(e["status"] == "active" for e in m["entries"])
+        marker = '<span class="act"></span>' if acts else f'<span class="n">{len(m["entries"])}</span>'
+        out.append(f'  <a class="it{on}" href="/components/{c}/">{c}{marker}</a>')
+    return "\n".join(out)
+
+def docs_html(m):
+    d = m.get("docs", {})
+    if not d:
+        return ""
+    parts = {}
+    if d.get("use"):
+        items = d["use"] if isinstance(d["use"], list) else [d["use"]]
+        lis = "".join(f"<li>{x}</li>" for x in items)
+        parts["use"] = f'<div class="doc use"><div class="dt">✓ gebruik</div><ul>{lis}</ul></div>'
+    if d.get("avoid"):
+        items = d["avoid"] if isinstance(d["avoid"], list) else [d["avoid"]]
+        lis = "".join(f"<li>{x}</li>" for x in items)
+        parts["avoid"] = f'<div class="doc avoid"><div class="dt">✕ vermijd</div><ul>{lis}</ul></div>'
+    if d.get("contract"):
+        items = d["contract"] if isinstance(d["contract"], list) else [d["contract"]]
+        lis = "".join(f"<li><code>{x}</code></li>" for x in items)
+        parts["contract"] = f'<div class="doc contract"><div class="dt">contract</div><ul>{lis}</ul></div>'
+    return DOCS_CARD.format(**parts)
+
+def build_catalog(c):
+    m = load_manifest(c)
+    cells = []
+    for e in m["entries"]:
+        act = e["status"] == "active"
+        orgtxt = {"self": "zelf", "self-modified": "zelf (aangepast)", "external": "extern"}.get(e["origin"], e["origin"])
+        if e.get("source"):
+            orgtxt += f" · {e['source']}"
+        fp = os.path.join(COMP, c, e["file"])
+        src = ""
+        if os.path.exists(fp):
+            with open(fp) as f:
+                src = htmlmod.escape(f.read())
+        wide = ' style="grid-column:1/-1"' if e.get("wide") or e.get("h", 0) >= 600 else ""
+        cells.append(CELL.format(
+            cls=" active" if act else "",
+            wide=wide,
+            eid=e["id"], note=e.get("note", ""),
+            orgcls="external" if e["origin"] == "external" else "",
+            orgtxt=orgtxt,
+            stbadge='<span class="st active">ACTIEF</span>' if act else '<span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>',
+            file=e["file"], h=e.get("h", 240), added=e.get("added", "?"), src=src,
+        ))
+    body = CATALOG_BODY.format(
+        title=m.get("title", c), name=c, desc=m.get("desc", ""),
+        n=len(m["entries"]),
+        nself=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
+        next=sum(1 for e in m["entries"] if e["origin"] == "external"),
+        docs=docs_html(m), cells="\n".join(cells), today=str(date.today()),
+    )
+    page = (SHELL_HEAD.replace("{title}", m.get("title", c))
+            .replace("{nav}", nav_html(current=c))
+            .replace("{on_studio}", "")
+            + body + SHELL_FOOT)
+    with open(os.path.join(COMP, c, "index.html"), "w") as f:
+        f.write(page)
+
+def build_gallery():
+    items = []
+    for c in components():
+        if c == "studio":
+            continue
+        m = load_manifest(c)
+        acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
+        items.append(GALLERY_ITEM.format(
+            name=c, title=m.get("title", c), desc=m.get("desc", ""),
             nself=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
-            next=sum(1 for e in m["entries"] if e["origin"] == "external"),
-            cells="\n".join(cells), today=today,
-        )
-        with open(os.path.join(COMP, c, "index.html"), "w") as f:
-            f.write(page)
-    if not only:
-        items = []
+            nx=sum(1 for e in m["entries"] if e["origin"] == "external"),
+            active="actief: " + ",".join(acts) if acts else "",
+        ))
+    body = GALLERY_BODY.format(items="\n".join(items), today=str(date.today()))
+    page = (SHELL_HEAD.replace("{title}", "components")
+            .replace("{nav}", nav_html())
+            .replace("{on_studio}", "")
+            + body + SHELL_FOOT)
+    with open(os.path.join(COMP, "index.html"), "w") as f:
+        f.write(page)
+
+def cmd_build(only=None):
+    if only:
+        build_catalog(only)
+        build_gallery()
+    else:
         for c in components():
-            m = load_manifest(c)
-            acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
-            items.append(GALLERY_ITEM.format(
-                name=c, title=m.get("title", c), desc=m.get("desc", ""),
-                n=len(m["entries"]),
-                ns=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
-                nx=sum(1 for e in m["entries"] if e["origin"] == "external"),
-                active="actief: " + ",".join(acts) if acts else "—",
-            ))
-        with open(os.path.join(COMP, "index.html"), "w") as f:
-            f.write(GALLERY.format(items="\n".join(items), today=today))
-    print("✓ web bijgewerkt" + (f" ({only})" if only else f" ({len(comps)} componenten + gallery)"))
+            build_catalog(c)
+        build_gallery()
+    print("✓ web bijgewerkt" + (f" ({only} + gallery)" if only else f" ({len(components())} componenten + gallery)"))
 
 # ---------- main ----------
 

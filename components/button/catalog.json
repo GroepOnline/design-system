@@ -66,5 +66,23 @@
       "added": "2026-07-27",
       "note": "radius 0, marketing-site stijl"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "acties die de gebruiker bewust start",
+      "primary max 1x per context",
+      "gbtn voor icon-only acties in balken"
+    ],
+    "avoid": [
+      "twee primary naast elkaar",
+      "knop als navigatie — gebruik een link",
+      "emoji in of naast de knop"
+    ],
+    "contract": [
+      ".btn h32 px13 r8",
+      ".primary text↔bg inverse",
+      ".gbtn 28px ghost",
+      "kbd in knop voor toets-hints"
+    ]
+  }
 }

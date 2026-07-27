@@ -12,5 +12,20 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "elke agent-run als zichtbare activiteit",
+      "uitklapbaar: stappen met tijdstip"
+    ],
+    "avoid": [
+      "spinner ernaast — de rij ís de indicator",
+      "animatie die doorgaat na afronding"
+    ],
+    "contract": [
+      "streep 2px links, accent tijdens run",
+      "timer tabular mono",
+      "ripple 1.1s per tool-call, r/w/x kleuren"
+    ]
+  }
 }

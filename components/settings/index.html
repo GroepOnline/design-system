@@ -3,42 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>settings — catalogus</title>
+<title>settings — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/tokens.css">
 <style>
-  body { padding: 26px 24px; max-width: 1100px; margin: 0 auto; }
-  header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
-  h1 { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }
-  .sub { color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }
-  a.back { color: var(--accent-ink); text-decoration: none; font-size: 13px; }
-  .legend { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--text-faint); flex-wrap: wrap; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 14px; }
+  html, body { height: 100%; }
+  body { display: flex; overflow: hidden; }
+  /* ---- app-shell sidebar ---- */
+  .rail {
+    width: 248px; flex-shrink: 0; border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; background: var(--bg);
+    overflow-y: auto; padding: 12px 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 6px 9px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
+  .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+  .rail .lbl { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); margin: 14px 9px 5px; }
+  .rail a.it {
+    display: flex; align-items: baseline; gap: 8px; padding: 6px 9px;
+    border-radius: var(--r-md); font-size: 13.5px; color: var(--text-muted);
+    text-decoration: none;
+  }
+  .rail a.it:hover { background: var(--hover); }
+  .rail a.it.on { background: var(--surface-sunk); color: var(--text); font-weight: 500; }
+  .rail a.it .n { margin-left: auto; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .rail a.it .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; align-self: center; }
+  .rail .foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
+  .rail .foot .seg { flex: 1; }
+  .rail .foot .seg button { flex: 1; font-size: 12px; }
+  /* ---- content ---- */
+  .main { flex: 1; overflow-y: auto; min-width: 0; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 30px 38px 60px; }
+  h1 { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; }
+  .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: 12.5px; color: var(--text-faint); flex-wrap: wrap; }
+  .legend code { font-family: var(--mono); font-size: 11px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  /* ---- docs card ---- */
+  .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
+  .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; background: var(--surface); }
+  .doc .dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .doc.use .dt { color: var(--open-green); }
+  .doc.avoid .dt { color: var(--red); }
+  .doc.contract .dt { color: var(--accent-ink); }
+  .doc p, .doc li { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .doc ul { padding-left: 16px; }
+  .doc code { font-family: var(--mono); font-size: 11.5px; background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+  /* ---- variant grid ---- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  .cell .ch { display: flex; align-items: center; gap: 7px; padding: 8px 11px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 12.5px; }
+  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 13px; }
   .cell .ch .id { font-weight: 500; }
-  .cell .ch .note { color: var(--text-faint); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cell .ch .note { color: var(--text-faint); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
-  .st { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 200px; letter-spacing: 0.04em; }
+  .st { font-family: var(--mono); font-size: 10px; padding: 2.5px 9px; border-radius: 200px; letter-spacing: 0.04em; }
   .st.active { background: var(--open-green-bg); color: var(--open-green); }
   .st.locked { border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }
-  .org { font-size: 10.5px; padding: 2px 8px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
+  .org { font-size: 10.5px; padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
-  .cell .cf { display: flex; gap: 8px; padding: 6px 11px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
-  .cell .cf a { color: var(--accent-ink); text-decoration: none; margin-left: auto; }
-  .gen { margin-top: 26px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell .cf { display: flex; gap: 10px; align-items: center; padding: 7px 13px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell .cf a { color: var(--accent-ink); text-decoration: none; }
+  .cell details { border-top: 1px solid var(--line); }
+  .cell summary { padding: 7px 13px; font-size: 12px; color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; }
+  .cell summary:hover { color: var(--text); }
+  .cell summary .copy { margin-left: auto; }
+  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.5; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
+  .gen { margin-top: 30px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  @media (max-width: 860px) {
+    body { flex-direction: column; overflow: auto; }
+    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
+    .rail .lbl, .rail a.it .n { display: none; }
+    .rail .foot { margin: 0 0 0 auto; border: none; padding: 0; }
+    .main { overflow: visible; }
+    .wrap { padding: 20px 16px 40px; }
+    .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<header><h1>settings</h1><a class="back" href="/components/">← alle componenten</a></header>
-<div class="sub">volledige instellingen-surface · 1 zelf · 0 extern</div>
+<aside class="rail">
+  <a class="brand" href="/"><span class="logo">d</span>design-system</a>
+  <div class="lbl">Componenten</div>
+  <a class="it" href="/components/approval/">approval<span class="act"></span></a>
+  <a class="it" href="/components/artifact/">artifact<span class="act"></span></a>
+  <a class="it" href="/components/badge/">badge<span class="act"></span></a>
+  <a class="it" href="/components/button/">button<span class="act"></span></a>
+  <a class="it" href="/components/composer/">composer<span class="act"></span></a>
+  <a class="it" href="/components/nav/">nav<span class="act"></span></a>
+  <a class="it" href="/components/pr-card/">pr-card<span class="act"></span></a>
+  <a class="it on" href="/components/settings/">settings<span class="act"></span></a>
+  <a class="it" href="/components/transcript/">transcript<span class="act"></span></a>
+  <a class="it" href="/components/worked-row/">worked-row<span class="act"></span></a>
+  <div class="lbl">Systeem</div>
+  <a class="it" href="/components/studio/">studio<span class="n">visueel</span></a>
+  <a class="it" href="/DESIGN.md">DESIGN.md<span class="n">taal</span></a>
+  <a class="it" href="/WORKFLOW.md">WORKFLOW.md<span class="n">proces</span></a>
+  <a class="it" href="/AGENTS.md">AGENTS.md<span class="n">voor ai</span></a>
+  <a class="it" href="/references/">references<span class="n">shots</span></a>
+  <div class="foot">
+    <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
+  </div>
+</aside>
+<main class="main"><div class="wrap">
+<h1>settings</h1>
+<div class="sub">volledige instellingen-surface · 1 varianten: 1 zelf, 0 extern · manifest: <span class="mono" style="font-size:12px">components/settings/catalog.json</span></div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
-  <span style="margin-left:10px"><span class="st locked"><svg class="ic" style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in catalogus, wijzigt alleen via <span style="font-family:var(--mono)">ds settings select|remove</span></span>
+  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
+  <span>wijzigt alleen via <code>ds settings select|remove</code> · experimenten in <code>playground/</code></span>
 </div>
+<div class="docs">
+  <div class="doc use"><div class="dt">✓ gebruik</div><ul><li>elke optie met live state zichtbaar</li><li>direct van kracht — geen opslaan-knop</li><li>eerlijke descriptions met consequentie</li></ul></div><div class="doc avoid"><div class="dt">✕ vermijd</div><ul><li>waarden verstopt achter edit-knop</li><li>marketing-taal in descriptions</li></ul></div><div class="doc contract"><div class="dt">contract</div><ul><li><code>rail 216px, content max 700px</code></li><li><code>.setting: label/desc/state + control rechts</code></li><li><code>seg voor thema, switch voor booleans</code></li></ul></div>
+</div>
+
 <div class="grid">
   <div class="cell active">
     <div class="ch">
@@ -49,10 +127,270 @@
         <span class="st active">ACTIEF</span>
       </span>
     </div>
-    <iframe src="self/default.html" style="height:220px" loading="lazy"></iframe>
-    <div class="cf">self/default.html · toegevoegd 2026-07-27<a href="self/default.html" target="_blank">open ↗</a></div>
+    <iframe src="self/default.html" style="height:240px" loading="lazy"></iframe>
+    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nl&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;surface: instellingen&lt;/title&gt;
+&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/tokens.css&quot;&gt;
+&lt;style&gt;
+  body { min-height: 100vh; }
+  .shell { display: flex; min-height: 100vh; }
+
+  /* sections rail */
+  .sections {
+    width: 216px; flex-shrink: 0;
+    border-right: 1px solid var(--line);
+    padding: 18px 8px;
+  }
+  .sections .back {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; color: var(--text-muted);
+    padding: 6px 8px; border-radius: var(--r-md); cursor: pointer;
+    margin-bottom: 12px; text-decoration: none;
+  }
+  .sections .back:hover { background: var(--hover); }
+  .sec-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 10px; border-radius: var(--r-md);
+    font-size: 13.5px; color: var(--text-muted);
+    cursor: pointer; user-select: none; position: relative;
+  }
+  .sec-item:hover { background: var(--hover); }
+  .sec-item.active { background: var(--accent-soft); color: var(--accent-ink); font-weight: 500; }
+  .sec-item.active::before {
+    content: &quot;&quot;; position: absolute; left: -8px; top: 7px; bottom: 7px;
+    width: 2px; border-radius: 1px; background: var(--accent);
+  }
+  .sec-item .ic { opacity: 0.8; }
+
+  /* content */
+  .content { flex: 1; padding: 26px 34px; max-width: 700px; }
+  .content h1 { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .content .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 22px; }
+  .sec-title {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--text-faint);
+    margin: 26px 0 4px;
+  }
+  .font-preview {
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 16px 18px; margin: 8px 0 4px; background: var(--surface);
+  }
+  .font-preview .fp-1 { font-size: 19px; font-weight: 500; letter-spacing: -0.02em; }
+  .font-preview .fp-2 { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+  .font-preview .fp-3 { font-family: var(--mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+  .size-row { display: flex; align-items: center; gap: 10px; }
+  .size-row .val { font-family: var(--mono); font-size: 12px; width: 52px; text-align: right; }
+  input[type=&quot;range&quot;] {
+    -webkit-appearance: none; width: 180px; height: 2px;
+    background: var(--line-strong); border-radius: 1px; outline: none;
+  }
+  input[type=&quot;range&quot;]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--surface); border: 1.5px solid var(--text);
+    cursor: pointer; transition: transform 120ms var(--ease-out);
+  }
+  input[type=&quot;range&quot;]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  kbd.k {
+    font-family: var(--mono); font-size: 11px;
+    border: 1px solid var(--line-strong); border-radius: 5px;
+    padding: 1px 6px; color: var(--text-muted); background: var(--surface);
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;shell&quot;&gt;
+
+  &lt;!-- sections rail --&gt;
+  &lt;aside class=&quot;sections&quot;&gt;
+    &lt;a class=&quot;back&quot; href=&quot;index.html&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot; transform=&quot;rotate(180 12 12)&quot;/&gt;&lt;/svg&gt;Terug&lt;/a&gt;
+    &lt;div class=&quot;sec-item active&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-settings&quot;/&gt;&lt;/svg&gt;Weergave&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-message&quot;/&gt;&lt;/svg&gt;Modellen&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-terminal&quot;/&gt;&lt;/svg&gt;MCP-servers&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-book&quot;/&gt;&lt;/svg&gt;Werkruimtes&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-inbox&quot;/&gt;&lt;/svg&gt;Account&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-more&quot;/&gt;&lt;/svg&gt;Ontwikkelaar&lt;/div&gt;
+  &lt;/aside&gt;
+
+  &lt;!-- content --&gt;
+  &lt;main class=&quot;content&quot;&gt;
+    &lt;h1&gt;Weergave&lt;/h1&gt;
+    &lt;div class=&quot;sub&quot;&gt;Hoe de app eruitziet en leest. Direct van kracht, geen opslaan-knop.&lt;/div&gt;
+
+    &lt;!-- THEMA --&gt;
+    &lt;div class=&quot;sec-title&quot;&gt;Thema&lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;
+        &lt;div class=&quot;st-label&quot;&gt;Kleurthema&lt;/div&gt;
+        &lt;div class=&quot;st-desc&quot;&gt;Licht is de standaard. Donker is Basalt: warm zwart, geen zuiver zwart.&lt;/div&gt;
+        &lt;div class=&quot;st-state&quot; id=&quot;themeState&quot;&gt;licht&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;
+        &lt;div class=&quot;seg&quot; id=&quot;themeSeg&quot;&gt;
+          &lt;button class=&quot;on&quot; data-t=&quot;&quot;&gt;Licht&lt;/button&gt;
+          &lt;button data-t=&quot;dark&quot;&gt;Donker&lt;/button&gt;
+          &lt;button data-t=&quot;sys&quot;&gt;Systeem&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- LETTER TYPES --&gt;
+    &lt;div class=&quot;sec-title&quot;&gt;Lettertypes&lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;
+        &lt;div class=&quot;st-label&quot;&gt;Interface-lettertype&lt;/div&gt;
+        &lt;div class=&quot;st-desc&quot;&gt;Voor alle tekst in de app. Koppen altijd gewicht 500.&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;
+        &lt;select class=&quot;select&quot; id=&quot;fontSel&quot;&gt;
+          &lt;option&gt;General Sans&lt;/option&gt;
+          &lt;option&gt;Systeemstandaard&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;
+        &lt;div class=&quot;st-label&quot;&gt;Data-lettertype (mono)&lt;/div&gt;
+        &lt;div class=&quot;st-desc&quot;&gt;Voor timers, diffs, commands en paden. Altijd tabular cijfers.&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;
+        &lt;select class=&quot;select&quot; id=&quot;monoSel&quot;&gt;
+          &lt;option&gt;JetBrains Mono&lt;/option&gt;
+          &lt;option&gt;Systeem-mono&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;
+        &lt;div class=&quot;st-label&quot;&gt;Tekstgrootte&lt;/div&gt;
+        &lt;div class=&quot;st-desc&quot;&gt;Basis voor de hele interface. 15px is de referentie.&lt;/div&gt;
+        &lt;div class=&quot;st-state&quot; id=&quot;sizeState&quot;&gt;15px · referentie&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;
+        &lt;div class=&quot;size-row&quot;&gt;
+          &lt;input type=&quot;range&quot; min=&quot;13&quot; max=&quot;17&quot; step=&quot;1&quot; value=&quot;15&quot; id=&quot;sizeRange&quot;&gt;
+          &lt;span class=&quot;val&quot; id=&quot;sizeVal&quot;&gt;15px&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;font-preview&quot; id=&quot;fontPreview&quot;&gt;
+      &lt;div class=&quot;fp-1&quot;&gt;Klaar voor instructies&lt;/div&gt;
+      &lt;div class=&quot;fp-2&quot;&gt;De agent toont wat hij doet terwijl het gebeurt. Geen spinners, wel een stroom.&lt;/div&gt;
+      &lt;div class=&quot;fp-3&quot;&gt;4m 13s · +25 −131 · devin/USA-938-1765942251&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- GEDRAG --&gt;
+    &lt;div class=&quot;sec-title&quot;&gt;Gedrag&lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;
+        &lt;div class=&quot;st-label&quot;&gt;Animaties&lt;/div&gt;
+        &lt;div class=&quot;st-desc&quot;&gt;Ripples, entrances en overgangen. Uit = alles direct, zoals reduced-motion.&lt;/div&gt;
+        &lt;div class=&quot;st-state&quot; id=&quot;motionState&quot;&gt;aan&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;
+        &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; id=&quot;motionSw&quot;&gt;&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;
+        &lt;div class=&quot;st-label&quot;&gt;Enter stuurt direct&lt;/div&gt;
+        &lt;div class=&quot;st-desc&quot;&gt;Aan: Enter stuurt, Shift+Enter nieuwe regel. Uit: omgekeerd.&lt;/div&gt;
+        &lt;div class=&quot;st-state&quot;&gt;aan&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;
+        &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; onclick=&quot;flip(this)&quot;&gt;&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- SNELTOETSEN --&gt;
+    &lt;div class=&quot;sec-title&quot;&gt;Sneltoetsen&lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;&lt;div class=&quot;st-label&quot;&gt;Command-palet&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;&lt;kbd class=&quot;k&quot;&gt;⌘K&lt;/kbd&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;&lt;div class=&quot;st-label&quot;&gt;Instellingen&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;&lt;kbd class=&quot;k&quot;&gt;⌘,&lt;/kbd&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;setting&quot;&gt;
+      &lt;div class=&quot;st-txt&quot;&gt;&lt;div class=&quot;st-label&quot;&gt;Approval beantwoorden&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;st-control&quot;&gt;&lt;kbd class=&quot;k&quot;&gt;1&lt;/kbd&gt; &lt;kbd class=&quot;k&quot;&gt;2&lt;/kbd&gt; &lt;kbd class=&quot;k&quot;&gt;3&lt;/kbd&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// thema-segmented
+const seg = document.getElementById(&quot;themeSeg&quot;);
+const state = document.getElementById(&quot;themeState&quot;);
+seg.querySelectorAll(&quot;button&quot;).forEach(b =&gt; b.addEventListener(&quot;click&quot;, () =&gt; {
+  seg.querySelectorAll(&quot;button&quot;).forEach(x =&gt; x.classList.remove(&quot;on&quot;));
+  b.classList.add(&quot;on&quot;);
+  const t = b.dataset.t;
+  if (t === &quot;sys&quot;) {
+    const dark = matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches;
+    document.documentElement.dataset.theme = dark ? &quot;dark&quot; : &quot;&quot;;
+    state.textContent = &quot;systeem (&quot; + (dark ? &quot;donker&quot; : &quot;licht&quot;) + &quot;)&quot;;
+  } else {
+    document.documentElement.dataset.theme = t;
+    state.textContent = t === &quot;dark&quot; ? &quot;donker&quot; : &quot;licht&quot;;
+  }
+}));
+// switches
+function flip(el){ el.setAttribute(&quot;aria-checked&quot;, el.getAttribute(&quot;aria-checked&quot;) !== &quot;true&quot;); }
+document.getElementById(&quot;motionSw&quot;).addEventListener(&quot;click&quot;, function(){
+  flip(this);
+  document.getElementById(&quot;motionState&quot;).textContent = this.getAttribute(&quot;aria-checked&quot;) === &quot;true&quot; ? &quot;aan&quot; : &quot;uit&quot;;
+});
+// font size
+const range = document.getElementById(&quot;sizeRange&quot;);
+range.addEventListener(&quot;input&quot;, () =&gt; {
+  document.getElementById(&quot;sizeVal&quot;).textContent = range.value + &quot;px&quot;;
+  document.getElementById(&quot;sizeState&quot;).textContent = range.value + &quot;px&quot; + (range.value === &quot;15&quot; ? &quot; · referentie&quot; : &quot;&quot;);
+  document.getElementById(&quot;fontPreview&quot;).style.fontSize = (range.value / 15) + &quot;em&quot;;
+});
+// deep link ?theme=dark
+if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&quot;) {
+  document.documentElement.dataset.theme = &quot;dark&quot;;
+  seg.querySelectorAll(&quot;button&quot;).forEach(x =&gt; x.classList.toggle(&quot;on&quot;, x.dataset.t === &quot;dark&quot;));
+  state.textContent = &quot;donker&quot;;
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
   </div>
 </div>
-<div class="gen">gegenereerd door ds build op 2026-07-27 — catalog.json is de bron, dit bestand niet bewerken</div>
+<div class="gen">gegenereerd door ds build op 2026-07-27 · catalog.json is de bron · dit bestand niet bewerken</div>
+
+</div></main>
+<script>
+const seg = document.getElementById("themeSeg");
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
+  document.querySelectorAll("iframe").forEach(f => {
+    try { f.contentDocument.documentElement.dataset.theme = t; } catch(e) {}
+  });
+}
+seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setTheme(b.dataset.t)));
+if (new URLSearchParams(location.search).get("theme") === "dark") {
+  window.addEventListener("load", () => setTheme("dark"));
+  setTheme("dark");
+}
+document.querySelectorAll("[data-copy]").forEach(btn => {
+  btn.addEventListener("click", async e => {
+    e.preventDefault();
+    const pre = btn.closest("details").querySelector("pre");
+    try { await navigator.clipboard.writeText(pre.textContent); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
+  });
+});
+</script>
 </body>
 </html>

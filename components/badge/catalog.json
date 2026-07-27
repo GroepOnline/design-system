@@ -12,5 +12,20 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "git-status (Open / merged)",
+      "korte meta-labels via outline"
+    ],
+    "avoid": [
+      "groen als decoratie — gereserveerd voor git",
+      "zinnen in een badge"
+    ],
+    "contract": [
+      "pill r200, 12px/500",
+      ".green alleen git-status",
+      ".outline voor meta"
+    ]
+  }
 }

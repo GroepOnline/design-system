@@ -12,5 +12,20 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "vaste glyph-lane links",
+      "counts en tijden in mono faint",
+      "live-dot voor actieve sessie"
+    ],
+    "avoid": [
+      "ad-hoc paddings",
+      "kleurcode voor sessie-status (alleen accent-dot)"
+    ],
+    "contract": [
+      "active = surface-sunk + weight 500",
+      "dot 6px, pulse 2s zacht"
+    ]
+  }
 }

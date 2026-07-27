@@ -12,5 +12,19 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "user = sunk pill + avatar rechts",
+      "agent = kale prose, geen achtergrond"
+    ],
+    "avoid": [
+      "bubble achter agent-tekst",
+      "avatar bij agent"
+    ],
+    "contract": [
+      "kolom max 720px gecentreerd",
+      "meta-row inklapbaar met roterende chev"
+    ]
+  }
 }

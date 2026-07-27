@@ -12,5 +12,21 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "elke optie met live state zichtbaar",
+      "direct van kracht — geen opslaan-knop",
+      "eerlijke descriptions met consequentie"
+    ],
+    "avoid": [
+      "waarden verstopt achter edit-knop",
+      "marketing-taal in descriptions"
+    ],
+    "contract": [
+      "rail 216px, content max 700px",
+      ".setting: label/desc/state + control rechts",
+      "seg voor thema, switch voor booleans"
+    ]
+  }
 }

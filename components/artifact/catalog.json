@@ -12,5 +12,19 @@
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
     }
-  ]
+  ],
+  "docs": {
+    "use": [
+      "bewijs: before/after, rapport, diff",
+      "toggle via panel-icoon in topbar"
+    ],
+    "avoid": [
+      "marketing-content in het paneel",
+      "gradient als UI-element (alleen als demo-inhoud)"
+    ],
+    "contract": [
+      "400px, verborgen <1100px",
+      "ba-cellen identiek: lbl/body/foot"
+    ]
+  }
 }
