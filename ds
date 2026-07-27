@@ -56,6 +56,7 @@ DOCS = [
     ("WORKFLOW.md", "workflow", "proces", "nieuw project scaffolden, component-discipline, taste-loop"),
     ("AGENTS.md", "agents", "voor ai", "invarianten en commando's voor AI-agents"),
     ("README.md", "readme", "overzicht", "wat dit systeem is en hoe je het gebruikt"),
+    ("hoe-wat.md", "hoe-wat", "overzicht", "de grote gids: vier tools, starten, als agent, als mens, fouten, FAQ"),
     ("motion-spec.md", "motion-spec", "taal", "bewegingsfysica (gelockt)"),
     ("surfaces/session.md", "surface-session", "surface", "sessie-surface brief"),
     ("surfaces/composer.md", "surface-composer", "surface", "composer-surface brief"),
