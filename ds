@@ -28,6 +28,18 @@ from datetime import date
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 COMP = os.path.join(ROOT, "components")
+STYLES_JSON = os.path.join(ROOT, "styles.json")
+
+def load_styles():
+    if os.path.exists(STYLES_JSON):
+        with open(STYLES_JSON) as f:
+            return json.load(f)
+    return [{"id": "", "label": "Devin"}]
+
+def save_styles(st):
+    with open(STYLES_JSON, "w") as f:
+        json.dump(st, f, indent=2, ensure_ascii=False)
+        f.write("\n")
 
 CATS = [
     ("primitieven", "Primitieven"),
@@ -73,8 +85,11 @@ def _c(code, s):
 
 def ok(m):    print(f"{_c('32;1','✓')} {m}")
 def err(m):   sys.exit(f"{_c('31;1','✗')} {m}")
+def wrn(m):   print(f"  {_c('33;1','!')} {m}")
+def errp(m):  print(f"  {_c('31;1','✗')} {m}")
 def dim(s):   return _c("2", s)
 def bold(s):  return _c("1", s)
+def green(s): return _c("32", s)
 def green(s): return _c("32", s)
 def blue(s):  return _c("34", s)
 def amber(s): return _c("33", s)
@@ -406,7 +421,7 @@ SHELL_HEAD = """<!DOCTYPE html>
   <div class="lbl caps">Systeem</div>
 {sysnav}
   <div class="foot" style="flex-direction:column;align-items:stretch">
-    <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button></div>
+    <div class="seg" id="styleSeg">{styleseg}</div>
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
   </div>
 </aside>
@@ -650,6 +665,7 @@ def build_catalog(c):
             .replace("{nav}", nav_html(current=c))
             .replace("{sysnav}", sysnav_html())
             .replace("{mdcss}", "")
+            .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT)
     with open(os.path.join(COMP, c, "index.html"), "w") as f:
         f.write(page)
@@ -680,6 +696,7 @@ def build_gallery():
             .replace("{nav}", nav_html())
             .replace("{sysnav}", sysnav_html())
             .replace("{mdcss}", "")
+            .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT)
     with open(os.path.join(COMP, "index.html"), "w") as f:
         f.write(page)
@@ -708,11 +725,18 @@ DOC_PAGE_BODY = """<div class="pagehead">
 <div class="gen">gegenereerd uit {src} op {today} · bewerk de .md, niet deze pagina</div>
 """
 
+def styleseg_html():
+    st = load_styles()
+    return "".join(
+        f'<button{" class=\"on\"" if i == 0 else ""} data-s="{x["id"]}">{x["label"]}</button>'
+        for i, x in enumerate(st))
+
 def _shell(title, body, mdcss=""):
     return (SHELL_HEAD.replace("{title}", title)
             .replace("{nav}", nav_html())
             .replace("{sysnav}", sysnav_html())
             .replace("{mdcss}", mdcss)
+            .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT)
 
 def build_docs():
@@ -792,6 +816,63 @@ def cmd_build(only=None):
 
 # ---------- main ----------
 
+def cmd_style_list():
+    st = load_styles()
+    if not st:
+        print("  (geen stijlen geregistreerd)")
+        return
+    ok(f"{bold('STIJLEN')}  {len(st)} skins")
+    for x in st:
+        label = x["label"]
+        desc = x.get("desc", "")
+        sid = x["id"]
+        act = green(" ACTIEF") if sid == "" else ""
+        print(f"    {label.ljust(12)} {sid or '(default)':<10}  {desc}{act}")
+
+def cmd_check():
+    """Valideer catalogus-structuur, sprite-referenties, em-dash in copy."""
+    errors = []
+    warnings = []
+    with open(os.path.join(COMP, "icons.svg")) as f:
+        sprite_ids = set(re.findall(r'id="([^"]+)"', f.read()))
+    for c in sorted(components()):
+        m = load_manifest(c)
+        entries = m["entries"]
+        actives = [e for e in entries if e["status"] == "active"]
+        if len(actives) == 0:
+            errors.append(f"{c}: geen actieve variant")
+        elif len(actives) > 1:
+            es = ", ".join(e.get("id","?") for e in actives)
+            errors.append(f"{c}: {len(actives)} actieve varianten — {es}")
+        for e in entries:
+            if e["status"] not in ("active", "locked"):
+                errors.append(f"{c}/{e['id']}: ongeldige status '{e['status']}'")
+            if e["origin"] not in ("self", "self-modified", "external"):
+                errors.append(f"{c}/{e['id']}: ongeldige origin '{e['origin']}'")
+            entry_dir = "self" if e.get("origin", "self") in ("self", "self-modified") else "external"
+            fname = os.path.join(COMP, c, entry_dir, e["id"] + ".html")
+            if not os.path.exists(fname):
+                errors.append(f"{c}/{e['id']}: bestand niet gevonden ({fname})")
+            src = e.get("source", "")
+            if src and not src.startswith("http"):
+                warnings.append(f"{c}/{e['id']}: source '{src}' is geen URL")
+    # em-dash in .md files (copy)
+    for fn in os.listdir(ROOT):
+        if fn.endswith(".md"):
+            raw = open(os.path.join(ROOT, fn)).read()
+            if "—" in raw:
+                warnings.append(f"em-dash in {fn}")
+    for e in errors:
+        errp(e)
+    for w in warnings:
+        wrn(w)
+    ec = len(errors)
+    if ec:
+        err(f"{ec} errors, {len(warnings)} warnings — fix met bovenstaande")
+    ok(f"{len(components())} componenten {dim(f'— {ec} errors, {len(warnings)} warnings')}")
+    return ec
+
+
 def main():
     args = sys.argv[1:]
     if not args or args[0] in ("-h", "--help", "help"):
@@ -800,7 +881,22 @@ def main():
     if args[0] == "list":
         cmd_list()
     elif args[0] == "build":
+        check_only = "--check" in args
         cmd_build()
+        if check_only:
+            import subprocess
+            r = subprocess.run(["git", "diff", "--exit-code"], capture_output=True, cwd=ROOT)
+            if r.returncode != 0:
+                err("build --check: gegenereerde bestanden zijn niet up-to-date (git diff na build is niet leeg)")
+            else:
+                print(f"  {g('OK')} gegenereerde bestanden zijn up-to-date")
+    elif args[0] == "style":
+        if len(args) > 1 and args[1] == "list":
+            cmd_style_list()
+        else:
+            err("gebruik: ds style list")
+    elif args[0] == "check":
+        cmd_check()
     else:
         c = args[0]
         sub = args[1] if len(args) > 1 else "list"
