@@ -30,6 +30,42 @@ Elk componentbestand bevat: werkende demo + `COMPONENT CSS` blok + contract-comm
 **Regel:** componenten worden gekopieerd, niet geïmporteerd. Het product bezit zijn
 eigen kopie (zoals shadcn). Upstream-fixes haal je bewust binnen, nooit automatisch.
 
+## De catalogus-discipline (kern van het systeem)
+
+Per component een map met **alle varianten ooit**, gesplitst in `self/` (zelf-ontworpen,
+ook aangepaste externe) en `external/` (shadcn, devin-observed, ...). Bron: `catalog.json`.
+
+```
+components/button/
+├── catalog.json      manifest: id, origin, source, status, note
+├── self/             onze varianten
+├── external/         externe referenties
+└── index.html        GEGENEREERD (ds build) — nooit handmatig bewerken
+```
+
+**Statussen:** `active` (geselecteerd voor gebruik, 1 per component) en `locked`
+(vast in de catalogus). Wat vast staat verandert nooit stilletjes: alleen
+`ds select` of `ds remove` raakt het. Een oefensessie kan het systeem niet
+verneuken, want experimenten leven in `playground/` en komen er alleen in via
+een expliciete `ds add`.
+
+### CLI (reactief, herbouwt web automatisch)
+
+```bash
+./ds list                                # alle componenten + actieve variant
+./ds button list                         # entries met status/origin/source
+./ds button select primary               # active wisselen (rest -> vast)
+./ds button add playground/x.html --id x --origin self --note "..."
+./ds button remove x --yes               # expliciet verwijderen
+./ds build                               # web herbouwen (gaat automatisch bij mutaties)
+```
+
+### Web (gegenereerd uit dezelfde manifests)
+
+`/components/` = gallery uit catalog.json-bestanden. `/components/button/` = de
+button-catalogus met ACTIEF-markering, vast-badges, zelf/extern-split, iframes
+per variant. CLI en web spreken dezelfde taal omdat het manifest de enige bron is.
+
 ## Y — Bouwen (de discipline)
 
 1. **Lees eerst `taste/taste-rules.md`.** Dat zijn de geleerde regels. Binding.

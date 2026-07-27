@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>button — catalogus</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  body { padding: 26px 24px; max-width: 1100px; margin: 0 auto; }
+  header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+  h1 { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }
+  .sub { color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }
+  a.back { color: var(--accent-ink); text-decoration: none; font-size: 13px; }
+  .legend { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--text-faint); flex-wrap: wrap; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 14px; }
+  .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+  .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .cell .ch { display: flex; align-items: center; gap: 7px; padding: 8px 11px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 12.5px; }
+  .cell .ch .id { font-weight: 500; }
+  .cell .ch .note { color: var(--text-faint); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+  .st { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 200px; letter-spacing: 0.04em; }
+  .st.active { background: var(--open-green-bg); color: var(--open-green); }
+  .st.locked { border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }
+  .org { font-size: 10.5px; padding: 2px 8px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
+  .org.external { color: var(--accent-ink); }
+  .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .cf { display: flex; gap: 8px; padding: 6px 11px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell .cf a { color: var(--accent-ink); text-decoration: none; margin-left: auto; }
+  .gen { margin-top: 26px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+</style>
+</head>
+<body>
+<header><h1>button</h1><a class="back" href="/components/">← alle componenten</a></header>
+<div class="sub">btn + gbtn + kbd · 5 zelf · 2 extern</div>
+<div class="legend">
+  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
+  <span style="margin-left:10px"><span class="st locked"><svg class="ic" style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in catalogus, wijzigt alleen via <span style="font-family:var(--mono)">ds button select|remove</span></span>
+</div>
+<div class="grid">
+  <div class="cell active">
+    <div class="ch">
+      <span class="id">default</span>
+      <span class="note">oorspronkelijke demo, gemigreerd naar catalogus</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st active">ACTIEF</span>
+      </span>
+    </div>
+    <iframe src="self/default.html" style="height:220px" loading="lazy"></iframe>
+    <div class="cf">self/default.html · toegevoegd 2026-07-27<a href="self/default.html" target="_blank">open ↗</a></div>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <span class="id">standard</span>
+      <span class="note">basis btn, hairline border</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/standard.html" style="height:220px" loading="lazy"></iframe>
+    <div class="cf">self/standard.html · toegevoegd 2026-07-27<a href="self/standard.html" target="_blank">open ↗</a></div>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <span class="id">primary</span>
+      <span class="note">inverse text/bg</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/primary.html" style="height:220px" loading="lazy"></iframe>
+    <div class="cf">self/primary.html · toegevoegd 2026-07-27<a href="self/primary.html" target="_blank">open ↗</a></div>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <span class="id">with-kbd</span>
+      <span class="note">approval-patroon met toets-hints</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/with-kbd.html" style="height:220px" loading="lazy"></iframe>
+    <div class="cf">self/with-kbd.html · toegevoegd 2026-07-27<a href="self/with-kbd.html" target="_blank">open ↗</a></div>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <span class="id">gbtn</span>
+      <span class="note">ghost icon + solid send</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/gbtn.html" style="height:220px" loading="lazy"></iframe>
+    <div class="cf">self/gbtn.html · toegevoegd 2026-07-27<a href="self/gbtn.html" target="_blank">open ↗</a></div>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <span class="id">shadcn-default</span>
+      <span class="note">zinc-schaal, radius 6, shadow-xs, 36px hoog</span>
+      <span class="right">
+        <span class="org external">extern · shadcn/ui</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="external/shadcn-default.html" style="height:220px" loading="lazy"></iframe>
+    <div class="cf">external/shadcn-default.html · toegevoegd 2026-07-27<a href="external/shadcn-default.html" target="_blank">open ↗</a></div>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <span class="id">devin-square</span>
+      <span class="note">radius 0, marketing-site stijl</span>
+      <span class="right">
+        <span class="org external">extern · devin.ai (gemeten)</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="external/devin-square.html" style="height:220px" loading="lazy"></iframe>
+    <div class="cf">external/devin-square.html · toegevoegd 2026-07-27<a href="external/devin-square.html" target="_blank">open ↗</a></div>
+  </div>
+</div>
+<div class="gen">gegenereerd door ds build op 2026-07-27 — catalog.json is de bron, dit bestand niet bewerken</div>
+</body>
+</html>

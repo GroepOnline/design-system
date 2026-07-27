@@ -1,0 +1,16 @@
+{
+  "component": "settings",
+  "title": "settings",
+  "desc": "volledige instellingen-surface",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-07-27",
+      "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+    }
+  ]
+}

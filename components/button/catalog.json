@@ -1,0 +1,70 @@
+{
+  "component": "button",
+  "title": "button",
+  "desc": "btn + gbtn + kbd",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-07-27",
+      "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+    },
+    {
+      "id": "standard",
+      "file": "self/standard.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-07-27",
+      "note": "basis btn, hairline border"
+    },
+    {
+      "id": "primary",
+      "file": "self/primary.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-07-27",
+      "note": "inverse text/bg"
+    },
+    {
+      "id": "with-kbd",
+      "file": "self/with-kbd.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-07-27",
+      "note": "approval-patroon met toets-hints"
+    },
+    {
+      "id": "gbtn",
+      "file": "self/gbtn.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-07-27",
+      "note": "ghost icon + solid send"
+    },
+    {
+      "id": "shadcn-default",
+      "file": "external/shadcn-default.html",
+      "origin": "external",
+      "source": "shadcn/ui",
+      "status": "locked",
+      "added": "2026-07-27",
+      "note": "zinc-schaal, radius 6, shadow-xs, 36px hoog"
+    },
+    {
+      "id": "devin-square",
+      "file": "external/devin-square.html",
+      "origin": "external",
+      "source": "devin.ai (gemeten)",
+      "status": "locked",
+      "added": "2026-07-27",
+      "note": "radius 0, marketing-site stijl"
+    }
+  ]
+}

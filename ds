@@ -1,0 +1,312 @@
+#!/usr/bin/env python3
+"""ds — design-system catalogus CLI
+
+Model:
+  components/<naam>/
+    catalog.json      manifest (entries: id, file, origin, source, status, added, note)
+    self/             zelf-ontworpen varianten (ook aangepaste externe)
+    external/         externe varianten (shadcn, devin-observed, ...)
+    index.html        GEGENEREERD door `ds build` — niet handmatig bewerken
+
+Statussen:
+  active   het geselecteerde component (1 per component)
+  locked   in de catalogus, vast — verandert nooit stilletjes
+
+Experimenten horen in playground/. Promoveren: ds <c> add.
+Selecteren:      ds <c> select <id>   (demote huidige active automatisch)
+Verwijderen:     ds <c> remove <id>   (expliciet)
+"""
+import json
+import os
+import re
+import shutil
+import sys
+from datetime import date
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+COMP = os.path.join(ROOT, "components")
+
+# ---------- helpers ----------
+
+def load_manifest(c):
+    p = os.path.join(COMP, c, "catalog.json")
+    if not os.path.exists(p):
+        sys.exit(f"onbekend component: {c}")
+    with open(p) as f:
+        return json.load(f)
+
+def save_manifest(c, m):
+    p = os.path.join(COMP, c, "catalog.json")
+    with open(p, "w") as f:
+        json.dump(m, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+def components():
+    return sorted(d for d in os.listdir(COMP)
+                  if os.path.isdir(os.path.join(COMP, d))
+                  and os.path.exists(os.path.join(COMP, d, "catalog.json")))
+
+def rewrite_paths(text):
+    """Maak paden root-absoluut zodat varianten overal staan."""
+    text = re.sub(r'href="(?:\.\./)+tokens\.css"', 'href="/tokens.css"', text)
+    text = re.sub(r'href="(?:\.\./)*components/icons\.svg#', 'href="/components/icons.svg#', text)
+    text = re.sub(r'src="(?:\.\./)*components/lib\.js"', 'src="/components/lib.js"', text)
+    return text
+
+# ---------- commands ----------
+
+def cmd_list():
+    print(f"{'component':<14} {'entries':<8} {'active':<20} {'self/ext'}")
+    for c in components():
+        m = load_manifest(c)
+        acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
+        ns = sum(1 for e in m["entries"] if e["origin"].startswith("self"))
+        nx = len(m["entries"]) - ns
+        print(f"{c:<14} {len(m['entries']):<8} {','.join(acts) or '-':<20} {ns}/{nx}")
+
+def cmd_clist(c):
+    m = load_manifest(c)
+    print(f"{m.get('title', c)} — {m.get('desc','')}\n")
+    print(f"{'status':<8} {'origin':<14} {'id':<22} {'source':<14} note")
+    for e in m["entries"]:
+        st = "ACTIEF" if e["status"] == "active" else "vast"
+        print(f"{st:<8} {e['origin']:<14} {e['id']:<22} {(e.get('source') or '-'):<14} {e.get('note','')}")
+
+def cmd_select(c, eid):
+    m = load_manifest(c)
+    ids = [e["id"] for e in m["entries"]]
+    if eid not in ids:
+        sys.exit(f"onbekende entry: {eid} (opties: {', '.join(ids)})")
+    for e in m["entries"]:
+        e["status"] = "active" if e["id"] == eid else "locked"
+    save_manifest(c, m)
+    cmd_build(only=c)
+    print(f"✓ {c}/{eid} is nu ACTIEF (rest vast). Web bijgewerkt.")
+
+def cmd_add(c, path, eid=None, origin="self", source=None, note=""):
+    if origin not in ("self", "self-modified", "external"):
+        sys.exit("origin: self | self-modified | external")
+    m = load_manifest(c)
+    eid = eid or re.sub(r"[^a-z0-9-]", "-", os.path.splitext(os.path.basename(path))[0].lower())
+    if any(e["id"] == eid for e in m["entries"]):
+        sys.exit(f"entry bestaat al: {eid} (kies andere id of verwijder eerst)")
+    dest_dir = os.path.join(COMP, c, "external" if origin == "external" else "self")
+    os.makedirs(dest_dir, exist_ok=True)
+    dest = os.path.join(dest_dir, eid + ".html")
+    if os.path.exists(dest):
+        sys.exit(f"bestand bestaat al: {dest} — catalogus is vast; verwijderen kan alleen expliciet")
+    with open(path) as f:
+        content = rewrite_paths(f.read())
+    with open(dest, "w") as f:
+        f.write(content)
+    m["entries"].append({
+        "id": eid, "file": os.path.relpath(dest, os.path.join(COMP, c)),
+        "origin": origin, "source": source, "status": "locked",
+        "added": str(date.today()), "note": note,
+    })
+    save_manifest(c, m)
+    cmd_build(only=c)
+    print(f"✓ {c}/{eid} toegevoegd als VAST ({origin}). Selecteer met: ./ds {c} select {eid}")
+
+def cmd_remove(c, eid, yes=False):
+    m = load_manifest(c)
+    entry = next((e for e in m["entries"] if e["id"] == eid), None)
+    if not entry:
+        sys.exit(f"onbekende entry: {eid}")
+    if entry["status"] == "active" and not yes:
+        sys.exit(f"{eid} is ACTIEF — bevestig met --yes (selecteer daarna een andere)")
+    m["entries"] = [e for e in m["entries"] if e["id"] != eid]
+    f = os.path.join(COMP, c, entry["file"])
+    if os.path.exists(f):
+        os.remove(f)
+    save_manifest(c, m)
+    cmd_build(only=c)
+    print(f"✓ {c}/{eid} verwijderd uit catalogus")
+
+# ---------- web generator ----------
+
+PAGE = """<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title} — catalogus</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  body {{ padding: 26px 24px; max-width: 1100px; margin: 0 auto; }}
+  header {{ display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }}
+  h1 {{ font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }}
+  .sub {{ color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }}
+  a.back {{ color: var(--accent-ink); text-decoration: none; font-size: 13px; }}
+  .legend {{ display: flex; gap: 8px; align-items: center; margin-bottom: 20px; font-size: 12px; color: var(--text-faint); flex-wrap: wrap; }}
+  .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 14px; }}
+  .cell {{ border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }}
+  .cell.active {{ border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }}
+  .cell .ch {{ display: flex; align-items: center; gap: 7px; padding: 8px 11px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 12.5px; }}
+  .cell .ch .id {{ font-weight: 500; }}
+  .cell .ch .note {{ color: var(--text-faint); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+  .cell .ch .right {{ margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }}
+  .st {{ font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 200px; letter-spacing: 0.04em; }}
+  .st.active {{ background: var(--open-green-bg); color: var(--open-green); }}
+  .st.locked {{ border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }}
+  .org {{ font-size: 10.5px; padding: 2px 8px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }}
+  .org.external {{ color: var(--accent-ink); }}
+  .cell iframe {{ width: 100%; border: none; display: block; background: var(--bg); }}
+  .cell .cf {{ display: flex; gap: 8px; padding: 6px 11px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }}
+  .cell .cf a {{ color: var(--accent-ink); text-decoration: none; margin-left: auto; }}
+  .gen {{ margin-top: 26px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }}
+</style>
+</head>
+<body>
+<header><h1>{title}</h1><a class="back" href="/components/">← alle componenten</a></header>
+<div class="sub">{desc} · {nself} zelf · {next} extern</div>
+<div class="legend">
+  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
+  <span style="margin-left:10px"><span class="st locked"><svg class="ic" style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in catalogus, wijzigt alleen via <span style="font-family:var(--mono)">ds {name} select|remove</span></span>
+</div>
+<div class="grid">
+{cells}
+</div>
+<div class="gen">gegenereerd door ds build op {today} — catalog.json is de bron, dit bestand niet bewerken</div>
+</body>
+</html>
+"""
+
+CELL = """  <div class="cell{cls}">
+    <div class="ch">
+      <span class="id">{eid}</span>
+      <span class="note">{note}</span>
+      <span class="right">
+        <span class="org {orgcls}">{orgtxt}</span>
+        {stbadge}
+      </span>
+    </div>
+    <iframe src="{file}" style="height:{h}px" loading="lazy"></iframe>
+    <div class="cf">{file} · toegevoegd {added}<a href="{file}" target="_blank">open ↗</a></div>
+  </div>"""
+
+GALLERY_ITEM = """  <a class="item" href="/components/{name}/">
+    <span class="name">{title}</span>
+    <span class="desc">{desc} · {n} varianten ({ns} zelf, {nx} extern)</span>
+    <span class="tag">{active}</span>
+  </a>"""
+
+GALLERY = """<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>components — design-system</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  body {{ padding: 28px 26px; max-width: 860px; margin: 0 auto; }}
+  h1 {{ font-size: 22px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }}
+  .sub {{ color: var(--text-muted); font-size: 13.5px; margin-bottom: 8px; }}
+  .rule {{ font-size: 12.5px; color: var(--text-faint); margin-bottom: 24px; }}
+  .rule code {{ font-family: var(--mono); font-size: 11.5px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }}
+  .row {{ display: flex; flex-direction: column; gap: 2px; }}
+  a.item {{ display: flex; align-items: baseline; gap: 12px; padding: 11px 14px; border-radius: var(--r-md); text-decoration: none; color: var(--text); border: 1px solid transparent; transition: background 140ms, border-color 140ms; }}
+  a.item:hover {{ background: var(--surface); border-color: var(--line); }}
+  a.item .name {{ font-weight: 500; font-size: 14.5px; min-width: 130px; }}
+  a.item .desc {{ color: var(--text-faint); font-size: 13px; }}
+  a.item .tag {{ margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--open-green); }}
+  a.back {{ color: var(--accent-ink); text-decoration: none; font-size: 13px; }}
+  .gen {{ margin-top: 24px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }}
+</style>
+</head>
+<body>
+<h1>Components</h1>
+<div class="sub"><a class="back" href="/">← design-system</a></div>
+<div class="rule">Catalogus-model: per component een map met <code>self/</code> + <code>external/</code> varianten.
+Alles in de catalogus is <b>vast</b> tot expliciete <code>ds select</code> of <code>ds remove</code>.
+Experimenten: <code>playground/</code>.</div>
+<div class="row">
+{items}
+</div>
+<div class="gen">gegenereerd door ds build op {today}</div>
+</body>
+</html>
+"""
+
+def cmd_build(only=None):
+    today = str(date.today())
+    comps = [only] if only else components()
+    for c in comps:
+        m = load_manifest(c)
+        cells = []
+        for e in m["entries"]:
+            act = e["status"] == "active"
+            orgtxt = {"self": "zelf", "self-modified": "zelf (aangepast)", "external": "extern"}.get(e["origin"], e["origin"])
+            if e.get("source"):
+                orgtxt += f" · {e['source']}"
+            cells.append(CELL.format(
+                cls=" active" if act else "",
+                eid=e["id"], note=e.get("note", ""),
+                orgcls="external" if e["origin"] == "external" else "",
+                orgtxt=orgtxt,
+                stbadge='<span class="st active">ACTIEF</span>' if act else '<span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>',
+                file=e["file"], h=e.get("h", 220), added=e.get("added", "?"),
+            ))
+        page = PAGE.format(
+            title=m.get("title", c), name=c, desc=m.get("desc", ""),
+            nself=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
+            next=sum(1 for e in m["entries"] if e["origin"] == "external"),
+            cells="\n".join(cells), today=today,
+        )
+        with open(os.path.join(COMP, c, "index.html"), "w") as f:
+            f.write(page)
+    if not only:
+        items = []
+        for c in components():
+            m = load_manifest(c)
+            acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
+            items.append(GALLERY_ITEM.format(
+                name=c, title=m.get("title", c), desc=m.get("desc", ""),
+                n=len(m["entries"]),
+                ns=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
+                nx=sum(1 for e in m["entries"] if e["origin"] == "external"),
+                active="actief: " + ",".join(acts) if acts else "—",
+            ))
+        with open(os.path.join(COMP, "index.html"), "w") as f:
+            f.write(GALLERY.format(items="\n".join(items), today=today))
+    print("✓ web bijgewerkt" + (f" ({only})" if only else f" ({len(comps)} componenten + gallery)"))
+
+# ---------- main ----------
+
+def main():
+    args = sys.argv[1:]
+    if not args or args[0] in ("-h", "--help", "help"):
+        print(__doc__)
+        return
+    if args[0] == "list":
+        cmd_list()
+    elif args[0] == "build":
+        cmd_build()
+    else:
+        c = args[0]
+        sub = args[1] if len(args) > 1 else "list"
+        if sub == "list":
+            cmd_clist(c)
+        elif sub == "select":
+            cmd_select(c, args[2])
+        elif sub == "add":
+            path = args[2]
+            kw = {}
+            it = iter(args[3:])
+            for a in it:
+                if a == "--id": kw["eid"] = next(it)
+                elif a == "--origin": kw["origin"] = next(it)
+                elif a == "--source": kw["source"] = next(it)
+                elif a == "--note": kw["note"] = next(it)
+            cmd_add(c, path, **kw)
+        elif sub == "remove":
+            cmd_remove(c, args[2], yes="--yes" in args)
+        else:
+            sys.exit(f"onbekend: {sub}")
+
+if __name__ == "__main__":
+    main()
