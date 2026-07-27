@@ -28,6 +28,20 @@ from datetime import date
 ROOT = os.path.dirname(os.path.abspath(__file__))
 COMP = os.path.join(ROOT, "components")
 
+ICONS = {
+    "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
+    "button": "i-click", "composer": "i-pencil", "nav": "i-inbox",
+    "pr-card": "i-git-pr", "settings": "i-settings", "transcript": "i-message",
+    "worked-row": "i-clock", "studio": "i-sparkle",
+}
+SYS_LINKS = [
+    ("studio", "/components/studio/", "i-sparkle", "studio", "visueel"),
+    ("design", "/DESIGN.md", "i-book", "DESIGN.md", "taal"),
+    ("workflow", "/WORKFLOW.md", "i-queue", "WORKFLOW.md", "proces"),
+    ("agents", "/AGENTS.md", "i-terminal", "AGENTS.md", "voor ai"),
+    ("references", "/references/", "i-external", "references", "shots"),
+]
+
 # ---------- helpers ----------
 
 def load_manifest(c):
@@ -68,8 +82,8 @@ def cmd_clist(c):
     m = load_manifest(c)
     print(f"{m.get('title', c)} — {m.get('desc','')}")
     d = m.get("docs", {})
-    if d.get("use"): print(f"  gebruik:  {d['use']}")
-    if d.get("avoid"): print(f"  vermijd:  {d['avoid']}")
+    if d.get("use"): print(f"  gebruik:  {'; '.join(d['use'])}")
+    if d.get("avoid"): print(f"  vermijd:  {'; '.join(d['avoid'])}")
     print()
     print(f"{'status':<8} {'origin':<14} {'id':<22} {'source':<14} note")
     for e in m["entries"]:
@@ -141,42 +155,59 @@ SHELL_HEAD = """<!DOCTYPE html>
 <style>
   html, body { height: 100%; }
   body { display: flex; overflow: hidden; }
-  /* ---- app-shell sidebar ---- */
+  /* ---- app-shell rail: aparte component-blokken ---- */
   .rail {
-    width: 248px; flex-shrink: 0; border-right: 1px solid var(--line);
+    width: 272px; flex-shrink: 0; border-right: 1px solid var(--line);
     display: flex; flex-direction: column; background: var(--bg);
-    overflow-y: auto; padding: 12px 10px;
+    overflow-y: auto; padding: 14px 12px 12px;
   }
-  .brand { display: flex; align-items: center; gap: 9px; padding: 6px 9px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 16px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
   .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
-  .rail .lbl { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); margin: 14px 9px 5px; }
+  .rail .lbl { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); margin: 14px 10px 6px; }
   .rail a.it {
-    display: flex; align-items: baseline; gap: 8px; padding: 6px 9px;
-    border-radius: var(--r-md); font-size: 13.5px; color: var(--text-muted);
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 10px 7px 8px; margin-bottom: 2px;
+    border-radius: var(--r-md); border: 1px solid transparent;
     text-decoration: none;
   }
   .rail a.it:hover { background: var(--hover); }
-  .rail a.it.on { background: var(--surface-sunk); color: var(--text); font-weight: 500; }
-  .rail a.it .n { margin-left: auto; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
-  .rail a.it .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; align-self: center; }
+  .rail a.it.on { background: var(--surface); border-color: var(--line); box-shadow: var(--shadow-xs); }
+  .rail a.it.on .nm { color: var(--text); }
+  .rail a.it.on .tile { border-color: var(--accent); }
+  .rail a.it.on .tile svg { color: var(--accent-ink); }
+  .rail .tile {
+    width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+    border: 1px solid var(--line); background: var(--surface);
+    display: grid; place-items: center;
+  }
+  .rail .tile svg { width: 14px; height: 14px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .rail a.it.sys .tile { width: 22px; height: 22px; border: none; background: transparent; }
+  .rail a.it.sys { padding: 6px 10px 6px 11px; }
+  .rail a.it.sys .tile svg { width: 13px; height: 13px; color: var(--text-faint); }
+  .rail a.it.sys .nm { font-size: 13px; font-weight: 400; color: var(--text-muted); }
+  .rail .nm { font-size: 13.5px; font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
+  .rail .nm .ds { display: block; font-size: 10.5px; font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+  .rail .n { margin-left: auto; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); flex-shrink: 0; }
+  .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; }
   .rail .foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
   .rail .foot .seg { flex: 1; }
   .rail .foot .seg button { flex: 1; font-size: 12px; }
   /* ---- content ---- */
   .main { flex: 1; overflow-y: auto; min-width: 0; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 30px 38px 60px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 30px 38px 60px; }
   h1 { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
   .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; }
+  .sub code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
   .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: 12.5px; color: var(--text-faint); flex-wrap: wrap; }
   .legend code { font-family: var(--mono); font-size: 11px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
-  /* ---- docs card ---- */
+  /* ---- docs cards ---- */
   .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
   .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; background: var(--surface); }
-  .doc .dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .doc .dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
   .doc.use .dt { color: var(--open-green); }
   .doc.avoid .dt { color: var(--red); }
   .doc.contract .dt { color: var(--accent-ink); }
-  .doc p, .doc li { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .doc li { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
   .doc ul { padding-left: 16px; }
   .doc code { font-family: var(--mono); font-size: 11.5px; background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
   /* ---- variant grid ---- */
@@ -204,7 +235,7 @@ SHELL_HEAD = """<!DOCTYPE html>
   @media (max-width: 860px) {
     body { flex-direction: column; overflow: auto; }
     .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
-    .rail .lbl, .rail a.it .n { display: none; }
+    .rail .lbl, .rail a.it .n, .rail .nm .ds { display: none; }
     .rail .foot { margin: 0 0 0 auto; border: none; padding: 0; }
     .main { overflow: visible; }
     .wrap { padding: 20px 16px 40px; }
@@ -218,11 +249,7 @@ SHELL_HEAD = """<!DOCTYPE html>
   <div class="lbl">Componenten</div>
 {nav}
   <div class="lbl">Systeem</div>
-  <a class="it{on_studio}" href="/components/studio/">studio<span class="n">visueel</span></a>
-  <a class="it" href="/DESIGN.md">DESIGN.md<span class="n">taal</span></a>
-  <a class="it" href="/WORKFLOW.md">WORKFLOW.md<span class="n">proces</span></a>
-  <a class="it" href="/AGENTS.md">AGENTS.md<span class="n">voor ai</span></a>
-  <a class="it" href="/references/">references<span class="n">shots</span></a>
+{sysnav}
   <div class="foot">
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
   </div>
@@ -246,6 +273,20 @@ if (new URLSearchParams(location.search).get("theme") === "dark") {
   window.addEventListener("load", () => setTheme("dark"));
   setTheme("dark");
 }
+/* iframes passen zich aan hun inhoud aan — geen interne scrollbars */
+function fitFrames() {
+  document.querySelectorAll("iframe[data-fit]").forEach(f => {
+    try {
+      const h = f.contentDocument.documentElement.scrollHeight;
+      if (h > 0) f.style.height = Math.max(140, h + 2) + "px";
+    } catch(e) {}
+  });
+}
+window.addEventListener("load", () => {
+  fitFrames();
+  setTimeout(fitFrames, 400);
+  setTimeout(fitFrames, 1500);
+});
 document.querySelectorAll("[data-copy]").forEach(btn => {
   btn.addEventListener("click", async e => {
     e.preventDefault();
@@ -259,7 +300,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
 """
 
 CATALOG_BODY = """<h1>{title}</h1>
-<div class="sub">{desc} · {n} varianten: {nself} zelf, {next} extern · manifest: <span class="mono" style="font-size:12px">components/{name}/catalog.json</span></div>
+<div class="sub">{desc} · {n} varianten: {nself} zelf, {next} extern · manifest: <code>components/{name}/catalog.json</code></div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
@@ -286,7 +327,7 @@ CELL = """  <div class="cell{cls}"{wide}>
         {stbadge}
       </span>
     </div>
-    <iframe src="{file}" style="height:{h}px" loading="lazy"></iframe>
+    <iframe src="{file}" style="min-height:{h}px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>{file}</span><span>toegevoegd {added}</span><a href="{file}" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>{src}</pre></details>
   </div>"""
@@ -305,11 +346,12 @@ GALLERY_BODY = """<h1>Components</h1>
 """
 
 GALLERY_ITEM = """  <a class="cell" href="/components/{name}/" style="display:flex;align-items:center;gap:14px;padding:14px 17px;text-decoration:none;color:var(--text)">
+    <span class="tile" style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#{icon}"/></svg></span>
     <span style="font-weight:500;font-size:15px;min-width:130px">{title}</span>
     <span style="color:var(--text-faint);font-size:13px;flex:1">{desc}</span>
     <span class="org">{nself} zelf</span>
     <span class="org external">{nx} extern</span>
-    <span class="mono" style="font-family:var(--mono);font-size:11px;color:var(--open-green)">{active}</span>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--open-green)">{active}</span>
   </a>"""
 
 def nav_html(current=None):
@@ -321,7 +363,25 @@ def nav_html(current=None):
         on = " on" if c == current else ""
         acts = any(e["status"] == "active" for e in m["entries"])
         marker = '<span class="act"></span>' if acts else f'<span class="n">{len(m["entries"])}</span>'
-        out.append(f'  <a class="it{on}" href="/components/{c}/">{c}{marker}</a>')
+        icon = ICONS.get(c, "i-file")
+        desc = m.get("desc", "")
+        out.append(
+            f'  <a class="it{on}" href="/components/{c}/">'
+            f'<span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>'
+            f'<span class="nm">{c}<span class="ds">{desc}</span></span>'
+            f'{marker}</a>'
+        )
+    return "\n".join(out)
+
+def sysnav_html():
+    out = []
+    for _key, href, icon, label, meta in SYS_LINKS:
+        out.append(
+            f'  <a class="it sys" href="{href}">'
+            f'<span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>'
+            f'<span class="nm">{label}</span>'
+            f'<span class="n">{meta}</span></a>'
+        )
     return "\n".join(out)
 
 def docs_html(m):
@@ -330,16 +390,13 @@ def docs_html(m):
         return ""
     parts = {}
     if d.get("use"):
-        items = d["use"] if isinstance(d["use"], list) else [d["use"]]
-        lis = "".join(f"<li>{x}</li>" for x in items)
+        lis = "".join(f"<li>{x}</li>" for x in d["use"])
         parts["use"] = f'<div class="doc use"><div class="dt">✓ gebruik</div><ul>{lis}</ul></div>'
     if d.get("avoid"):
-        items = d["avoid"] if isinstance(d["avoid"], list) else [d["avoid"]]
-        lis = "".join(f"<li>{x}</li>" for x in items)
+        lis = "".join(f"<li>{x}</li>" for x in d["avoid"])
         parts["avoid"] = f'<div class="doc avoid"><div class="dt">✕ vermijd</div><ul>{lis}</ul></div>'
     if d.get("contract"):
-        items = d["contract"] if isinstance(d["contract"], list) else [d["contract"]]
-        lis = "".join(f"<li><code>{x}</code></li>" for x in items)
+        lis = "".join(f"<li><code>{x}</code></li>" for x in d["contract"])
         parts["contract"] = f'<div class="doc contract"><div class="dt">contract</div><ul>{lis}</ul></div>'
     return DOCS_CARD.format(**parts)
 
@@ -358,8 +415,7 @@ def build_catalog(c):
                 src = htmlmod.escape(f.read())
         wide = ' style="grid-column:1/-1"' if e.get("wide") or e.get("h", 0) >= 600 else ""
         cells.append(CELL.format(
-            cls=" active" if act else "",
-            wide=wide,
+            cls=" active" if act else "", wide=wide,
             eid=e["id"], note=e.get("note", ""),
             orgcls="external" if e["origin"] == "external" else "",
             orgtxt=orgtxt,
@@ -375,7 +431,7 @@ def build_catalog(c):
     )
     page = (SHELL_HEAD.replace("{title}", m.get("title", c))
             .replace("{nav}", nav_html(current=c))
-            .replace("{on_studio}", "")
+            .replace("{sysnav}", sysnav_html())
             + body + SHELL_FOOT)
     with open(os.path.join(COMP, c, "index.html"), "w") as f:
         f.write(page)
@@ -389,6 +445,7 @@ def build_gallery():
         acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
         items.append(GALLERY_ITEM.format(
             name=c, title=m.get("title", c), desc=m.get("desc", ""),
+            icon=ICONS.get(c, "i-file"),
             nself=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
             nx=sum(1 for e in m["entries"] if e["origin"] == "external"),
             active="actief: " + ",".join(acts) if acts else "",
@@ -396,7 +453,7 @@ def build_gallery():
     body = GALLERY_BODY.format(items="\n".join(items), today=str(date.today()))
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{nav}", nav_html())
-            .replace("{on_studio}", "")
+            .replace("{sysnav}", sysnav_html())
             + body + SHELL_FOOT)
     with open(os.path.join(COMP, "index.html"), "w") as f:
         f.write(page)
@@ -409,7 +466,7 @@ def cmd_build(only=None):
         for c in components():
             build_catalog(c)
         build_gallery()
-    print("✓ web bijgewerkt" + (f" ({only} + gallery)" if only else f" ({len(components())} componenten + gallery)"))
+    print(f"✓ web bijgewerkt" + (f" ({only} + gallery)" if only else f" ({len(components())} componenten + gallery)"))
 
 # ---------- main ----------
 
