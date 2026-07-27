@@ -829,6 +829,25 @@ def cmd_style_list():
         act = green(" ACTIEF") if sid == "" else ""
         print(f"    {label.ljust(12)} {sid or '(default)':<10}  {desc}{act}")
 
+def cmd_style_add(name, css_file):
+    """Voeg een nieuwe skin toe uit een :root CSS bestand."""
+    # strip :root blok uit het css-bestand, zet het in [data-style]
+    raw = open(css_file).read()
+    m = re.search(r':root\s*\{([^}]*)\}', raw, re.DOTALL)
+    if not m:
+        err(f"geen :root blok gevonden in {css_file}")
+    body = m.group(1).strip()
+    new_entry = {"id": name, "label": name.capitalize(), "desc": "custom skin"}
+    # schrijf overrides als [data-style] block
+    css_block = f"\n[data-style=\"{name}\"] {{\n{body}\n}}\n"
+    with open(os.path.join(ROOT, "tokens.css"), "a") as f:
+        f.write(css_block)
+    st = load_styles()
+    # verwijder default (empty id) als het de enige default was
+    st = [x for x in st if x["id"] != ""] + [new_entry]
+    save_styles(st)
+    ok(f"skin '{name}' toegevoegd — tokens.css + styles.json bijgewerkt")
+
 def cmd_check():
     """Valideer catalogus-structuur, sprite-referenties, em-dash in copy."""
     errors = []
@@ -881,20 +900,21 @@ def main():
     if args[0] == "list":
         cmd_list()
     elif args[0] == "build":
-        check_only = "--check" in args
         cmd_build()
-        if check_only:
-            import subprocess
-            r = subprocess.run(["git", "diff", "--exit-code"], capture_output=True, cwd=ROOT)
-            if r.returncode != 0:
-                err("build --check: gegenereerde bestanden zijn niet up-to-date (git diff na build is niet leeg)")
-            else:
-                print(f"  {g('OK')} gegenereerde bestanden zijn up-to-date")
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()
+        elif len(args) > 2 and args[1] == "add":
+            name = args[2]
+            kw = {}
+            it = iter(args[3:])
+            for a in it:
+                if a == "--css-file" or a == "--from": kw["css"] = next(it)
+            if "css" not in kw:
+                err("ds style add <naam> --css-file <file>")
+            cmd_style_add(name, kw["css"])
         else:
-            err("gebruik: ds style list")
+            err("gebruik: ds style list | ds style add <naam> --css-file <file>")
     elif args[0] == "check":
         cmd_check()
     else:

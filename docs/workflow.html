@@ -186,85 +186,124 @@
   <div class="meta"><a href="/docs/" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
 </div>
 <div class="md"><h1>WORKFLOW.md — hoe je dit systeem gebruikt</h1>
-<blockquote>Het complete circuit: van nieuw product (X) naar gebouwde surface (Y) naar</blockquote>
-<blockquote>taste-leren (terug naar het systeem). Geen losse keuzes meer — alles loopt</blockquote>
-<blockquote>door deze pipeline.</blockquote>
+<blockquote>Compleet circuit: van nieuw product (X) naar gebouwde surface (Y) naar</blockquote>
+<blockquote>style-toevoegen (Z) naar taste-leren (terug naar het systeem). Alles loopt</blockquote>
+<blockquote>door deze pipeline; geen losse keuzes.</blockquote>
 <hr>
-<h2>X — Nieuw product starten (template)</h2>
+<h2>X — Nieuw product starten</h2>
 <pre><code>cd /home/joep/design-system
 ./new-project.sh mijn-product ~/Documents/mijn-product</code></pre>
-<p>Dat scaffolds:</p>
+<p>Scaffolds:</p>
 <pre><code>mijn-product/
-├── index.html          ← app-skeleton (fonts, tokens, icons, thema-toggle)
-├── tokens.css          ← kopie (de bron blijft dit repo)
+├── index.html        ← app-skeleton (fonts, tokens, icons, thema-toggle)
+├── tokens.css        ← kopie (bron blijft in dit repo)
 └── components/
-    ├── icons.svg       ← 29 Lucide-symbols
-    └── lib.js          ← thema deep-links + switch-gedrag</code></pre>
-<p>Daarna: bouw surfaces door componenten uit <code>components/*.html</code> te kopiëren.</p>
-<p>Elk componentbestand bevat: werkende demo + <code>COMPONENT CSS</code> blok + contract-comment.</p>
-<p><strong>Regel:</strong> componenten worden gekopieerd, niet geïmporteerd. Het product bezit zijn</p>
-<p>eigen kopie (zoals shadcn). Upstream-fixes haal je bewust binnen, nooit automatisch.</p>
-<h2>De catalogus-discipline (kern van het systeem)</h2>
-<p>Per component een map met <strong>alle varianten ooit</strong>, gesplitst in <code>self/</code> (zelf-ontworpen,</p>
-<p>ook aangepaste externe) en <code>external/</code> (shadcn, devin-observed, ...). Bron: <code>catalog.json</code>.</p>
+    ├── icons.svg     ← 29 Lucide-symbolen
+    └── lib.js        ← thema deep-links + switch-gedrag</code></pre>
+<p>Bouw daarna surfaces door componenten uit <code>components/*.html</code> te kopiëren.</p>
+<p>Elk component bevat: werkende demo + <code>COMPONENT CSS</code> blok + contract-comment.</p>
+<p><strong>Regel:</strong> componenten worden <strong>gekopiëerd</strong>, niet geïmporteerd. Het product</p>
+<p>bezit zijn eigen kopie (shadcn-model). Upstream-fixes haal je bewust binnen.</p>
+<h2>De catalogus-discipline</h2>
+<p>Per component een map met <strong>alle varianten ooit</strong>, gesplitst in <code>self/</code></p>
+<p>(zelf-ontworpen, ook aangepaste externe) en <code>external/</code> (shadcn, devin, ...).</p>
 <pre><code>components/button/
-├── catalog.json      manifest: id, origin, source, status, note
-├── self/             onze varianten
+├── catalog.json      manifest (enige bron: id, origin, source, status, note)
+├── self/             on/onze varianten
 ├── external/         externe referenties
-└── index.html        GEGENEREERD (ds build) — nooit handmatig bewerken</code></pre>
-<p><strong>Statussen:</strong> <code>active</code> (geselecteerd voor gebruik, 1 per component) en <code>locked</code></p>
-<p>(vast in de catalogus). Wat vast staat verandert nooit stilletjes: alleen</p>
-<p><code>ds select</code> of <code>ds remove</code> raakt het. Een oefensessie kan het systeem niet</p>
-<p>verneuken, want experimenten leven in <code>playground/</code> en komen er alleen in via</p>
-<p>een expliciete <code>ds add</code>.</p>
-<h3>CLI (reactief, herbouwt web automatisch)</h3>
-<pre><code>./ds list                                # alle componenten + actieve variant
-./ds button list                         # entries met status/origin/source
-./ds button select primary               # active wisselen (rest -&gt; vast)
-./ds button add playground/x.html --id x --origin self --note &quot;...&quot;
-./ds button remove x --yes               # expliciet verwijderen
-./ds build                               # web herbouwen (gaat automatisch bij mutaties)</code></pre>
-<h3>Web (gegenereerd uit dezelfde manifests)</h3>
-<p><code>/components/</code> = gallery uit catalog.json-bestanden. <code>/components/button/</code> = de</p>
-<p>button-catalogus met ACTIEF-markering, vast-badges, zelf/extern-split, iframes</p>
-<p>per variant. CLI en web spreken dezelfde taal omdat het manifest de enige bron is.</p>
-<h2>Y — Bouwen (de discipline)</h2>
+└── index.html        GEGENEREERD (ds build) — nooit handmatig</code></pre>
+<p><strong>Statussen:</strong> <code>active</code> (1 per component, geselecteerd voor gebruik) en <code>locked</code></p>
+<p>(vast in de catalogus). Wat vast staat verandert niet stilletjes:</p>
+<p><code>ds select</code> en <code>ds remove</code> zijn enige mutaties. <code>playground/</code> is de</p>
+<p>experimenteer-zone, promotie alleen via <code>ds add</code>.</p>
+<h3>CLI (web herbouwt automatisch)</h3>
+<pre><code>./ds list                                   # alle componenten + actieve variant
+./ds button list                            # entries met status/origin/source
+./ds button select primary                  # active wisselen (rest → vast)
+./ds button add playground/x.html --id x [--origin self|external] [--source] [--note]
+./ds button remove x --yes                  # expliciet verwijderen
+./ds build                                  # web herbouwen (bij mutaties automatisch)
+./ds check                                  # validatie (catalogus, sprite ids, geen em-dashes)
+./ds style list                             # alle skins
+./ds style add &lt;naam&gt; --css-file &lt;file&gt;     # nieuwe stijl toevoegen uit studio-export</code></pre>
+<h3>Web</h3>
+<p><code>/components/</code> = gallery · <code>/&lt;component&gt;/</code> = catalogus met ACTIEF, badges,</p>
+<p>zelf/extern per rij, iframes per variant. CLI en web lezen hetzelfde manifest.</p>
+<h2>Y — Bouwdiscipline</h2>
 <ol>
-<li><strong>Lees eerst <code>taste/taste-rules.md</code>.</strong> Dat zijn de geleerde regels. Binding.</li>
-<li><strong>Gebruik alleen bestaande componenten</strong> voor standaardpatronen. Iets nieuws</li>
-<p>verzinnen is een taste-beslissing, geen vrijbrief.</p>
+<li><strong>Eerst <code>taste/taste-rules.md</code> lezen.</strong> Dat zijn geleerde regels. Binding.</li>
+<li><strong>Bestaande componenten gebruiken</strong> voor standaardpatronen. Iets nieuws</li>
+<p>= taste-beslissing.</p>
 <li><strong>Check per scherm de bans</strong> (DESIGN.md §10): geen spinners, geen emoji-iconen,</li>
-<p>geen em-dashes, één accent, groen alleen voor git, amber alleen voor wacht-op-jou.</p>
-<li><strong>Test beide thema&#x27;s.</strong> <code>?theme=dark</code> werkt op elke component-pagina en op de</li>
-<p>gallery (<code>components/index.html</code>).</p>
-<li><strong>Toon het Joep in de browser</strong>, niet als beschrijving. Serveer:</li>
+<p>geen em-dashes, één accent, groen alleen voor git, amber voor wacht-op-jou.</p>
+<li><strong>Test beide thema&#x27;s.</strong> <code>?theme=dark</code> werkt overal.</li>
+<li><strong>Test beide stijlen.</strong> <code>?style=strak</code> schakelt naar de tweede skin.</li>
+<li><strong>Toon in browser, niet in beschrijving.</strong> Serveer met</li>
 <p><code>python3 -m http.server &lt;poort&gt; --directory &lt;product&gt;</code> of via tailscale serve.</p>
 </ol>
-<h2>Taste-loop — wijzigingen komen terug in het systeem</h2>
+<h2>Z — Nieuwe stijl (skin) toevoegen</h2>
+<p>Elke skin heeft een <code>data-style</code> block in <code>tokens.css</code> + registratie in</p>
+<p><code>styles.json</code>. De shell genereert de stijl-switch dynamisch uit <code>styles.json</code>.</p>
+<h3>Flow: Studio → nieuwe skin</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│  1. Studio openen (/components/studio/)                       │
+│  2. Schuiven naar gewenst uiterlijk (preset/swatches/sliders)│
+│  3. &quot;Kopieer tokens&quot; → exporteert :root CSS naar clipboard  │
+│  4. Zo op schijf opslaan:                                    │
+│       cat &gt; /tmp/mijn-stijl.css                              │
+│       [plak met Ctrl+Shift+V]  Ctrl+D                        │
+│  5. ds style add &lt;naam&gt; --css-file /tmp/mijn-stijl.css       │
+│     → parses :root vars → schrijft [data-style=&quot;&lt;naam&gt;&quot;]     │
+│       in tokens.css + registreert in styles.json             │
+│  6. switch is direct overal beschikbaar                      │
+│     (Stijl-seg in rail, /?style=&lt;naam&gt; deep-link)            │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+<p>Handmatig: <code>ds style add zacht --css-file /tmp/studio-export.css</code></p>
+<p>Zonder studio: schrijf een :root block (of gewone tokens) in een file,</p>
+<p><code>ds style add</code> zet het om naar <code>[data-style=&quot;...&quot;]</code>.</p>
+<h3>Relatie met studio-presets</h3>
+<p>De studio heeft <strong>presets</strong> (Devin/Strak/Zacht) die accent/warmte/radius</p>
+<p>combineren. Een <strong>skin</strong> is een complete token-override in tokens.css.</p>
+<p>Je kunt een studio-preset promoten naar een skin door de export in te lezen:</p>
+<pre><code>1. Studio: preset &quot;Zacht&quot; laden → Kopieer tokens
+2. ds style add zacht --css-file /tmp/export.css
+3. Switch in rail toont &quot;Zacht&quot; als derde skin</code></pre>
+<h2>Home page (WIP)</h2>
+<p>De root <code>index.html</code> is architectuur-placeholder. De echte home page wordt een</p>
+<p>theatrale, interactieve ervaring — geïnspireerd op:</p>
+<ul>
+<li><strong>Fable 5</strong> announcement (cinematische product-reveal animation)</li>
+<li><strong>Kimi 3</strong> announcement (motion-heavy intro)</li>
+<li><strong>Dans site</strong> (rode vlinders die uit het scherm komen — depth/parallax effect)</li>
+</ul>
+<p>Zie <code>/home/joep/design-system-prototype</code> voor de volgende iteratie.</p>
+<h2>Taste-loop — terug in het systeem</h2>
 <pre><code>Joep ziet iets
-  → reactie in taste/taste-log.md (shown / reaction / signal / delta)
+  → log in taste/taste-log.md (shown / reaction / signal / delta)
   → 2+ observaties van hetzelfde patroon
   → regel in taste/taste-rules.md
   → propagatie (verplicht, zelfde commit):
-      DESIGN.md          als de taal zelf verandert
+      DESIGN.md          als de taal verandert
       tokens.css         als tokens/primitives veranderen
       components/&lt;x&gt;.html als een component verandert
       surfaces/&lt;x&gt;.md    als een surface-brief verandert
-  → commit met prefix &quot;taste: &lt;wat&gt;&quot;</code></pre>
-<p><strong>Propagatie is geen optie.</strong> Een regel die alleen in taste-rules.md staat en</p>
-<p>nergens anders, bestaat niet.</p>
+      styles.json        als een stijl wordt toegevoegd
+  → commit prefix &quot;taste: &lt;wat&gt;&quot;</code></pre>
+<p>Propagatie is <strong>geen optie.</strong> Een regel in taste-rules.md die nergens anders</p>
+<p>staat, bestaat niet.</p>
+<h2>CI</h2>
+<p><code>.github/workflows/validate.yml</code> draait op elke push/PR:</p>
+<ol>
+<li><strong><code>ds build --check</code></strong> — idempotentiecheck: de gegenereerde bestanden moeten</li>
+<p>up-to-date zijn met de manifesten (git diff ≡ 0 na build).</p>
+<li><strong><code>ds check</code></strong> — validatie: catalogus-schema (1 active per component, bestaan</li>
+<p>van bestanden), sprite-referenties, em-dash vrije copy in .md bestanden</p>
+<p>(warning-only).</p>
+</ol>
+<p>Zolang GitHub Actions minuten op private repos beperkt zijn, draai je lokaal:</p>
+<pre><code>./ds check &amp;&amp; python3 ds build --check</code></pre>
 <h2>Bestandskaart</h2>
-<table><thead><tr><th>Pad</th><th>Rol</th><th>Wanneer aanraken</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>gelockte taal</td><td>alleen via taste-loop of expliciete Joep-beslissing</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn/gbtn/badge/switch/seg/input/setting)</td><td>bij elke token- of primitive-wijziging</td></tr><tr><td><code>components/</code></td><td>standalone componenten + gallery</td><td>nieuw patroon of taste-propagatie</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica</td><td>zelden — motion is gelockt</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td><td>bij nieuwe surfaces</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app</td><td>als meerdere componenten tegelijk veranderen</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin)</td><td>bij twijfel over &quot;hoe ziet goed eruit&quot;</td></tr><tr><td><code>taste/</code></td><td>het lerende systeem</td><td>continu</td></tr><tr><td><code>new-project.sh</code> + <code>templates/</code></td><td>X-scaffolder</td><td>als de scaffold zelf verbetert</td></tr></tbody></table>
-<h2>Verbeteren van het systeem zelf</h2>
-<ul>
-<li>Nieuwe component nodig? Maak <code>components/&lt;naam&gt;.html</code> (standalone, met</li>
-<p>COMPONENT CSS-blok + contract-comment), voeg toe aan gallery-grid in</p>
-<p><code>components/index.html</code>, commit.</p>
-<li>Nieuwe primitive (zoals .switch)? Eerst in <code>tokens.css</code>, dan gebruiken in</li>
-<p>componenten. Nooit andersom.</p>
-<li>Prototype eerst: twijfelgeval → bouw in <code>prototype-v2.html</code>, laat Joep voelen,</li>
-<p>pas dan component eruit extraheren.</p>
-</ul></div>
+<table><thead><tr><th>Pad</th><th>Rol</th><th>Wanneer aanraken</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>gelockte taal</td><td>taste-loop of Joep-beslissing</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives</td><td>elke token/primitieve-wijziging</td></tr><tr><td><code>styles.json</code></td><td>stijl-registratie</td><td>nieuwe skin toevoegen (ds style add)</td></tr><tr><td><code>components/</code></td><td>standalone componenten + catalogus</td><td>nieuw patroon of propagatie</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica</td><td>zelden — gelockt</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td><td>nieuwe surfaces</td></tr><tr><td><code>prototype-v2.html</code></td><td>referentie-app</td><td>meerdere componenten tegelijk</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots</td><td>twijfel over &quot;hoe ziet goed eruit&quot;</td></tr><tr><td><code>taste/</code></td><td>lerend systeem</td><td>continu</td></tr><tr><td><code>new-project.sh</code> + <code>templates/</code></td><td>X-scaffolder</td><td>scaffold-verbeteringen</td></tr><tr><td><code>playground/</code></td><td>experimenteerzone</td><td>elke oefensessie</td></tr><tr><td><code>.github/workflows/</code></td><td>CI</td><td>validatie-automatisering</td></tr></tbody></table></div>
 <div class="gen">gegenereerd uit WORKFLOW.md op 2026-07-27 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
