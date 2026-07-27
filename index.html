@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>design-system</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { padding: 32px 24px; max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 36px; max-width: 560px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin: 28px 0 10px; font-weight: 600; }
+  .row { display: flex; flex-direction: column; gap: 2px; }
+  a.item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 10px 14px; border-radius: var(--r-md);
+    text-decoration: none; color: var(--text);
+    border: 1px solid transparent;
+    transition: background 140ms, border-color 140ms;
+  }
+  a.item:hover { background: var(--surface); border-color: var(--line); }
+  a.item .name { font-weight: 500; font-size: 14.5px; }
+  a.item .desc { color: var(--text-faint); font-size: 13px; }
+  a.item .tag { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
+  .states { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  .states a {
+    font-family: var(--mono); font-size: 11.5px; color: var(--accent-ink);
+    padding: 3px 10px; border: 1px solid var(--line); border-radius: var(--r-pill);
+    text-decoration: none;
+  }
+  .states a:hover { border-color: var(--accent); }
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sw { width: 64px; }
+  .sw .box { height: 40px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 4px; }
+  .sw .nm { font-family: var(--mono); font-size: 10px; color: var(--text-faint); }
+</style>
+</head>
+<body>
+
+<h1>design-system</h1>
+<div class="sub">v2 "Devin-richting". Warm off-white, één blauw accent, shadcn-componenten, Lucide-iconen, levende activiteit in plaats van spinners. Standalone, product-onafhankelijk.</div>
+
+<h2>Prototype v2 (actief)</h2>
+<div class="row">
+  <a class="item" href="prototype-v2.html">
+    <span class="name">prototype-v2.html</span>
+    <span class="desc">3-pane sessie-UI, speelbaar</span>
+    <span class="tag">referentie</span>
+  </a>
+  <div class="states">
+    <a href="prototype-v2.html?state=running">?state=running</a>
+    <a href="prototype-v2.html?state=holding">?state=holding</a>
+    <a href="prototype-v2.html?state=done">?state=done</a>
+    <a href="prototype-v2.html?theme=dark">?theme=dark</a>
+  </div>
+</div>
+
+<h2>Archief</h2>
+<div class="row">
+  <a class="item" href="prototype-v1-stroom.html">
+    <span class="name">prototype-v1 (Stroom)</span>
+    <span class="desc">teal-richting, vervangen door v2</span>
+    <span class="tag">archief</span>
+  </a>
+</div>
+
+<h2>Documenten</h2>
+<div class="row">
+  <a class="item" href="DESIGN.md"><span class="name">DESIGN.md</span><span class="desc">de gelockte taal</span><span class="tag">md</span></a>
+  <a class="item" href="tokens.css"><span class="name">tokens.css</span><span class="desc">custom properties + primitives</span><span class="tag">css</span></a>
+  <a class="item" href="motion-spec.md"><span class="name">motion-spec.md</span><span class="desc">spring-fysica, ripple-contract</span><span class="tag">md</span></a>
+  <a class="item" href="references/"><span class="name">references/</span><span class="desc">Devin-DNA + eigen states</span><span class="tag">shots</span></a>
+</div>
+
+<h2>Palet</h2>
+<div class="swatches">
+  <div class="sw"><div class="box" style="background:#F7F6F5"></div><div class="nm">bg F7F6F5</div></div>
+  <div class="sw"><div class="box" style="background:#FFFFFF"></div><div class="nm">surface</div></div>
+  <div class="sw"><div class="box" style="background:#EFEFEF"></div><div class="nm">sunk</div></div>
+  <div class="sw"><div class="box" style="background:#191919"></div><div class="nm">text</div></div>
+  <div class="sw"><div class="box" style="background:#317CFF"></div><div class="nm">accent</div></div>
+  <div class="sw"><div class="box" style="background:#1F883D"></div><div class="nm">git-green</div></div>
+  <div class="sw"><div class="box" style="background:#BF5B00"></div><div class="nm">hold-amber</div></div>
+  <div class="sw"><div class="box" style="background:#121111"></div><div class="nm">dark bg</div></div>
+</div>
+
+</body>
+</html>

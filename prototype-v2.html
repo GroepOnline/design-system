@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype v2 — Devin-richting</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS v2 — Devin-richting (gemeten: bg rgb(247,246,245),
+   link #446DCD, product-cards ~12px, knoppen vierkant→8px,
+   H weight 500) + shadcn/ui component conventies
+   ============================================================ */
+:root {
+  --bg: #F7F6F5;
+  --surface: #FFFFFF;
+  --surface-sunk: #EFEFEF;
+  --hover: rgba(0,0,0,0.045);
+  --line: rgba(0,0,0,0.08);
+  --line-strong: rgba(0,0,0,0.14);
+  --text: #191919;
+  --text-muted: rgba(0,0,0,0.55);
+  --text-faint: rgba(0,0,0,0.38);
+  --accent: #317CFF;
+  --accent-ink: #1D5FD6;
+  --accent-soft: rgba(49,124,255,0.09);
+  --open-green: #1F883D;
+  --open-green-bg: rgba(31,136,61,0.10);
+  --red: #CF222E;
+  --amber: #BF5B00;
+  --hold-bg: rgba(191,91,0,0.06);
+  --hold-line: rgba(191,91,0,0.35);
+  --font: "General Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  /* shadcn radius scale */
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-pill: 200px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  --bg: #121111;
+  --surface: #1B1A19;
+  --surface-sunk: #242322;
+  --hover: rgba(255,255,255,0.05);
+  --line: rgba(255,255,255,0.09);
+  --line-strong: rgba(255,255,255,0.16);
+  --text: #F0EEEB;
+  --text-muted: rgba(240,238,235,0.55);
+  --text-faint: rgba(240,238,235,0.35);
+  --accent: #5C97FF;
+  --accent-ink: #8AB4FF;
+  --accent-soft: rgba(92,151,255,0.12);
+  --open-green: #3FB950;
+  --open-green-bg: rgba(63,185,80,0.12);
+  --red: #F85149;
+  --amber: #D9A038;
+  --hold-bg: rgba(217,160,56,0.08);
+  --hold-line: rgba(217,160,56,0.40);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--font); font-size: 15px; line-height: 1.55;
+  overflow: hidden; -webkit-font-smoothing: antialiased;
+}
+.mono { font-family: var(--mono); }
+
+/* ============ icon systeem (lucide-stijl) ============ */
+.ic {
+  width: 15px; height: 15px; flex-shrink: 0;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+.ic.sm { width: 12px; height: 12px; }
+.ic.lg { width: 17px; height: 17px; }
+
+/* ============ shadcn component primitives ============ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  height: 32px; padding: 0 13px;
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  border-radius: var(--r-md); border: 1px solid var(--line-strong);
+  background: var(--surface); color: var(--text);
+  cursor: pointer; white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.1s var(--ease-out);
+}
+.btn:hover { background: var(--surface-sunk); }
+.btn:active { transform: scale(0.97); }
+.btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.btn.primary:hover { background: var(--text); opacity: 0.87; }
+.btn kbd {
+  font-family: var(--mono); font-size: 10px;
+  border: 1px solid currentColor; border-radius: 4px;
+  padding: 0 4px; opacity: 0.55;
+}
+.gbtn {
+  width: 28px; height: 28px; flex-shrink: 0;
+  display: inline-grid; place-items: center;
+  border: none; background: transparent; color: var(--text-muted);
+  border-radius: var(--r-md); cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.1s var(--ease-out);
+}
+.gbtn:hover { background: var(--hover); color: var(--text); }
+.gbtn:active { transform: scale(0.92); }
+.gbtn.solid { background: var(--text); color: var(--bg); }
+.gbtn.solid:hover { opacity: 0.87; }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  border-radius: var(--r-pill); padding: 2.5px 10px;
+  font-size: 12px; font-weight: 500; line-height: 1.4;
+  border: 1px solid transparent;
+}
+.badge.green { background: var(--open-green-bg); color: var(--open-green); }
+.badge.outline { border-color: var(--line-strong); color: var(--text-muted); background: transparent; }
+
+/* ============ APP FRAME ============ */
+.app { display: flex; height: 100vh; }
+
+/* ---- Sidebar ---- */
+.sidebar {
+  width: 232px; flex-shrink: 0;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  padding: 10px 8px; background: var(--bg);
+}
+.ws-switcher {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px; border-radius: var(--r-md);
+  font-weight: 500; font-size: 14px; cursor: pointer;
+}
+.ws-switcher:hover { background: var(--hover); }
+.ws-logo {
+  width: 20px; height: 20px; border-radius: 6px;
+  background: var(--text); color: var(--bg);
+  display: grid; place-items: center; font-size: 11px; font-weight: 600;
+}
+.ws-switcher .ic { margin-left: auto; opacity: 0.5; }
+.nav { margin-top: 12px; display: flex; flex-direction: column; gap: 1px; }
+.nav-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 6px 8px; border-radius: var(--r-md);
+  font-size: 13.5px; color: var(--text-muted);
+  cursor: pointer; user-select: none;
+}
+.nav-item:hover { background: var(--hover); }
+.nav-item.active { background: var(--surface-sunk); color: var(--text); font-weight: 500; }
+.nav-item .count { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
+
+.recent-label {
+  margin: 16px 8px 5px; font-size: 11.5px; font-weight: 500;
+  color: var(--text-faint);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.recent-label .gbtn { width: 22px; height: 22px; }
+.recent-label .icons { display: flex; gap: 2px; }
+.session-item { padding: 6px 8px; border-radius: var(--r-md); cursor: pointer; }
+.session-item:hover { background: var(--hover); }
+.session-item.active { background: var(--surface-sunk); }
+.session-item .t { font-size: 13px; font-weight: 500; line-height: 1.3; display: flex; align-items: center; gap: 7px; }
+.session-item .m { font-size: 11.5px; color: var(--text-faint); margin-top: 2px; display: flex; gap: 5px; align-items: center; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; animation: dotpulse 2s ease-in-out infinite; }
+@keyframes dotpulse { 50% { opacity: 0.3; } }
+.pr-mini { font-family: var(--mono); font-size: 10.5px; color: var(--open-green); display: inline-flex; align-items: center; gap: 3px; }
+.pr-mini .ic { width: 11px; height: 11px; }
+.sidebar-bottom { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line); }
+
+/* ---- Center ---- */
+.center { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.session-topbar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 18px; border-bottom: 1px solid var(--line); font-size: 13.5px;
+}
+.session-topbar .ws { display: flex; align-items: center; gap: 5px; font-weight: 500; cursor: pointer; padding: 3px 7px; border-radius: 6px; }
+.session-topbar .ws:hover { background: var(--hover); }
+.session-topbar .sep { color: var(--text-faint); }
+.session-topbar .title { color: var(--text-muted); }
+.topbar-right { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+
+.transcript { flex: 1; overflow-y: auto; padding: 20px 26px 10px; scroll-behavior: smooth; }
+.transcript::-webkit-scrollbar { width: 8px; }
+.transcript::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+.msg { max-width: 720px; margin: 0 auto 16px; }
+
+.msg-user {
+  background: var(--surface-sunk); border-radius: var(--r-lg);
+  padding: 10px 15px; font-size: 14.5px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.msg-user .txt { flex: 1; }
+.avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  flex-shrink: 0; display: grid; place-items: center;
+  font-size: 11px; font-weight: 600;
+}
+.msg-agent { font-size: 14.5px; line-height: 1.6; }
+.msg-agent p + p { margin-top: 8px; }
+
+/* meta rows (playbook etc) */
+.meta-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-muted);
+  padding: 5px 9px; margin: 4px auto;
+  max-width: 720px;
+  border-radius: var(--r-md); cursor: pointer; user-select: none;
+}
+.meta-row:hover { background: var(--hover); }
+.meta-row .chev { transition: transform 0.22s var(--ease-out); display: inline-flex; color: var(--text-faint); }
+.meta-row.open .chev { transform: rotate(90deg); }
+
+/* ===== worked row — activiteitsindicator (geen spinners) ===== */
+.worked {
+  max-width: 720px; margin: 2px auto 12px;
+  display: flex; align-items: center; gap: 9px;
+  padding: 6px 10px 6px 13px;
+  position: relative; cursor: pointer; user-select: none;
+  font-size: 13px; color: var(--text-muted);
+  border-radius: var(--r-md);
+}
+.worked:hover { background: var(--hover); }
+.worked::before {
+  content: ""; position: absolute; left: 0; top: 6px; bottom: 6px;
+  width: 2px; border-radius: 1px;
+  background: var(--line-strong); transition: background 0.4s;
+}
+.worked.live::before { background: var(--accent); }
+.worked .chev { transition: transform 0.22s var(--ease-out); display: inline-flex; color: var(--text-faint); }
+.worked.open .chev { transform: rotate(90deg); }
+.worked .timer { font-family: var(--mono); font-size: 12.5px; color: var(--text); font-variant-numeric: tabular-nums; }
+.worked .diff { font-family: var(--mono); font-size: 11.5px; }
+.worked .diff .add { color: var(--open-green); }
+.worked .diff .del { color: var(--red); }
+.worked .tools { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+
+/* tool ripple: golfje in de stroom — geen spinner */
+.ripple { width: 18px; height: 10px; position: relative; }
+.ripple::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 4px; height: 2px;
+  background: currentColor; border-radius: 1px; opacity: 0.35;
+}
+.ripple.on::before { animation: rippleflow 1.1s linear infinite; opacity: 0.9; }
+@keyframes rippleflow {
+  0% { transform: scaleX(0.15); transform-origin: left; }
+  45% { transform: scaleX(1); transform-origin: left; }
+  46% { transform-origin: right; }
+  100% { transform: scaleX(0.15); transform-origin: right; }
+}
+.ripple.r { color: var(--accent); }
+.ripple.w { color: var(--open-green); }
+.ripple.x { color: var(--amber); }
+
+.worked-detail {
+  max-width: 720px; margin: -6px auto 12px;
+  padding: 0 10px 0 25px;
+  font-family: var(--mono); font-size: 12px; color: var(--text-muted);
+  display: none;
+}
+.worked-detail.open { display: block; animation: fadeSlide 0.28s var(--ease-out); }
+.worked-detail .step { padding: 3px 0; display: flex; gap: 8px; align-items: center; }
+.worked-detail .step .st { color: var(--text-faint); width: 52px; flex-shrink: 0; }
+.worked-detail .step .ic { width: 12px; height: 12px; }
+@keyframes fadeSlide { from { opacity: 0; transform: translateY(-4px); } }
+
+/* ===== PR card (shadcn card) ===== */
+.pr-card {
+  max-width: 720px; margin: 0 auto 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 12px 15px;
+  opacity: 0; transform: translateY(10px) scale(0.985);
+  transition: opacity 0.42s var(--ease-out), transform 0.42s var(--ease-out), border-color 0.2s;
+}
+.pr-card.shown { opacity: 1; transform: none; }
+.pr-card:hover { border-color: var(--line-strong); }
+.pr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.pr-repo { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
+.pr-num { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
+.pr-actions { margin-left: auto; display: flex; gap: 3px; }
+.pr-actions .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
+.pr-title { font-size: 14.5px; font-weight: 500; margin-bottom: 7px; }
+.pr-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-faint); }
+.pr-meta .branch {
+  font-family: var(--mono); font-size: 11px;
+  background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px;
+  max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
+.pr-meta .diff .add { color: var(--open-green); }
+.pr-meta .diff .del { color: var(--red); }
+
+/* attachment chip */
+.attach {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 5px 11px; font-family: var(--mono); font-size: 12px;
+  color: var(--text-muted); cursor: pointer; background: var(--surface);
+  transition: border-color 0.15s;
+}
+.attach:hover { border-color: var(--line-strong); }
+
+/* approval — hold state */
+.approval {
+  max-width: 720px; margin: 0 auto 12px;
+  background: var(--surface);
+  border: 1px solid var(--hold-line);
+  border-radius: var(--r-lg);
+  padding: 12px 15px; display: none;
+}
+.approval.shown { display: block; animation: fadeSlide 0.32s var(--ease-out); }
+.approval .kind {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--amber); font-weight: 500;
+  margin-bottom: 8px;
+}
+.approval .cmd {
+  font-family: var(--mono); font-size: 12.5px;
+  background: var(--surface-sunk); border-radius: 6px;
+  padding: 7px 10px; margin-bottom: 10px; overflow-x: auto; white-space: nowrap;
+}
+.approval .btns { display: flex; gap: 7px; flex-wrap: wrap; }
+
+/* status line */
+.status-line {
+  max-width: 720px; margin: 2px auto 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-faint);
+  opacity: 0; transition: opacity 0.6s;
+}
+.status-line.shown { opacity: 1; }
+
+/* ---- Composer (shadcn textarea + ghost bar) ---- */
+.composer-wrap { padding: 8px 26px 18px; }
+.composer {
+  max-width: 720px; margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  padding: 12px 12px 8px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.composer:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.composer textarea {
+  width: 100%; border: none; outline: none; resize: none;
+  font-family: var(--font); font-size: 14.5px; line-height: 1.5;
+  background: transparent; color: var(--text);
+  min-height: 22px; max-height: 140px; display: block;
+}
+.composer textarea::placeholder { color: var(--text-faint); }
+.composer-bar { display: flex; align-items: center; gap: 4px; margin-top: 7px; }
+.composer-bar .right { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+.model-chip {
+  font-size: 12px; color: var(--text-muted);
+  padding: 4px 9px; border-radius: var(--r-md);
+  cursor: pointer; display: flex; gap: 5px; align-items: center;
+  transition: background 0.15s;
+}
+.model-chip:hover { background: var(--hover); }
+
+.queued-chip {
+  max-width: 720px; margin: 0 auto 8px;
+  display: none; align-items: center; gap: 8px;
+  background: var(--accent-soft); color: var(--accent-ink);
+  border-radius: var(--r-md); padding: 6px 12px; font-size: 12.5px;
+}
+.queued-chip.shown { display: flex; animation: fadeSlide 0.28s var(--ease-out); }
+
+/* ---- Artifact pane ---- */
+.artifact {
+  width: 400px; flex-shrink: 0;
+  border-left: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  transition: width 0.32s var(--ease-out);
+}
+.artifact.hidden { width: 0; border: none; overflow: hidden; }
+.artifact-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 13px; border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 12.5px; color: var(--text-muted);
+  min-width: 400px;
+}
+.artifact-head .ic { color: var(--text-faint); }
+.artifact-head .acts { margin-left: auto; display: flex; gap: 2px; }
+.artifact-head .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
+.artifact-body { flex: 1; overflow-y: auto; padding: 17px; min-width: 400px; }
+.artifact-body h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 9px; }
+.artifact-body p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 11px; }
+.artifact-body p code {
+  font-family: var(--mono); font-size: 12px;
+  background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px;
+}
+.artifact-body h3 { font-size: 14px; font-weight: 600; margin: 17px 0 8px; }
+.ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.ba-cell { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.ba-cell .lbl { font-size: 11px; color: var(--text-faint); padding: 5px 9px; border-bottom: 1px solid var(--line); background: var(--bg); }
+.ba-cell .body { padding: 13px 10px; font-size: 18px; font-weight: 600; letter-spacing: -0.02em; text-align: center; }
+.ba-cell .foot { font-size: 10.5px; color: var(--text-faint); padding: 5px 9px; border-top: 1px solid var(--line); background: var(--bg); }
+.grad-text { background: linear-gradient(90deg, #5B8DEF, #7A5CFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.solid-text { color: #317CFF; }
+
+/* ---- demo controls (dev tooling, niet product-UI) ---- */
+.demo {
+  position: fixed; right: 14px; bottom: 14px; z-index: 50;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 10px;
+  display: flex; flex-direction: column; gap: 7px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  width: 210px;
+}
+.demo .lbl { font-family: var(--mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; }
+.demo .row { display: flex; gap: 5px; }
+.demo .btn { flex: 1; height: 28px; padding: 0 8px; font-size: 11.5px; }
+.demo .btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+@media (max-width: 1100px) { .artifact { display: none; } }
+@media (max-width: 760px) { .sidebar { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LUCIDE ICON DEFS ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="i-chevrons-updown" viewBox="0 0 24 24"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0014 0v-1M12 18v4"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+    <symbol id="i-git-pr" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5v7M18 15.5V8a3 3 0 00-3-3h-3"/></symbol>
+    <symbol id="i-git-branch" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M6 8.5v7M18 8.5c0 4-3 5-6 5"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.5-6.9A2 2 0 0016.8 4H7.2a2 2 0 00-1.7 1.1z"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.8 2.8 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><path d="M4 17l6-6-6-6M12 19h8"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.9 5.6 5.6 1.9-5.6 1.9L12 18l-1.9-5.6L4.5 10.5l5.6-1.9z"/></symbol>
+    <symbol id="i-queue" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="ws-switcher">
+      <div class="ws-logo">O</div>
+      OpenWork
+      <svg class="ic sm"><use href="#i-chevrons-updown"/></svg>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active"><svg class="ic"><use href="#i-inbox"/></svg>Sessies <span class="count">3</span></div>
+      <div class="nav-item"><svg class="ic"><use href="#i-message"/></svg>Ask</div>
+      <div class="nav-item"><svg class="ic"><use href="#i-book"/></svg>Wiki</div>
+      <div class="nav-item"><svg class="ic"><use href="#i-search"/></svg>Review <span class="count">2</span></div>
+    </nav>
+    <div class="recent-label">Recent
+      <div class="icons">
+        <button class="gbtn"><svg class="ic sm"><use href="#i-search"/></svg></button>
+        <button class="gbtn"><svg class="ic sm"><use href="#i-plus"/></svg></button>
+        <button class="gbtn"><svg class="ic sm"><use href="#i-more"/></svg></button>
+      </div>
+    </div>
+    <div class="session-item active">
+      <div class="t">Gradient-tekst migreren <span class="dot"></span></div>
+      <div class="m">1 uur geleden · <span class="pr-mini"><svg class="ic"><use href="#i-git-pr"/></svg>2 open</span></div>
+    </div>
+    <div class="session-item">
+      <div class="t">GitHub troubleshooting docs</div>
+      <div class="m">2 uur geleden · <span class="pr-mini"><svg class="ic"><use href="#i-git-pr"/></svg>1 merged</span></div>
+    </div>
+    <div class="session-item">
+      <div class="t">Iconen accountpagina</div>
+      <div class="m">4 uur geleden · <span class="pr-mini"><svg class="ic"><use href="#i-git-pr"/></svg>1 merged</span></div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="nav-item" id="themeToggle"><svg class="ic"><use href="#i-moon"/></svg>Thema</div>
+      <div class="nav-item"><svg class="ic"><use href="#i-settings"/></svg>Instellingen</div>
+    </div>
+  </aside>
+
+  <!-- ============ CENTER ============ -->
+  <main class="center">
+    <div class="session-topbar">
+      <div class="ws">Website <svg class="ic sm"><use href="#i-chevrons-updown"/></svg></div>
+      <span class="sep">/</span>
+      <span class="title">Gradient-tekst migreren</span>
+      <div class="topbar-right">
+        <span class="badge green"><svg class="ic sm"><use href="#i-git-pr"/></svg>#357 +1</span>
+        <button class="gbtn" id="artifactToggle" title="Rapport paneel"><svg class="ic"><use href="#i-panel"/></svg></button>
+      </div>
+    </div>
+
+    <div class="transcript" id="transcript">
+      <div class="msg msg-user">
+        <div class="txt">Migreer alle gradient-tekst naar #317CFF in beide repo's, en test daarna</div>
+        <div class="avatar">J</div>
+      </div>
+
+      <div class="meta-row" onclick="this.classList.toggle('open')">
+        <span class="chev"><svg class="ic sm"><use href="#i-chevron"/></svg></span>
+        <svg class="ic sm"><use href="#i-book"/></svg>
+        Playbook gebruikt: Test
+      </div>
+
+      <div class="msg msg-agent">
+        <p>Ik migreer alle gradient-tekst naar #317CFF in zowel cognition-website als devin-website, en test daarna de wijzigingen. Ik begin nu.</p>
+      </div>
+
+      <div class="worked live" id="workedRow" onclick="toggleWorked()">
+        <span class="chev"><svg class="ic sm"><use href="#i-chevron"/></svg></span>
+        <span id="workLabel">Aan het werk</span>
+        <span class="timer" id="workTimer">0m 00s</span>
+        <span class="diff" id="workDiff" style="display:none"><span class="add">+25</span> <span class="del">−131</span></span>
+        <div class="tools" id="toolRipples"></div>
+      </div>
+      <div class="worked-detail" id="workedDetail"></div>
+
+      <div class="approval" id="approval">
+        <div class="kind"><svg class="ic"><use href="#i-alert"/></svg>Wacht op jou: test draaien op productie-domein</div>
+        <div class="cmd">curl -sI https://cognition.ai | grep -i x-gradient && pnpm test:visual</div>
+        <div class="btns">
+          <button class="btn primary" onclick="resolveApproval(1)">Een keer <kbd>1</kbd></button>
+          <button class="btn" onclick="resolveApproval(2)">Altijd in deze map <kbd>2</kbd></button>
+          <button class="btn" onclick="resolveApproval(3)">Weigeren <kbd>3</kbd></button>
+        </div>
+      </div>
+
+      <div id="prSlot"></div>
+
+      <div id="doneSlot" style="display:none">
+        <div class="msg msg-agent">
+          <p>Klaar! Alle gradient-tekst is gemigreerd naar #317CFF en getest in beide repo's. Volledig rapport bijgevoegd.</p>
+        </div>
+        <div class="msg"><span class="attach"><svg class="ic sm"><use href="#i-file"/></svg>test_gradient_migration.md</span></div>
+      </div>
+
+      <div class="status-line" id="statusLine">
+        <svg class="ic sm"><use href="#i-sparkle"/></svg>
+        Klaar voor instructies
+      </div>
+    </div>
+
+    <div class="queued-chip" id="queuedChip"><svg class="ic sm"><use href="#i-queue"/></svg>In wachtrij. Wordt gestuurd zodra de run klaar is</div>
+
+    <div class="composer-wrap">
+      <div class="composer" id="composer">
+        <textarea id="composerInput" rows="1" placeholder="Vraag om features te bouwen, bugs te fixen, of aan je code te werken"></textarea>
+        <div class="composer-bar">
+          <button class="gbtn" title="Bijlage"><svg class="ic lg"><use href="#i-plus"/></svg></button>
+          <div class="right">
+            <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="#i-chevrons-updown"/></svg></div>
+            <button class="gbtn" title="Spraak"><svg class="ic"><use href="#i-mic"/></svg></button>
+            <button class="gbtn solid" id="sendBtn" title="Stuur"><svg class="ic"><use href="#i-arrow-up"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ ARTIFACT ============ -->
+  <aside class="artifact" id="artifact">
+    <div class="artifact-head">
+      <svg class="ic sm"><use href="#i-file"/></svg>
+      test_gradient_migration.md
+      <div class="acts">
+        <button class="gbtn" title="Kopieer"><svg class="ic sm"><use href="#i-copy"/></svg></button>
+        <button class="gbtn" title="Download"><svg class="ic sm"><use href="#i-download"/></svg></button>
+        <button class="gbtn" id="artifactClose" title="Sluit"><svg class="ic sm"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+    <div class="artifact-body">
+      <h2>Testrapport: gradient-tekst migreren</h2>
+      <p>PR's: <code>devin-website #357</code> | <code>cognition-website #167</code></p>
+      <p>Alle gradient-achtergronden op tekst (<code>linear-gradient(...)</code>) vervangen door effen kleur <code>#317CFF</code> in beide repo's. Getest door productie (gradient) te vergelijken met lokale dev-servers (effen blauw).</p>
+      <h3>Homepage</h3>
+      <div class="ba-grid">
+        <div class="ba-cell">
+          <div class="lbl">Voor · productie</div>
+          <div class="body grad-text">Secure,<br>Private</div>
+          <div class="foot">Gradient op tekst</div>
+        </div>
+        <div class="ba-cell">
+          <div class="lbl">Na · localhost</div>
+          <div class="body solid-text">Secure,<br>Private</div>
+          <div class="foot">Effen blauw</div>
+        </div>
+      </div>
+      <h3>Footer</h3>
+      <div class="ba-grid">
+        <div class="ba-cell">
+          <div class="lbl">Voor · productie</div>
+          <div class="body grad-text">Secure,<br>Private</div>
+          <div class="foot">Gradient op tekst</div>
+        </div>
+        <div class="ba-cell">
+          <div class="lbl">Na · localhost</div>
+          <div class="body solid-text">Secure,<br>Private</div>
+          <div class="foot">Effen blauw</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ============ DEMO (dev tooling) ============ -->
+<div class="demo">
+  <span class="lbl">demo · v2 devin-richting</span>
+  <div class="row">
+    <button class="btn" id="demoRun" onclick="demoRun()"><svg class="ic sm"><use href="#i-play"/></svg>run</button>
+    <button class="btn" id="demoHold" onclick="demoHold()"><svg class="ic sm"><use href="#i-pause"/></svg>hold</button>
+    <button class="btn" onclick="demoDone()"><svg class="ic sm"><use href="#i-check"/></svg>klaar</button>
+  </div>
+  <div class="row">
+    <button class="btn" onclick="toolRipple('r')"><svg class="ic sm"><use href="#i-file"/></svg>read</button>
+    <button class="btn" onclick="toolRipple('w')"><svg class="ic sm"><use href="#i-pencil"/></svg>write</button>
+    <button class="btn" onclick="toolRipple('x')"><svg class="ic sm"><use href="#i-terminal"/></svg>extern</button>
+  </div>
+</div>
+
+<script>
+const S = { running: false, holding: false, startT: 0, elapsed: 0, queued: null };
+const $ = id => document.getElementById(id);
+const transcript = $("transcript");
+
+function fmt(ms) {
+  const s = Math.floor(ms / 1000);
+  return `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, "0")}s`;
+}
+(function tick() {
+  if (S.running && !S.holding) {
+    $("workTimer").textContent = fmt(S.elapsed + (performance.now() - S.startT));
+  }
+  requestAnimationFrame(tick);
+})();
+
+let workedOpen = false;
+const steps = [];
+function toggleWorked() {
+  workedOpen = !workedOpen;
+  $("workedRow").classList.toggle("open", workedOpen);
+  $("workedDetail").classList.toggle("open", workedOpen);
+}
+const stepIcons = {
+  run: "#i-play", read: "#i-file", write: "#i-pencil", ext: "#i-terminal",
+  pause: "#i-pause", ok: "#i-check", ok2: "#i-check", no: "#i-x", stop: "#i-check", queue: "#i-queue"
+};
+function pushStep(icon, text) {
+  steps.push({ icon, text, t: $("workTimer").textContent });
+  $("workedDetail").innerHTML = steps.map(s =>
+    `<div class="step"><span class="st">${s.t}</span><svg class="ic"><use href="${stepIcons[s.icon] || "#i-check"}"/></svg><span>${s.text}</span></div>`
+  ).join("");
+}
+
+function toolRipple(kind) {
+  const box = $("toolRipples");
+  const r = document.createElement("span");
+  r.className = `ripple ${kind} on`;
+  box.appendChild(r);
+  const labels = { r: ["read", "lees src/styles/*.scss"], w: ["write", "schrijf _text-gradient.scss"], x: ["ext", "curl productie-domein"] };
+  pushStep(labels[kind][0], labels[kind][1]);
+  setTimeout(() => { r.classList.remove("on"); setTimeout(() => r.remove(), 400); }, 2600);
+}
+
+function demoRun() {
+  if (S.running) return;
+  S.running = true; S.holding = false;
+  S.startT = performance.now(); S.elapsed = 0;
+  $("workedRow").classList.add("live");
+  $("workLabel").textContent = "Aan het werk";
+  $("statusLine").classList.remove("shown");
+  $("doneSlot").style.display = "none";
+  $("demoRun").classList.add("on");
+  pushStep("run", "run gestart");
+  if (S.queued) { S.queued = null; $("queuedChip").classList.remove("shown"); }
+  scrollBottom();
+}
+function demoHold() {
+  if (!S.running) demoRun();
+  if (S.holding) return;
+  S.holding = true;
+  S.elapsed += performance.now() - S.startT;
+  $("approval").classList.add("shown");
+  pushStep("pause", "wacht op toestemming (extern)");
+  scrollBottom();
+}
+function resolveApproval(n) {
+  $("approval").classList.remove("shown");
+  S.holding = false;
+  S.startT = performance.now();
+  pushStep(["", "ok", "ok2", "no"][n], ["", "een keer toegestaan", "altijd in deze map", "geweigerd"][n]);
+  if (n === 3) { demoDone(); return; }
+  scrollBottom();
+}
+function demoDone() {
+  S.running = false; S.holding = false;
+  $("workedRow").classList.remove("live");
+  $("workLabel").textContent = "Gewerkt";
+  $("workDiff").style.display = "";
+  $("demoRun").classList.remove("on");
+  pushStep("stop", "run afgerond, diff gereed");
+  showPRs();
+  setTimeout(() => {
+    $("doneSlot").style.display = "block";
+    $("statusLine").classList.add("shown");
+    scrollBottom();
+  }, 500);
+}
+
+function showPRs() {
+  const slot = $("prSlot");
+  slot.innerHTML = "";
+  const prs = [
+    { repo: "cognition/cognition-website", num: "#167", branch: "devin/USA-938-1765942251", files: "6 files", add: "+21", del: "−123" },
+    { repo: "cognition/devin-website", num: "#357", branch: "devin/USA-938-1765942252", files: "2 files", add: "+4", del: "−8" },
+  ];
+  prs.forEach((pr, i) => {
+    const card = document.createElement("div");
+    card.className = "pr-card";
+    card.innerHTML = `
+      <div class="pr-head">
+        <span class="badge green"><svg class="ic sm"><use href="#i-git-pr"/></svg>Open</span>
+        <span class="pr-repo">${pr.repo}</span>
+        <span class="pr-num">${pr.num}</span>
+        <div class="pr-actions">
+          <button class="gbtn"><svg class="ic sm"><use href="#i-git-branch"/></svg></button>
+          <button class="gbtn"><svg class="ic sm"><use href="#i-external"/></svg></button>
+        </div>
+      </div>
+      <div class="pr-title">Alle gradient-tekst naar #317CFF</div>
+      <div class="pr-meta">
+        <span class="branch">${pr.branch}</span>
+        <svg class="ic sm" style="width:10px"><use href="#i-chevron"/></svg>
+        <span class="branch">main</span>
+        <span>${pr.files}</span>
+        <span class="diff"><span class="add">${pr.add}</span> <span class="del">${pr.del}</span></span>
+      </div>`;
+    slot.appendChild(card);
+    setTimeout(() => card.classList.add("shown"), 120 + i * 140);
+  });
+  scrollBottom();
+}
+
+const input = $("composerInput");
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    const txt = input.value.trim();
+    if (!txt) return;
+    input.value = "";
+    autoGrow();
+    if (S.running) {
+      S.queued = txt;
+      $("queuedChip").classList.add("shown");
+      pushStep("queue", `in wachtrij: "${txt.slice(0, 40)}"`);
+    } else {
+      demoRun();
+      setTimeout(() => toolRipple("r"), 600);
+      setTimeout(() => toolRipple("w"), 1800);
+    }
+  }
+});
+function autoGrow() {
+  input.style.height = "auto";
+  input.style.height = Math.min(input.scrollHeight, 140) + "px";
+}
+input.addEventListener("input", autoGrow);
+$("sendBtn").addEventListener("click", () => {
+  input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+});
+
+document.addEventListener("keydown", e => {
+  if (!$("approval").classList.contains("shown")) return;
+  if (document.activeElement === input) return;
+  if (["1", "2", "3"].includes(e.key)) resolveApproval(Number(e.key));
+});
+
+$("artifactToggle").addEventListener("click", () => $("artifact").classList.toggle("hidden"));
+$("artifactClose").addEventListener("click", () => $("artifact").classList.add("hidden"));
+$("themeToggle").addEventListener("click", () => {
+  const el = document.documentElement;
+  el.dataset.theme = el.dataset.theme === "dark" ? "" : "dark";
+});
+
+function scrollBottom() {
+  requestAnimationFrame(() => { transcript.scrollTop = transcript.scrollHeight; });
+}
+
+const p = new URLSearchParams(location.search);
+if (p.get("theme") === "dark") document.documentElement.dataset.theme = "dark";
+if (p.get("state") === "running") demoRun();
+if (p.get("state") === "holding") demoHold();
+if (p.get("state") === "done") { demoRun(); setTimeout(demoDone, 400); }
+</script>
+</body>
+</html>

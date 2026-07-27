@@ -1,0 +1,146 @@
+/* ============================================================
+   tokens.css — v2 "Devin-richting"
+   Gemeten aan devin.ai computed styles (2026-07-27):
+   bg rgb(247,246,245) · link #446DCD · accent #317CFF
+   product-cards 12px · badges pill · H weight 500 · tracking −4%
+   Component-conventies: shadcn/ui (btn, badge, gbtn, card)
+   Iconen: Lucide SVG only. Nooit emoji als icoon.
+   ============================================================ */
+
+:root {
+  /* ---- surfaces ---- */
+  --bg: #F7F6F5;              /* exact devin body bg */
+  --surface: #FFFFFF;
+  --surface-sunk: #EFEFEF;    /* user-pill, chips, code bg */
+  --hover: rgba(0,0,0,0.045);
+
+  /* ---- lines ---- */
+  --line: rgba(0,0,0,0.08);
+  --line-strong: rgba(0,0,0,0.14);
+
+  /* ---- text ---- */
+  --text: #191919;
+  --text-muted: rgba(0,0,0,0.55);
+  --text-faint: rgba(0,0,0,0.38);
+
+  /* ---- accent (devin blue family) ---- */
+  --accent: #317CFF;
+  --accent-ink: #1D5FD6;      /* links, PR-nummers */
+  --accent-soft: rgba(49,124,255,0.09);   /* focus-ring, queue-chip */
+
+  /* ---- semantic ---- */
+  --open-green: #1F883D;      /* PR open / schrijf-ripple */
+  --open-green-bg: rgba(31,136,61,0.10);
+  --red: #CF222E;             /* diff deletes */
+  --amber: #BF5B00;           /* hold / approval */
+  --hold-bg: rgba(191,91,0,0.06);
+  --hold-line: rgba(191,91,0,0.35);
+
+  /* ---- type ---- */
+  --font: "General Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --h-weight: 500;            /* devin meetwaarde: koppen zijn medium, niet bold */
+  --h-tracking: -0.02em;      /* product-UI; marketing-hero: -0.04em */
+
+  /* ---- radius (shadcn scale) ---- */
+  --r-md: 8px;                /* controls, inputs, meta-rows */
+  --r-lg: 12px;               /* cards, composer, user-pill */
+  --r-pill: 200px;            /* badges */
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur-med: 280ms;
+  --dur-slow: 420ms;
+}
+
+[data-theme="dark"] {
+  --bg: #121111;
+  --surface: #1B1A19;
+  --surface-sunk: #242322;
+  --hover: rgba(255,255,255,0.05);
+  --line: rgba(255,255,255,0.09);
+  --line-strong: rgba(255,255,255,0.16);
+  --text: #F0EEEB;
+  --text-muted: rgba(240,238,235,0.55);
+  --text-faint: rgba(240,238,235,0.35);
+  --accent: #5C97FF;
+  --accent-ink: #8AB4FF;
+  --accent-soft: rgba(92,151,255,0.12);
+  --open-green: #3FB950;
+  --open-green-bg: rgba(63,185,80,0.12);
+  --red: #F85149;
+  --amber: #D9A038;
+  --hold-bg: rgba(217,160,56,0.08);
+  --hold-line: rgba(217,160,56,0.40);
+}
+
+/* ---- shared primitives ---- */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+.mono { font-family: var(--mono); }
+
+/* shadcn-style button */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  height: 32px; padding: 0 13px;
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  border-radius: var(--r-md); border: 1px solid var(--line-strong);
+  background: var(--surface); color: var(--text);
+  cursor: pointer; white-space: nowrap;
+  transition: background var(--dur-fast), border-color var(--dur-fast),
+              opacity var(--dur-fast), transform 100ms var(--ease-out);
+}
+.btn:hover { background: var(--surface-sunk); }
+.btn:active { transform: scale(0.97); }
+.btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.btn.primary:hover { background: var(--text); opacity: 0.87; }
+.btn kbd {
+  font-family: var(--mono); font-size: 10px;
+  border: 1px solid currentColor; border-radius: 4px;
+  padding: 0 4px; opacity: 0.55;
+}
+
+/* ghost icon button */
+.gbtn {
+  width: 28px; height: 28px; flex-shrink: 0;
+  display: inline-grid; place-items: center;
+  border: none; background: transparent; color: var(--text-muted);
+  border-radius: var(--r-md); cursor: pointer;
+  transition: background var(--dur-fast), color var(--dur-fast), transform 100ms var(--ease-out);
+}
+.gbtn:hover { background: var(--hover); color: var(--text); }
+.gbtn:active { transform: scale(0.92); }
+.gbtn.solid { background: var(--text); color: var(--bg); }
+.gbtn.solid:hover { opacity: 0.87; }
+
+/* badge pill */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  border-radius: var(--r-pill); padding: 2.5px 10px;
+  font-size: 12px; font-weight: 500; line-height: 1.4;
+  border: 1px solid transparent;
+}
+.badge.green { background: var(--open-green-bg); color: var(--open-green); }
+.badge.outline { border-color: var(--line-strong); color: var(--text-muted); background: transparent; }
+
+/* lucide icon sizing contract */
+.ic {
+  width: 15px; height: 15px; flex-shrink: 0;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+.ic.sm { width: 12px; height: 12px; }
+.ic.lg { width: 17px; height: 17px; }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

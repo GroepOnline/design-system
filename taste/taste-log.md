@@ -1,0 +1,41 @@
+# Taste Log — raw record of Joep's design reactions
+
+> Append-only. Format defined in `SKILL.md`. Distill into `taste-rules.md` every ~10 entries
+> or when a hypothesis repeats.
+
+---
+
+## 2026-07-26 · DESIGN.md "Stroom" (rebuild identity)
+- **shown**: full design language — teal accent, General Sans, De Stroom signature, sandblasted radius scale, 5-motion budget
+- **reaction**: approved
+- **signal**: "ja volledig doen" after review of concept + signature
+- **delta**: DESIGN.md locked as written
+- **candidate rule**: water/flow metaphor for system state lands well; instrument framing ("sandblasted") approved → *promoted to seed rules (metaphor)*
+
+## 2026-07-26 · Spinner ban in DESIGN.md
+- **shown**: hard ban "no spinners anywhere"
+- **reaction**: adjusted
+- **signal**: "waarom geen spinners? dat heeft devin wel"
+- **delta**: rule refined — global spinners banned (Current replaces), bounded local busy-states on the initiating control allowed
+- **candidate rule**: Joep challenges absolute bans that cost usability; prefers precise scoping over blanket prohibition. *Watch for recurrence → structure category*
+
+## 2026-07-27 · geen emoticons, shadcn-componenten
+- **shown**: prototype v2 (Devin-richting, met 📋📄▶✋ emoji als iconen)
+- **reaction**: gecorrigeerd
+- **signal**: "geen emoticons evt. shadcn of soort gelijk gebruiken voor components van hun"
+- **delta**: (1) NOOIT emoji/emoticons als UI-iconen — echte SVG iconen (Lucide-stijl, zoals shadcn). (2) Componenten volgen shadcn/ui conventies (button/badge/card/textarea) — Devin's UI ís shadcn-achtig
+- **candidate rule**: emoji-ban uitbreiden van copy naar UI-iconen. shadcn/Radix als component-baseline. *→ direct naar taste-rules (structure)*
+
+## 2026-07-27 · WEG VAN STROOM, richting Devin
+- **shown**: Devin's live product-UI (sessie/composer/artifact-pane/pricing) naast ons Stroom prototype (teal accent, De Stroom lijn)
+- **reaction**: redirect
+- **signal**: "stappen van stroom af en gaan meer richting devin"
+- **delta**: richtingsbeslissing — Devin's warme stille matte esthetiek (off-white, blauw #317CFF, grijze pills, bordered cards, 3-pane layout) wint van de teal Stroom-richting. OPEN: welke Stroom-elementen overleven (De Stroom lijn als subtiel element? motion-spec behouden?)
+- **candidate rule**: Joep verkiest bewezen product-esthetiek (Devin) boven eigen nieuwe signatuur — *evidence over invention. Watch → metaphor category*
+
+## 2026-07-26 · Devin direction for rebuild design
+- **shown**: gap analysis + proposal to design toward Devin smoothness
+- **reaction**: approved with emphasis
+- **signal**: "25x meer smoothly > meer de kant van Devin op volledige skills voor perfected implementation"
+- **delta**: motion quality became a first-class identity pillar (motion-spec.md exists because of this)
+- **candidate rule**: motion polish is not optional garnish for Joep — it is core product value. *Watch for recurrence → motion category*

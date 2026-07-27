@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stroom — OpenWork Rebuild Prototype</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    display: grid;
+    grid-template-columns: 248px 2px 1fr;
+    background: var(--canvas);
+    transition: background var(--d-state) var(--ease-out);
+  }
+
+  /* ── Rail ── */
+  .rail {
+    background: var(--canvas);
+    display: flex;
+    flex-direction: column;
+    padding: var(--s-3);
+    gap: var(--s-2);
+    border-right: 1px solid var(--line);
+    transition: background var(--d-state) var(--ease-out);
+  }
+  .search {
+    background: var(--surface-sunk);
+    border-radius: var(--r-control);
+    padding: 7px 10px;
+    font-family: var(--font-data);
+    font-size: 12px;
+    color: var(--text-faint);
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background var(--d-hover) var(--ease-out);
+  }
+  .search:hover { background: var(--line); }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: var(--s-2) var(--s-2) var(--s-1);
+    font-weight: 500;
+  }
+  .session-row {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: var(--s-1);
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: var(--r-control);
+    cursor: pointer;
+    transition: background var(--d-hover) var(--ease-out);
+    position: relative;
+  }
+  .session-row:hover { background: var(--surface-sunk); }
+  .session-row.active { background: var(--accent-soft); }
+  .session-row.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 6px; bottom: 6px;
+    width: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+  .session-glyph { font-size: 13px; text-align: center; }
+  .session-title { font-size: 13.5px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .session-meta { font-family: var(--font-data); font-size: 11px; color: var(--text-faint); }
+  .rail-footer {
+    margin-top: auto;
+    padding-top: var(--s-3);
+    border-top: 1px solid var(--line);
+    font-family: var(--font-data);
+    font-size: 11px;
+    color: var(--text-faint);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* ── The Current ── */
+  .current-wrap {
+    position: relative;
+    z-index: var(--z-current);
+  }
+  .current-svg { display: block; height: 100%; }
+
+  /* ── Work zone ── */
+  .work {
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: background var(--d-state) var(--ease-out);
+  }
+  .tabs {
+    height: 36px;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 0 var(--s-3);
+    border-bottom: 1px solid var(--line);
+    background: var(--canvas);
+    transition: background var(--d-state) var(--ease-out);
+  }
+  .tab {
+    padding: 7px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-radius: var(--r-control) var(--r-control) 0 0;
+    cursor: pointer;
+    transition: all var(--d-hover) var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--surface); color: var(--text); }
+  .tab .dirty { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+  .transcript {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--s-8) var(--s-10);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-6);
+  }
+  .msg-user {
+    background: var(--surface-sunk);
+    border-radius: var(--r-surface);
+    padding: 12px 16px;
+    max-width: 72ch;
+    font-size: 14px;
+    align-self: flex-end;
+    transition: background var(--d-state) var(--ease-out);
+  }
+  .msg-agent {
+    max-width: 72ch;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .tool-call {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: 7px 12px;
+    border-radius: var(--r-control);
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    max-width: 72ch;
+    transition: background var(--d-hover) var(--ease-out);
+  }
+  .tool-call:hover { background: var(--surface-sunk); }
+  .tool-call .t-icon { font-size: 14px; }
+  .tool-call .t-dur { font-family: var(--font-data); font-size: 11px; color: var(--text-faint); margin-left: auto; }
+
+  .approval {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-surface);
+    padding: var(--s-4);
+    max-width: 72ch;
+    display: none;
+    flex-direction: column;
+    gap: var(--s-3);
+    background: var(--surface);
+  }
+  .approval.visible { display: flex; animation: reveal var(--d-state) var(--ease-out); }
+  .approval-title { font-size: 14px; font-weight: 500; }
+  .approval-detail {
+    background: var(--surface-sunk);
+    border-radius: var(--r-control);
+    padding: 8px 12px;
+    font-family: var(--font-data);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .approval-actions { display: flex; gap: var(--s-2); }
+  .approval-btn {
+    padding: 7px 14px;
+    border-radius: var(--r-control);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-family: var(--font-interface);
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all var(--d-hover) var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .approval-btn:hover { border-color: var(--line-strong); }
+  .approval-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .approval-btn.primary:hover { filter: brightness(1.08); }
+  .approval-btn .key {
+    font-family: var(--font-data);
+    font-size: 11px;
+    opacity: 0.6;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    padding: 0 4px;
+  }
+
+  /* ── Composer ── */
+  .composer-zone { padding: var(--s-4) var(--s-10) var(--s-6); }
+  .composer {
+    background: var(--surface-sunk);
+    border: 1px solid var(--line);
+    border-radius: var(--r-surface);
+    padding: var(--s-3) var(--s-4);
+    transition: all var(--d-state) var(--ease-out);
+    cursor: text;
+  }
+  .composer:focus-within, .composer.focused {
+    background: var(--elevated);
+    border-color: var(--line-strong);
+    box-shadow: var(--e1);
+  }
+  .composer textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    resize: none;
+    font-family: var(--font-interface);
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    line-height: 1.5;
+  }
+  .composer textarea::placeholder { color: var(--text-faint); }
+  .composer-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-top: var(--s-2);
+  }
+  .composer-chip {
+    font-family: var(--font-data);
+    font-size: 11px;
+    color: var(--text-faint);
+    padding: 3px 8px;
+    border-radius: var(--r-control);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: all var(--d-hover) var(--ease-out);
+  }
+  .composer-chip:hover { color: var(--text-muted); border-color: var(--line-strong); }
+  .send-btn {
+    margin-left: auto;
+    width: 28px; height: 28px;
+    border-radius: var(--r-control);
+    border: none;
+    background: var(--line);
+    color: var(--canvas);
+    cursor: pointer;
+    font-size: 14px;
+    display: grid;
+    place-items: center;
+    transition: all var(--d-hover) var(--ease-out);
+  }
+  .send-btn.armed { background: var(--accent); }
+
+  /* ── Demo controls ── */
+  .demo {
+    position: fixed;
+    bottom: var(--s-4);
+    right: var(--s-4);
+    z-index: var(--z-toast);
+    background: var(--elevated);
+    border: 1px solid var(--line);
+    border-radius: var(--r-overlay);
+    box-shadow: var(--e2);
+    padding: var(--s-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    width: 240px;
+    transition: background var(--d-state) var(--ease-out);
+  }
+  .demo-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+  .demo-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .demo-btn {
+    flex: 1;
+    min-width: 64px;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-family: var(--font-interface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-control);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: all var(--d-hover) var(--ease-out);
+  }
+  .demo-btn:hover { border-color: var(--line-strong); background: var(--surface-sunk); }
+  .demo-btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .demo-note { font-size: 11px; color: var(--text-faint); line-height: 1.4; }
+  .state-readout {
+    font-family: var(--font-data);
+    font-size: 11px;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: var(--r-control);
+    padding: 4px 8px;
+    text-align: center;
+  }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .kbd-hint {
+    font-family: var(--font-data);
+    font-size: 10px;
+    color: var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Rail ── -->
+<nav class="rail">
+  <div class="search"><span>Zoek of start…</span><span>⌘K</span></div>
+  <div class="section-label">Workspaces</div>
+  <div class="session-row">
+    <span class="session-glyph" style="color: var(--text-faint)">▸</span>
+    <div><div class="session-title" style="font-weight:500">OpenWork Chat</div></div>
+  </div>
+  <div class="section-label">Sessies</div>
+  <div class="session-row active">
+    <span class="session-glyph" style="color: var(--accent)">●</span>
+    <div>
+      <div class="session-title">Stroom prototype</div>
+      <div class="session-meta">nu</div>
+    </div>
+  </div>
+  <div class="session-row" id="row-needs">
+    <span class="session-glyph" style="color: var(--warning)" id="glyph-needs">◐</span>
+    <div>
+      <div class="session-title">Auth-refactor</div>
+      <div class="session-meta">4 min</div>
+    </div>
+  </div>
+  <div class="session-row">
+    <span class="session-glyph" style="color: var(--success)">✓</span>
+    <div>
+      <div class="session-title">Audit docs afronden</div>
+      <div class="session-meta">1 u</div>
+    </div>
+  </div>
+  <div class="rail-footer">
+    <span>1 provider · 2 MCP</span>
+    <span style="color: var(--success)">● gesynchroniseerd</span>
+  </div>
+</nav>
+
+<!-- ── The Current ── -->
+<div class="current-wrap">
+  <svg class="current-svg" id="current" width="8" preserveAspectRatio="none">
+    <line id="c-base" x1="4" y1="0" x2="4" y2="100%" stroke="var(--accent)" stroke-width="2" opacity="0.35"/>
+    <line id="c-flow" x1="4" y1="0" x2="4" y2="100%" stroke="var(--accent)" stroke-width="2" stroke-dasharray="2 10" opacity="0"/>
+    <g id="c-markers"></g>
+    <g id="c-ripples"></g>
+  </svg>
+</div>
+
+<!-- ── Work zone ── -->
+<main class="work">
+  <div class="tabs">
+    <div class="tab active">Stroom prototype</div>
+    <div class="tab">Auth-refactor <span class="dirty"></span></div>
+    <div class="tab">Audit docs</div>
+  </div>
+
+  <div class="transcript" id="transcript">
+    <div class="msg-user">Maak een prototype van De Stroom zodat ik de physics kan voelen.</div>
+    <div class="msg-agent">Ik bouw de Current als SVG met een eigen render loop. De stroomsnelheid volgt een spring naar de doel-snelheid per state — kritisch gedempt, dus geen overshoot.</div>
+    <div class="tool-call" data-tool="read">
+      <span class="t-icon">📄</span>
+      <span>Lees motion-spec.md</span>
+      <span class="t-dur">240ms</span>
+    </div>
+    <div class="tool-call" data-tool="write">
+      <span class="t-icon">✏️</span>
+      <span>Schrijf stroom-prototype.html</span>
+      <span class="t-dur">1.2s</span>
+    </div>
+    <div class="msg-agent">De ripple-physics: elke tool call legt een marker op de lijn op transcript-positie. Klik op een marker om ernaartoe te springen.</div>
+
+    <div class="approval" id="approval">
+      <div class="approval-title">✋ OpenWork wil schrijven naar <span class="mono">src/auth.ts</span></div>
+      <div class="approval-detail">+ 12 regels, − 3 regels · diff beschikbaar</div>
+      <div class="approval-actions">
+        <button class="approval-btn primary pressable" data-resolve="allow"><span class="key">1</span> Sta toe voor sessie</button>
+        <button class="approval-btn pressable" data-resolve="once"><span class="key">2</span> Eén keer</button>
+        <button class="approval-btn pressable" data-resolve="deny"><span class="key">3</span> Weiger</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="composer-zone">
+    <div class="composer" id="composer">
+      <textarea id="composer-input" rows="2" placeholder="Beschrijf de taak…"></textarea>
+      <div class="composer-bar">
+        <span class="composer-chip">+ bijlage</span>
+        <span class="composer-chip">model: big-pickle ⌄</span>
+        <button class="send-btn pressable" id="send">↑</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── Demo controls ── -->
+<aside class="demo">
+  <div class="demo-title">Stroom demo</div>
+  <div class="state-readout" id="readout">idle</div>
+  <div class="demo-row">
+    <button class="demo-btn" id="b-flow">▶ run</button>
+    <button class="demo-btn" id="b-hold">✋ hold</button>
+    <button class="demo-btn" id="b-done">✓ done</button>
+  </div>
+  <div class="demo-row">
+    <button class="demo-btn" id="b-read">📄 read</button>
+    <button class="demo-btn" id="b-write">✏️ write</button>
+    <button class="demo-btn" id="b-ext">🌐 extern</button>
+  </div>
+  <div class="demo-row">
+    <button class="demo-btn" id="b-theme">◐ thema</button>
+    <button class="demo-btn" id="b-reset">↺ reset</button>
+  </div>
+  <div class="demo-note">run = flowing · hold = wacht op jou (approval verschijnt) · done = settle + volledige ripple · read/write/extern = tool ripple</div>
+</aside>
+
+<script>
+/* ============================================================
+   De Stroom — spring physics prototype
+   stiffness 180 · damping 26 · mass 1 (critically damped)
+   ============================================================ */
+
+const svg = document.getElementById('current');
+const flowLine = document.getElementById('c-flow');
+const markersG = document.getElementById('c-markers');
+const ripplesG = document.getElementById('c-ripples');
+const readout = document.getElementById('readout');
+const approval = document.getElementById('approval');
+const rowNeeds = document.getElementById('row-needs');
+
+let H = svg.clientHeight || window.innerHeight;
+window.addEventListener('resize', () => { H = svg.clientHeight; });
+
+/* ── Spring ── */
+class Spring {
+  constructor(value = 0) {
+    this.value = value;
+    this.target = value;
+    this.velocity = 0;
+    this.stiffness = 180;
+    this.damping = 26;
+  }
+  step(dt) {
+    const F = -this.stiffness * (this.value - this.target) - this.damping * this.velocity;
+    this.velocity += F * dt;
+    this.value += this.velocity * dt;
+    return this.value;
+  }
+  get settled() {
+    return Math.abs(this.velocity) < 0.001 && Math.abs(this.value - this.target) < 0.001;
+  }
+}
+
+/* ── State ── */
+const state = {
+  mode: 'idle',           // idle | flowing | holding | settling
+  flowOpacity: new Spring(0),
+  flowSpeed: new Spring(0),   // px/sec target: 0..90
+  dashOffset: 0,
+  holdY: 0,
+  breathT: 0,
+  ripples: [],
+  markers: [],
+};
+
+const FLOW_SPEED = 55; // px/sec at nominal "token throughput"
+
+function setMode(mode, opts = {}) {
+  state.mode = mode;
+  readout.textContent = mode;
+  document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('on'));
+  if (mode === 'flowing') {
+    document.getElementById('b-flow').classList.add('on');
+    state.flowOpacity.target = 0.9;
+    state.flowSpeed.target = FLOW_SPEED;
+    approval.classList.remove('visible');
+  } else if (mode === 'holding') {
+    document.getElementById('b-hold').classList.add('on');
+    state.flowOpacity.target = 0.9;
+    state.flowSpeed.target = 0;
+    state.holdY = opts.y ?? H * 0.55;
+    state.breathT = 0;
+    approval.classList.add('visible');
+    approval.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    addMarker(state.holdY, 'hold');
+  } else if (mode === 'idle') {
+    state.flowOpacity.target = 0;
+    state.flowSpeed.target = 0;
+    approval.classList.remove('visible');
+  } else if (mode === 'settling') {
+    document.getElementById('b-done').classList.add('on');
+    state.flowSpeed.target = 0;
+    approval.classList.remove('visible');
+    // full-length completion ripple
+    spawnRipple('done');
+    setTimeout(() => setMode('idle'), 900);
+  }
+}
+
+/* ── Markers ── */
+function addMarker(y, kind) {
+  const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  c.setAttribute('cx', 4);
+  c.setAttribute('cy', y);
+  c.setAttribute('r', 3);
+  c.setAttribute('fill', kind === 'hold' ? 'var(--warning)' : 'var(--accent)');
+  c.style.transition = 'opacity 220ms';
+  markersG.appendChild(c);
+  state.markers.push({ el: c, y, kind });
+  return c;
+}
+
+/* ── Ripples ── */
+const RIPPLE_DEFS = {
+  read:  { color: 'var(--line-strong)', dur: 400, amp: 3.5 },
+  write: { color: 'var(--accent)',      dur: 500, amp: 4.5 },
+  ext:   { color: 'var(--warning)',     dur: 600, amp: 4.5 },
+  done:  { color: 'var(--accent)',      dur: 800, amp: 5.5 },
+};
+
+function spawnRipple(kind) {
+  const def = RIPPLE_DEFS[kind];
+  const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  c.setAttribute('cx', 4);
+  c.setAttribute('cy', 0);
+  c.setAttribute('r', def.amp);
+  c.setAttribute('fill', def.color);
+  ripplesG.appendChild(c);
+  state.ripples.push({ el: c, t: 0, ...def });
+}
+
+/* ── Render loop ── */
+let last = performance.now();
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function frame(now) {
+  const dt = Math.min((now - last) / 1000, 0.05);
+  last = now;
+
+  // Springs
+  const fo = state.flowOpacity.step(dt);
+  const fs = state.flowSpeed.step(dt);
+
+  flowLine.setAttribute('opacity', reduced ? (state.mode === 'flowing' ? 0.9 : fo > 0.05 ? fo : 0) : fo);
+
+  // Flow travel
+  if (fs > 0.01 && !reduced) {
+    state.dashOffset -= fs * dt;
+    flowLine.setAttribute('stroke-dashoffset', state.dashOffset);
+  }
+
+  // Holding breath — sine, amplitude 1.5px, period 2400ms
+  if (state.mode === 'holding' && !reduced) {
+    state.breathT += dt;
+    const dx = Math.sin(state.breathT * (Math.PI * 2 / 2.4)) * 1.5;
+    const holdMarker = state.markers.find(m => m.kind === 'hold');
+    if (holdMarker) holdMarker.el.setAttribute('cx', 4 + dx);
+    // gentle line swell at hold point via dash gap localisation is overkill for proto;
+    // the breathing marker carries the signal.
+  }
+
+  // Ripples — asymmetric gaussian travel
+  for (let i = state.ripples.length - 1; i >= 0; i--) {
+    const r = state.ripples[i];
+    r.t += dt * 1000;
+    const p = Math.min(r.t / r.dur, 1);
+    // ease-out position with soft landing
+    const y = H * (1 - Math.pow(1 - p, 2.2));
+    // amplitude envelope: fast attack (20%), long decay
+    const env = p < 0.2 ? p / 0.2 : 1 - (p - 0.2) / 0.8;
+    r.el.setAttribute('cy', y);
+    r.el.setAttribute('r', r.amp * Math.max(env, 0.001));
+    r.el.setAttribute('opacity', env);
+    if (p >= 1) {
+      r.el.remove();
+      state.ripples.splice(i, 1);
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ── Demo wiring ── */
+document.getElementById('b-flow').onclick = () => setMode('flowing');
+document.getElementById('b-hold').onclick = () => setMode('holding');
+document.getElementById('b-done').onclick = () => setMode('settling');
+document.getElementById('b-read').onclick = () => { spawnRipple('read'); addMarker(H * (0.25 + Math.random() * 0.5), 'read'); };
+document.getElementById('b-write').onclick = () => { spawnRipple('write'); addMarker(H * (0.25 + Math.random() * 0.5), 'write'); };
+document.getElementById('b-ext').onclick = () => { spawnRipple('ext'); addMarker(H * (0.25 + Math.random() * 0.5), 'ext'); };
+document.getElementById('b-reset').onclick = () => {
+  state.markers.forEach(m => m.el.remove());
+  state.ripples.forEach(r => r.el.remove());
+  state.markers = []; state.ripples = [];
+  setMode('idle');
+};
+document.getElementById('b-theme').onclick = () => {
+  document.documentElement.classList.toggle('dark');
+};
+
+/* Approval resolution */
+document.querySelectorAll('[data-resolve]').forEach(btn => {
+  btn.onclick = () => {
+    const kind = btn.dataset.resolve;
+    approval.classList.remove('visible');
+    state.markers.filter(m => m.kind === 'hold').forEach(m => m.el.remove());
+    state.markers = state.markers.filter(m => m.kind !== 'hold');
+    if (kind === 'deny') { spawnRipple('ext'); setMode('idle'); }
+    else setMode('flowing');
+  };
+});
+
+/* Keyboard: 1/2/3 when approval visible */
+document.addEventListener('keydown', (e) => {
+  if (!approval.classList.contains('visible')) return;
+  if (e.key === '1') document.querySelector('[data-resolve="allow"]').click();
+  if (e.key === '2') document.querySelector('[data-resolve="once"]').click();
+  if (e.key === '3') document.querySelector('[data-resolve="deny"]').click();
+});
+
+/* Composer */
+const input = document.getElementById('composer-input');
+const send = document.getElementById('send');
+input.addEventListener('input', () => {
+  send.classList.toggle('armed', input.value.trim().length > 0);
+});
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (input.value.trim()) {
+      setMode('flowing');
+      input.value = '';
+      send.classList.remove('armed');
+      setTimeout(() => setMode('settling'), 2600);
+    }
+  }
+});
+
+/* Init — ?state= for demo/screenshot deep links */
+const params = new URLSearchParams(location.search);
+const initial = params.get('state');
+if (params.get('theme') === 'dark') document.documentElement.classList.add('dark');
+if (initial === 'flowing') setMode('flowing');
+else if (initial === 'holding') setMode('holding');
+else if (initial === 'settling') setMode('settling');
+else setMode('idle');
+if (params.get('ripples')) {
+  spawnRipple('write'); addMarker(H * 0.35, 'write');
+  setTimeout(() => spawnRipple('read'), 200);
+}
+</script>
+</body>
+</html>

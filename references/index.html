@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Referenties — OpenWork Rebuild</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  body { padding: 24px; max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 32px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin: 32px 0 12px; font-weight: 600; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .shot { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-surface); overflow: hidden; }
+  .shot img { width: 100%; display: block; }
+  .shot .cap { padding: 10px 14px; font-size: 13px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
+  .shot .cap .tag { font-family: var(--font-data); font-size: 11px; color: var(--text-faint); }
+  a.back { color: var(--accent-ink); text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<h1>Design Referenties</h1>
+<div class="sub"><a class="back" href="../stroom-prototype.html">← Terug naar Stroom prototype</a> · OpenWork Rebuild · <span class="mono" style="font-size:12px">.ulpi/design/references/</span></div>
+
+<h2>Stroom prototype (eigen werk)</h2>
+<div class="grid">
+  <div class="shot"><img src="stroom-light.png" loading="lazy"><div class="cap">Idle · licht <span class="tag">sand</span></div></div>
+  <div class="shot"><img src="stroom-flowing.png" loading="lazy"><div class="cap">Flowing · stroom actief <span class="tag">run</span></div></div>
+  <div class="shot"><img src="stroom-holding.png" loading="lazy"><div class="cap">Holding · approval + marker <span class="tag">hold</span></div></div>
+  <div class="shot"><img src="stroom-dark.png" loading="lazy"><div class="cap">Flowing · donker <span class="tag">basalt</span></div></div>
+</div>
+
+<h2>Devin — product UI</h2>
+<div class="grid">
+  <div class="shot"><img src="devin-home.png" loading="lazy"><div class="cap">Sessie + composer + artifact pane <span class="tag">home</span></div></div>
+  <div class="shot"><img src="devin-usecases.png" loading="lazy"><div class="cap">Use cases + klantlogo's <span class="tag">marketing</span></div></div>
+  <div class="shot"><img src="devin-pricing.png" loading="lazy"><div class="cap">Pricing <span class="tag">pricing</span></div></div>
+  <div class="shot"><img src="devin-current.png" loading="lazy"><div class="cap">Huidige viewport <span class="tag">live</span></div></div>
+</div>
+</body>
+</html>
