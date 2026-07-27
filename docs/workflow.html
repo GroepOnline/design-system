@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pr-card — design-system</title>
+<title>WORKFLOW — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/tokens.css">
@@ -116,6 +116,27 @@
     .wrap { padding: 20px 16px 40px; }
     .grid { grid-template-columns: 1fr; }
   }
+
+  .md { max-width: 780px; }
+  .md h1 { font-size: 26px; margin: 8px 0 10px; }
+  .md h2 { font-size: 19px; margin: 30px 0 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .md h3 { font-size: 15.5px; margin: 22px 0 6px; }
+  .md h4 { font-size: 14px; margin: 18px 0 4px; }
+  .md p, .md li { font-size: 14.5px; line-height: 1.65; color: var(--text-muted); }
+  .md p { margin: 8px 0; }
+  .md ul, .md ol { padding-left: 20px; margin: 8px 0; }
+  .md li { margin: 3px 0; }
+  .md strong { color: var(--text); font-weight: 500; }
+  .md code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .md pre { background: var(--surface-sunk); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; overflow-x: auto; margin: 12px 0; scrollbar-width: thin; }
+  .md pre code { background: none; padding: 0; font-size: 12px; line-height: 1.6; }
+  .md table { border-collapse: collapse; margin: 14px 0; width: 100%; font-size: 13.5px; }
+  .md th { text-align: left; font-weight: 500; color: var(--text); padding: 8px 12px; border-bottom: 1px solid var(--line-strong); }
+  .md td { padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--text-muted); vertical-align: top; }
+  .md a { color: var(--accent-ink); text-decoration: none; }
+  .md a:hover { text-decoration: underline; }
+  .md blockquote { border-left: 2px solid var(--accent); padding: 4px 14px; margin: 12px 0; color: var(--text-muted); }
+  .md hr { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
 </style>
 </head>
 <body>
@@ -131,7 +152,7 @@
   <a class="it" href="/components/worked-row/"><span class="tile"><svg><use href="/components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
   <div class="lbl caps">Bewijs</div>
   <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
-  <a class="it on" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
+  <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
   <div class="lbl caps">Structuur</div>
   <a class="it" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
@@ -149,141 +170,94 @@
 </aside>
 <main class="main"><div class="wrap">
 <div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span>
+  <span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span>
   <div>
-    <h1>pr-card</h1>
-    <div class="cat caps">bewijs</div>
+    <h1>WORKFLOW</h1>
+    <div class="cat caps">proces · bron: WORKFLOW.md</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern</div>
+  <div class="meta"><a href="/docs/" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
 </div>
-<div class="sub">bewijs van werk · manifest: <code>components/pr-card/catalog.json</code></div>
-<div class="legend">
-  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
-  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds pr-card select|remove</code> · experimenten in <code>playground/</code></span>
-</div>
-<div class="use-now">
-  <span class="lbl2">Gebruik nu</span>
-  <span>actieve variant <code>default</code></span>
-  <code>components/pr-card/self/default.html</code>
-  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
-</div>
-
-<div class="docs">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>bewijs van git-werk na een run</li><li>diff-stats altijd zichtbaar</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>cards-in-cards</li><li>shadow op product-cards</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>r12 hairline, hover line-strong</code></li><li><code>badge.green Open</code></li><li><code>branch→main in mono chips</code></li></ul></div>
-</div>
-
-<div class="grid">
-  <div class="cell active">
-    <div class="ch">
-      <span class="id">default</span>
-      <span class="note">oorspronkelijke demo, gemigreerd naar catalogus</span>
-      <span class="right">
-        <span class="org ">zelf</span>
-        <span class="st active">ACTIEF</span>
-      </span>
-    </div>
-    <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;nl&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-&lt;title&gt;component: pr-card&lt;/title&gt;
-&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/tokens.css&quot;&gt;
-&lt;style&gt;
-  body { padding: 40px 32px; max-width: 780px; }
-  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
-  .demo-head a { color: var(--accent-ink); text-decoration: none; }
-
-  /* ==== COMPONENT CSS (copy vanaf hier) ==== */
-  .pr-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    padding: 12px 15px;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-  .pr-card:hover { border-color: var(--line-strong); }
-  .pr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .pr-repo { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
-  .pr-num { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
-  .pr-actions { margin-left: auto; display: flex; gap: 3px; }
-  .pr-actions .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
-  .pr-title { font-size: 14.5px; font-weight: 500; margin-bottom: 7px; }
-  .pr-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-faint); }
-  .pr-meta .branch {
-    font-family: var(--mono); font-size: 11px;
-    background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px;
-    max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
-  .pr-meta .diff .add { color: var(--open-green); }
-  .pr-meta .diff .del { color: var(--red); }
-  /* entrance (optioneel, voor live verschijnen) */
-  .pr-card.enter { opacity: 0; transform: translateY(10px) scale(0.985); }
-  .pr-card.enter.shown { opacity: 1; transform: none; transition: opacity .42s var(--ease-out), transform .42s var(--ease-out), border-color .2s; }
-  /* ==== /COMPONENT CSS ==== */
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;← components&lt;/a&gt; / pr-card&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/cognition-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#167&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942251&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;6 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+21&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−123&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/devin-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#357&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942252&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;2 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+4&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−8&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- CONTRACT
-  kaart = bewijs van werk. r12, hairline, geen shadow.
-  entrance: .enter + .shown (stagger 120 + i*140ms) als de agent hem live maakt.
-  groen badge alleen voor git-status. diff: add groen / del rood, mono 11.5.
---&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre></details>
-  </div>
-</div>
-<div class="gen">gegenereerd door ds build op 2026-07-27 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="md"><h1>WORKFLOW.md — hoe je dit systeem gebruikt</h1>
+<blockquote>Het complete circuit: van nieuw product (X) naar gebouwde surface (Y) naar</blockquote>
+<blockquote>taste-leren (terug naar het systeem). Geen losse keuzes meer — alles loopt</blockquote>
+<blockquote>door deze pipeline.</blockquote>
+<hr>
+<h2>X — Nieuw product starten (template)</h2>
+<pre><code>cd /home/joep/design-system
+./new-project.sh mijn-product ~/Documents/mijn-product</code></pre>
+<p>Dat scaffolds:</p>
+<pre><code>mijn-product/
+├── index.html          ← app-skeleton (fonts, tokens, icons, thema-toggle)
+├── tokens.css          ← kopie (de bron blijft dit repo)
+└── components/
+    ├── icons.svg       ← 29 Lucide-symbols
+    └── lib.js          ← thema deep-links + switch-gedrag</code></pre>
+<p>Daarna: bouw surfaces door componenten uit <code>components/*.html</code> te kopiëren.</p>
+<p>Elk componentbestand bevat: werkende demo + <code>COMPONENT CSS</code> blok + contract-comment.</p>
+<p><strong>Regel:</strong> componenten worden gekopieerd, niet geïmporteerd. Het product bezit zijn</p>
+<p>eigen kopie (zoals shadcn). Upstream-fixes haal je bewust binnen, nooit automatisch.</p>
+<h2>De catalogus-discipline (kern van het systeem)</h2>
+<p>Per component een map met <strong>alle varianten ooit</strong>, gesplitst in <code>self/</code> (zelf-ontworpen,</p>
+<p>ook aangepaste externe) en <code>external/</code> (shadcn, devin-observed, ...). Bron: <code>catalog.json</code>.</p>
+<pre><code>components/button/
+├── catalog.json      manifest: id, origin, source, status, note
+├── self/             onze varianten
+├── external/         externe referenties
+└── index.html        GEGENEREERD (ds build) — nooit handmatig bewerken</code></pre>
+<p><strong>Statussen:</strong> <code>active</code> (geselecteerd voor gebruik, 1 per component) en <code>locked</code></p>
+<p>(vast in de catalogus). Wat vast staat verandert nooit stilletjes: alleen</p>
+<p><code>ds select</code> of <code>ds remove</code> raakt het. Een oefensessie kan het systeem niet</p>
+<p>verneuken, want experimenten leven in <code>playground/</code> en komen er alleen in via</p>
+<p>een expliciete <code>ds add</code>.</p>
+<h3>CLI (reactief, herbouwt web automatisch)</h3>
+<pre><code>./ds list                                # alle componenten + actieve variant
+./ds button list                         # entries met status/origin/source
+./ds button select primary               # active wisselen (rest -&gt; vast)
+./ds button add playground/x.html --id x --origin self --note &quot;...&quot;
+./ds button remove x --yes               # expliciet verwijderen
+./ds build                               # web herbouwen (gaat automatisch bij mutaties)</code></pre>
+<h3>Web (gegenereerd uit dezelfde manifests)</h3>
+<p><code>/components/</code> = gallery uit catalog.json-bestanden. <code>/components/button/</code> = de</p>
+<p>button-catalogus met ACTIEF-markering, vast-badges, zelf/extern-split, iframes</p>
+<p>per variant. CLI en web spreken dezelfde taal omdat het manifest de enige bron is.</p>
+<h2>Y — Bouwen (de discipline)</h2>
+<ol>
+<li><strong>Lees eerst <code>taste/taste-rules.md</code>.</strong> Dat zijn de geleerde regels. Binding.</li>
+<li><strong>Gebruik alleen bestaande componenten</strong> voor standaardpatronen. Iets nieuws</li>
+<p>verzinnen is een taste-beslissing, geen vrijbrief.</p>
+<li><strong>Check per scherm de bans</strong> (DESIGN.md §10): geen spinners, geen emoji-iconen,</li>
+<p>geen em-dashes, één accent, groen alleen voor git, amber alleen voor wacht-op-jou.</p>
+<li><strong>Test beide thema&#x27;s.</strong> <code>?theme=dark</code> werkt op elke component-pagina en op de</li>
+<p>gallery (<code>components/index.html</code>).</p>
+<li><strong>Toon het Joep in de browser</strong>, niet als beschrijving. Serveer:</li>
+<p><code>python3 -m http.server &lt;poort&gt; --directory &lt;product&gt;</code> of via tailscale serve.</p>
+</ol>
+<h2>Taste-loop — wijzigingen komen terug in het systeem</h2>
+<pre><code>Joep ziet iets
+  → reactie in taste/taste-log.md (shown / reaction / signal / delta)
+  → 2+ observaties van hetzelfde patroon
+  → regel in taste/taste-rules.md
+  → propagatie (verplicht, zelfde commit):
+      DESIGN.md          als de taal zelf verandert
+      tokens.css         als tokens/primitives veranderen
+      components/&lt;x&gt;.html als een component verandert
+      surfaces/&lt;x&gt;.md    als een surface-brief verandert
+  → commit met prefix &quot;taste: &lt;wat&gt;&quot;</code></pre>
+<p><strong>Propagatie is geen optie.</strong> Een regel die alleen in taste-rules.md staat en</p>
+<p>nergens anders, bestaat niet.</p>
+<h2>Bestandskaart</h2>
+<table><thead><tr><th>Pad</th><th>Rol</th><th>Wanneer aanraken</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>gelockte taal</td><td>alleen via taste-loop of expliciete Joep-beslissing</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn/gbtn/badge/switch/seg/input/setting)</td><td>bij elke token- of primitive-wijziging</td></tr><tr><td><code>components/</code></td><td>standalone componenten + gallery</td><td>nieuw patroon of taste-propagatie</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica</td><td>zelden — motion is gelockt</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td><td>bij nieuwe surfaces</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app</td><td>als meerdere componenten tegelijk veranderen</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin)</td><td>bij twijfel over &quot;hoe ziet goed eruit&quot;</td></tr><tr><td><code>taste/</code></td><td>het lerende systeem</td><td>continu</td></tr><tr><td><code>new-project.sh</code> + <code>templates/</code></td><td>X-scaffolder</td><td>als de scaffold zelf verbetert</td></tr></tbody></table>
+<h2>Verbeteren van het systeem zelf</h2>
+<ul>
+<li>Nieuwe component nodig? Maak <code>components/&lt;naam&gt;.html</code> (standalone, met</li>
+<p>COMPONENT CSS-blok + contract-comment), voeg toe aan gallery-grid in</p>
+<p><code>components/index.html</code>, commit.</p>
+<li>Nieuwe primitive (zoals .switch)? Eerst in <code>tokens.css</code>, dan gebruiken in</li>
+<p>componenten. Nooit andersom.</p>
+<li>Prototype eerst: twijfelgeval → bouw in <code>prototype-v2.html</code>, laat Joep voelen,</li>
+<p>pas dan component eruit extraheren.</p>
+</ul></div>
+<div class="gen">gegenereerd uit WORKFLOW.md op 2026-07-27 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <script>

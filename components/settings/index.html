@@ -47,7 +47,18 @@
   .rail .foot .seg { flex: 1; }
   .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
   /* ---- content ---- */
-  .main { flex: 1; overflow-y: auto; min-width: 0; }
+  .main { flex: 1; overflow-y: auto; min-width: 0;
+    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+  .main::-webkit-scrollbar { width: 10px; }
+  .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
+  .main::-webkit-scrollbar-track { background: transparent; }
+  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  .rail { scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  /* code-blokken ook dun */
+  .cell pre { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+  .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
+  .cell pre::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
   .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 40px 64px; }
   /* ---- pagina-header ---- */
   .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
@@ -126,6 +137,8 @@
   <a class="it on" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Systeem</div>
   <a class="it sys" href="/components/studio/"><span class="tile"><svg><use href="/components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
+  <a class="it sys" href="/docs/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
+  <a class="it sys" href="/taste-site/"><span class="tile"><svg><use href="/components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
   <a class="it sys" href="/DESIGN.md"><span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="/AGENTS.md"><span class="tile"><svg><use href="/components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>

@@ -1,48 +1,65 @@
 # design-system
 
-Ons eigen design-systeem voor agent-producten. Standalone, product-onafhankelijk.
+Standalone design language + componentencatalogus + tools. Geen product;
+de taal en het systeem waar producten mee gebouwd worden. v2 richt zich op de
+Devin-producttaal (gemeten aan hun live site), met eigen motion-discipline en
+Nederlandse copy-stem.
 
-**v2 "Devin-richting"**: warm off-white, één blauw accent, shadcn-componenten,
-Lucide-iconen, levende activiteit in plaats van spinners, Nederlandse copy.
-Light én dark (Basalt) als first-class thema's.
+**Live (tailnet):** `https://joep.tail86a8f2.ts.net:8443/`
 
-## Snel kijken
+## De vier tools
+
+| Tool | Waar | Wat |
+|---|---|---|
+| **catalogus** | `components/` + `./ds` | alle varianten ooit: self + external. Lock-model: vast tot expliciete select/remove |
+| **studio** | `/components/studio/` | visueel afstellen zonder code: presets (incl. **Vanaf nul**), accent, warmte, radius, tekstgrootte. Tabs: Afstellen + **Docs** (de taal lezen terwijl je stelt). Export: Kopieer tokens |
+| **docs** | `/docs/` | alle .md-documenten gerenderd als lees-laag. De .md blijft de bron |
+| **taste** | `/taste-site/` | het lerende smaak-systeem: bindende regels + observatie-log. Onderhoud via de `joep-design-taste` skill, gekoppeld aan alles via het propagatie-contract |
+
+## Snelstart
 
 ```bash
-cd design-system
-python3 -m http.server 8765 --bind 127.0.0.1
-# → /                      index
-# → /components/           gallery (mini-storybook, thema-toggle)
-# → /components/settings.html   instellingen-surface
-# → /prototype-v2.html     volledige referentie-app
+./ds list                    # overzicht van alles
+./ds button list             # één component in detail
+./ds build                   # web herbouwen (catalogus + docs + taste)
+./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem
 ```
 
-## Nieuw product starten (X)
+Nieuw component of variant:
 
 ```bash
-./new-project.sh mijn-product ~/Documents/mijn-product
+# 1. experimenteer in playground/ (vrij, relatieve paden ok)
+# 2. promoveer naar de catalogus
+./ds button add playground/mijn-knop.html --id mijn-knop --origin self --note "wat en waarom"
+# 3. selecteer als dé knop
+./ds button select mijn-knop
 ```
 
-Daarna componenten kopiëren uit `components/` (copy-paste, zoals shadcn).
-Volledige discipline in `WORKFLOW.md`.
+## Mappen
 
-## Inhoud
-
-| Pad | Wat |
+| Pad | Rol |
 |---|---|
-| `DESIGN.md` | de gelockte taal (kleur, type, iconen, componenten, layout, stem, bans) |
-| `WORKFLOW.md` | X scaffolden, Y bouwen, taste-loop propagatie |
-| `tokens.css` | custom properties + primitives (btn, gbtn, badge, switch, seg, input, setting) |
-| `components/` | 10 standalone componenten + icons.svg + lib.js + gallery |
-| `motion-spec.md` | motion-fysica (spring 180/26, ripple-contract) |
-| `prototype-v2.html` | speelbare referentie: 3-pane sessie-UI, run/hold/done |
-| `surfaces/` | per-surface design briefs |
-| `references/` | Devin-product screenshots (gemeten DNA) |
-| `taste/` | zelflerend taste-systeem: log → regels → propagatie |
-| `new-project.sh` + `templates/` | project-scaffolder |
+| `ds` | CLI + web-generator (python3, geen deps) |
+| `tokens.css` | tokens + primitives + typografie-schaal + icon-maten |
+| `components/<naam>/` | catalog.json (bron) + self/ + external/ + index.html (gegenereerd) |
+| `components/icons.svg` | 31 Lucide symbols |
+| `playground/` | experimentzone — kan de catalogus nooit corrupt maken |
+| `docs/` | gerenderde .md-pagina's (gegenereerd) |
+| `taste-site/` | taste-regels + log als site (gegenereerd uit taste/*.md) |
+| `templates/` + `new-project.sh` | scaffold voor nieuwe producten |
+| `references/` | meetlat-screenshots (Devin-product, eigen states) |
+| `surfaces/` | per-surface ontwerpbriefs |
+| `prototype-v2.html` | volledige referentie-app (3-pane sessie) |
 
-## Regels in één adem
+## Regels in het kort
 
-Geen spinners. Geen emoji als icoon. Geen em-dashes. Eén accent (blauw).
-Groen = git, amber = wacht-op-jou. Koppen weight 500. Mono alleen voor data.
-Alles settle-t vroeg. Toon bewijs (diffs, PR's, before/after), vertel niet.
+- Geen spinners (activiteit = worked-row + ripples), geen emoji-iconen (Lucide),
+  geen em-dashes, één accent, groen/amber/rood gereserveerd, light én dark
+  first-class. Volledig: `DESIGN.md` §10-13.
+- Catalogus is **vast**: entries veranderen nooit stilletjes. Selecteren en
+  verwijderen zijn de enige mutaties, altijd via `ds`.
+- Gegenereerde bestanden (`components/*/index.html`, `docs/`, `taste-site/`)
+  nooit handmatig bewerken.
+
+Meer: `hoe-wat.md` (grote gids) · `AGENTS.md` (agent-contract) ·
+`WORKFLOW.md` (processen) · `DESIGN.md` (de taal)

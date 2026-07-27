@@ -43,10 +43,26 @@ ICONS = {
 }
 SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
+    ("/docs/", "i-file", "docs", "alle .md"),
+    ("/taste-site/", "i-check", "taste", "regels+log"),
     ("/DESIGN.md", "i-book", "DESIGN.md", "taal"),
     ("/WORKFLOW.md", "i-queue", "WORKFLOW.md", "proces"),
     ("/AGENTS.md", "i-terminal", "AGENTS.md", "voor ai"),
     ("/references/", "i-external", "references", "shots"),
+]
+
+DOCS = [
+    ("DESIGN.md", "design", "taal", "de gelockte ontwerptaal v2: tokens, Devin-DNA, bans"),
+    ("WORKFLOW.md", "workflow", "proces", "nieuw project scaffolden, component-discipline, taste-loop"),
+    ("AGENTS.md", "agents", "voor ai", "invarianten en commando's voor AI-agents"),
+    ("README.md", "readme", "overzicht", "wat dit systeem is en hoe je het gebruikt"),
+    ("motion-spec.md", "motion-spec", "taal", "bewegingsfysica (gelockt)"),
+    ("surfaces/session.md", "surface-session", "surface", "sessie-surface brief"),
+    ("surfaces/composer.md", "surface-composer", "surface", "composer-surface brief"),
+    ("surfaces/palette.md", "surface-palette", "surface", "command-palette brief"),
+    ("surfaces/settings.md", "surface-settings", "surface", "settings-surface brief"),
+    ("surfaces/approvals.md", "surface-approvals", "surface", "approvals-surface brief"),
+    ("surfaces/states.md", "surface-states", "surface", "states-surface brief"),
 ]
 
 # ---------- cli logs (ansi) ----------
@@ -169,6 +185,90 @@ def cmd_remove(c, eid, yes=False):
     cmd_build(only=c)
     ok(f"{bold(c)}/{eid} verwijderd uit catalogus")
 
+# ---------- markdown renderer (geen deps) ----------
+
+def _inline(t):
+    t = htmlmod.escape(t)
+    t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
+    t = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
+    t = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", t)
+    t = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', t)
+    return t
+
+def md_to_html(md):
+    lines, out, i = md.split("\n"), [], 0
+    in_code, lang, buf, lst = False, "", [], None
+    while i < len(lines):
+        line = lines[i]
+        s = line.strip()
+        if s.startswith("```"):
+            if not in_code:
+                in_code, lang, buf = True, s[3:], []
+            else:
+                in_code = False
+                out.append(f'<pre><code>{htmlmod.escape(chr(10).join(buf))}</code></pre>')
+            i += 1; continue
+        if in_code:
+            buf.append(line); i += 1; continue
+        if not s:
+            if lst: out.append(f"</{lst}>"); lst = None
+            i += 1; continue
+        if s.startswith("|") and i + 1 < len(lines) and re.match(r"^\|[\s:|\-]+\|?$", lines[i+1].strip()):
+            header = [c.strip() for c in s.strip("|").split("|")]
+            i += 2; rows = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")]); i += 1
+            h = "<table><thead><tr>" + "".join(f"<th>{_inline(c)}</th>" for c in header) + "</tr></thead><tbody>"
+            for r in rows:
+                h += "<tr>" + "".join(f"<td>{_inline(c)}</td>" for c in r) + "</tr>"
+            out.append(h + "</tbody></table>"); continue
+        m = re.match(r"^(#{1,4})\s+(.*)", s)
+        if m:
+            out.append(f"<h{len(m.group(1))}>{_inline(m.group(2))}</h{len(m.group(1))}>")
+            i += 1; continue
+        if re.match(r"^(-{3,}|\*{3,})$", s):
+            out.append("<hr>"); i += 1; continue
+        if s.startswith(">"):
+            out.append(f"<blockquote>{_inline(s.lstrip('> ').strip())}</blockquote>"); i += 1; continue
+        m = re.match(r"^[-*]\s+(.*)", s)
+        if m:
+            if lst != "ul":
+                if lst: out.append(f"</{lst}>")
+                out.append("<ul>"); lst = "ul"
+            out.append(f"<li>{_inline(m.group(1))}</li>"); i += 1; continue
+        m = re.match(r"^\d+[.)]\s+(.*)", s)
+        if m:
+            if lst != "ol":
+                if lst: out.append(f"</{lst}>")
+                out.append("<ol>"); lst = "ol"
+            out.append(f"<li>{_inline(m.group(1))}</li>"); i += 1; continue
+        out.append(f"<p>{_inline(s)}</p>"); i += 1
+    if lst: out.append(f"</{lst}>")
+    return "\n".join(out)
+
+MD_CSS = """
+  .md { max-width: 780px; }
+  .md h1 { font-size: 26px; margin: 8px 0 10px; }
+  .md h2 { font-size: 19px; margin: 30px 0 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .md h3 { font-size: 15.5px; margin: 22px 0 6px; }
+  .md h4 { font-size: 14px; margin: 18px 0 4px; }
+  .md p, .md li { font-size: 14.5px; line-height: 1.65; color: var(--text-muted); }
+  .md p { margin: 8px 0; }
+  .md ul, .md ol { padding-left: 20px; margin: 8px 0; }
+  .md li { margin: 3px 0; }
+  .md strong { color: var(--text); font-weight: 500; }
+  .md code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .md pre { background: var(--surface-sunk); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; overflow-x: auto; margin: 12px 0; scrollbar-width: thin; }
+  .md pre code { background: none; padding: 0; font-size: 12px; line-height: 1.6; }
+  .md table { border-collapse: collapse; margin: 14px 0; width: 100%; font-size: 13.5px; }
+  .md th { text-align: left; font-weight: 500; color: var(--text); padding: 8px 12px; border-bottom: 1px solid var(--line-strong); }
+  .md td { padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--text-muted); vertical-align: top; }
+  .md a { color: var(--accent-ink); text-decoration: none; }
+  .md a:hover { text-decoration: underline; }
+  .md blockquote { border-left: 2px solid var(--accent); padding: 4px 14px; margin: 12px 0; color: var(--text-muted); }
+  .md hr { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
+"""
+
 # ---------- web generator (desktop-first app-shell) ----------
 
 SHELL_HEAD = """<!DOCTYPE html>
@@ -220,7 +320,18 @@ SHELL_HEAD = """<!DOCTYPE html>
   .rail .foot .seg { flex: 1; }
   .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
   /* ---- content ---- */
-  .main { flex: 1; overflow-y: auto; min-width: 0; }
+  .main { flex: 1; overflow-y: auto; min-width: 0;
+    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+  .main::-webkit-scrollbar { width: 10px; }
+  .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
+  .main::-webkit-scrollbar-track { background: transparent; }
+  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  .rail { scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  /* code-blokken ook dun */
+  .cell pre { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+  .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
+  .cell pre::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
   .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 40px 64px; }
   /* ---- pagina-header ---- */
   .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
@@ -278,7 +389,7 @@ SHELL_HEAD = """<!DOCTYPE html>
     .wrap { padding: 20px 16px 40px; }
     .grid { grid-template-columns: 1fr; }
   }
-</style>
+{mdcss}</style>
 </head>
 <body>
 <aside class="rail">
@@ -503,6 +614,7 @@ def build_catalog(c):
     page = (SHELL_HEAD.replace("{title}", m.get("title", c))
             .replace("{nav}", nav_html(current=c))
             .replace("{sysnav}", sysnav_html())
+            .replace("{mdcss}", "")
             + body + SHELL_FOOT)
     with open(os.path.join(COMP, c, "index.html"), "w") as f:
         f.write(page)
@@ -532,9 +644,101 @@ def build_gallery():
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{nav}", nav_html())
             .replace("{sysnav}", sysnav_html())
+            .replace("{mdcss}", "")
             + body + SHELL_FOOT)
     with open(os.path.join(COMP, "index.html"), "w") as f:
         f.write(page)
+
+DOCS_INDEX_BODY = """<div class="pagehead">
+  <span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span>
+  <div>
+    <h1>Docs</h1>
+    <div class="cat caps">{nd} documenten</div>
+  </div>
+</div>
+<div class="sub">Alle .md-documenten van het systeem, gerenderd en doorzoekbaar gemaakt uit de bron. De .md zelf blijft de waarheid; deze pagina's zijn een lees-laag.</div>
+{groups}
+<div class="gen">gegenereerd door ds build op {today} · bron: de .md-bestanden in de repo-root</div>
+"""
+
+DOC_PAGE_BODY = """<div class="pagehead">
+  <span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span>
+  <div>
+    <h1>{title}</h1>
+    <div class="cat caps">{cat} · bron: {src}</div>
+  </div>
+  <div class="meta"><a href="/docs/" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
+</div>
+<div class="md">{content}</div>
+<div class="gen">gegenereerd uit {src} op {today} · bewerk de .md, niet deze pagina</div>
+"""
+
+def _shell(title, body, mdcss=""):
+    return (SHELL_HEAD.replace("{title}", title)
+            .replace("{nav}", nav_html())
+            .replace("{sysnav}", sysnav_html())
+            .replace("{mdcss}", mdcss)
+            + body + SHELL_FOOT)
+
+def build_docs():
+    os.makedirs(os.path.join(ROOT, "docs"), exist_ok=True)
+    cats = {}
+    for src, slug, cat, desc in DOCS:
+        p = os.path.join(ROOT, src)
+        if not os.path.exists(p):
+            print(f"  {_c('33','!')} {src} ontbreekt, overgeslagen")
+            continue
+        with open(p) as f:
+            md = f.read()
+        title = re.sub(r"\.md$", "", os.path.basename(src))
+        content = md_to_html(md)
+        body = DOC_PAGE_BODY.format(title=title, cat=cat, src=src, content=content, today=str(date.today()))
+        with open(os.path.join(ROOT, "docs", slug + ".html"), "w") as f:
+            f.write(_shell(title, body, MD_CSS))
+        cats.setdefault(cat, []).append((slug, title, desc))
+    groups = []
+    for cat in ["overzicht", "taal", "proces", "voor ai", "surface"]:
+        if cat not in cats:
+            continue
+        items = "".join(
+            f'  <a class="cell" href="/docs/{slug}.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)">'
+            f'<span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span>'
+            f'<span style="font-weight:500;font-size:var(--text-lg);min-width:150px">{title}</span>'
+            f'<span style="color:var(--text-faint);font-size:var(--text-md);flex:1">{desc}</span>'
+            f'<span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>'
+            for slug, title, desc in cats[cat])
+        groups.append(f'<div class="caps" style="margin:26px 0 10px">{cat}</div><div class="grid" style="grid-template-columns:1fr">{items}</div>')
+    nd = sum(len(v) for v in cats.values())
+    body = DOCS_INDEX_BODY.format(nd=nd, groups="\n".join(groups), today=str(date.today()))
+    with open(os.path.join(ROOT, "docs", "index.html"), "w") as f:
+        f.write(_shell("docs", body))
+    print(f"  {_c('32','✓')} {bold('docs'):<14} {nd} documenten {dim('(gerenderd uit .md)')}")
+
+def build_taste():
+    os.makedirs(os.path.join(ROOT, "taste-site"), exist_ok=True)
+    rules = log = ""
+    rp = os.path.join(ROOT, "taste", "taste-rules.md")
+    lp = os.path.join(ROOT, "taste", "taste-log.md")
+    if os.path.exists(rp):
+        rules = md_to_html(open(rp).read())
+    if os.path.exists(lp):
+        log = md_to_html(open(lp).read())
+    coupling = ("<div class='use-now' style='margin-bottom:26px'><span class='lbl2'>Koppeling</span>"
+                "<span>taste-log → (2+ observaties) → regel hier → propagatie naar "
+                "<code>DESIGN.md</code> + <code>tokens.css</code> + <code>components/</code> in dezelfde commit. "
+                "Onderhoud via de <code>joep-design-taste</code> skill, niet handmatig op deze pagina.</span></div>")
+    body = ("<div class='pagehead'><span class='tile'><svg><use href='/components/icons.svg#i-check'/></svg></span>"
+            "<div><h1>Taste</h1><div class='cat caps'>onderhoudssysteem · apart van studio · gekoppeld</div></div></div>"
+            "<div class='sub'>Het lerende smaak-systeem: regels zijn binding voor elke surface, de log is het bewijs. "
+            "Studio stelt visueel af; taste beslist wat mag.</div>"
+            + coupling
+            + "<div class='md'><h2>Regels (binding)</h2>" + rules
+            + "<h2>Log (observaties)</h2>" + log + "</div>"
+            + f"<div class='gen'>gegenereerd uit taste/*.md op {date.today()}</div>")
+    with open(os.path.join(ROOT, "taste-site", "index.html"), "w") as f:
+        f.write(_shell("taste", body, MD_CSS))
+    # /taste/ is bezet door de .md-map; serveer via taste-site en link daarheen
+    print(f"  {_c('32','✓')} {bold('taste'):<14} regels + log {dim('(uit taste/*.md)')}")
 
 def cmd_build(only=None):
     targets = [only] if only else components()
@@ -547,7 +751,9 @@ def cmd_build(only=None):
     if only:
         ok(f"web bijgewerkt {dim('(' + only + ' + gallery)')}")
     else:
-        ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery)')}")
+        build_docs()
+        build_taste()
+        ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery + docs + taste)')}")
 
 # ---------- main ----------
 

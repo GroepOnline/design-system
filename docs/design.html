@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pr-card — design-system</title>
+<title>DESIGN — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/tokens.css">
@@ -116,6 +116,27 @@
     .wrap { padding: 20px 16px 40px; }
     .grid { grid-template-columns: 1fr; }
   }
+
+  .md { max-width: 780px; }
+  .md h1 { font-size: 26px; margin: 8px 0 10px; }
+  .md h2 { font-size: 19px; margin: 30px 0 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .md h3 { font-size: 15.5px; margin: 22px 0 6px; }
+  .md h4 { font-size: 14px; margin: 18px 0 4px; }
+  .md p, .md li { font-size: 14.5px; line-height: 1.65; color: var(--text-muted); }
+  .md p { margin: 8px 0; }
+  .md ul, .md ol { padding-left: 20px; margin: 8px 0; }
+  .md li { margin: 3px 0; }
+  .md strong { color: var(--text); font-weight: 500; }
+  .md code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .md pre { background: var(--surface-sunk); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; overflow-x: auto; margin: 12px 0; scrollbar-width: thin; }
+  .md pre code { background: none; padding: 0; font-size: 12px; line-height: 1.6; }
+  .md table { border-collapse: collapse; margin: 14px 0; width: 100%; font-size: 13.5px; }
+  .md th { text-align: left; font-weight: 500; color: var(--text); padding: 8px 12px; border-bottom: 1px solid var(--line-strong); }
+  .md td { padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--text-muted); vertical-align: top; }
+  .md a { color: var(--accent-ink); text-decoration: none; }
+  .md a:hover { text-decoration: underline; }
+  .md blockquote { border-left: 2px solid var(--accent); padding: 4px 14px; margin: 12px 0; color: var(--text-muted); }
+  .md hr { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
 </style>
 </head>
 <body>
@@ -131,7 +152,7 @@
   <a class="it" href="/components/worked-row/"><span class="tile"><svg><use href="/components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
   <div class="lbl caps">Bewijs</div>
   <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
-  <a class="it on" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
+  <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
   <div class="lbl caps">Structuur</div>
   <a class="it" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
@@ -149,141 +170,124 @@
 </aside>
 <main class="main"><div class="wrap">
 <div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span>
+  <span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span>
   <div>
-    <h1>pr-card</h1>
-    <div class="cat caps">bewijs</div>
+    <h1>DESIGN</h1>
+    <div class="cat caps">taal · bron: DESIGN.md</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern</div>
+  <div class="meta"><a href="/docs/" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
 </div>
-<div class="sub">bewijs van werk · manifest: <code>components/pr-card/catalog.json</code></div>
-<div class="legend">
-  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
-  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds pr-card select|remove</code> · experimenten in <code>playground/</code></span>
-</div>
-<div class="use-now">
-  <span class="lbl2">Gebruik nu</span>
-  <span>actieve variant <code>default</code></span>
-  <code>components/pr-card/self/default.html</code>
-  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
-</div>
-
-<div class="docs">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>bewijs van git-werk na een run</li><li>diff-stats altijd zichtbaar</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>cards-in-cards</li><li>shadow op product-cards</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>r12 hairline, hover line-strong</code></li><li><code>badge.green Open</code></li><li><code>branch→main in mono chips</code></li></ul></div>
-</div>
-
-<div class="grid">
-  <div class="cell active">
-    <div class="ch">
-      <span class="id">default</span>
-      <span class="note">oorspronkelijke demo, gemigreerd naar catalogus</span>
-      <span class="right">
-        <span class="org ">zelf</span>
-        <span class="st active">ACTIEF</span>
-      </span>
-    </div>
-    <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;nl&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-&lt;title&gt;component: pr-card&lt;/title&gt;
-&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/tokens.css&quot;&gt;
-&lt;style&gt;
-  body { padding: 40px 32px; max-width: 780px; }
-  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
-  .demo-head a { color: var(--accent-ink); text-decoration: none; }
-
-  /* ==== COMPONENT CSS (copy vanaf hier) ==== */
-  .pr-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    padding: 12px 15px;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-  .pr-card:hover { border-color: var(--line-strong); }
-  .pr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .pr-repo { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
-  .pr-num { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
-  .pr-actions { margin-left: auto; display: flex; gap: 3px; }
-  .pr-actions .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
-  .pr-title { font-size: 14.5px; font-weight: 500; margin-bottom: 7px; }
-  .pr-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-faint); }
-  .pr-meta .branch {
-    font-family: var(--mono); font-size: 11px;
-    background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px;
-    max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
-  .pr-meta .diff .add { color: var(--open-green); }
-  .pr-meta .diff .del { color: var(--red); }
-  /* entrance (optioneel, voor live verschijnen) */
-  .pr-card.enter { opacity: 0; transform: translateY(10px) scale(0.985); }
-  .pr-card.enter.shown { opacity: 1; transform: none; transition: opacity .42s var(--ease-out), transform .42s var(--ease-out), border-color .2s; }
-  /* ==== /COMPONENT CSS ==== */
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;← components&lt;/a&gt; / pr-card&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/cognition-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#167&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942251&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;6 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+21&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−123&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/devin-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#357&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942252&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;2 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+4&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−8&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- CONTRACT
-  kaart = bewijs van werk. r12, hairline, geen shadow.
-  entrance: .enter + .shown (stagger 120 + i*140ms) als de agent hem live maakt.
-  groen badge alleen voor git-status. diff: add groen / del rood, mono 11.5.
---&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre></details>
-  </div>
-</div>
-<div class="gen">gegenereerd door ds build op 2026-07-27 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="md"><h1>DESIGN.md — v2</h1>
+<blockquote>De design language. Standalone systeem, niet gekoppeld aan één product.</blockquote>
+<blockquote>v1 was &quot;Stroom&quot; (teal, eigen signatuurlijn). v2 richt zich volledig op de</blockquote>
+<blockquote>Devin-producttaal, gemeten aan hun live site, met eigen motion-discipline</blockquote>
+<blockquote>en Nederlandse copy-stem. Beslissing: 2026-07-27 (taste-log).</blockquote>
+<hr>
+<h2>1. Kern</h2>
+<p><strong>Een stil, warm, mat instrument dat toont wat de agent doet terwijl het gebeurt.</strong></p>
+<p>Drie pijlers:</p>
+<ol>
+<li><strong>Stil oppervlak.</strong> Warm off-white, hairlines, geen glow, geen gradients in UI.</li>
+<li><strong>Levende activiteit.</strong> Werk zie je als tijd + golfjes, nooit als spinner.</li>
+<li><strong>Bewijs in beeld.</strong> Diffs, PR-cards, before/after. De agent toont, niet vertelt.</li>
+</ol>
+<h2>2. Gemeten Devin-DNA (bron: devin.ai computed styles, 2026-07-27)</h2>
+<table><thead><tr><th>Element</th><th>Waarde</th><th>Overname</th></tr></thead><tbody><tr><td>body bg</td><td><code>rgb(247,246,245)</code></td><td>exact</td></tr><tr><td>tekst</td><td><code>rgb(25,25,25)</code></td><td>exact</td></tr><tr><td>link-blauw</td><td><code>rgb(68,109,205)</code></td><td>als <code>--accent-ink</code> familie</td></tr><tr><td>merk-blauw</td><td><code>#317CFF</code> (uit product-UI)</td><td>als <code>--accent</code></td></tr><tr><td>badge-blauw</td><td><code>#2200FF</code> (NEW-pill)</td><td>niet — te hard</td></tr><tr><td>marketing-cards</td><td>radius 16px</td><td>product: 12px (<code>--r-lg</code>)</td></tr><tr><td>knoppen (marketing)</td><td>radius 0px</td><td>product: 8px (<code>--r-md</code>)</td></tr><tr><td>headings</td><td>weight 500, tracking −4%</td><td>weight 500, tracking −2% (product)</td></tr><tr><td>font</td><td>NB International Pro</td><td>General Sans (gratis equivalent)</td></tr></tbody></table>
+<h2>3. Kleur</h2>
+<p>Zie <code>tokens.css</code>. Regels:</p>
+<ul>
+<li><strong>Eén accent</strong>: blauw <code>#317CFF</code> (licht) / <code>#5C97FF</code> (donker). Niets anders mag schreeuwen.</li>
+<li><strong>Groen is gereserveerd</strong> voor git/PR/toestemming (<code>#1F883D</code>). Nooit als decoratie.</li>
+<li><strong>Amber is gereserveerd</strong> voor hold/wacht-op-jou. Rood alleen voor diff-deletes en destructive.</li>
+<li>Neutraal is warm, nooit koudgrijs. Dark mode is basalt-warm, geen zuiver zwart.</li>
+</ul>
+<h2>4. Typografie</h2>
+<ul>
+<li><strong>General Sans</strong> 400/500/600 voor alles. Koppen <strong>500</strong> met tracking −0.02em.</li>
+<li><strong>JetBrains Mono</strong> uitsluitend voor data: timers, diffs, branch-namen, commands, paden.</li>
+<li>Timers en tellers altijd <code>font-variant-numeric: tabular-nums</code>.</li>
+<li>Nooit Inter/Geist/Space Grotesk. Nooit mono voor prose of labels.</li>
+</ul>
+<h2>5. Iconen</h2>
+<ul>
+<li><strong>Lucide SVG, nergens emoji.</strong> 24-viewBox, stroke 1.75, ronde caps/joins.</li>
+<li>Maten: <code>.ic</code> 15px, <code>.ic.sm</code> 12px, <code>.ic.lg</code> 17px.</li>
+<li>Emoji in copy eveneens verboden. Toetsenbord-hints als <code>&lt;kbd&gt;</code>, niet als symbool.</li>
+</ul>
+<h2>6. Componenten (shadcn-conventies)</h2>
+<p>Baseline is shadcn/ui-denken: simpele variants, hairline borders, rustige hovers.</p>
+<table><thead><tr><th>Component</th><th>Contract</th></tr></thead><tbody><tr><td><code>.btn</code></td><td>h-32px, px-13px, r-8px, border hairline-strong. <code>.primary</code> = text↔bg omgekeerd. <code>:active</code> scale 0.97</td></tr><tr><td><code>.gbtn</code></td><td>28px ghost icon-button, hover = <code>--hover</code> wash. <code>.solid</code> voor send-acties</td></tr><tr><td><code>.badge</code></td><td>pill, 12px, <code>.green</code> voor Open/merged, <code>.outline</code> voor meta</td></tr><tr><td>card</td><td>r-12px, border <code>--line</code>, hover → <code>--line-strong</code>. Geen shadow in product</td></tr><tr><td>composer</td><td>r-12px, focus = accent border + 3px <code>--accent-soft</code> ring</td></tr><tr><td>user-pill</td><td><code>--surface-sunk</code>, r-12px, avatar rechts</td></tr><tr><td>agent prose</td><td>kaal, geen achtergrond, 14.5px/1.6</td></tr></tbody></table>
+<h2>7. De activiteitsindicator (signatuur)</h2>
+<p><strong>Geen spinners.</strong> Activiteit toont als:</p>
+<ol>
+<li><strong>Worked-row</strong>: <code>Aan het werk 2m 14s</code> — live timer in tabular mono, links een 2px streep.</li>
+<p>Streep is <code>--line-strong</code> in rust, <code>--accent</code> tijdens run. Uitklapbaar: elke stap met tijdstip.</p>
+<li><strong>Tool-ripples</strong>: per tool-call een 18px golfje dat eenmaal heen-en-weer schaal­t (1.1s).</li>
+<p>Blauw = lezen, groen = schrijven, amber = extern. Geen infinite loops: ripple stopt zodra de call klaar is.</p>
+<li><strong>Hold-marker</strong>: bij approval stopt de timer (niet resetten), approval-card verschijnt inline, toetsen 1/2/3.</li>
+<li><strong>Klaar</strong>: rij wordt <code>Gewerkt 4m 13s +25 −131</code> — statisch, diff in groen/rood.</li>
+</ol>
+<p>Motion-fysica: zie <code>motion-spec.md</code> (spring 180/26, ease-out cubic-bezier(0.22,1,0.36,1),</p>
+<p>140/280/420ms). Alles settle-t vroeg; niets bounct; niets ambients.</p>
+<h2>8. Layout</h2>
+<p><strong>3-pane</strong> (devin-model):</p>
+<pre><code>┌──────────┬─────────────────────┬──────────────┐
+│ sidebar  │ sessie (transcript) │ artifact     │
+│ 232px    │ flex, max-col 720px │ 400px, toggle│
+└──────────┴─────────────────────┴──────────────┘</code></pre>
+<ul>
+<li>Sidebar: workspace-switcher, nav (Sessies/Ask/Wiki/Review), Recent met PR-badges, onderaan Thema + Instellingen.</li>
+<li>Transcript: max 720px kolom, gecentreerd. Composer plakt onderaan, zelfde kolombreedte.</li>
+<li>Artifact: rapport/diff/browser. Toggle via panel-icoon in topbar. &lt;1100px: verborgen. &lt;760px: sidebar weg.</li>
+</ul>
+<h2>9. Stem (copy)</h2>
+<ul>
+<li>Warm, direct, menselijk Nederlands op gebruikersvlakken.</li>
+<li>&quot;Wacht op jou: test draaien op productie-domein&quot; — niet &quot;Approval required for external execution&quot;.</li>
+<li><strong>Verboden</strong>: em-dashes, buzzwords, verzonnen metrics, emoji, &quot;AI&quot;-gebezigheid in labels.</li>
+<li>Statuslijn: &quot;Klaar voor instructies&quot;. Eén sparkle-icoon, geen animatie.</li>
+</ul>
+<h2>10. Bans (hard)</h2>
+<ul>
+<li>Geen spinners/loaders (ripple-systeem vervangt ze)</li>
+<li>Geen emoji als icoon of in copy</li>
+<li>Geen em-dashes</li>
+<li>Geen paarse gradients, glassmorphism, glow, bento-kaartjes</li>
+<li>Geen cards-in-cards, geen geneste elevation</li>
+<li>Geen infinite ambient motion</li>
+<li>Geen marketing-witruimte in product (density 5–7)</li>
+</ul>
+<h2>11. Bestanden</h2>
+<table><thead><tr><th>Bestand</th><th>Wat</th></tr></thead><tbody><tr><td><code>tokens.css</code></td><td>alle custom properties + btn/gbtn/badge primitives</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica, timing, ripple-contract</td></tr><tr><td><code>prototype-v2.html</code></td><td>levende referentie-implementatie (deze taal, speelbaar)</td></tr><tr><td><code>prototype-v1-stroom.html</code></td><td>gearchiveerd: v1 teal/Stroom-richting</td></tr><tr><td><code>surfaces/*.md</code></td><td>per-surface briefs (session, composer, palette, settings, approvals, states)</td></tr><tr><td><code>references/</code></td><td>Devin-screenshots + eigen states, als meetlat</td></tr><tr><td><code>taste/</code></td><td>het zelflerende taste-systeem dat dit document voedt</td></tr></tbody></table>
+<h2>12. Status</h2>
+<p><strong>v2 actief</strong> — prototype-v2.html is de bron van waarheid voor feel.</p>
+<p>Open: naam voor de taal (werktitel &quot;Devin-richting&quot; is geen naam, is een richting).</p>
+<hr>
+<h2>§11 Typografie (v2.1, web-typography skill)</h2>
+<p>Schaal via tokens, nooit losse px-waarden in componenten:</p>
+<table><thead><tr><th>Token</th><th>px</th><th>Gebruik</th></tr></thead><tbody><tr><td><code>--text-2xs</code></td><td>10.5</td><td>meta, counts, badge</td></tr><tr><td><code>--text-xs</code></td><td>11.5</td><td>labels, kbd, captions</td></tr><tr><td><code>--text-sm</code></td><td>12.5</td><td>beschrijvingen, secondair</td></tr><tr><td><code>--text-md</code></td><td>13.5</td><td><strong>UI-standaard</strong></td></tr><tr><td><code>--text-lg</code></td><td>15</td><td>prose, kleine titels</td></tr><tr><td><code>--text-xl</code></td><td>18</td><td>sectie-headers</td></tr><tr><td><code>--text-2xl</code></td><td>24</td><td>pagina-titels</td></tr></tbody></table>
+<p>Regels:</p>
+<ul>
+<li>Rendering: <code>antialiased</code> + <code>optimizeLegibility</code> op html (staat in tokens.css)</li>
+<li>Headings: <code>--leading-head</code> 1.2, tracking <code>−0.02em</code>, <code>text-wrap: balance</code></li>
+<li>Prose: <code>.prose</code> = 15px / 1.62 / max 65ch (measure-cap)</li>
+<li>Data (timer, diff, counts): <code>.num</code> = tabular-nums</li>
+<li>Sectie-labels: <code>.caps</code> = 10.5px / 600 / +0.07em / faint</li>
+<li><code>text-wrap: pretty</code> op paragrafen</li>
+</ul>
+<h2>§12 Iconen (v2.1, icon-system skill)</h2>
+<ul>
+<li>Grid 24×24, stroke 2, round caps/joins — Lucide-conventie, sprite <code>components/icons.svg</code></li>
+<li>Maten: <code>.ic</code> (15, standaard) · <code>.ic-13</code> (compact) · <code>.ic-18</code> (knoppen) · <code>.ic-24</code> (hero)</li>
+<li>Elke svg die een sprite-symbol gebruikt MOET <code>fill:none;stroke:currentColor</code> hebben (via <code>.ic</code> of expliciet) — symbols erven niets van de sprite-root</li>
+<li>Icon-tiles in navigatie: 28px tile / 14px icon; pagina-headers 44px / 20px</li>
+<li>Nieuwe symbols: Lucide-path kopiëren, id <code>i-&lt;naam&gt;</code>, toevoegen vóór <code>&lt;/svg&gt;</code></li>
+</ul>
+<h2>§13 Categorieën (v2.1)</h2>
+<p>Elke component-catalogus hoort bij één categorie (<code>cat</code> in catalog.json):</p>
+<table><thead><tr><th>Categorie</th><th>Componenten</th></tr></thead><tbody><tr><td>primitieven</td><td>button, badge</td></tr><tr><td>gesprek</td><td>composer, transcript, worked-row, approval</td></tr><tr><td>bewijs</td><td>pr-card, artifact</td></tr><tr><td>structuur</td><td>nav, settings</td></tr></tbody></table>
+<p>Rail en gallery groeperen op categorie. Nieuwe categorie: toevoegen aan <code>CATS</code> in <code>ds</code>.</p></div>
+<div class="gen">gegenereerd uit DESIGN.md op 2026-07-27 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <script>

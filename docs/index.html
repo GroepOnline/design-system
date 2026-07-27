@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pr-card — design-system</title>
+<title>docs — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/tokens.css">
@@ -131,7 +131,7 @@
   <a class="it" href="/components/worked-row/"><span class="tile"><svg><use href="/components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
   <div class="lbl caps">Bewijs</div>
   <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
-  <a class="it on" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
+  <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
   <div class="lbl caps">Structuur</div>
   <a class="it" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
@@ -149,141 +149,19 @@
 </aside>
 <main class="main"><div class="wrap">
 <div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span>
+  <span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span>
   <div>
-    <h1>pr-card</h1>
-    <div class="cat caps">bewijs</div>
-  </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern</div>
-</div>
-<div class="sub">bewijs van werk · manifest: <code>components/pr-card/catalog.json</code></div>
-<div class="legend">
-  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
-  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds pr-card select|remove</code> · experimenten in <code>playground/</code></span>
-</div>
-<div class="use-now">
-  <span class="lbl2">Gebruik nu</span>
-  <span>actieve variant <code>default</code></span>
-  <code>components/pr-card/self/default.html</code>
-  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
-</div>
-
-<div class="docs">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>bewijs van git-werk na een run</li><li>diff-stats altijd zichtbaar</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>cards-in-cards</li><li>shadow op product-cards</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>r12 hairline, hover line-strong</code></li><li><code>badge.green Open</code></li><li><code>branch→main in mono chips</code></li></ul></div>
-</div>
-
-<div class="grid">
-  <div class="cell active">
-    <div class="ch">
-      <span class="id">default</span>
-      <span class="note">oorspronkelijke demo, gemigreerd naar catalogus</span>
-      <span class="right">
-        <span class="org ">zelf</span>
-        <span class="st active">ACTIEF</span>
-      </span>
-    </div>
-    <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;nl&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-&lt;title&gt;component: pr-card&lt;/title&gt;
-&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/tokens.css&quot;&gt;
-&lt;style&gt;
-  body { padding: 40px 32px; max-width: 780px; }
-  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
-  .demo-head a { color: var(--accent-ink); text-decoration: none; }
-
-  /* ==== COMPONENT CSS (copy vanaf hier) ==== */
-  .pr-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    padding: 12px 15px;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-  .pr-card:hover { border-color: var(--line-strong); }
-  .pr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .pr-repo { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
-  .pr-num { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
-  .pr-actions { margin-left: auto; display: flex; gap: 3px; }
-  .pr-actions .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
-  .pr-title { font-size: 14.5px; font-weight: 500; margin-bottom: 7px; }
-  .pr-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-faint); }
-  .pr-meta .branch {
-    font-family: var(--mono); font-size: 11px;
-    background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px;
-    max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
-  .pr-meta .diff .add { color: var(--open-green); }
-  .pr-meta .diff .del { color: var(--red); }
-  /* entrance (optioneel, voor live verschijnen) */
-  .pr-card.enter { opacity: 0; transform: translateY(10px) scale(0.985); }
-  .pr-card.enter.shown { opacity: 1; transform: none; transition: opacity .42s var(--ease-out), transform .42s var(--ease-out), border-color .2s; }
-  /* ==== /COMPONENT CSS ==== */
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;← components&lt;/a&gt; / pr-card&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/cognition-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#167&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942251&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;6 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+21&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−123&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/devin-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#357&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942252&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;2 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+4&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−8&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- CONTRACT
-  kaart = bewijs van werk. r12, hairline, geen shadow.
-  entrance: .enter + .shown (stagger 120 + i*140ms) als de agent hem live maakt.
-  groen badge alleen voor git-status. diff: add groen / del rood, mono 11.5.
---&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre></details>
+    <h1>Docs</h1>
+    <div class="cat caps">11 documenten</div>
   </div>
 </div>
-<div class="gen">gegenereerd door ds build op 2026-07-27 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="sub">Alle .md-documenten van het systeem, gerenderd en doorzoekbaar gemaakt uit de bron. De .md zelf blijft de waarheid; deze pagina's zijn een lees-laag.</div>
+<div class="caps" style="margin:26px 0 10px">overzicht</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/docs/readme.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">README</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">wat dit systeem is en hoe je het gebruikt</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a></div>
+<div class="caps" style="margin:26px 0 10px">taal</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/docs/design.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">DESIGN</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">de gelockte ontwerptaal v2: tokens, Devin-DNA, bans</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>  <a class="cell" href="/docs/motion-spec.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">motion-spec</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">bewegingsfysica (gelockt)</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a></div>
+<div class="caps" style="margin:26px 0 10px">proces</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/docs/workflow.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">WORKFLOW</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">nieuw project scaffolden, component-discipline, taste-loop</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a></div>
+<div class="caps" style="margin:26px 0 10px">voor ai</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/docs/agents.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">AGENTS</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">invarianten en commando's voor AI-agents</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a></div>
+<div class="caps" style="margin:26px 0 10px">surface</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/docs/surface-session.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">session</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">sessie-surface brief</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>  <a class="cell" href="/docs/surface-composer.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">composer</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">composer-surface brief</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>  <a class="cell" href="/docs/surface-palette.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">palette</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">command-palette brief</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>  <a class="cell" href="/docs/surface-settings.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">settings</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">settings-surface brief</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>  <a class="cell" href="/docs/surface-approvals.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">approvals</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">approvals-surface brief</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>  <a class="cell" href="/docs/surface-states.html" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">states</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1">states-surface brief</span><span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a></div>
+<div class="gen">gegenereerd door ds build op 2026-07-27 · bron: de .md-bestanden in de repo-root</div>
 
 </div></main>
 <script>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>studio — design-system</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+  .top {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 20px; border-bottom: 1px solid var(--line);
+  }
+  .top h1 { font-size: 17px; font-weight: 500; letter-spacing: -0.02em; }
+  .top .hint { font-size: 13px; color: var(--text-muted); }
+  .top .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  .studio { flex: 1; display: flex; min-height: 0; }
+
+  /* ---- controls (non-designer taal) ---- */
+  .controls {
+    width: 300px; flex-shrink: 0;
+    border-right: 1px solid var(--line);
+    padding: 18px; overflow-y: auto;
+    background: var(--bg);
+  }
+  .ctl { margin-bottom: 22px; }
+  .ctl .lb { font-size: 13.5px; font-weight: 500; margin-bottom: 2px; }
+  .ctl .ds { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+  .ctl .val { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 6px; display: flex; justify-content: space-between; }
+  input[type="range"] {
+    -webkit-appearance: none; width: 100%; height: 2px;
+    background: var(--line-strong); border-radius: 1px; outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 17px; height: 17px; border-radius: 50%;
+    background: var(--surface); border: 1.5px solid var(--text);
+    cursor: pointer; transition: transform 120ms var(--ease-out);
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  .swatches { display: flex; gap: 7px; margin-top: 10px; flex-wrap: wrap; }
+  .swb {
+    width: 30px; height: 30px; border-radius: 8px; cursor: pointer;
+    border: 2px solid transparent; padding: 0;
+    transition: transform 120ms var(--ease-out), border-color 120ms;
+  }
+  .swb:hover { transform: scale(1.1); }
+  .swb.on { border-color: var(--text); }
+  .presets { display: flex; flex-direction: column; gap: 6px; }
+  .preset {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 11px; border: 1px solid var(--line);
+    border-radius: var(--r-md); cursor: pointer; background: var(--surface);
+    transition: border-color 140ms; text-align: left; width: 100%;
+    font-family: var(--font);
+  }
+  .preset:hover { border-color: var(--line-strong); }
+  .preset.on { border-color: var(--accent); }
+  .preset .dots { display: flex; gap: 3px; }
+  .preset .dots span { width: 12px; height: 12px; border-radius: 4px; border: 1px solid var(--line); }
+  .preset .pn { font-size: 13px; font-weight: 500; }
+  .preset .pd { font-size: 11.5px; color: var(--text-faint); margin-left: auto; }
+
+  /* ---- preview canvas ---- */
+  .canvas { flex: 1; overflow-y: auto; padding: 26px 30px 60px; background: var(--bg); }
+  .cv-wrap { max-width: 660px; margin: 0 auto; }
+  .cv-label { font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin: 26px 0 8px; }
+  .cv-label:first-child { margin-top: 0; }
+
+  /* component-stijlen voor preview (kopie uit components/) */
+  .msg-user { background: var(--surface-sunk); border-radius: var(--r-lg); padding: 10px 15px; font-size: 14.5px; display: flex; gap: 12px; align-items: flex-start; }
+  .msg-user .txt { flex: 1; }
+  .avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; flex-shrink: 0; display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+  .msg-agent { font-size: 14.5px; line-height: 1.6; margin: 14px 0; }
+  .worked { display: flex; align-items: center; gap: 9px; padding: 6px 10px 6px 13px; position: relative; font-size: 13px; color: var(--text-muted); border-radius: var(--r-md); margin: 8px 0; }
+  .worked::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px; border-radius: 1px; background: var(--line-strong); transition: background 0.4s; }
+  .worked.live::before { background: var(--accent); }
+  .worked .timer { font-family: var(--mono); font-size: 12.5px; color: var(--text); font-variant-numeric: tabular-nums; }
+  .worked .diff { font-family: var(--mono); font-size: 11.5px; }
+  .worked .diff .add { color: var(--open-green); }
+  .worked .diff .del { color: var(--red); }
+  .worked .tools { margin-left: auto; display: flex; gap: 4px; }
+  .ripple { width: 18px; height: 10px; position: relative; }
+  .ripple::before { content: ""; position: absolute; left: 0; right: 0; top: 4px; height: 2px; background: currentColor; border-radius: 1px; }
+  .ripple.on::before { animation: rippleflow 1.1s linear infinite; }
+  @keyframes rippleflow { 0%{transform:scaleX(.15);transform-origin:left} 45%{transform:scaleX(1);transform-origin:left} 46%{transform-origin:right} 100%{transform:scaleX(.15);transform-origin:right} }
+  .ripple.r { color: var(--accent); } .ripple.w { color: var(--open-green); }
+  .pr-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 12px 15px; margin: 8px 0; }
+  .pr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .pr-repo { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
+  .pr-num { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
+  .pr-title { font-size: 14.5px; font-weight: 500; margin-bottom: 7px; }
+  .pr-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-faint); }
+  .pr-meta .branch { font-family: var(--mono); font-size: 11px; background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px; }
+  .pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
+  .pr-meta .diff .add { color: var(--open-green); } .pr-meta .diff .del { color: var(--red); }
+  .composer { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-lg); padding: 12px 12px 8px; transition: border-color .25s, box-shadow .25s; }
+  .composer:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .composer textarea { width: 100%; border: none; outline: none; resize: none; font-family: var(--font); font-size: 14.5px; background: transparent; color: var(--text); min-height: 22px; }
+  .composer textarea::placeholder { color: var(--text-faint); }
+  .composer-bar { display: flex; align-items: center; gap: 4px; margin-top: 7px; }
+  .composer-bar .right { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .model-chip { font-size: 12px; color: var(--text-muted); padding: 4px 9px; border-radius: var(--r-md); display: flex; gap: 5px; align-items: center; }
+  .btnrow { display: flex; gap: 8px; flex-wrap: wrap; }
+  .status-line { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-faint); margin-top: 14px; }
+  .copyok { color: var(--open-green) !important; }
+  /* tabs: afstellen / docs */
+  .tabs { display: flex; gap: 2px; background: var(--surface-sunk); border-radius: var(--r-md); padding: 2px; }
+  .tabs button { border: none; background: transparent; padding: 5px 13px; border-radius: calc(var(--r-md) - 2px); font-family: var(--font); font-size: 12.5px; color: var(--text-muted); cursor: pointer; }
+  .tabs button.on { background: var(--surface); color: var(--text); font-weight: 500; box-shadow: var(--shadow-xs); }
+  .docsview { display: none; flex: 1; min-height: 0; }
+  .docsview.on { display: flex; }
+  .docsview iframe { flex: 1; border: none; background: var(--bg); }
+  body.mode-docs .studio { display: none; }
+  body.mode-docs .docsview { display: flex; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>studio</h1>
+  <span class="hint">Stel het uiterlijk af zonder code. Alles wat je ziet reageert direct.</span>
+  <div class="tabs" id="tabs">
+    <button class="on" data-mode="">Afstellen</button>
+    <button data-mode="docs">Docs</button>
+  </div>
+  <div class="right">
+    <div class="seg" id="themeSeg">
+      <button class="on" data-t="">Licht</button>
+      <button data-t="dark">Donker</button>
+    </div>
+    <button class="btn primary" id="copyBtn"><svg class="ic sm"><use href="/components/icons.svg#i-copy"/></svg><span>Kopieer tokens</span></button>
+  </div>
+</div>
+
+<div class="studio">
+  <!-- ============ CONTROLS ============ -->
+  <aside class="controls">
+    <div class="ctl">
+      <div class="lb">Startpunt</div>
+      <div class="ds">Kies een richting, stel daarna bij.</div>
+      <div class="presets" id="presets"></div>
+    </div>
+
+    <div class="ctl">
+      <div class="lb">Accentkleur</div>
+      <div class="ds">De ene kleur die aandacht trekt. Knoppen, links, activiteit.</div>
+      <div class="swatches" id="accentSw"></div>
+    </div>
+
+    <div class="ctl">
+      <div class="lb">Warmte van de achtergrond</div>
+      <div class="ds">Koel grijs links, warm zand rechts.</div>
+      <input type="range" id="warmth" min="0" max="100" value="60">
+      <div class="val"><span>koel</span><span id="warmthVal">60%</span><span>warm</span></div>
+    </div>
+
+    <div class="ctl">
+      <div class="lb">Hoekronding</div>
+      <div class="ds">Hoe rond knoppen en kaarten zijn. 0 = vierkant (Devin-marketing).</div>
+      <input type="range" id="radius" min="0" max="16" value="8">
+      <div class="val"><span>vierkant</span><span id="radiusVal">8px</span><span>rond</span></div>
+    </div>
+
+    <div class="ctl">
+      <div class="lb">Tekstgrootte</div>
+      <div class="ds">Basis voor de hele interface. 15 is de referentie.</div>
+      <input type="range" id="fsize" min="13" max="17" value="15">
+      <div class="val"><span>13</span><span id="fsizeVal">15px</span><span>17</span></div>
+    </div>
+  </aside>
+
+  <!-- ============ PREVIEW ============ -->
+  <main class="canvas">
+    <div class="cv-wrap">
+
+      <div class="cv-label">Knoppen</div>
+      <div class="btnrow">
+        <button class="btn primary">Primaire actie</button>
+        <button class="btn">Standaard</button>
+        <button class="btn">Met hint <kbd>2</kbd></button>
+        <button class="gbtn"><svg class="ic"><use href="/components/icons.svg#i-plus"/></svg></button>
+        <button class="gbtn solid"><svg class="ic"><use href="/components/icons.svg#i-arrow-up"/></svg></button>
+      </div>
+
+      <div class="cv-label">Gesprek</div>
+      <div class="msg msg-user">
+        <div class="txt">Migreer alle gradient-tekst naar #317CFF in beide repo's, en test daarna</div>
+        <div class="avatar">J</div>
+      </div>
+      <div class="msg msg-agent">Ik migreer alle gradient-tekst in beide repo's en test daarna de wijzigingen. Ik begin nu.</div>
+
+      <div class="worked live">
+        <svg class="ic sm" style="color:var(--text-faint)"><use href="/components/icons.svg#i-chevron"/></svg>
+        <span>Aan het werk</span>
+        <span class="timer" id="t">0m 00s</span>
+        <div class="tools"><span class="ripple r on"></span><span class="ripple w on"></span></div>
+      </div>
+      <div class="worked">
+        <svg class="ic sm" style="color:var(--text-faint)"><use href="/components/icons.svg#i-chevron"/></svg>
+        <span>Gewerkt</span>
+        <span class="timer">4m 13s</span>
+        <span class="diff"><span class="add">+25</span> <span class="del">−131</span></span>
+      </div>
+
+      <div class="cv-label">Bewijs</div>
+      <div class="pr-card">
+        <div class="pr-head">
+          <span class="badge green"><svg class="ic sm"><use href="/components/icons.svg#i-git-pr"/></svg>Open</span>
+          <span class="pr-repo">cognition/cognition-website</span>
+          <span class="pr-num">#167</span>
+        </div>
+        <div class="pr-title">Alle gradient-tekst naar effen blauw</div>
+        <div class="pr-meta">
+          <span class="branch">devin/USA-938-1765942251</span>
+          <span>→</span>
+          <span class="branch">main</span>
+          <span class="diff"><span class="add">+21</span> <span class="del">−123</span></span>
+        </div>
+      </div>
+
+      <div class="cv-label">Invoer</div>
+      <div class="composer">
+        <textarea rows="1" placeholder="Vraag om features te bouwen, bugs te fixen, of aan je code te werken"></textarea>
+        <div class="composer-bar">
+          <button class="gbtn"><svg class="ic lg"><use href="/components/icons.svg#i-plus"/></svg></button>
+          <div class="right">
+            <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="/components/icons.svg#i-chevrons-updown"/></svg></div>
+            <button class="gbtn"><svg class="ic"><use href="/components/icons.svg#i-mic"/></svg></button>
+            <button class="gbtn solid"><svg class="ic"><use href="/components/icons.svg#i-arrow-up"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="status-line"><svg class="ic sm"><use href="/components/icons.svg#i-sparkle"/></svg>Klaar voor instructies</div>
+
+    </div>
+  </main>
+</div>
+
+<div class="docsview" id="docsview">
+  <iframe src="/docs/" title="docs"></iframe>
+</div>
+
+<script>
+const root = document.documentElement;
+const $ = id => document.getElementById(id);
+
+/* ---------- helpers ---------- */
+function hexToRgb(h){ h=h.replace("#",""); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+function rgbToHex(r,g,b){ return "#"+[r,g,b].map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,"0")).join("").toUpperCase(); }
+function mix(a,b,t){ const A=hexToRgb(a),B=hexToRgb(b); return rgbToHex(A[0]+(B[0]-A[0])*t, A[1]+(B[1]-A[1])*t, A[2]+(B[2]-A[2])*t); }
+function darken(h,f){ const c=hexToRgb(h); return rgbToHex(c[0]*f,c[1]*f,c[2]*f); }
+
+/* ---------- state ---------- */
+const S = { accent: "#317CFF", warmth: 60, radius: 8, fsize: 15, theme: "" };
+
+const presets = [
+  { name: "Vanaf nul", desc: "leeg beginpunt", accent: "#317CFF", warmth: 50, radius: 8, fsize: 15, dots: ["#F6F5F3","#D9D5CE","#191919"] },
+  { name: "Devin",  desc: "referentie",      accent: "#317CFF", warmth: 60, radius: 8,  fsize: 15, dots: ["#F7F6F5","#317CFF","#191919"] },
+  { name: "Strak",  desc: "koeler, hoekiger", accent: "#2563EB", warmth: 15, radius: 4,  fsize: 14, dots: ["#F6F7F9","#2563EB","#141416"] },
+  { name: "Zacht",  desc: "warmer, ronder",  accent: "#4F8DFF", warmth: 95, radius: 12, fsize: 15, dots: ["#F9F4EC","#4F8DFF","#221E19"] },
+];
+// alleen toegestane accenten: groen=git, amber=hold, rood=destructief zijn gereserveerd,
+// paars is geband. Wat overblijft: blauw-familie, teal, grafiet.
+const accentChoices = ["#317CFF","#2563EB","#4F8DFF","#0E7C86","#191919"];
+
+/* ---------- apply ---------- */
+function apply() {
+  root.style.setProperty("--accent", S.accent);
+  root.style.setProperty("--accent-ink", darken(S.accent, 0.78));
+  const [r,g,b] = hexToRgb(S.accent);
+  root.style.setProperty("--accent-soft", `rgba(${r},${g},${b},0.09)`);
+  // warmte: koel #F5F6F8 <-> warm #FAF4EB (alleen licht thema)
+  const bg = mix("#F5F6F8", "#FAF4EB", S.warmth / 100);
+  const sunk = mix("#ECEEF1", "#F0EAE0", S.warmth / 100);
+  if (!S.theme) {
+    root.style.setProperty("--bg", bg);
+    root.style.setProperty("--surface-sunk", sunk);
+  } else {
+    root.style.removeProperty("--bg");
+    root.style.removeProperty("--surface-sunk");
+  }
+  root.style.setProperty("--r-md", S.radius + "px");
+  root.style.setProperty("--r-lg", Math.min(S.radius + 4, 20) + "px");
+  root.style.fontSize = S.fsize + "px";
+  document.body.style.fontSize = S.fsize + "px";
+  root.dataset.theme = S.theme;
+  // ui state
+  $("warmthVal").textContent = S.warmth + "%";
+  $("radiusVal").textContent = S.radius + "px";
+  $("fsizeVal").textContent = S.fsize + "px";
+  document.querySelectorAll(".swb").forEach(el => el.classList.toggle("on", el.dataset.c === S.accent));
+  document.querySelectorAll(".preset").forEach(el => {
+    const p = presets[el.dataset.i];
+    el.classList.toggle("on", p.accent === S.accent && p.warmth === S.warmth && p.radius === S.radius && p.fsize === S.fsize);
+  });
+}
+
+/* ---------- ui: presets ---------- */
+presets.forEach((p, i) => {
+  const el = document.createElement("button");
+  el.className = "preset"; el.dataset.i = i;
+  el.innerHTML = `<span class="dots">${p.dots.map(d=>`<span style="background:${d}"></span>`).join("")}</span><span class="pn">${p.name}</span><span class="pd">${p.desc}</span>`;
+  el.addEventListener("click", () => {
+    Object.assign(S, { accent: p.accent, warmth: p.warmth, radius: p.radius, fsize: p.fsize });
+    $("warmth").value = p.warmth; $("radius").value = p.radius; $("fsize").value = p.fsize;
+    apply();
+  });
+  $("presets").appendChild(el);
+});
+
+/* ---------- ui: accent swatches ---------- */
+accentChoices.forEach(c => {
+  const el = document.createElement("button");
+  el.className = "swb"; el.dataset.c = c; el.style.background = c;
+  el.title = c;
+  el.addEventListener("click", () => { S.accent = c; apply(); });
+  $("accentSw").appendChild(el);
+});
+
+/* ---------- ui: sliders ---------- */
+$("warmth").addEventListener("input", e => { S.warmth = +e.target.value; apply(); });
+$("radius").addEventListener("input", e => { S.radius = +e.target.value; apply(); });
+$("fsize").addEventListener("input", e => { S.fsize = +e.target.value; apply(); });
+
+/* ---------- ui: theme ---------- */
+$("themeSeg").querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+  $("themeSeg").querySelectorAll("button").forEach(x => x.classList.remove("on"));
+  b.classList.add("on");
+  S.theme = b.dataset.t;
+  apply();
+}));
+
+/* ---------- copy tokens ---------- */
+$("copyBtn").addEventListener("click", async () => {
+  const [r,g,b] = hexToRgb(S.accent);
+  const css = `:root {
+  --bg: ${S.theme ? "#121111" : mix("#F5F6F8", "#FAF4EB", S.warmth / 100)};
+  --surface: ${S.theme ? "#1B1A19" : "#FFFFFF"};
+  --surface-sunk: ${S.theme ? "#242322" : mix("#ECEEF1", "#F0EAE0", S.warmth / 100)};
+  --text: ${S.theme ? "#F0EEEB" : "#191919"};
+  --accent: ${S.accent};
+  --accent-ink: ${darken(S.accent, 0.78)};
+  --accent-soft: rgba(${r}, ${g}, ${b}, 0.09);
+  --r-md: ${S.radius}px;
+  --r-lg: ${Math.min(S.radius + 4, 20)}px;
+  /* tekstbasis: ${S.fsize}px · thema: ${S.theme ? "donker" : "licht"} */
+}`;
+  try {
+    await navigator.clipboard.writeText(css);
+    const lbl = $("copyBtn").querySelector("span");
+    lbl.textContent = "Gekopieerd";
+    $("copyBtn").classList.add("copyok");
+    setTimeout(() => { lbl.textContent = "Kopieer tokens"; $("copyBtn").classList.remove("copyok"); }, 1600);
+  } catch(e) { prompt("Kopieer handmatig:", css); }
+});
+
+/* ---------- timer demo ---------- */
+const start = performance.now();
+(function tick(){
+  const s = Math.floor((performance.now()-start)/1000);
+  $("t").textContent = `${Math.floor(s/60)}m ${String(s%60).padStart(2,"0")}s`;
+  requestAnimationFrame(tick);
+})();
+
+/* ---------- ui: tabs ---------- */
+$("tabs").querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+  $("tabs").querySelectorAll("button").forEach(x => x.classList.remove("on"));
+  b.classList.add("on");
+  document.body.classList.toggle("mode-docs", b.dataset.mode === "docs");
+}));
+
+/* deep link */
+if (new URLSearchParams(location.search).get("theme") === "dark") {
+  S.theme = "dark";
+  $("themeSeg").querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === "dark"));
+}
+apply();
+</script>
+</body>
+</html>

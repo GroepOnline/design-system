@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pr-card — design-system</title>
+<title>session — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/tokens.css">
@@ -116,6 +116,27 @@
     .wrap { padding: 20px 16px 40px; }
     .grid { grid-template-columns: 1fr; }
   }
+
+  .md { max-width: 780px; }
+  .md h1 { font-size: 26px; margin: 8px 0 10px; }
+  .md h2 { font-size: 19px; margin: 30px 0 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .md h3 { font-size: 15.5px; margin: 22px 0 6px; }
+  .md h4 { font-size: 14px; margin: 18px 0 4px; }
+  .md p, .md li { font-size: 14.5px; line-height: 1.65; color: var(--text-muted); }
+  .md p { margin: 8px 0; }
+  .md ul, .md ol { padding-left: 20px; margin: 8px 0; }
+  .md li { margin: 3px 0; }
+  .md strong { color: var(--text); font-weight: 500; }
+  .md code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .md pre { background: var(--surface-sunk); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; overflow-x: auto; margin: 12px 0; scrollbar-width: thin; }
+  .md pre code { background: none; padding: 0; font-size: 12px; line-height: 1.6; }
+  .md table { border-collapse: collapse; margin: 14px 0; width: 100%; font-size: 13.5px; }
+  .md th { text-align: left; font-weight: 500; color: var(--text); padding: 8px 12px; border-bottom: 1px solid var(--line-strong); }
+  .md td { padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--text-muted); vertical-align: top; }
+  .md a { color: var(--accent-ink); text-decoration: none; }
+  .md a:hover { text-decoration: underline; }
+  .md blockquote { border-left: 2px solid var(--accent); padding: 4px 14px; margin: 12px 0; color: var(--text-muted); }
+  .md hr { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
 </style>
 </head>
 <body>
@@ -131,7 +152,7 @@
   <a class="it" href="/components/worked-row/"><span class="tile"><svg><use href="/components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
   <div class="lbl caps">Bewijs</div>
   <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
-  <a class="it on" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
+  <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
   <div class="lbl caps">Structuur</div>
   <a class="it" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
@@ -149,141 +170,103 @@
 </aside>
 <main class="main"><div class="wrap">
 <div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span>
+  <span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span>
   <div>
-    <h1>pr-card</h1>
-    <div class="cat caps">bewijs</div>
+    <h1>session</h1>
+    <div class="cat caps">surface · bron: surfaces/session.md</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern</div>
+  <div class="meta"><a href="/docs/" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
 </div>
-<div class="sub">bewijs van werk · manifest: <code>components/pr-card/catalog.json</code></div>
-<div class="legend">
-  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
-  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds pr-card select|remove</code> · experimenten in <code>playground/</code></span>
-</div>
-<div class="use-now">
-  <span class="lbl2">Gebruik nu</span>
-  <span>actieve variant <code>default</code></span>
-  <code>components/pr-card/self/default.html</code>
-  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
-</div>
-
-<div class="docs">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>bewijs van git-werk na een run</li><li>diff-stats altijd zichtbaar</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>cards-in-cards</li><li>shadow op product-cards</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>r12 hairline, hover line-strong</code></li><li><code>badge.green Open</code></li><li><code>branch→main in mono chips</code></li></ul></div>
-</div>
-
-<div class="grid">
-  <div class="cell active">
-    <div class="ch">
-      <span class="id">default</span>
-      <span class="note">oorspronkelijke demo, gemigreerd naar catalogus</span>
-      <span class="right">
-        <span class="org ">zelf</span>
-        <span class="st active">ACTIEF</span>
-      </span>
-    </div>
-    <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;nl&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-&lt;title&gt;component: pr-card&lt;/title&gt;
-&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/tokens.css&quot;&gt;
-&lt;style&gt;
-  body { padding: 40px 32px; max-width: 780px; }
-  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
-  .demo-head a { color: var(--accent-ink); text-decoration: none; }
-
-  /* ==== COMPONENT CSS (copy vanaf hier) ==== */
-  .pr-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    padding: 12px 15px;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-  .pr-card:hover { border-color: var(--line-strong); }
-  .pr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .pr-repo { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
-  .pr-num { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
-  .pr-actions { margin-left: auto; display: flex; gap: 3px; }
-  .pr-actions .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
-  .pr-title { font-size: 14.5px; font-weight: 500; margin-bottom: 7px; }
-  .pr-meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-faint); }
-  .pr-meta .branch {
-    font-family: var(--mono); font-size: 11px;
-    background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px;
-    max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
-  .pr-meta .diff .add { color: var(--open-green); }
-  .pr-meta .diff .del { color: var(--red); }
-  /* entrance (optioneel, voor live verschijnen) */
-  .pr-card.enter { opacity: 0; transform: translateY(10px) scale(0.985); }
-  .pr-card.enter.shown { opacity: 1; transform: none; transition: opacity .42s var(--ease-out), transform .42s var(--ease-out), border-color .2s; }
-  /* ==== /COMPONENT CSS ==== */
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;← components&lt;/a&gt; / pr-card&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/cognition-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#167&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942251&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;6 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+21&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−123&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;pr-card&quot;&gt;
-  &lt;div class=&quot;pr-head&quot;&gt;
-    &lt;span class=&quot;badge green&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-pr&quot;/&gt;&lt;/svg&gt;Open&lt;/span&gt;
-    &lt;span class=&quot;pr-repo&quot;&gt;cognition/devin-website&lt;/span&gt;
-    &lt;span class=&quot;pr-num&quot;&gt;#357&lt;/span&gt;
-    &lt;div class=&quot;pr-actions&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-git-branch&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;pr-title&quot;&gt;Alle gradient-tekst naar #317CFF&lt;/div&gt;
-  &lt;div class=&quot;pr-meta&quot;&gt;
-    &lt;span class=&quot;branch&quot;&gt;devin/USA-938-1765942252&lt;/span&gt;
-    &lt;svg class=&quot;ic sm&quot; style=&quot;width:10px&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;
-    &lt;span class=&quot;branch&quot;&gt;main&lt;/span&gt;
-    &lt;span&gt;2 files&lt;/span&gt;
-    &lt;span class=&quot;diff&quot;&gt;&lt;span class=&quot;add&quot;&gt;+4&lt;/span&gt; &lt;span class=&quot;del&quot;&gt;−8&lt;/span&gt;&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- CONTRACT
-  kaart = bewijs van werk. r12, hairline, geen shadow.
-  entrance: .enter + .shown (stagger 120 + i*140ms) als de agent hem live maakt.
-  groen badge alleen voor git-status. diff: add groen / del rood, mono 11.5.
---&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre></details>
-  </div>
-</div>
-<div class="gen">gegenereerd door ds build op 2026-07-27 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="md"><h1>Surface Brief — Session Workbench</h1>
+<blockquote>Binds to <code>DESIGN.md</code>. Register: product. Mode: Operate.</blockquote>
+<blockquote>This is the home surface — 90% of product time happens here.</blockquote>
+<hr>
+<h2>1. Purpose &amp; read</h2>
+<p>The workbench answers the three core questions (what is my agent doing / what does it need / where did it leave off) without the user reading a paragraph. Scanability first, prose second.</p>
+<p>Composition: rail + work zone + context rail, Current anchored at the rail/work boundary.</p>
+<h2>2. Anatomy</h2>
+<pre><code>┌────────────────────────────────────────────────────────────────┐
+│ RAIL 248px          ║ WORK ZONE (8col)          │ CONTEXT 4col │
+│ ┌────────────────┐  ║ ┌─────┬─────────────────┐ │ ┌──────────┐ │
+│ │ ⌘K search      │  ║ │ tab │ tab │ tab │  +  │ │ │ files    │ │
+│ ├────────────────┤  ║ ├─────┴─────────────────┤ │ │ browser  │ │
+│ │ WORKSPACES     │  ║ │                         │ │ │ terminal │ │
+│ │ ▸ OpenWork Chat│  ║ │      transcript         │ │ │ (tabs)   │ │
+│ │   📌 pinned    │  ║ │                         │ │ ├──────────┤ │
+│ │   ● session A  │  ║ │                         │ │ │ session  │ │
+│ │   ○ session B  │  ║ ├─────────────────────────┤ │ │ info     │ │
+│ │   TO DO (3)    │  ║ │      composer           │ │ │ tools    │ │
+│ │   ARCHIVED     │  ║ └─────────────────────────┘ │ └──────────┘ │
+│ ├────────────────┤  ║                             │              │
+│ │ account · sync │  ║                             │              │
+│ └────────────────┘  ║                             │              │
+│ 1 provider · 2 MCP  ║ ← the Current (2px)                       │
+└────────────────────────────────────────────────────────────────┘</code></pre>
+<h2>3. Rail (left)</h2>
+<h3>Structure</h3>
+<ul>
+<li>Top: <code>⌘K</code> search affordance (full-width, <code>surface-sunk</code>, <code>r-control</code>, mono placeholder <code>Zoek of start…</code> — this is the ONE allowed pill-adjacent search affordance, here as a rect with <code>r-control</code>).</li>
+<li>Middle: workspace tree. Two-lane rows (glyph 20px / label flex).</li>
+<li>Bottom: account block (name, sync state) + status line (providers · MCPs · mode) in mono 12px <code>text-faint</code>.</li>
+</ul>
+<h3>Session rows</h3>
+<table><thead><tr><th>Element</th><th>Spec</th></tr></thead><tbody><tr><td>Status glyph</td><td>16px, semantic icon: <code>●</code> active (accent), <code>○</code> idle (line-strong), <code>◐</code> needs-you (warning), <code>✓</code> done (success), <code>⏸</code> archived (text-faint)</td></tr><tr><td>Title</td><td>14px interface, <code>text</code>, truncate, no wrapping</td></tr><tr><td>Meta</td><td>12px mono, <code>text-faint</code>: relative time</td></tr><tr><td>Hover</td><td><code>surface-sunk</code> fill, <code>d-hover</code></td></tr><tr><td>Active row</td><td><code>accent-soft</code> wash + 2px <code>accent</code> leading bar (NOT the Current — a row marker)</td></tr><tr><td>Needs-you row</td><td><code>warning</code> glyph + title in <code>text</code>, row breathes once on appearance (single 1.02 scale settle) then still</td></tr></tbody></table>
+<h3>Groups</h3>
+<ul>
+<li>Group headers: 11px uppercase, letter-spacing 0.08em, <code>text-faint</code>, <code>TO DO</code> / <code>PINNED</code> / <code>ARCHIVED</code>.</li>
+<li>Collapse chevron on hover only. State persists per workspace.</li>
+</ul>
+<h3>Rail interactions</h3>
+<ul>
+<li>Collapse to 64px icon rail via <code>⌘B</code> or drag handle. <code>d-pane</code>.</li>
+<li>Drag session onto group = move (drop target highlights <code>accent-soft</code>).</li>
+<li>Right-click = context menu (rename, pin, archive, delete). Every action also in ⌘K.</li>
+</ul>
+<h2>4. Work zone</h2>
+<h3>Tab strip</h3>
+<ul>
+<li>Height 36px, <code>surface</code>, hairline below.</li>
+<li>Tabs: <code>r-control</code> top corners only, title + dirty-dot (draft exists), close <code>×</code> on hover.</li>
+<li>Active tab: <code>surface</code> on <code>canvas</code> seam, no border-circus.</li>
+<li>Overflow: horizontal scroll with edge fades, never wrap.</li>
+<li><code>⌘1..9</code> jumps to tab. Drag to split right.</li>
+</ul>
+<h3>Transcript</h3>
+<ul>
+<li>Measure: 72ch max, centered in work zone with min 48px gutters.</li>
+<li>Message spacing: 24px between turns, 12px within a turn.</li>
+<li><strong>User messages</strong>: <code>surface-sunk</code> block, <code>r-surface</code>, 14px.</li>
+<li><strong>Agent messages</strong>: no background — prose on <code>surface</code>, 15px reading size, markdown with <code>line</code> hairline code blocks (mono 13px, <code>surface-sunk</code> background).</li>
+<li><strong>Tool calls</strong>: collapsed one-liner by default:</li>
+<p><code>[icon] Lees src/auth.ts · 240ms</code> — icon per family, verb + object, duration mono <code>text-faint</code>. Expand inline (height animation <code>d-state</code>, content reveal <code>d-state</code>).</p>
+<li><strong>Diffs</strong>: mono 13px, <code>+</code> gutter <code>success</code>, <code>−</code> gutter <code>danger</code>, no full-line backgrounds, max 3 context lines, &quot;Toon meer&quot; expands.</li>
+<li><strong>Thinking/reasoning</strong>: collapsed <code>text-faint</code> italic block, one line: <code>Redeneerde 12s over authenticatie-aanpak</code>, expandable.</li>
+<li><strong>Attachments in messages</strong>: chip with real file-type icon, name, size mono. Click opens in context rail.</li>
+</ul>
+<h3>Composer (see <code>surface-composer.md</code>)</h3>
+<h2>5. Context rail (right, 4 col)</h2>
+<ul>
+<li>Tabbed: Files / Browser / Terminal / Info. Only one open at a time.</li>
+<li>Closed by default on &lt;1440px, open on ≥1440px, remembers per workspace.</li>
+<li>Panel slides <code>d-pane</code> (motion 5). Hairline <code>line</code> divider.</li>
+<li><strong>Files</strong>: workspace tree, <code>◆</code> changed-by-agent badge on modified files (accent), click opens read-only preview. No editing here — editing is agent work.</li>
+<li><strong>Info</strong>: session model, token usage (mono), MCP connections with live status dots, workspace path with copy button.</li>
+<li>Context rail never shows while <code>holding</code> state is unresolved — the approval gets the screen.</li>
+</ul>
+<h2>6. States</h2>
+<table><thead><tr><th>State</th><th>Behavior</th></tr></thead><tbody><tr><td>Loading workspace</td><td>Rail skeleton (3 group blocks), work zone: composer live immediately (drafts are local), transcript skeleton 3 blocks, single shimmer</td></tr><tr><td>Empty workspace</td><td>Transcript: <code>Nog geen sessies.</code> + primary action <code>[Start je eerste taak]</code> (accent, <code>r-control</code>). No illustration</td></tr><tr><td>Session empty</td><td>Composer pre-focused, placeholder: <code>Beschrijf de taak…</code></td></tr><tr><td>Engine down</td><td>Banner top of work zone: <code>danger</code> icon + <code>Engine reageert niet.</code> + <code>[Herstart]</code> — transcript remains readable, composer disabled with reason</td></tr><tr><td>Sync conflict</td><td>Inline block at top of transcript: <code>warning</code> + <code>Sessie is op een ander apparaat gewijzigd.</code> + <code>[Laad nieuwe versie] [Behoud lokale]</code></td></tr><tr><td>Archived session</td><td>Transcript read-only, composer replaced by <code>Gearchiveerd · [Herstel]</code> bar</td></tr><tr><td>Offline</td><td>Last-known transcript visible, composer accepts input (queues), status bar: <code>Offline · wijzigingen wachten</code> in mono <code>warning</code></td></tr></tbody></table>
+<h2>7. Keyboard map (surface-owned)</h2>
+<table><thead><tr><th>Keys</th><th>Action</th></tr></thead><tbody><tr><td><code>⌘K</code></td><td>Command palette</td></tr><tr><td><code>⌘B</code></td><td>Toggle rail</td></tr><tr><td><code>⌘J</code></td><td>Toggle context rail</td></tr><tr><td><code>⌘1..9</code></td><td>Jump to tab</td></tr><tr><td><code>⌘⇧T</code></td><td>Reopen closed session tab</td></tr><tr><td><code>Enter</code> in composer</td><td>Send (steer when streaming)</td></tr><tr><td><code>⌘Enter</code></td><td>Queue message</td></tr><tr><td><code>Esc</code></td><td>Close topmost layer; stop run only from focused stop control</td></tr><tr><td><code>1/2/3</code> on approval</td><td>Allow / once / deny</td></tr></tbody></table>
+<h2>8. Acceptance criteria</h2>
+<ul>
+<li>[ ] Agent state readable in ≤2s via Current + row glyph alone (no text read needed).</li>
+<li>[ ] Tab switch &lt; 50ms perceived (preloaded panes).</li>
+<li>[ ] Approval actionable in ≤2 keystrokes from anywhere in the app.</li>
+<li>[ ] No card-in-card anywhere on this surface.</li>
+<li>[ ] All states above verified in light + dark + reduced-motion + forced-colors.</li>
+<li>[ ] Rail collapse/expand preserves scroll and selection.</li>
+</ul></div>
+<div class="gen">gegenereerd uit surfaces/session.md op 2026-07-27 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <script>
