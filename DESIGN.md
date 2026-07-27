@@ -174,3 +174,23 @@ Elke component-catalogus hoort bij één categorie (`cat` in catalog.json):
 | structuur | nav, settings |
 
 Rail en gallery groeperen op categorie. Nieuwe categorie: toevoegen aan `CATS` in `ds`.
+
+---
+
+## §14 Stijl-laag (v2.2)
+
+Het systeem draagt meerdere **complete skins** via `data-style` op `<html>`.
+Dit is geen accent-wissel maar een volledige tweede stijl over dezelfde taal.
+
+| Skin | Karakter | Tokens |
+|---|---|---|
+| `devin` (default) | warm, zacht, r8/12, #317CFF | warm off-white, hairlines |
+| `strak` | koel, scherp, r4/6, #2563EB | koel grijs-blauw, sterkere lines |
+
+Regels:
+- Nieuwe skins zijn complete token-overrides in `tokens.css`, light én dark
+- De taal (§1-§10) blijft gelden onder elke skin: geen spinners, één accent,
+  zelfde typografie-schaal, zelfde icon-grid
+- Wisselen: seg in de rail (persist via localStorage) of `?style=strak`
+- Variant-frames erven de skin via propagatie in de shell
+- Een derde skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen

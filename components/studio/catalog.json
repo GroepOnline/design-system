@@ -11,16 +11,28 @@
       "status": "locked",
       "added": "2026-07-27",
       "note": "volledige visuele editor — open fullscreen voor echt gebruik",
-      "h": 860
+      "h": 860,
+      "wide": true
     },
     {
       "id": "v2-docs",
       "file": "self/v2-docs.html",
       "origin": "self",
       "source": null,
+      "status": "locked",
+      "added": "2026-07-27",
+      "note": "tabs afstellen/docs + vanaf-nul preset",
+      "wide": true
+    },
+    {
+      "id": "v3-flow",
+      "file": "self/v3-flow.html",
+      "origin": "self",
+      "source": null,
       "status": "active",
       "added": "2026-07-27",
-      "note": "tabs afstellen/docs + vanaf-nul preset"
+      "note": "natuurlijke flow, sticky topbar+controls, geen interne scroll",
+      "wide": true
     }
   ],
   "docs": {

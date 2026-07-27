@@ -18,10 +18,10 @@
   }
   .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
   .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
-  .rail .lbl { margin: 16px 10px 6px; }
+  .rail .lbl { margin: 14px 10px 5px; color: var(--text-muted); }
   .rail a.it {
     display: flex; align-items: center; gap: 10px;
-    padding: 7px 10px 7px 8px; margin-bottom: 2px;
+    padding: 6px 10px 6px 8px; margin-bottom: 1px;
     border-radius: var(--r-md); border: 1px solid transparent;
     text-decoration: none;
   }
@@ -34,10 +34,10 @@
     border: 1px solid var(--line); background: var(--surface);
     display: grid; place-items: center;
   }
-  .rail .tile svg { width: 14px; height: 14px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .rail a.it.sys { padding: 6px 10px 6px 13px; }
+  .rail .tile svg { width: 17px; height: 17px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .rail a.it.sys { padding: 5px 10px 5px 13px; }
   .rail a.it.sys .tile { width: 18px; height: 18px; border: none; background: transparent; }
-  .rail a.it.sys .tile svg { width: 13px; height: 13px; color: var(--text-faint); }
+  .rail a.it.sys .tile svg { width: 14px; height: 14px; color: var(--text-faint); }
   .rail a.it.sys .nm { font-size: var(--text-md); font-weight: 400; color: var(--text-muted); }
   .rail .nm { font-size: var(--text-md); font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
   .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
@@ -63,7 +63,7 @@
   /* ---- pagina-header ---- */
   .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
   .pagehead .tile { width: 44px; height: 44px; border-radius: 11px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex-shrink: 0; }
-  .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pagehead .tile svg { width: 22px; height: 22px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .pagehead h1 { margin: 0; }
   .pagehead .cat { margin-left: 2px; }
   .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; }
@@ -83,13 +83,20 @@
   .doc.avoid .dt { color: var(--red); }
   .doc.contract .dt { color: var(--accent-ink); }
   .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; }
-  .doc ul { padding-left: 16px; }
+  .doc ul { padding-left: 17px; }
+  .doc li { margin: 2px 0; }
+  .doc li::marker { color: var(--text-faint); }
   .doc code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: var(--text-md); }
+  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: var(--text-md); cursor: pointer; user-select: none; }
+  .cell .ch:hover { background: var(--hover); }
+  .cell .ch .caret { width: 13px; height: 13px; color: var(--text-faint); transition: transform 200ms var(--ease-out); flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; }
+  .cell.closed .ch .caret { transform: rotate(-90deg); }
+  .cell.closed iframe, .cell.closed .cf, .cell.closed details { display: none; }
+  .cell.closed .ch { border-bottom: none; }
   .cell .ch .id { font-weight: 500; }
   .cell .ch .note { color: var(--text-faint); font-size: var(--text-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
@@ -143,7 +150,8 @@
   <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="/AGENTS.md"><span class="tile"><svg><use href="/components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
   <a class="it sys" href="/references/"><span class="tile"><svg><use href="/components/icons.svg#i-external"/></svg></span><span class="nm">references</span><span class="n">shots</span></a>
-  <div class="foot">
+  <div class="foot" style="flex-direction:column;align-items:stretch">
+    <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button></div>
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
   </div>
 </aside>
@@ -176,6 +184,7 @@
 <div class="grid">
   <div class="cell active">
     <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">default</span>
       <span class="note">oorspronkelijke demo, gemigreerd naar catalogus</span>
       <span class="right">
@@ -256,6 +265,7 @@
   </div>
   <div class="cell">
     <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">standard</span>
       <span class="note">basis btn, hairline border</span>
       <span class="right">
@@ -272,6 +282,7 @@
   </div>
   <div class="cell">
     <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">primary</span>
       <span class="note">inverse text/bg</span>
       <span class="right">
@@ -288,6 +299,7 @@
   </div>
   <div class="cell">
     <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">with-kbd</span>
       <span class="note">approval-patroon met toets-hints</span>
       <span class="right">
@@ -305,6 +317,7 @@
   </div>
   <div class="cell">
     <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">gbtn</span>
       <span class="note">ghost icon + solid send</span>
       <span class="right">
@@ -322,6 +335,7 @@
   </div>
   <div class="cell">
     <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">shadcn-default</span>
       <span class="note">zinc-schaal, radius 6, shadow-xs, 36px hoog</span>
       <span class="right">
@@ -351,6 +365,7 @@ body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   </div>
   <div class="cell">
     <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">devin-square</span>
       <span class="note">radius 0, marketing-site stijl</span>
       <span class="right">
@@ -378,22 +393,46 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
 </div></main>
 <script>
 const seg = document.getElementById("themeSeg");
+const sseg = document.getElementById("styleSeg");
+function applyToFrames(fn) {
+  document.querySelectorAll("iframe").forEach(f => { try { fn(f.contentDocument.documentElement); } catch(e) {} });
+}
 function setTheme(t) {
+  curTheme = t;
   document.documentElement.dataset.theme = t;
+  try { localStorage.setItem("ds-theme", t); } catch(e) {}
   seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
-  document.querySelectorAll("iframe").forEach(f => {
-    try { f.contentDocument.documentElement.dataset.theme = t; } catch(e) {}
-  });
+  applyToFrames(r => r.dataset.theme = t);
+}
+function setStyle(v) {
+  curStyle = v;
+  document.documentElement.dataset.style = v;
+  try { localStorage.setItem("ds-style", v); } catch(e) {}
+  sseg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.s === v));
+  applyToFrames(r => r.dataset.style = v);
 }
 seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setTheme(b.dataset.t)));
-if (new URLSearchParams(location.search).get("theme") === "dark") {
-  window.addEventListener("load", () => setTheme("dark"));
-  setTheme("dark");
-}
+sseg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setStyle(b.dataset.s)));
+const q = new URLSearchParams(location.search);
+const wantTheme = q.get("theme") || (() => { try { return localStorage.getItem("ds-theme"); } catch(e) { return null; } })();
+const wantStyle = q.get("style") || (() => { try { return localStorage.getItem("ds-style"); } catch(e) { return null; } })();
+if (wantTheme) { window.addEventListener("load", () => setTheme(wantTheme)); setTheme(wantTheme); }
+if (wantStyle) { window.addEventListener("load", () => setStyle(wantStyle)); setStyle(wantStyle); }
+/* cell in/uitklappen via header */
+document.querySelectorAll(".cell > .ch").forEach(ch => {
+  ch.addEventListener("click", e => {
+    if (e.target.closest("a") || e.target.closest("button")) return;
+    ch.parentElement.classList.toggle("closed");
+  });
+});
+let curTheme = "", curStyle = "";
 function fitFrames() {
   document.querySelectorAll("iframe[data-fit]").forEach(f => {
     try {
-      const h = f.contentDocument.documentElement.scrollHeight;
+      const r = f.contentDocument.documentElement;
+      r.dataset.theme = curTheme;
+      r.dataset.style = curStyle;
+      const h = r.scrollHeight;
       if (h > 0) f.style.height = Math.max(140, h + 2) + "px";
     } catch(e) {}
   });

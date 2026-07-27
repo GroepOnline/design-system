@@ -39,3 +39,10 @@
 - **signal**: "25x meer smoothly > meer de kant van Devin op volledige skills voor perfected implementation"
 - **delta**: motion quality became a first-class identity pillar (motion-spec.md exists because of this)
 - **candidate rule**: motion polish is not optional garnish for Joep — it is core product value. *Watch for recurrence → motion category*
+
+## 2026-07-27 · tweede stijl-skin (Strak)
+
+- **shown**: design-system met één stijl (Devin-richting) + studio-presets
+- **reaction**: "dit is 1 gehele stijl met paar opties maar je moet ook nog 1 hier overheen doen"
+- **hypothesis**: het systeem moet meerdere COMPLETE skins dragen via een stijl-laag (data-style), niet alleen accent/radius-opties. Strak (koel, scherp, r4/6) is de tweede skin naast Devin (warm, zacht, r8/12)
+- **status**: geïmplementeerd als data-style="strak" in tokens.css + switch in rail, propagateert naar alle variant-frames. Regel kandidaat bij herhaling

@@ -241,3 +241,38 @@ p { text-wrap: pretty; }
 .ic-13 { width: 13px; height: 13px; }
 .ic-18 { width: 18px; height: 18px; }
 .ic-24 { width: 24px; height: 24px; }
+
+/* ── Stijl-laag (v2.2) ──────────────────────────────────────
+   Twee complete skins over hetzelfde systeem. Zet met
+   data-style op <html>; componenten erven via tokens.
+   devin (default) = warm, zacht, r8/12 · strak = koel, scherp, r4/6 */
+[data-style="strak"] {
+  --bg: #F4F6F9;
+  --surface: #FFFFFF;
+  --surface-sunk: #EBEEF3;
+  --text: #131417;
+  --text-muted: #525860;
+  --text-faint: #8F96A1;
+  --line: #E2E6EC;
+  --line-strong: #C6CDD8;
+  --r-md: 4px;
+  --r-lg: 6px;
+  --accent: #2563EB;
+  --accent-ink: #1D4FD7;
+  --accent-soft: rgba(37, 99, 235, 0.09);
+  --hover: rgba(19, 20, 23, 0.05);
+}
+[data-theme="dark"][data-style="strak"] {
+  --bg: #0F1013;
+  --surface: #16181C;
+  --surface-sunk: #1E2126;
+  --text: #ECEDF0;
+  --text-muted: #9BA1AB;
+  --text-faint: #676D78;
+  --line: #25282E;
+  --line-strong: #363A43;
+  --accent: #4F8DFF;
+  --accent-ink: #7FA9FF;
+  --accent-soft: rgba(79, 141, 255, 0.12);
+  --hover: rgba(236, 237, 240, 0.06);
+}
