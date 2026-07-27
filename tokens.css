@@ -206,3 +206,38 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Typografie v2.1 (web-typography skill) ─────────────────
+   schaal-tokens, rendering, measure, numeriek. Gebruik overal:
+   UI standaard --text-md, prose .prose (65ch), data .num. */
+:root {
+  --text-2xs: 10.5px;   /* meta, counts, badge */
+  --text-xs:  11.5px;   /* labels, kbd, captions */
+  --text-sm:  12.5px;   /* beschrijvingen, secondair */
+  --text-md:  13.5px;   /* UI-standaard */
+  --text-lg:  15px;     /* prose / kleine titels */
+  --text-xl:  18px;     /* sectie-headers */
+  --text-2xl: 24px;     /* pagina-titels */
+  --leading-head: 1.2;
+  --leading-ui: 1.45;
+  --leading-prose: 1.62;
+  --track-tight: -0.02em;
+  --track-caps: 0.07em;
+}
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+body { font-size: var(--text-md); line-height: var(--leading-ui); }
+h1, h2, h3, h4 { line-height: var(--leading-head); letter-spacing: var(--track-tight); text-wrap: balance; }
+h1 { font-size: var(--text-2xl); font-weight: 500; }
+h2 { font-size: var(--text-xl); font-weight: 500; }
+h3 { font-size: var(--text-lg); font-weight: 500; }
+p { text-wrap: pretty; }
+.prose { font-size: var(--text-lg); line-height: var(--leading-prose); max-width: 65ch; color: var(--text); }
+.num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+.caps { font-size: var(--text-2xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--text-faint); }
+
+/* ── Iconen v2.1 (icon-system skill) ────────────────────────
+   grid 24, stroke 2, optische maten: 13/15/18/24. */
+.ic   { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.ic-13 { width: 13px; height: 13px; }
+.ic-18 { width: 18px; height: 18px; }
+.ic-24 { width: 24px; height: 24px; }

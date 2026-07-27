@@ -27,5 +27,6 @@
       "active = surface-sunk + weight 500",
       "dot 6px, pulse 2s zacht"
     ]
-  }
+  },
+  "cat": "structuur"
 }

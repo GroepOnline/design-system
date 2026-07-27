@@ -28,5 +28,6 @@
       ".setting: label/desc/state + control rechts",
       "seg voor thema, switch voor booleans"
     ]
-  }
+  },
+  "cat": "structuur"
 }

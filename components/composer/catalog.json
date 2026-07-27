@@ -28,5 +28,6 @@
       "send = .gbtn.solid",
       "model-chip is select, geen knop"
     ]
-  }
+  },
+  "cat": "gesprek"
 }

@@ -28,5 +28,6 @@
       "cmd mono op sunk",
       "primary btn = eerste optie"
     ]
-  }
+  },
+  "cat": "gesprek"
 }

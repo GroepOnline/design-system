@@ -63,6 +63,13 @@ taste-log entry → (2+ observaties) → regel in `taste/taste-rules.md` →
 update: `DESIGN.md` + `tokens.css` + geraakte `components/` + `surfaces/`.
 Een regel die alleen in taste-rules staat, bestaat niet.
 
+## Categorieën
+
+`cat` in catalog.json: primitieven · gesprek · bewijs · structuur. Nieuwe
+componenten krijgen verplicht een categorie; rail/gallery groeperen erop.
+Typografie- en icon-regels: DESIGN.md §11-§13 (schaal-tokens verplicht,
+sprite-svg's altijd fill:none + stroke:currentColor).
+
 ## Bestandskaart
 
 | Pad | Rol |

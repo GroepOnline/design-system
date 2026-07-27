@@ -3,7 +3,7 @@
 
 Model:
   components/<naam>/
-    catalog.json      manifest (entries + docs) — DE ENIGE BRON
+    catalog.json      manifest (entries + docs + cat) — DE ENIGE BRON
     self/             zelf-ontworpen varianten (ook aangepaste externe)
     external/         externe varianten (shadcn, devin-observed, ...)
     index.html        GEGENEREERD door `ds build` — niet handmatig bewerken
@@ -12,6 +12,7 @@ Statussen:
   active   het geselecteerde component (1 per component)
   locked   in de catalogus, vast — verandert nooit stilletjes
 
+Categorieën (rail + gallery): primitieven, gesprek, bewijs, structuur.
 Experimenten horen in playground/. Promoveren: ds <c> add.
 Selecteren:      ds <c> select <id>   (demote huidige active automatisch)
 Verwijderen:     ds <c> remove <id>   (expliciet)
@@ -28,6 +29,12 @@ from datetime import date
 ROOT = os.path.dirname(os.path.abspath(__file__))
 COMP = os.path.join(ROOT, "components")
 
+CATS = [
+    ("primitieven", "Primitieven"),
+    ("gesprek", "Gesprek"),
+    ("bewijs", "Bewijs"),
+    ("structuur", "Structuur"),
+]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
     "button": "i-click", "composer": "i-pencil", "nav": "i-inbox",
@@ -35,19 +42,32 @@ ICONS = {
     "worked-row": "i-clock", "studio": "i-sparkle",
 }
 SYS_LINKS = [
-    ("studio", "/components/studio/", "i-sparkle", "studio", "visueel"),
-    ("design", "/DESIGN.md", "i-book", "DESIGN.md", "taal"),
-    ("workflow", "/WORKFLOW.md", "i-queue", "WORKFLOW.md", "proces"),
-    ("agents", "/AGENTS.md", "i-terminal", "AGENTS.md", "voor ai"),
-    ("references", "/references/", "i-external", "references", "shots"),
+    ("/components/studio/", "i-sparkle", "studio", "visueel"),
+    ("/DESIGN.md", "i-book", "DESIGN.md", "taal"),
+    ("/WORKFLOW.md", "i-queue", "WORKFLOW.md", "proces"),
+    ("/AGENTS.md", "i-terminal", "AGENTS.md", "voor ai"),
+    ("/references/", "i-external", "references", "shots"),
 ]
+
+# ---------- cli logs (ansi) ----------
+
+def _c(code, s):
+    return f"\033[{code}m{s}\033[0m" if sys.stdout.isatty() else str(s)
+
+def ok(m):    print(f"{_c('32;1','✓')} {m}")
+def err(m):   sys.exit(f"{_c('31;1','✗')} {m}")
+def dim(s):   return _c("2", s)
+def bold(s):  return _c("1", s)
+def green(s): return _c("32", s)
+def blue(s):  return _c("34", s)
+def amber(s): return _c("33", s)
 
 # ---------- helpers ----------
 
 def load_manifest(c):
     p = os.path.join(COMP, c, "catalog.json")
     if not os.path.exists(p):
-        sys.exit(f"onbekend component: {c}")
+        err(f"onbekend component: {bold(c)}")
     with open(p) as f:
         return json.load(f)
 
@@ -67,52 +87,60 @@ def rewrite_paths(text):
     text = re.sub(r'src="(?:\.\./)*components/lib\.js"', 'src="/components/lib.js"', text)
     return text
 
+def counts(m):
+    ns = sum(1 for e in m["entries"] if e["origin"].startswith("self"))
+    return ns, len(m["entries"]) - ns
+
 # ---------- commands ----------
 
 def cmd_list():
-    print(f"{'component':<14} {'entries':<8} {'active':<20} {'self/ext'}")
+    print(bold(f"{'component':<15} {'cat':<13} {'entries':<8} {'active':<18} {'zelf/ext'}"))
+    print(dim("─" * 66))
     for c in components():
         m = load_manifest(c)
         acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
-        ns = sum(1 for e in m["entries"] if e["origin"].startswith("self"))
-        nx = len(m["entries"]) - ns
-        print(f"{c:<14} {len(m['entries']):<8} {','.join(acts) or '-':<20} {ns}/{nx}")
+        ns, nx = counts(m)
+        act = green(",".join(acts)) if acts else dim("-")
+        print(f"{bold(c):<24} {dim(m.get('cat','?')):<22} {len(m['entries']):<8} {act:<27} {ns}/{nx}")
+    tot = sum(len(load_manifest(c)["entries"]) for c in components())
+    print(dim("─" * 66))
+    print(f"{len(components())} componenten, {tot} varianten " + dim("· ./ds <component> list voor detail"))
 
 def cmd_clist(c):
     m = load_manifest(c)
-    print(f"{m.get('title', c)} — {m.get('desc','')}")
+    print(f"{bold(m.get('title', c))} {dim('· ' + m.get('cat','?'))} — {m.get('desc','')}")
     d = m.get("docs", {})
-    if d.get("use"): print(f"  gebruik:  {'; '.join(d['use'])}")
-    if d.get("avoid"): print(f"  vermijd:  {'; '.join(d['avoid'])}")
+    if d.get("use"):   print(f"  {green('✓ gebruik')}  " + dim("; ".join(d["use"])))
+    if d.get("avoid"): print(f"  {_c('31','✕ vermijd')}  " + dim("; ".join(d["avoid"])))
     print()
-    print(f"{'status':<8} {'origin':<14} {'id':<22} {'source':<14} note")
+    print(dim(f"{'status':<9} {'origin':<15} {'id':<22} {'source':<15} note"))
     for e in m["entries"]:
-        st = "ACTIEF" if e["status"] == "active" else "vast"
-        print(f"{st:<8} {e['origin']:<14} {e['id']:<22} {(e.get('source') or '-'):<14} {e.get('note','')}")
+        st = green("ACTIEF") if e["status"] == "active" else dim("vast")
+        print(f"{st:<18} {e['origin']:<15} {bold(e['id']):<31} {dim((e.get('source') or '-')):<24} {e.get('note','')}")
 
 def cmd_select(c, eid):
     m = load_manifest(c)
     ids = [e["id"] for e in m["entries"]]
     if eid not in ids:
-        sys.exit(f"onbekende entry: {eid} (opties: {', '.join(ids)})")
+        err(f"onbekende entry: {bold(eid)} " + dim(f"(opties: {', '.join(ids)})"))
     for e in m["entries"]:
         e["status"] = "active" if e["id"] == eid else "locked"
     save_manifest(c, m)
     cmd_build(only=c)
-    print(f"✓ {c}/{eid} is nu ACTIEF (rest vast). Web bijgewerkt.")
+    ok(f"{bold(c)}/{green(eid)} is nu ACTIEF (rest vast). Web bijgewerkt.")
 
 def cmd_add(c, path, eid=None, origin="self", source=None, note=""):
     if origin not in ("self", "self-modified", "external"):
-        sys.exit("origin: self | self-modified | external")
+        err("origin: self | self-modified | external")
     m = load_manifest(c)
     eid = eid or re.sub(r"[^a-z0-9-]", "-", os.path.splitext(os.path.basename(path))[0].lower())
     if any(e["id"] == eid for e in m["entries"]):
-        sys.exit(f"entry bestaat al: {eid} (kies andere id of verwijder eerst)")
+        err(f"entry bestaat al: {bold(eid)} " + dim("(kies andere id of verwijder eerst)"))
     dest_dir = os.path.join(COMP, c, "external" if origin == "external" else "self")
     os.makedirs(dest_dir, exist_ok=True)
     dest = os.path.join(dest_dir, eid + ".html")
     if os.path.exists(dest):
-        sys.exit(f"bestand bestaat al: {dest} — catalogus is vast; verwijderen kan alleen expliciet")
+        err(f"bestand bestaat al: {dest} " + dim("— catalogus is vast; verwijderen kan alleen expliciet"))
     with open(path) as f:
         content = rewrite_paths(f.read())
     with open(dest, "w") as f:
@@ -124,22 +152,22 @@ def cmd_add(c, path, eid=None, origin="self", source=None, note=""):
     })
     save_manifest(c, m)
     cmd_build(only=c)
-    print(f"✓ {c}/{eid} toegevoegd als VAST ({origin}). Selecteer met: ./ds {c} select {eid}")
+    ok(f"{bold(c)}/{eid} toegevoegd als VAST ({origin}). Selecteer: {dim('./ds ' + c + ' select ' + eid)}")
 
 def cmd_remove(c, eid, yes=False):
     m = load_manifest(c)
     entry = next((e for e in m["entries"] if e["id"] == eid), None)
     if not entry:
-        sys.exit(f"onbekende entry: {eid}")
+        err(f"onbekende entry: {bold(eid)}")
     if entry["status"] == "active" and not yes:
-        sys.exit(f"{eid} is ACTIEF — bevestig met --yes (selecteer daarna een andere)")
+        err(f"{bold(eid)} is ACTIEF — bevestig met {amber('--yes')} (selecteer daarna een andere)")
     m["entries"] = [e for e in m["entries"] if e["id"] != eid]
     f = os.path.join(COMP, c, entry["file"])
     if os.path.exists(f):
         os.remove(f)
     save_manifest(c, m)
     cmd_build(only=c)
-    print(f"✓ {c}/{eid} verwijderd uit catalogus")
+    ok(f"{bold(c)}/{eid} verwijderd uit catalogus")
 
 # ---------- web generator (desktop-first app-shell) ----------
 
@@ -155,15 +183,15 @@ SHELL_HEAD = """<!DOCTYPE html>
 <style>
   html, body { height: 100%; }
   body { display: flex; overflow: hidden; }
-  /* ---- app-shell rail: aparte component-blokken ---- */
+  /* ---- rail: gecategoriseerde component-blokken ---- */
   .rail {
-    width: 272px; flex-shrink: 0; border-right: 1px solid var(--line);
+    width: 276px; flex-shrink: 0; border-right: 1px solid var(--line);
     display: flex; flex-direction: column; background: var(--bg);
     overflow-y: auto; padding: 14px 12px 12px;
   }
-  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 16px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
   .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
-  .rail .lbl { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); margin: 14px 10px 6px; }
+  .rail .lbl { margin: 16px 10px 6px; }
   .rail a.it {
     display: flex; align-items: center; gap: 10px;
     padding: 7px 10px 7px 8px; margin-bottom: 2px;
@@ -172,7 +200,6 @@ SHELL_HEAD = """<!DOCTYPE html>
   }
   .rail a.it:hover { background: var(--hover); }
   .rail a.it.on { background: var(--surface); border-color: var(--line); box-shadow: var(--shadow-xs); }
-  .rail a.it.on .nm { color: var(--text); }
   .rail a.it.on .tile { border-color: var(--accent); }
   .rail a.it.on .tile svg { color: var(--accent-ink); }
   .rail .tile {
@@ -181,57 +208,67 @@ SHELL_HEAD = """<!DOCTYPE html>
     display: grid; place-items: center;
   }
   .rail .tile svg { width: 14px; height: 14px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .rail a.it.sys .tile { width: 22px; height: 22px; border: none; background: transparent; }
-  .rail a.it.sys { padding: 6px 10px 6px 11px; }
+  .rail a.it.sys { padding: 6px 10px 6px 13px; }
+  .rail a.it.sys .tile { width: 18px; height: 18px; border: none; background: transparent; }
   .rail a.it.sys .tile svg { width: 13px; height: 13px; color: var(--text-faint); }
-  .rail a.it.sys .nm { font-size: 13px; font-weight: 400; color: var(--text-muted); }
-  .rail .nm { font-size: 13.5px; font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
-  .rail .nm .ds { display: block; font-size: 10.5px; font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
-  .rail .n { margin-left: auto; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); flex-shrink: 0; }
+  .rail a.it.sys .nm { font-size: var(--text-md); font-weight: 400; color: var(--text-muted); }
+  .rail .nm { font-size: var(--text-md); font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
+  .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
+  .rail .n { margin-left: auto; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
   .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; }
   .rail .foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
   .rail .foot .seg { flex: 1; }
-  .rail .foot .seg button { flex: 1; font-size: 12px; }
+  .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
   /* ---- content ---- */
   .main { flex: 1; overflow-y: auto; min-width: 0; }
-  .wrap { max-width: 1280px; margin: 0 auto; padding: 30px 38px 60px; }
-  h1 { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
-  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; }
-  .sub code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
-  .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: 12.5px; color: var(--text-faint); flex-wrap: wrap; }
-  .legend code { font-family: var(--mono); font-size: 11px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 40px 64px; }
+  /* ---- pagina-header ---- */
+  .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
+  .pagehead .tile { width: 44px; height: 44px; border-radius: 11px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex-shrink: 0; }
+  .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pagehead h1 { margin: 0; }
+  .pagehead .cat { margin-left: 2px; }
+  .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; line-height: 1.55; }
+  .sub code, .legend code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: var(--text-sm); color: var(--text-faint); flex-wrap: wrap; }
+  /* ---- gebruik-paneel (actieve variant) ---- */
+  .use-now { display: flex; align-items: center; gap: 12px; border: 1px solid var(--accent); background: var(--accent-soft); border-radius: var(--r-lg); padding: 11px 15px; margin-bottom: 26px; font-size: var(--text-md); }
+  .use-now .lbl2 { font-weight: 500; color: var(--accent-ink); flex-shrink: 0; }
+  .use-now code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface); border: 1px solid var(--line); padding: 2px 8px; border-radius: 6px; }
+  .use-now .cp { margin-left: auto; }
   /* ---- docs cards ---- */
   .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
   .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; background: var(--surface); }
-  .doc .dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+  .doc .dt { margin-bottom: 7px; }
   .doc.use .dt { color: var(--open-green); }
   .doc.avoid .dt { color: var(--red); }
   .doc.contract .dt { color: var(--accent-ink); }
-  .doc li { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; }
   .doc ul { padding-left: 16px; }
-  .doc code { font-family: var(--mono); font-size: 11.5px; background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+  .doc code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 13px; }
+  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: var(--text-md); }
   .cell .ch .id { font-weight: 500; }
-  .cell .ch .note { color: var(--text-faint); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cell .ch .note { color: var(--text-faint); font-size: var(--text-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
   .st { font-family: var(--mono); font-size: 10px; padding: 2.5px 9px; border-radius: 200px; letter-spacing: 0.04em; }
   .st.active { background: var(--open-green-bg); color: var(--open-green); }
   .st.locked { border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }
-  .org { font-size: 10.5px; padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
+  .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
-  .cell .cf { display: flex; gap: 10px; align-items: center; padding: 7px 13px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell .cf { display: flex; gap: 10px; align-items: center; padding: 7px 13px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
-  .cell summary { padding: 7px 13px; font-size: 12px; color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; }
+  .cell summary { padding: 7px 13px; font-size: var(--text-sm); color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; }
   .cell summary:hover { color: var(--text); }
   .cell summary .copy { margin-left: auto; }
-  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.5; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
-  .gen { margin-top: 30px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
+  .gen { margin-top: 32px; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   @media (max-width: 860px) {
     body { flex-direction: column; overflow: auto; }
     .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
@@ -246,9 +283,8 @@ SHELL_HEAD = """<!DOCTYPE html>
 <body>
 <aside class="rail">
   <a class="brand" href="/"><span class="logo">d</span>design-system</a>
-  <div class="lbl">Componenten</div>
 {nav}
-  <div class="lbl">Systeem</div>
+  <div class="lbl caps">Systeem</div>
 {sysnav}
   <div class="foot">
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
@@ -273,7 +309,6 @@ if (new URLSearchParams(location.search).get("theme") === "dark") {
   window.addEventListener("load", () => setTheme("dark"));
   setTheme("dark");
 }
-/* iframes passen zich aan hun inhoud aan — geen interne scrollbars */
 function fitFrames() {
   document.querySelectorAll("iframe[data-fit]").forEach(f => {
     try {
@@ -287,11 +322,19 @@ window.addEventListener("load", () => {
   setTimeout(fitFrames, 400);
   setTimeout(fitFrames, 1500);
 });
+document.querySelectorAll("[data-copy-path]").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const codes = btn.closest(".use-now").querySelectorAll("code");
+    try { await navigator.clipboard.writeText(codes[codes.length-1].textContent); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer pad", 1400); } catch(e) {}
+  });
+});
 document.querySelectorAll("[data-copy]").forEach(btn => {
   btn.addEventListener("click", async e => {
     e.preventDefault();
-    const pre = btn.closest("details").querySelector("pre");
-    try { await navigator.clipboard.writeText(pre.textContent); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
+    const tgt = btn.dataset.copy ? btn.closest(btn.dataset.copy) : null;
+    const pre = btn.closest("details") ? btn.closest("details").querySelector("pre") : null;
+    const txt = pre ? pre.textContent : (tgt ? tgt.textContent : "");
+    try { await navigator.clipboard.writeText(txt); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
   });
 });
 </script>
@@ -299,18 +342,34 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
 </html>
 """
 
-CATALOG_BODY = """<h1>{title}</h1>
-<div class="sub">{desc} · {n} varianten: {nself} zelf, {next} extern · manifest: <code>components/{name}/catalog.json</code></div>
+CATALOG_BODY = """<div class="pagehead">
+  <span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>
+  <div>
+    <h1>{title}</h1>
+    <div class="cat caps">{cat}</div>
+  </div>
+  <div class="meta">{n} varianten<br>{nself} zelf · {next} extern</div>
+</div>
+<div class="sub">{desc} · manifest: <code>components/{name}/catalog.json</code></div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
   <span>wijzigt alleen via <code>ds {name} select|remove</code> · experimenten in <code>playground/</code></span>
 </div>
+{usenow}
 {docs}
 <div class="grid">
 {cells}
 </div>
 <div class="gen">gegenereerd door ds build op {today} · catalog.json is de bron · dit bestand niet bewerken</div>
+"""
+
+USENOW = """<div class="use-now">
+  <span class="lbl2">Gebruik nu</span>
+  <span>actieve variant <code>{aid}</code></span>
+  <code>{afile}</code>
+  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
+</div>
 """
 
 DOCS_CARD = """<div class="docs">
@@ -332,50 +391,58 @@ CELL = """  <div class="cell{cls}"{wide}>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>{src}</pre></details>
   </div>"""
 
-GALLERY_BODY = """<h1>Components</h1>
+GALLERY_BODY = """<div class="pagehead">
+  <span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span>
+  <div>
+    <h1>Components</h1>
+    <div class="cat caps">{nc} componenten · {nv} varianten</div>
+  </div>
+</div>
 <div class="sub">Per component een catalogus met alle varianten ooit: onze eigen (self) en externe referenties (external). Alles is vast tot expliciete select of remove via de CLI.</div>
-<div class="legend">
-  <span class="st active">ACTIEF</span> in gebruik
-  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> bewaard
-  <span>CLI: <code>./ds list</code> · <code>./ds &lt;component&gt; list|select|add|remove</code></span>
-</div>
-<div class="grid" style="grid-template-columns:1fr">
-{items}
-</div>
+{groups}
 <div class="gen">gegenereerd door ds build op {today}</div>
 """
 
-GALLERY_ITEM = """  <a class="cell" href="/components/{name}/" style="display:flex;align-items:center;gap:14px;padding:14px 17px;text-decoration:none;color:var(--text)">
-    <span class="tile" style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#{icon}"/></svg></span>
-    <span style="font-weight:500;font-size:15px;min-width:130px">{title}</span>
-    <span style="color:var(--text-faint);font-size:13px;flex:1">{desc}</span>
+GALLERY_GROUP = """<div class="caps" style="margin:26px 0 10px">{cat}</div>
+<div class="grid" style="grid-template-columns:1fr">
+{items}
+</div>
+"""
+
+GALLERY_ITEM = """  <a class="cell" href="/components/{name}/" style="display:flex;align-items:center;gap:14px;padding:13px 16px;text-decoration:none;color:var(--text)">
+    <span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#{icon}"/></svg></span>
+    <span style="font-weight:500;font-size:var(--text-lg);min-width:132px">{title}</span>
+    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">{desc}</span>
     <span class="org">{nself} zelf</span>
     <span class="org external">{nx} extern</span>
-    <span style="font-family:var(--mono);font-size:11px;color:var(--open-green)">{active}</span>
+    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green)">{active}</span>
   </a>"""
 
 def nav_html(current=None):
     out = []
-    for c in components():
-        if c == "studio":
+    for cat, label in CATS:
+        comps = [c for c in components() if load_manifest(c).get("cat") == cat]
+        if not comps:
             continue
-        m = load_manifest(c)
-        on = " on" if c == current else ""
-        acts = any(e["status"] == "active" for e in m["entries"])
-        marker = '<span class="act"></span>' if acts else f'<span class="n">{len(m["entries"])}</span>'
-        icon = ICONS.get(c, "i-file")
-        desc = m.get("desc", "")
-        out.append(
-            f'  <a class="it{on}" href="/components/{c}/">'
-            f'<span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>'
-            f'<span class="nm">{c}<span class="ds">{desc}</span></span>'
-            f'{marker}</a>'
-        )
+        out.append(f'  <div class="lbl caps">{label}</div>')
+        for c in comps:
+            m = load_manifest(c)
+            on = " on" if c == current else ""
+            acts = any(e["status"] == "active" for e in m["entries"])
+            marker = '<span class="act"></span>' if acts else f'<span class="n">{len(m["entries"])}</span>'
+            icon = ICONS.get(c, "i-file")
+            desc = m.get("desc", "")
+            out.append(
+                f'  <a class="it{on}" href="/components/{c}/">'
+                f'<span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>'
+                f'<span class="nm">{c}<span class="ds">{desc}</span></span>'
+                f'{marker}</a>'
+            )
     return "\n".join(out)
 
 def sysnav_html():
     out = []
-    for _key, href, icon, label, meta in SYS_LINKS:
+    for href, icon, label, meta in SYS_LINKS:
         out.append(
             f'  <a class="it sys" href="{href}">'
             f'<span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>'
@@ -391,18 +458,19 @@ def docs_html(m):
     parts = {}
     if d.get("use"):
         lis = "".join(f"<li>{x}</li>" for x in d["use"])
-        parts["use"] = f'<div class="doc use"><div class="dt">✓ gebruik</div><ul>{lis}</ul></div>'
+        parts["use"] = f'<div class="doc use"><div class="dt caps">✓ gebruik</div><ul>{lis}</ul></div>'
     if d.get("avoid"):
         lis = "".join(f"<li>{x}</li>" for x in d["avoid"])
-        parts["avoid"] = f'<div class="doc avoid"><div class="dt">✕ vermijd</div><ul>{lis}</ul></div>'
+        parts["avoid"] = f'<div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul>{lis}</ul></div>'
     if d.get("contract"):
         lis = "".join(f"<li><code>{x}</code></li>" for x in d["contract"])
-        parts["contract"] = f'<div class="doc contract"><div class="dt">contract</div><ul>{lis}</ul></div>'
+        parts["contract"] = f'<div class="doc contract"><div class="dt caps">contract</div><ul>{lis}</ul></div>'
     return DOCS_CARD.format(**parts)
 
 def build_catalog(c):
     m = load_manifest(c)
     cells = []
+    active_entry = next((e for e in m["entries"] if e["status"] == "active"), None)
     for e in m["entries"]:
         act = e["status"] == "active"
         orgtxt = {"self": "zelf", "self-modified": "zelf (aangepast)", "external": "extern"}.get(e["origin"], e["origin"])
@@ -422,12 +490,15 @@ def build_catalog(c):
             stbadge='<span class="st active">ACTIEF</span>' if act else '<span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>',
             file=e["file"], h=e.get("h", 240), added=e.get("added", "?"), src=src,
         ))
+    ns, nx = counts(m)
+    usenow = ""
+    if active_entry:
+        usenow = USENOW.replace("{aid}", active_entry["id"]).replace("{afile}", f"components/{c}/{active_entry['file']}")
     body = CATALOG_BODY.format(
         title=m.get("title", c), name=c, desc=m.get("desc", ""),
-        n=len(m["entries"]),
-        nself=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
-        next=sum(1 for e in m["entries"] if e["origin"] == "external"),
-        docs=docs_html(m), cells="\n".join(cells), today=str(date.today()),
+        icon=ICONS.get(c, "i-file"), cat=m.get("cat", "?"),
+        n=len(m["entries"]), nself=ns, next=nx,
+        usenow=usenow, docs=docs_html(m), cells="\n".join(cells), today=str(date.today()),
     )
     page = (SHELL_HEAD.replace("{title}", m.get("title", c))
             .replace("{nav}", nav_html(current=c))
@@ -437,20 +508,27 @@ def build_catalog(c):
         f.write(page)
 
 def build_gallery():
-    items = []
-    for c in components():
-        if c == "studio":
+    groups = []
+    ncomp = 0
+    nvar = 0
+    for cat, label in CATS:
+        comps = [c for c in components() if load_manifest(c).get("cat") == cat]
+        if not comps:
             continue
-        m = load_manifest(c)
-        acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
-        items.append(GALLERY_ITEM.format(
-            name=c, title=m.get("title", c), desc=m.get("desc", ""),
-            icon=ICONS.get(c, "i-file"),
-            nself=sum(1 for e in m["entries"] if e["origin"].startswith("self")),
-            nx=sum(1 for e in m["entries"] if e["origin"] == "external"),
-            active="actief: " + ",".join(acts) if acts else "",
-        ))
-    body = GALLERY_BODY.format(items="\n".join(items), today=str(date.today()))
+        items = []
+        for c in comps:
+            m = load_manifest(c)
+            ns, nx = counts(m)
+            ncomp += 1
+            nvar += len(m["entries"])
+            acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
+            items.append(GALLERY_ITEM.format(
+                name=c, title=m.get("title", c), desc=m.get("desc", ""),
+                icon=ICONS.get(c, "i-file"), nself=ns, nx=nx,
+                active="actief: " + ",".join(acts) if acts else "",
+            ))
+        groups.append(GALLERY_GROUP.format(cat=label, items="\n".join(items)))
+    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), today=str(date.today()))
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{nav}", nav_html())
             .replace("{sysnav}", sysnav_html())
@@ -459,14 +537,17 @@ def build_gallery():
         f.write(page)
 
 def cmd_build(only=None):
+    targets = [only] if only else components()
+    for c in targets:
+        build_catalog(c)
+        m = load_manifest(c)
+        ns, nx = counts(m)
+        print(f"  {_c('32','✓')} {bold(c):<14} {len(m['entries'])} varianten {dim(f'({ns} zelf, {nx} extern)')}")
+    build_gallery()
     if only:
-        build_catalog(only)
-        build_gallery()
+        ok(f"web bijgewerkt {dim('(' + only + ' + gallery)')}")
     else:
-        for c in components():
-            build_catalog(c)
-        build_gallery()
-    print(f"✓ web bijgewerkt" + (f" ({only} + gallery)" if only else f" ({len(components())} componenten + gallery)"))
+        ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery)')}")
 
 # ---------- main ----------
 
@@ -499,7 +580,7 @@ def main():
         elif sub == "remove":
             cmd_remove(c, args[2], yes="--yes" in args)
         else:
-            sys.exit(f"onbekend: {sub}")
+            err(f"onbekend: {sub}")
 
 if __name__ == "__main__":
     main()

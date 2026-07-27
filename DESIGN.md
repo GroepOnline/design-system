@@ -129,3 +129,48 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 
 **v2 actief** — prototype-v2.html is de bron van waarheid voor feel.
 Open: naam voor de taal (werktitel "Devin-richting" is geen naam, is een richting).
+
+---
+
+## §11 Typografie (v2.1, web-typography skill)
+
+Schaal via tokens, nooit losse px-waarden in componenten:
+
+| Token | px | Gebruik |
+|---|---|---|
+| `--text-2xs` | 10.5 | meta, counts, badge |
+| `--text-xs` | 11.5 | labels, kbd, captions |
+| `--text-sm` | 12.5 | beschrijvingen, secondair |
+| `--text-md` | 13.5 | **UI-standaard** |
+| `--text-lg` | 15 | prose, kleine titels |
+| `--text-xl` | 18 | sectie-headers |
+| `--text-2xl` | 24 | pagina-titels |
+
+Regels:
+- Rendering: `antialiased` + `optimizeLegibility` op html (staat in tokens.css)
+- Headings: `--leading-head` 1.2, tracking `−0.02em`, `text-wrap: balance`
+- Prose: `.prose` = 15px / 1.62 / max 65ch (measure-cap)
+- Data (timer, diff, counts): `.num` = tabular-nums
+- Sectie-labels: `.caps` = 10.5px / 600 / +0.07em / faint
+- `text-wrap: pretty` op paragrafen
+
+## §12 Iconen (v2.1, icon-system skill)
+
+- Grid 24×24, stroke 2, round caps/joins — Lucide-conventie, sprite `components/icons.svg`
+- Maten: `.ic` (15, standaard) · `.ic-13` (compact) · `.ic-18` (knoppen) · `.ic-24` (hero)
+- Elke svg die een sprite-symbol gebruikt MOET `fill:none;stroke:currentColor` hebben (via `.ic` of expliciet) — symbols erven niets van de sprite-root
+- Icon-tiles in navigatie: 28px tile / 14px icon; pagina-headers 44px / 20px
+- Nieuwe symbols: Lucide-path kopiëren, id `i-<naam>`, toevoegen vóór `</svg>`
+
+## §13 Categorieën (v2.1)
+
+Elke component-catalogus hoort bij één categorie (`cat` in catalog.json):
+
+| Categorie | Componenten |
+|---|---|
+| primitieven | button, badge |
+| gesprek | composer, transcript, worked-row, approval |
+| bewijs | pr-card, artifact |
+| structuur | nav, settings |
+
+Rail en gallery groeperen op categorie. Nieuwe categorie: toevoegen aan `CATS` in `ds`.

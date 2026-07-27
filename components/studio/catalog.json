@@ -29,5 +29,6 @@
       "export = complete :root CSS",
       "accent-keuzes volgen taste-rules"
     ]
-  }
+  },
+  "cat": "systeem"
 }

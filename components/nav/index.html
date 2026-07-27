@@ -10,15 +10,15 @@
 <style>
   html, body { height: 100%; }
   body { display: flex; overflow: hidden; }
-  /* ---- app-shell rail: aparte component-blokken ---- */
+  /* ---- rail: gecategoriseerde component-blokken ---- */
   .rail {
-    width: 272px; flex-shrink: 0; border-right: 1px solid var(--line);
+    width: 276px; flex-shrink: 0; border-right: 1px solid var(--line);
     display: flex; flex-direction: column; background: var(--bg);
     overflow-y: auto; padding: 14px 12px 12px;
   }
-  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 16px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
   .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
-  .rail .lbl { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-faint); margin: 14px 10px 6px; }
+  .rail .lbl { margin: 16px 10px 6px; }
   .rail a.it {
     display: flex; align-items: center; gap: 10px;
     padding: 7px 10px 7px 8px; margin-bottom: 2px;
@@ -27,7 +27,6 @@
   }
   .rail a.it:hover { background: var(--hover); }
   .rail a.it.on { background: var(--surface); border-color: var(--line); box-shadow: var(--shadow-xs); }
-  .rail a.it.on .nm { color: var(--text); }
   .rail a.it.on .tile { border-color: var(--accent); }
   .rail a.it.on .tile svg { color: var(--accent-ink); }
   .rail .tile {
@@ -36,57 +35,67 @@
     display: grid; place-items: center;
   }
   .rail .tile svg { width: 14px; height: 14px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .rail a.it.sys .tile { width: 22px; height: 22px; border: none; background: transparent; }
-  .rail a.it.sys { padding: 6px 10px 6px 11px; }
+  .rail a.it.sys { padding: 6px 10px 6px 13px; }
+  .rail a.it.sys .tile { width: 18px; height: 18px; border: none; background: transparent; }
   .rail a.it.sys .tile svg { width: 13px; height: 13px; color: var(--text-faint); }
-  .rail a.it.sys .nm { font-size: 13px; font-weight: 400; color: var(--text-muted); }
-  .rail .nm { font-size: 13.5px; font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
-  .rail .nm .ds { display: block; font-size: 10.5px; font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
-  .rail .n { margin-left: auto; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); flex-shrink: 0; }
+  .rail a.it.sys .nm { font-size: var(--text-md); font-weight: 400; color: var(--text-muted); }
+  .rail .nm { font-size: var(--text-md); font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
+  .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
+  .rail .n { margin-left: auto; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
   .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; }
   .rail .foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
   .rail .foot .seg { flex: 1; }
-  .rail .foot .seg button { flex: 1; font-size: 12px; }
+  .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
   /* ---- content ---- */
   .main { flex: 1; overflow-y: auto; min-width: 0; }
-  .wrap { max-width: 1280px; margin: 0 auto; padding: 30px 38px 60px; }
-  h1 { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
-  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; }
-  .sub code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
-  .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: 12.5px; color: var(--text-faint); flex-wrap: wrap; }
-  .legend code { font-family: var(--mono); font-size: 11px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 40px 64px; }
+  /* ---- pagina-header ---- */
+  .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
+  .pagehead .tile { width: 44px; height: 44px; border-radius: 11px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex-shrink: 0; }
+  .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pagehead h1 { margin: 0; }
+  .pagehead .cat { margin-left: 2px; }
+  .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; line-height: 1.55; }
+  .sub code, .legend code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: var(--text-sm); color: var(--text-faint); flex-wrap: wrap; }
+  /* ---- gebruik-paneel (actieve variant) ---- */
+  .use-now { display: flex; align-items: center; gap: 12px; border: 1px solid var(--accent); background: var(--accent-soft); border-radius: var(--r-lg); padding: 11px 15px; margin-bottom: 26px; font-size: var(--text-md); }
+  .use-now .lbl2 { font-weight: 500; color: var(--accent-ink); flex-shrink: 0; }
+  .use-now code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface); border: 1px solid var(--line); padding: 2px 8px; border-radius: 6px; }
+  .use-now .cp { margin-left: auto; }
   /* ---- docs cards ---- */
   .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
   .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; background: var(--surface); }
-  .doc .dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+  .doc .dt { margin-bottom: 7px; }
   .doc.use .dt { color: var(--open-green); }
   .doc.avoid .dt { color: var(--red); }
   .doc.contract .dt { color: var(--accent-ink); }
-  .doc li { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; }
   .doc ul { padding-left: 16px; }
-  .doc code { font-family: var(--mono); font-size: 11.5px; background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+  .doc code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: 13px; }
+  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: var(--text-md); }
   .cell .ch .id { font-weight: 500; }
-  .cell .ch .note { color: var(--text-faint); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cell .ch .note { color: var(--text-faint); font-size: var(--text-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
   .st { font-family: var(--mono); font-size: 10px; padding: 2.5px 9px; border-radius: 200px; letter-spacing: 0.04em; }
   .st.active { background: var(--open-green-bg); color: var(--open-green); }
   .st.locked { border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }
-  .org { font-size: 10.5px; padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
+  .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
-  .cell .cf { display: flex; gap: 10px; align-items: center; padding: 7px 13px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell .cf { display: flex; gap: 10px; align-items: center; padding: 7px 13px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
-  .cell summary { padding: 7px 13px; font-size: 12px; color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; }
+  .cell summary { padding: 7px 13px; font-size: var(--text-sm); color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; }
   .cell summary:hover { color: var(--text); }
   .cell summary .copy { margin-left: auto; }
-  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.5; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
-  .gen { margin-top: 30px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
+  .gen { margin-top: 32px; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   @media (max-width: 860px) {
     body { flex-direction: column; overflow: auto; }
     .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
@@ -101,18 +110,21 @@
 <body>
 <aside class="rail">
   <a class="brand" href="/"><span class="logo">d</span>design-system</a>
-  <div class="lbl">Componenten</div>
-  <a class="it" href="/components/approval/"><span class="tile"><svg><use href="/components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
-  <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
+  <div class="lbl caps">Primitieven</div>
   <a class="it" href="/components/badge/"><span class="tile"><svg><use href="/components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
   <a class="it" href="/components/button/"><span class="tile"><svg><use href="/components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">btn + gbtn + kbd</span></span><span class="act"></span></a>
+  <div class="lbl caps">Gesprek</div>
+  <a class="it" href="/components/approval/"><span class="tile"><svg><use href="/components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
   <a class="it" href="/components/composer/"><span class="tile"><svg><use href="/components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
-  <a class="it on" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
-  <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
-  <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <a class="it" href="/components/transcript/"><span class="tile"><svg><use href="/components/icons.svg#i-message"/></svg></span><span class="nm">transcript<span class="ds">user-pill, prose, meta</span></span><span class="act"></span></a>
   <a class="it" href="/components/worked-row/"><span class="tile"><svg><use href="/components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
-  <div class="lbl">Systeem</div>
+  <div class="lbl caps">Bewijs</div>
+  <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
+  <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
+  <div class="lbl caps">Structuur</div>
+  <a class="it on" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
+  <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Systeem</div>
   <a class="it sys" href="/components/studio/"><span class="tile"><svg><use href="/components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="/DESIGN.md"><span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
@@ -123,15 +135,29 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<h1>nav</h1>
-<div class="sub">sidebar-onderdelen · 1 varianten: 1 zelf, 0 extern · manifest: <code>components/nav/catalog.json</code></div>
+<div class="pagehead">
+  <span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span>
+  <div>
+    <h1>nav</h1>
+    <div class="cat caps">structuur</div>
+  </div>
+  <div class="meta">1 varianten<br>1 zelf · 0 extern</div>
+</div>
+<div class="sub">sidebar-onderdelen · manifest: <code>components/nav/catalog.json</code></div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
   <span>wijzigt alleen via <code>ds nav select|remove</code> · experimenten in <code>playground/</code></span>
 </div>
+<div class="use-now">
+  <span class="lbl2">Gebruik nu</span>
+  <span>actieve variant <code>default</code></span>
+  <code>components/nav/self/default.html</code>
+  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
+</div>
+
 <div class="docs">
-  <div class="doc use"><div class="dt">✓ gebruik</div><ul><li>vaste glyph-lane links</li><li>counts en tijden in mono faint</li><li>live-dot voor actieve sessie</li></ul></div><div class="doc avoid"><div class="dt">✕ vermijd</div><ul><li>ad-hoc paddings</li><li>kleurcode voor sessie-status (alleen accent-dot)</li></ul></div><div class="doc contract"><div class="dt">contract</div><ul><li><code>active = surface-sunk + weight 500</code></li><li><code>dot 6px, pulse 2s zacht</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>vaste glyph-lane links</li><li>counts en tijden in mono faint</li><li>live-dot voor actieve sessie</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>ad-hoc paddings</li><li>kleurcode voor sessie-status (alleen accent-dot)</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>active = surface-sunk + weight 500</code></li><li><code>dot 6px, pulse 2s zacht</code></li></ul></div>
 </div>
 
 <div class="grid">
@@ -272,7 +298,6 @@ if (new URLSearchParams(location.search).get("theme") === "dark") {
   window.addEventListener("load", () => setTheme("dark"));
   setTheme("dark");
 }
-/* iframes passen zich aan hun inhoud aan — geen interne scrollbars */
 function fitFrames() {
   document.querySelectorAll("iframe[data-fit]").forEach(f => {
     try {
@@ -286,11 +311,19 @@ window.addEventListener("load", () => {
   setTimeout(fitFrames, 400);
   setTimeout(fitFrames, 1500);
 });
+document.querySelectorAll("[data-copy-path]").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const codes = btn.closest(".use-now").querySelectorAll("code");
+    try { await navigator.clipboard.writeText(codes[codes.length-1].textContent); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer pad", 1400); } catch(e) {}
+  });
+});
 document.querySelectorAll("[data-copy]").forEach(btn => {
   btn.addEventListener("click", async e => {
     e.preventDefault();
-    const pre = btn.closest("details").querySelector("pre");
-    try { await navigator.clipboard.writeText(pre.textContent); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
+    const tgt = btn.dataset.copy ? btn.closest(btn.dataset.copy) : null;
+    const pre = btn.closest("details") ? btn.closest("details").querySelector("pre") : null;
+    const txt = pre ? pre.textContent : (tgt ? tgt.textContent : "");
+    try { await navigator.clipboard.writeText(txt); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
   });
 });
 </script>
