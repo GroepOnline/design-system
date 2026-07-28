@@ -41,3 +41,7 @@
 
 ### direction
 - **WIP (1 observation)**: Devin's visual language beats own new signatures — teal Stroom redirected toward Devin warm-neutral + blue. Watch: does De Stroom line/motion system survive as element, or fully absorbed into Devin-style rows? *(2026-07-27)*
+
+### density & spacing
+- **DO** default to `h28` and `r6` (via `--r-md`) for secondary controls (select, input, ghost-buttons, nav-items) in the primary skin to match Devin-DNA density. **DON'T** arbitrarily mix `h32` or hardcode radii where global tokens apply. *(2026-07-28: Devin-DNA Phase A finalized, strict alignment enforced)*
+- **DO** use `r10` (via `--r-lg`) for primary cards and sub-grouped sections.

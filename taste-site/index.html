@@ -224,6 +224,11 @@
 <h3>direction</h3>
 <ul>
 <li><strong>WIP (1 observation)</strong>: Devin&#x27;s visual language beats own new signatures — teal Stroom redirected toward Devin warm-neutral + blue. Watch: does De Stroom line/motion system survive as element, or fully absorbed into Devin-style rows? <em>(2026-07-27)</em></li>
+</ul>
+<h3>density &amp; spacing</h3>
+<ul>
+<li><strong>DO</strong> default to <code>h28</code> and <code>r6</code> (via <code>--r-md</code>) for secondary controls (select, input, ghost-buttons, nav-items) in the primary skin to match Devin-DNA density. <strong>DON&#x27;T</strong> arbitrarily mix <code>h32</code> or hardcode radii where global tokens apply. <em>(2026-07-28: Devin-DNA Phase A finalized, strict alignment enforced)</em></li>
+<li><strong>DO</strong> use <code>r10</code> (via <code>--r-lg</code>) for primary cards and sub-grouped sections.</li>
 </ul><h2>Log (observaties)</h2><h1>Taste Log — raw record of Joep&#x27;s design reactions</h1>
 <blockquote>Append-only. Format defined in <code>SKILL.md</code>. Distill into <code>taste-rules.md</code> every ~10 entries</blockquote>
 <blockquote>or when a hypothesis repeats.</blockquote>
@@ -274,6 +279,14 @@
 <li><strong>reaction</strong>: &quot;dit is 1 gehele stijl met paar opties maar je moet ook nog 1 hier overheen doen&quot;</li>
 <li><strong>hypothesis</strong>: het systeem moet meerdere COMPLETE skins dragen via een stijl-laag (data-style), niet alleen accent/radius-opties. Strak (koel, scherp, r4/6) is de tweede skin naast Devin (warm, zacht, r8/12)</li>
 <li><strong>status</strong>: geïmplementeerd als data-style=&quot;strak&quot; in tokens.css + switch in rail, propagateert naar alle variant-frames. Regel kandidaat bij herhaling</li>
+</ul>
+<h2>2026-07-28 · Devin-DNA propagatie volledig (Fase A)</h2>
+<ul>
+<li><strong>shown</strong>: afronding van de gemeten control-sizes: nav-items (13px/500, h28, pad 0 10 0 6), selects (h28), ghost-buttons (h28) en grouped cards (r10).</li>
+<li><strong>reaction</strong>: gemodelleerd naar de Devin baseline via global tokens.</li>
+<li><strong>signal</strong>: &quot;moet specifieker volledig er gretiger&quot;</li>
+<li><strong>delta</strong>: .select en .input expliciet 28px. .nav-item exacte afmetingen. Global tokens <code>--r-md</code> (werd 6px) en <code>--r-lg</code> (werd 10px) bijgewerkt om radii systemisch uit te rollen voor controls en cards in de default skin.</li>
+<li><strong>candidate rule</strong>: h28/r6 is de harde norm voor secundaire controls en densiteit-lijsten in de Devin-taal. Cards en sub-grouping opereren op r10. -&gt; <em>Direct gepropageerd naar taste-rules.</em></li>
 </ul></div><div class='gen'>gegenereerd uit taste/*.md op 2026-07-28</div>
 </div></main>
 <script>

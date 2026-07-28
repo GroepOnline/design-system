@@ -46,3 +46,10 @@
 - **reaction**: "dit is 1 gehele stijl met paar opties maar je moet ook nog 1 hier overheen doen"
 - **hypothesis**: het systeem moet meerdere COMPLETE skins dragen via een stijl-laag (data-style), niet alleen accent/radius-opties. Strak (koel, scherp, r4/6) is de tweede skin naast Devin (warm, zacht, r8/12)
 - **status**: geïmplementeerd als data-style="strak" in tokens.css + switch in rail, propagateert naar alle variant-frames. Regel kandidaat bij herhaling
+
+## 2026-07-28 · Devin-DNA propagatie volledig (Fase A)
+- **shown**: afronding van de gemeten control-sizes: nav-items (13px/500, h28, pad 0 10 0 6), selects (h28), ghost-buttons (h28) en grouped cards (r10).
+- **reaction**: gemodelleerd naar de Devin baseline via global tokens.
+- **signal**: "moet specifieker volledig er gretiger" 
+- **delta**: .select en .input expliciet 28px. .nav-item exacte afmetingen. Global tokens `--r-md` (werd 6px) en `--r-lg` (werd 10px) bijgewerkt om radii systemisch uit te rollen voor controls en cards in de default skin.
+- **candidate rule**: h28/r6 is de harde norm voor secundaire controls en densiteit-lijsten in de Devin-taal. Cards en sub-grouping opereren op r10. -> *Direct gepropageerd naar taste-rules.*

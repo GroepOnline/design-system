@@ -43,8 +43,8 @@
   --h-tracking: -0.02em;      /* product-UI; marketing-hero: -0.04em */
 
   /* ---- radius (shadcn scale) ---- */
-  --r-md: 8px;                /* controls, inputs, meta-rows */
-  --r-lg: 12px;               /* cards, composer, user-pill */
+  --r-md: 6px;                /* controls, inputs, meta-rows */
+  --r-lg: 10px;               /* cards, composer, user-pill */
   --r-pill: 200px;            /* badges */
 
   /* ---- motion ---- */
@@ -173,7 +173,7 @@ body {
 
 /* ---- input / select ---- */
 .input, .select {
-  height: 32px; padding: 0 11px;
+  height: 28px; padding: 0 10px;
   font-family: var(--font); font-size: 13px; color: var(--text);
   background: var(--surface); border: 1px solid var(--line-strong);
   border-radius: var(--r-md); outline: none;
