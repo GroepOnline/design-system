@@ -193,6 +193,22 @@ body {
   padding: 13px 2px; border-bottom: 1px solid var(--line);
 }
 .setting:last-child { border-bottom: none; }
+
+/* ---- setting group (Devin grouped-card, gemeten 2026-07-28) ----
+   alle rows van een sectie in één card: border, r-lg, 0 16px,
+   hairlines tussen rows, geen dubbele borders. */
+.sgroup {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 0 16px; margin: 8px 0 4px;
+}
+.sgroup .setting { padding: 14px 2px; }
+.sgroup .setting:last-child { border-bottom: none; }
+/* section header boven een sgroup: plain, niet uppercase */
+.sgroup-title {
+  font-size: 14px; font-weight: 500; color: var(--text);
+  margin: 26px 0 2px;
+}
+.sgroup-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
 .setting .st-txt { flex: 1; min-width: 0; }
 .setting .st-label { font-size: 14px; font-weight: 500; }
 .setting .st-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; max-width: 420px; }

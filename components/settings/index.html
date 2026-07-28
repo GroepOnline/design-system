@@ -162,7 +162,7 @@
     <h1>settings</h1>
     <div class="cat caps">structuur</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern</div>
+  <div class="meta">2 varianten<br>2 zelf · 0 extern</div>
 </div>
 <div class="sub">volledige instellingen-surface · manifest: <code>components/settings/catalog.json</code></div>
 <div class="legend">
@@ -431,8 +431,269 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
 &lt;/html&gt;
 </pre></details>
   </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">grouped</span>
+      <span class="note">Devin grouped-card patroon (gemeten 2026-07-28): sectie = title + één card met hairlines</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/grouped.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/grouped.html</span><span>toegevoegd 2026-07-28</span><a href="self/grouped.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nl&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;surface: instellingen (grouped)&lt;/title&gt;
+&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/tokens.css&quot;&gt;
+&lt;style&gt;
+  body { min-height: 100vh; }
+  .shell { display: flex; min-height: 100vh; }
+
+  /* sections rail */
+  .sections {
+    width: 216px; flex-shrink: 0;
+    border-right: 1px solid var(--line);
+    padding: 18px 8px;
+  }
+  .sections .back {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; color: var(--text-muted);
+    padding: 6px 8px; border-radius: var(--r-md); cursor: pointer;
+    margin-bottom: 12px; text-decoration: none;
+  }
+  .sections .back:hover { background: var(--hover); }
+  .sec-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 10px; border-radius: var(--r-md);
+    font-size: 13.5px; color: var(--text-muted);
+    cursor: pointer; user-select: none; position: relative;
+  }
+  .sec-item:hover { background: var(--hover); }
+  .sec-item.active { background: var(--accent-soft); color: var(--accent-ink); font-weight: 500; }
+  .sec-item.active::before {
+    content: &quot;&quot;; position: absolute; left: -8px; top: 7px; bottom: 7px;
+    width: 2px; border-radius: 1px; background: var(--accent);
+  }
+  .sec-item .ic { opacity: 0.8; }
+
+  /* content */
+  .content { flex: 1; padding: 26px 34px; max-width: 700px; }
+  .content h1 { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .content .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 22px; }
+  .sec-title {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--text-faint);
+    margin: 26px 0 4px;
+  }
+  .font-preview {
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 16px 18px; margin: 8px 0 4px; background: var(--surface);
+  }
+  .font-preview .fp-1 { font-size: 19px; font-weight: 500; letter-spacing: -0.02em; }
+  .font-preview .fp-2 { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+  .font-preview .fp-3 { font-family: var(--mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+  .size-row { display: flex; align-items: center; gap: 10px; }
+  .size-row .val { font-family: var(--mono); font-size: 12px; width: 52px; text-align: right; }
+  input[type=&quot;range&quot;] {
+    -webkit-appearance: none; width: 180px; height: 2px;
+    background: var(--line-strong); border-radius: 1px; outline: none;
+  }
+  input[type=&quot;range&quot;]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--surface); border: 1.5px solid var(--text);
+    cursor: pointer; transition: transform 120ms var(--ease-out);
+  }
+  input[type=&quot;range&quot;]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  kbd.k {
+    font-family: var(--mono); font-size: 11px;
+    border: 1px solid var(--line-strong); border-radius: 5px;
+    padding: 1px 6px; color: var(--text-muted); background: var(--surface);
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;shell&quot;&gt;
+
+  &lt;!-- sections rail --&gt;
+  &lt;aside class=&quot;sections&quot;&gt;
+    &lt;a class=&quot;back&quot; href=&quot;index.html&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-chevron&quot; transform=&quot;rotate(180 12 12)&quot;/&gt;&lt;/svg&gt;Terug&lt;/a&gt;
+    &lt;div class=&quot;sec-item active&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-settings&quot;/&gt;&lt;/svg&gt;Weergave&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-message&quot;/&gt;&lt;/svg&gt;Modellen&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-terminal&quot;/&gt;&lt;/svg&gt;MCP-servers&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-book&quot;/&gt;&lt;/svg&gt;Werkruimtes&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-inbox&quot;/&gt;&lt;/svg&gt;Account&lt;/div&gt;
+    &lt;div class=&quot;sec-item&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;/components/icons.svg#i-more&quot;/&gt;&lt;/svg&gt;Ontwikkelaar&lt;/div&gt;
+  &lt;/aside&gt;
+
+  &lt;!-- content --&gt;
+  &lt;main class=&quot;content&quot;&gt;
+    &lt;h1&gt;Weergave&lt;/h1&gt;
+    &lt;div class=&quot;sub&quot;&gt;Hoe de app eruitziet en leest. Direct van kracht, geen opslaan-knop.&lt;/div&gt;
+
+    &lt;!-- THEMA --&gt;
+    &lt;div class=&quot;sgroup-title&quot;&gt;Thema&lt;/div&gt;
+    &lt;div class=&quot;sgroup&quot;&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;
+          &lt;div class=&quot;st-label&quot;&gt;Kleurthema&lt;/div&gt;
+          &lt;div class=&quot;st-desc&quot;&gt;Licht is de standaard. Donker is Basalt: warm zwart, geen zuiver zwart.&lt;/div&gt;
+          &lt;div class=&quot;st-state&quot; id=&quot;themeState&quot;&gt;licht&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;
+          &lt;div class=&quot;seg&quot; id=&quot;themeSeg&quot;&gt;
+            &lt;button class=&quot;on&quot; data-t=&quot;&quot;&gt;Licht&lt;/button&gt;
+            &lt;button data-t=&quot;dark&quot;&gt;Donker&lt;/button&gt;
+            &lt;button data-t=&quot;sys&quot;&gt;Systeem&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- LETTER TYPES --&gt;
+    &lt;div class=&quot;sgroup-title&quot;&gt;Lettertypes&lt;/div&gt;
+    &lt;div class=&quot;sgroup&quot;&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;
+          &lt;div class=&quot;st-label&quot;&gt;Interface-lettertype&lt;/div&gt;
+          &lt;div class=&quot;st-desc&quot;&gt;Voor alle tekst in de app. Koppen altijd gewicht 500.&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;
+          &lt;select class=&quot;select&quot; id=&quot;fontSel&quot;&gt;
+            &lt;option&gt;General Sans&lt;/option&gt;
+            &lt;option&gt;Systeemstandaard&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;
+          &lt;div class=&quot;st-label&quot;&gt;Data-lettertype (mono)&lt;/div&gt;
+          &lt;div class=&quot;st-desc&quot;&gt;Voor timers, diffs, commands en paden. Altijd tabular cijfers.&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;
+          &lt;select class=&quot;select&quot; id=&quot;monoSel&quot;&gt;
+            &lt;option&gt;JetBrains Mono&lt;/option&gt;
+            &lt;option&gt;Systeem-mono&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;
+          &lt;div class=&quot;st-label&quot;&gt;Tekstgrootte&lt;/div&gt;
+          &lt;div class=&quot;st-desc&quot;&gt;Basis voor de hele interface. 15px is de referentie.&lt;/div&gt;
+          &lt;div class=&quot;st-state&quot; id=&quot;sizeState&quot;&gt;15px · referentie&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;
+          &lt;div class=&quot;size-row&quot;&gt;
+            &lt;input type=&quot;range&quot; min=&quot;13&quot; max=&quot;17&quot; step=&quot;1&quot; value=&quot;15&quot; id=&quot;sizeRange&quot;&gt;
+            &lt;span class=&quot;val&quot; id=&quot;sizeVal&quot;&gt;15px&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot; style=&quot;flex:1&quot;&gt;
+          &lt;div class=&quot;font-preview&quot; id=&quot;fontPreview&quot; style=&quot;margin:2px 0&quot;&gt;
+            &lt;div class=&quot;fp-1&quot;&gt;Klaar voor instructies&lt;/div&gt;
+            &lt;div class=&quot;fp-2&quot;&gt;De agent toont wat hij doet terwijl het gebeurt. Geen spinners, wel een stroom.&lt;/div&gt;
+            &lt;div class=&quot;fp-3&quot;&gt;4m 13s · +25 −131 · devin/USA-938-1765942251&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- GEDRAG --&gt;
+    &lt;div class=&quot;sgroup-title&quot;&gt;Gedrag&lt;/div&gt;
+    &lt;div class=&quot;sgroup&quot;&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;
+          &lt;div class=&quot;st-label&quot;&gt;Animaties&lt;/div&gt;
+          &lt;div class=&quot;st-desc&quot;&gt;Ripples, entrances en overgangen. Uit = alles direct, zoals reduced-motion.&lt;/div&gt;
+          &lt;div class=&quot;st-state&quot; id=&quot;motionState&quot;&gt;aan&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;
+          &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; id=&quot;motionSw&quot;&gt;&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;
+          &lt;div class=&quot;st-label&quot;&gt;Enter stuurt direct&lt;/div&gt;
+          &lt;div class=&quot;st-desc&quot;&gt;Aan: Enter stuurt, Shift+Enter nieuwe regel. Uit: omgekeerd.&lt;/div&gt;
+          &lt;div class=&quot;st-state&quot;&gt;aan&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;
+          &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; onclick=&quot;flip(this)&quot;&gt;&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- SNELTOETSEN --&gt;
+    &lt;div class=&quot;sgroup-title&quot;&gt;Sneltoetsen&lt;/div&gt;
+    &lt;div class=&quot;sgroup&quot;&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;&lt;div class=&quot;st-label&quot;&gt;Command-palet&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;&lt;kbd class=&quot;k&quot;&gt;⌘K&lt;/kbd&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;&lt;div class=&quot;st-label&quot;&gt;Instellingen&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;&lt;kbd class=&quot;k&quot;&gt;⌘,&lt;/kbd&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;setting&quot;&gt;
+        &lt;div class=&quot;st-txt&quot;&gt;&lt;div class=&quot;st-label&quot;&gt;Approval beantwoorden&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;st-control&quot;&gt;&lt;kbd class=&quot;k&quot;&gt;1&lt;/kbd&gt; &lt;kbd class=&quot;k&quot;&gt;2&lt;/kbd&gt; &lt;kbd class=&quot;k&quot;&gt;3&lt;/kbd&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// thema-segmented
+const seg = document.getElementById(&quot;themeSeg&quot;);
+const state = document.getElementById(&quot;themeState&quot;);
+seg.querySelectorAll(&quot;button&quot;).forEach(b =&gt; b.addEventListener(&quot;click&quot;, () =&gt; {
+  seg.querySelectorAll(&quot;button&quot;).forEach(x =&gt; x.classList.remove(&quot;on&quot;));
+  b.classList.add(&quot;on&quot;);
+  const t = b.dataset.t;
+  if (t === &quot;sys&quot;) {
+    const dark = matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches;
+    document.documentElement.dataset.theme = dark ? &quot;dark&quot; : &quot;&quot;;
+    state.textContent = &quot;systeem (&quot; + (dark ? &quot;donker&quot; : &quot;licht&quot;) + &quot;)&quot;;
+  } else {
+    document.documentElement.dataset.theme = t;
+    state.textContent = t === &quot;dark&quot; ? &quot;donker&quot; : &quot;licht&quot;;
+  }
+}));
+// switches
+function flip(el){ el.setAttribute(&quot;aria-checked&quot;, el.getAttribute(&quot;aria-checked&quot;) !== &quot;true&quot;); }
+document.getElementById(&quot;motionSw&quot;).addEventListener(&quot;click&quot;, function(){
+  flip(this);
+  document.getElementById(&quot;motionState&quot;).textContent = this.getAttribute(&quot;aria-checked&quot;) === &quot;true&quot; ? &quot;aan&quot; : &quot;uit&quot;;
+});
+// font size
+const range = document.getElementById(&quot;sizeRange&quot;);
+range.addEventListener(&quot;input&quot;, () =&gt; {
+  document.getElementById(&quot;sizeVal&quot;).textContent = range.value + &quot;px&quot;;
+  document.getElementById(&quot;sizeState&quot;).textContent = range.value + &quot;px&quot; + (range.value === &quot;15&quot; ? &quot; · referentie&quot; : &quot;&quot;);
+  document.getElementById(&quot;fontPreview&quot;).style.fontSize = (range.value / 15) + &quot;em&quot;;
+});
+// deep link ?theme=dark
+if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&quot;) {
+  document.documentElement.dataset.theme = &quot;dark&quot;;
+  seg.querySelectorAll(&quot;button&quot;).forEach(x =&gt; x.classList.toggle(&quot;on&quot;, x.dataset.t === &quot;dark&quot;));
+  state.textContent = &quot;donker&quot;;
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
+  </div>
 </div>
-<div class="gen">gegenereerd door ds build op 2026-07-27 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen">gegenereerd door ds build op 2026-07-28 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <script>

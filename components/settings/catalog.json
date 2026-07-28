@@ -11,12 +11,21 @@
       "status": "active",
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+    },
+    {
+      "id": "grouped",
+      "file": "self/grouped.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-07-28",
+      "note": "Devin grouped-card patroon (gemeten 2026-07-28): sectie = title + \u00e9\u00e9n card met hairlines"
     }
   ],
   "docs": {
     "use": [
       "elke optie met live state zichtbaar",
-      "direct van kracht — geen opslaan-knop",
+      "direct van kracht \u2014 geen opslaan-knop",
       "eerlijke descriptions met consequentie"
     ],
     "avoid": [

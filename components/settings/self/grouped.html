@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>surface: instellingen (grouped)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  body { min-height: 100vh; }
+  .shell { display: flex; min-height: 100vh; }
+
+  /* sections rail */
+  .sections {
+    width: 216px; flex-shrink: 0;
+    border-right: 1px solid var(--line);
+    padding: 18px 8px;
+  }
+  .sections .back {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; color: var(--text-muted);
+    padding: 6px 8px; border-radius: var(--r-md); cursor: pointer;
+    margin-bottom: 12px; text-decoration: none;
+  }
+  .sections .back:hover { background: var(--hover); }
+  .sec-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 10px; border-radius: var(--r-md);
+    font-size: 13.5px; color: var(--text-muted);
+    cursor: pointer; user-select: none; position: relative;
+  }
+  .sec-item:hover { background: var(--hover); }
+  .sec-item.active { background: var(--accent-soft); color: var(--accent-ink); font-weight: 500; }
+  .sec-item.active::before {
+    content: ""; position: absolute; left: -8px; top: 7px; bottom: 7px;
+    width: 2px; border-radius: 1px; background: var(--accent);
+  }
+  .sec-item .ic { opacity: 0.8; }
+
+  /* content */
+  .content { flex: 1; padding: 26px 34px; max-width: 700px; }
+  .content h1 { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .content .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 22px; }
+  .sec-title {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--text-faint);
+    margin: 26px 0 4px;
+  }
+  .font-preview {
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 16px 18px; margin: 8px 0 4px; background: var(--surface);
+  }
+  .font-preview .fp-1 { font-size: 19px; font-weight: 500; letter-spacing: -0.02em; }
+  .font-preview .fp-2 { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+  .font-preview .fp-3 { font-family: var(--mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+  .size-row { display: flex; align-items: center; gap: 10px; }
+  .size-row .val { font-family: var(--mono); font-size: 12px; width: 52px; text-align: right; }
+  input[type="range"] {
+    -webkit-appearance: none; width: 180px; height: 2px;
+    background: var(--line-strong); border-radius: 1px; outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--surface); border: 1.5px solid var(--text);
+    cursor: pointer; transition: transform 120ms var(--ease-out);
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  kbd.k {
+    font-family: var(--mono); font-size: 11px;
+    border: 1px solid var(--line-strong); border-radius: 5px;
+    padding: 1px 6px; color: var(--text-muted); background: var(--surface);
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- sections rail -->
+  <aside class="sections">
+    <a class="back" href="index.html"><svg class="ic sm"><use href="/components/icons.svg#i-chevron" transform="rotate(180 12 12)"/></svg>Terug</a>
+    <div class="sec-item active"><svg class="ic"><use href="/components/icons.svg#i-settings"/></svg>Weergave</div>
+    <div class="sec-item"><svg class="ic"><use href="/components/icons.svg#i-message"/></svg>Modellen</div>
+    <div class="sec-item"><svg class="ic"><use href="/components/icons.svg#i-terminal"/></svg>MCP-servers</div>
+    <div class="sec-item"><svg class="ic"><use href="/components/icons.svg#i-book"/></svg>Werkruimtes</div>
+    <div class="sec-item"><svg class="ic"><use href="/components/icons.svg#i-inbox"/></svg>Account</div>
+    <div class="sec-item"><svg class="ic"><use href="/components/icons.svg#i-more"/></svg>Ontwikkelaar</div>
+  </aside>
+
+  <!-- content -->
+  <main class="content">
+    <h1>Weergave</h1>
+    <div class="sub">Hoe de app eruitziet en leest. Direct van kracht, geen opslaan-knop.</div>
+
+    <!-- THEMA -->
+    <div class="sgroup-title">Thema</div>
+    <div class="sgroup">
+      <div class="setting">
+        <div class="st-txt">
+          <div class="st-label">Kleurthema</div>
+          <div class="st-desc">Licht is de standaard. Donker is Basalt: warm zwart, geen zuiver zwart.</div>
+          <div class="st-state" id="themeState">licht</div>
+        </div>
+        <div class="st-control">
+          <div class="seg" id="themeSeg">
+            <button class="on" data-t="">Licht</button>
+            <button data-t="dark">Donker</button>
+            <button data-t="sys">Systeem</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LETTER TYPES -->
+    <div class="sgroup-title">Lettertypes</div>
+    <div class="sgroup">
+      <div class="setting">
+        <div class="st-txt">
+          <div class="st-label">Interface-lettertype</div>
+          <div class="st-desc">Voor alle tekst in de app. Koppen altijd gewicht 500.</div>
+        </div>
+        <div class="st-control">
+          <select class="select" id="fontSel">
+            <option>General Sans</option>
+            <option>Systeemstandaard</option>
+          </select>
+        </div>
+      </div>
+      <div class="setting">
+        <div class="st-txt">
+          <div class="st-label">Data-lettertype (mono)</div>
+          <div class="st-desc">Voor timers, diffs, commands en paden. Altijd tabular cijfers.</div>
+        </div>
+        <div class="st-control">
+          <select class="select" id="monoSel">
+            <option>JetBrains Mono</option>
+            <option>Systeem-mono</option>
+          </select>
+        </div>
+      </div>
+      <div class="setting">
+        <div class="st-txt">
+          <div class="st-label">Tekstgrootte</div>
+          <div class="st-desc">Basis voor de hele interface. 15px is de referentie.</div>
+          <div class="st-state" id="sizeState">15px · referentie</div>
+        </div>
+        <div class="st-control">
+          <div class="size-row">
+            <input type="range" min="13" max="17" step="1" value="15" id="sizeRange">
+            <span class="val" id="sizeVal">15px</span>
+          </div>
+        </div>
+      </div>
+      <div class="setting">
+        <div class="st-txt" style="flex:1">
+          <div class="font-preview" id="fontPreview" style="margin:2px 0">
+            <div class="fp-1">Klaar voor instructies</div>
+            <div class="fp-2">De agent toont wat hij doet terwijl het gebeurt. Geen spinners, wel een stroom.</div>
+            <div class="fp-3">4m 13s · +25 −131 · devin/USA-938-1765942251</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GEDRAG -->
+    <div class="sgroup-title">Gedrag</div>
+    <div class="sgroup">
+      <div class="setting">
+        <div class="st-txt">
+          <div class="st-label">Animaties</div>
+          <div class="st-desc">Ripples, entrances en overgangen. Uit = alles direct, zoals reduced-motion.</div>
+          <div class="st-state" id="motionState">aan</div>
+        </div>
+        <div class="st-control">
+          <button class="switch" role="switch" aria-checked="true" id="motionSw"></button>
+        </div>
+      </div>
+      <div class="setting">
+        <div class="st-txt">
+          <div class="st-label">Enter stuurt direct</div>
+          <div class="st-desc">Aan: Enter stuurt, Shift+Enter nieuwe regel. Uit: omgekeerd.</div>
+          <div class="st-state">aan</div>
+        </div>
+        <div class="st-control">
+          <button class="switch" role="switch" aria-checked="true" onclick="flip(this)"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNELTOETSEN -->
+    <div class="sgroup-title">Sneltoetsen</div>
+    <div class="sgroup">
+      <div class="setting">
+        <div class="st-txt"><div class="st-label">Command-palet</div></div>
+        <div class="st-control"><kbd class="k">⌘K</kbd></div>
+      </div>
+      <div class="setting">
+        <div class="st-txt"><div class="st-label">Instellingen</div></div>
+        <div class="st-control"><kbd class="k">⌘,</kbd></div>
+      </div>
+      <div class="setting">
+        <div class="st-txt"><div class="st-label">Approval beantwoorden</div></div>
+        <div class="st-control"><kbd class="k">1</kbd> <kbd class="k">2</kbd> <kbd class="k">3</kbd></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// thema-segmented
+const seg = document.getElementById("themeSeg");
+const state = document.getElementById("themeState");
+seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+  seg.querySelectorAll("button").forEach(x => x.classList.remove("on"));
+  b.classList.add("on");
+  const t = b.dataset.t;
+  if (t === "sys") {
+    const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.dataset.theme = dark ? "dark" : "";
+    state.textContent = "systeem (" + (dark ? "donker" : "licht") + ")";
+  } else {
+    document.documentElement.dataset.theme = t;
+    state.textContent = t === "dark" ? "donker" : "licht";
+  }
+}));
+// switches
+function flip(el){ el.setAttribute("aria-checked", el.getAttribute("aria-checked") !== "true"); }
+document.getElementById("motionSw").addEventListener("click", function(){
+  flip(this);
+  document.getElementById("motionState").textContent = this.getAttribute("aria-checked") === "true" ? "aan" : "uit";
+});
+// font size
+const range = document.getElementById("sizeRange");
+range.addEventListener("input", () => {
+  document.getElementById("sizeVal").textContent = range.value + "px";
+  document.getElementById("sizeState").textContent = range.value + "px" + (range.value === "15" ? " · referentie" : "");
+  document.getElementById("fontPreview").style.fontSize = (range.value / 15) + "em";
+});
+// deep link ?theme=dark
+if (new URLSearchParams(location.search).get("theme") === "dark") {
+  document.documentElement.dataset.theme = "dark";
+  seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === "dark"));
+  state.textContent = "donker";
+}
+</script>
+</body>
+</html>
