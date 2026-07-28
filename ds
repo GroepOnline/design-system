@@ -829,24 +829,36 @@ def cmd_style_list():
         act = green(" ACTIEF") if sid == "" else ""
         print(f"    {label.ljust(12)} {sid or '(default)':<10}  {desc}{act}")
 
-def cmd_style_add(name, css_file):
-    """Voeg een nieuwe skin toe uit een :root CSS bestand."""
-    # strip :root blok uit het css-bestand, zet het in [data-style]
+def cmd_style_add(name, css_file, desc=None):
+    """Voeg een nieuwe skin toe uit een :root CSS bestand.
+    - default entry (id "") blijft behouden
+    - duplicate id -> fout
+    - body wordt netjes geindenteerd (2 spaties per regel)
+    """
+    if not re.fullmatch(r"[a-z][a-z0-9-]*", name):
+        err(f"ongeldige skin-naam '{name}' (alleen lowercase, cijfers, streepjes)")
     raw = open(css_file).read()
     m = re.search(r':root\s*\{([^}]*)\}', raw, re.DOTALL)
     if not m:
         err(f"geen :root blok gevonden in {css_file}")
-    body = m.group(1).strip()
-    new_entry = {"id": name, "label": name.capitalize(), "desc": "custom skin"}
-    # schrijf overrides als [data-style] block
-    css_block = f"\n[data-style=\"{name}\"] {{\n{body}\n}}\n"
+    # normaliseer: strip, indent elke declaratie-regel met 2 spaties
+    lines = []
+    for ln in m.group(1).strip().splitlines():
+        ln = ln.strip()
+        if ln and not ln.startswith("/*"):
+            lines.append("  " + ln)
+        elif ln:
+            lines.append("  " + ln)
+    body = "\n".join(lines)
+    st = load_styles()
+    if any(x["id"] == name for x in st):
+        err(f"skin '{name}' bestaat al (id in styles.json) — kies andere naam of verwijder eerst")
+    css_block = f'\n/* skin: {name} (ds style add) */\n[data-style="{name}"] {{\n{body}\n}}\n'
     with open(os.path.join(ROOT, "tokens.css"), "a") as f:
         f.write(css_block)
-    st = load_styles()
-    # verwijder default (empty id) als het de enige default was
-    st = [x for x in st if x["id"] != ""] + [new_entry]
+    st.append({"id": name, "label": name.capitalize(), "desc": desc or "custom skin"})
     save_styles(st)
-    ok(f"skin '{name}' toegevoegd — tokens.css + styles.json bijgewerkt")
+    ok(f"skin '{name}' toegevoegd ({len(lines)} declaraties) — tokens.css + styles.json bijgewerkt")
 
 def cmd_check():
     """Valideer catalogus-structuur, sprite-referenties, em-dash in copy."""
@@ -909,12 +921,13 @@ def main():
             kw = {}
             it = iter(args[3:])
             for a in it:
-                if a == "--css-file" or a == "--from": kw["css"] = next(it)
+                if a in ("--css-file", "--from"): kw["css"] = next(it)
+                elif a == "--desc": kw["desc"] = next(it)
             if "css" not in kw:
-                err("ds style add <naam> --css-file <file>")
-            cmd_style_add(name, kw["css"])
+                err("ds style add <naam> --css-file <file> [--desc \"...\"]")
+            cmd_style_add(name, kw["css"], desc=kw.get("desc"))
         else:
-            err("gebruik: ds style list | ds style add <naam> --css-file <file>")
+            err("gebruik: ds style list | ds style add <naam> --css-file <file> [--desc \"...\"]")
     elif args[0] == "check":
         cmd_check()
     else:
