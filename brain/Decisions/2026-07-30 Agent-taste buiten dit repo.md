@@ -13,6 +13,7 @@ tags: [decision, agents, taste]
   - `.commandcode/taste/` blijft voorlopig ongemoeid tot de gedeelde generator bestaat; daarna wordt het gegenereerd artefact + evt. dunne overlay
   - Precedence later: canonieke yaml is inhoud; overlays voegen alleen tool-syntax toe, nooit regels overschrijven
   - Pi/Agy-formaat en globale vs repo-lokale Command Code-layers worden in dat gedeelde traject uitgezocht, niet hier
+- **Follow-up**: scaffold + PR in kater-dev-tools: https://github.com/OnlineChefGroep/kater-dev-tools/pull/174
 - **Productregel?** nee (agent-gedrag, geen UI)
 
 ## Links

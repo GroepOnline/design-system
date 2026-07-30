@@ -36,7 +36,7 @@ echo '{"file_path":"brain/Home.md"}' | .agents/hooks/brain-build.sh
 ## Buiten scope (besloten 2026-07-30)
 
 Agent-gedrag-taste hoort **niet** in dit repo. Canonieke bron komt in een
-gedeeld punt (richting `kater-dev-tools`): `taste.yaml` + generators naar
+gedeeld punt in `kater-dev-tools` (PR https://github.com/OnlineChefGroep/kater-dev-tools/pull/174): `taste.yaml` + generators naar
 per-tool overlays. Zie `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
 
 `.commandcode/taste/` blijft voorlopig zijn eigen bron tot die generator

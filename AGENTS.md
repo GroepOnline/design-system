@@ -73,8 +73,8 @@ Nooit een tweede bron aanmaken.
 | `brain-build.sh` | `afterFileEdit` | herbouwt `brain-site/` na een vault-note edit |
 
 Agent-gedrag-taste (canonieke `taste.yaml` met per-tool generators) staat
-**buiten dit repo** (besluit 2026-07-30): gedeeld punt richting
-`kater-dev-tools`. Zie `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
+**buiten dit repo** (besluit 2026-07-30): gedeeld punt in `kater-dev-tools`
+(PR https://github.com/OnlineChefGroep/kater-dev-tools/pull/174). Zie `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
 Geen `.agents/registry/taste.yaml` hier aanmaken.
 
 ## Design-regels (harde bans, uit DESIGN.md §10)
