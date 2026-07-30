@@ -1,3 +1,12 @@
 # Tool-local Command Code state. The generated taste.md is tracked explicitly.
 .commandcode/settings.json
 .commandcode/taste/*/
+.commandcode/design/
+
+# IDE/tool configs die niet bij dit repo horen
+.mcp.json
+.prettierignore
+customEditor/
+eslint.config.mjs
+package.json
+postcss.config.js

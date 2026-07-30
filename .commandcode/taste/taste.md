@@ -10,3 +10,20 @@
 - Conventional commits; geen AI-signatuur of co-authored bot-regels tenzij de repo dat eist. `conventional-commits`
 - Zero-bloat: geen boilerplate, geen overbodige abstractielaag, geen marketing-copy. `brutalist-minimal`
 - Nooit secrets, tokens of DSNs in chat/PR/commits; rapporteer hoogstens korte fingerprints. `no-secrets-in-output`
+- Config met secrets/API-keys hoort in user-scope (`~/.commandcode/`) niet in project-root, om te voorkomen dat keys in git belanden. `user-scope-secrets`
+- Wissel van GitHub-account via `gh auth switch --user <account>` voor elke push/PR-operatie; ga nooit uit van de default account. `gh-auth-switch`
+- Gebruik geïsoleerde worktrees (bv. `/tmp/kater-*-*`) voor PR-werk; na merge/afronden worktrees opruimen met `git worktree prune`. `isolated-worktrees`
+- Rebase PR-branches op `origin/main` (of upstream), nooit main in de feature branch mergen. Nooit force-pushen naar main. `rebase-based-pr-workflow`
+- Wacht tot CI-checks (unit, lint/type, e2e, gate) settled zijn voordat je merge; merge nooit zonder groene checks. `ci-gate-before-merge`
+- Bij merge-conflicten: een expliciete per-file strategie hanteren (bv. "keep main's structuur + branch's intent"), resolutie testen, dan pas pushen. `structured-conflict-resolution`
+- Review-driven ontwikkelen: eerst onopgeloste review threads inventariseren en verifiëren of ze al gefixt zijn; pas dan fixen, pushen, en replies geven. `review-driven-development`
+- Always squash-merge PRs met `gh pr merge <nr> --squash --delete-branch`; geen merge commits op feature branches. `squash-merge-prs`
+- Monitor CI na push tot checks settled zijn (pass/fail), rapporteer het resultaat. Merge niet voordat checks groen zijn. `ci-monitor-then-act`
+- Verzwak nooit CI-checks: fixes moeten tests laten slagen, niet overslaan. `never-weaken-ci`
+- Enkele bron van waarheid (SSOT) met gegenereerde artifacts: bewaar canonieke config in één YAML/MD-bestand, genereer per-tool outputs via scripts. Nooit handmatig gegenereerde bestanden bewerken. `ssot-generated-artifacts`
+- Drie-lagentaste-model: product/UI-taste, agent-gedragstaste (canoniek), per-tool overlay. Overlay mag alleen toevoegen, nooit canonieke regels overschrijven. `three-plane-taste`
+- Obsidian vault in repo als 'brain' voor niet-bindende context, research, decisions, concept-graph. Productwaarheid blijft in DESIGN.md/tokens.css/taste/. `obsidian-brain-vault`
+- Governance via taste-log → review → promotie → CI-drift-check loop. Gegenereerde artifacts moeten in sync blijven met canonieke bron. `taste-governance-loop`
+- Signalen, evaluatie, scoring en gates voor agentsystemen: meet wat agents doen, evalueer kwaliteit, gebruik gates om PRs/actions te blokkeren bij niet voldoen. `signals-eval-gates`
+- Multi-repo consistentie: als een patroon (taste, brain, agents) in meerdere repos werkt, centraliseer het dan in een gedeeld tools-repo (bv. kater-dev-tools) in plaats van per repo te dupliceren. `cross-repo-consistency`
+- MCP-serverinteractie via gestructureerde handshakes (initialize + notifications/initialized + tools/list met Content-Length framing) voor verificatie, niet ad-hoc CLI-calls. `mcp-structured-handshake`
