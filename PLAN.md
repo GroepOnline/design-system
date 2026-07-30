@@ -59,19 +59,23 @@ geleerde regels actief.
 | CI | ✅ validate.yml (build + check) |
 | Devin-DNA | ✅ settings beide thema's live gemeten + gearchiveerd |
 | Home page | ❌ placeholder — moet theatrale landing worden |
-| Settings-component | ⚠️ mist Devin's grouped-card patroon |
+| Settings-component | ✅ grouped-card patroon toegevoegd (A.1) |
 | Perfection pass | ❌ gepland, niet uitgevoerd |
 
 ## 3. Routekaart
 
-### Fase A — Devin-DNA propagatie (NU, deze sessie)
+### Fase A — Devin-DNA propagatie ✅ (2026-07-30)
 
-1. **Grouped-card patroon** naar `components/settings/self/`:
-   sectie = header (14px/500) + één card (r10, border, `0 16px`) met
-   hairlines tussen rows. Beide thema's, beide skins testen.
-2. **Select 32px → 28px** evalueren (Devin-meetwaarde), taste-log de keuze.
-3. **Ghost-button** h28 r6 checken tegen onze `.gbtn`.
-4. Nav-item 13px/500 h28 r6 padding `0 10px 0 6` checken tegen rail/nav.
+1. **Grouped-card patroon** → `components/settings/self/`: sectie = header
+   (14px/500) + één card (r10, border, `0 16px`) met hairlines tussen rows.
+   Beide thema's, beide skins getest. ✅
+2. **Select 32px → 28px** — Devin-meting: 28px. Onze `.input, .select` waren
+   al 28px in tokens.css. Geen wijziging nodig. Taste-log: bewuste keuze voor
+   28px (strakker, shadcn-compatibel). ✅
+3. **Ghost-button** — Devin ghost-button: h28 r6. Onze `.gbtn` matcht exact
+   (h28, `border-radius: var(--r-md)` = 6px devin skin). ✅
+4. **Nav-item** — Devin: 13px/500, h28, r6, padding `0 10px 0 6`. Onze
+   `.nav-item` in `components/nav/self/default.html` matcht exact. ✅
 
 ### Fase B — Uitgebreide Devin-meting (NU, parallel via agent)
 

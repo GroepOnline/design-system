@@ -58,14 +58,18 @@ Zie `tokens.css`. Regels:
 Baseline is shadcn/ui-denken: simpele variants, hairline borders, rustige hovers.
 
 | Component | Contract |
-|---|---|
-| `.btn` | h-32px, px-13px, r-8px, border hairline-strong. `.primary` = text↔bg omgekeerd. `:active` scale 0.97 |
-| `.gbtn` | 28px ghost icon-button, hover = `--hover` wash. `.solid` voor send-acties |
+|---|---|---|
+| `.btn` | h-32px, px-13px, r-6px, border hairline-strong. `.primary` = text↔bg omgekeerd. `:active` scale 0.97, `:focus-visible` outline 2px accent |
+| `.gbtn` | 28px ghost icon-button, hover = `--hover` wash. `:focus-visible` outline 2px accent. `.solid` voor send-acties |
 | `.badge` | pill, 12px, `.green` voor Open/merged, `.outline` voor meta |
 | card | r-12px, border `--line`, hover → `--line-strong`. Geen shadow in product |
 | composer | r-12px, focus = accent border + 3px `--accent-soft` ring |
 | user-pill | `--surface-sunk`, r-12px, avatar rechts |
 | agent prose | kaal, geen achtergrond, 14.5px/1.6 |
+| `.sgroup` | grouped-card: border, `--r-lg` (12px), `0 16px`, hairlines tussen rows |
+| `.switch` | 36×20px, full-radius (200px). `[aria-checked=true]` = accent fill. `:focus-visible` outline 2px accent |
+| `.nav-item` | h-28px, px `0 10px 0 6`, r-6px, 13px/500. `:focus-visible` outline 2px accent |
+| `.input, .select` | h-28px, px-10px, 13px, r-6px. Focus = accent border + 3px accent-soft ring. `:focus-visible` implicit via `:focus` |
 
 ## 7. De activiteitsindicator (signatuur)
 

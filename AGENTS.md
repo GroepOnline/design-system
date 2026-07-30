@@ -170,10 +170,10 @@ for an install/update command, `python3 --version` is enough as a runtime check.
   this in the generator, never in the generated HTML. `components/lib.js` only
   applies `?theme=` plus the gallery postMessage on standalone variant pages;
   it handles neither style nor persistence.
-- Caveat when you test that: the restore path is currently broken. `setTheme`
-  runs at the top level before `let curTheme, curStyle` is initialized, so any
-  load with a theme or style to restore throws a ReferenceError and aborts the
-  rest of the shell script (`/components/?theme=dark` still renders light).
-  Moving that declaration above the calls in `ds` and rebuilding fixes it.
+- Caveat when you test that: the restore path had a TDZ issue where `setTheme`
+  ran at the top level before `let curTheme, curStyle` was initialized. This was
+  **fixed in v2** — `curTheme`/`curStyle` declarations are now placed above the
+  restore calls in `SHELL_FOOT` (`ds` line 449). If `?theme=dark` still renders
+  light, check that `let curTheme` appears before the `wantTheme` restore block.
 - Fonts load from external CDNs (Fontshare/Google); offline the layout still
   works with fallback fonts.

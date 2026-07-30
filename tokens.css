@@ -96,7 +96,9 @@ body {
               opacity var(--dur-fast), transform 100ms var(--ease-out);
 }
 .btn:hover { background: var(--surface-sunk); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .btn:active { transform: scale(0.97); }
+.btn:disabled, .btn[aria-disabled] { opacity: 0.38; cursor: default; pointer-events: none; }
 .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
 .btn.primary:hover { background: var(--text); opacity: 0.87; }
 .btn kbd {
@@ -114,7 +116,12 @@ body {
   transition: background var(--dur-fast), color var(--dur-fast), transform 100ms var(--ease-out);
 }
 .gbtn:hover { background: var(--hover); color: var(--text); }
+.gbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .gbtn:active { transform: scale(0.92); }
+.gbtn:disabled, .gbtn[aria-disabled] { opacity: 0.3; cursor: default; pointer-events: none; }
+/* touch target expansion: 28px visual → 44px hit area */
+.gbtn { position: relative; }
+.gbtn::before { content: ""; position: absolute; inset: -8px; border-radius: inherit; z-index: -1; }
 .gbtn.solid { background: var(--text); color: var(--bg); }
 .gbtn.solid:hover { opacity: 0.87; }
 
@@ -152,6 +159,11 @@ body {
 }
 .switch[aria-checked="true"] { background: var(--accent); border-color: var(--accent); }
 .switch[aria-checked="true"]::after { transform: translateX(16px); background: #fff; }
+.switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.switch[aria-disabled] { opacity: 0.35; cursor: default; pointer-events: none; }
+/* touch target expansion: 36px switch → 44px */
+.switch { position: relative; }
+.switch::before { content: ""; position: absolute; inset: -4px -10px; border-radius: inherit; }
 
 /* ---- segmented control ---- */
 .seg {
@@ -166,6 +178,7 @@ body {
   transition: background 140ms, color 140ms;
 }
 .seg button:hover { color: var(--text); }
+.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .seg button.on {
   background: var(--surface); color: var(--text);
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
@@ -180,6 +193,7 @@ body {
   transition: border-color 150ms, box-shadow 150ms;
 }
 .input:focus, .select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.input:disabled, .select:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
 .input::placeholder { color: var(--text-faint); }
 .select { appearance: none; padding-right: 28px; cursor: pointer;
   background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
@@ -193,6 +207,8 @@ body {
   padding: 13px 2px; border-bottom: 1px solid var(--line);
 }
 .setting:last-child { border-bottom: none; }
+.setting:focus-within { outline: none; }
+.setting:focus-within .st-label { color: var(--accent-ink); }
 
 /* ---- setting group (Devin grouped-card, gemeten 2026-07-28) ----
    alle rows van een sectie in één card: border, r-lg, 0 16px,
@@ -214,6 +230,22 @@ body {
 .setting .st-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; max-width: 420px; }
 .setting .st-state { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 4px; }
 .setting .st-control { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding-top: 2px; }
+
+/* ---- loading skeleton (shimmer) ---- */
+.skel { display: flex; flex-direction: column; gap: 12px; padding: 16px 2px; }
+.skel-row { height: 18px; border-radius: 6px; background: var(--surface-sunk); position: relative; overflow: hidden; }
+.skel-row::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, var(--hover) 50%, transparent); animation: skel-shimmer 1.5s ease-in-out infinite; }
+@keyframes skel-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+/* ---- empty state ---- */
+.empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+.empty .ic { width: 32px; height: 32px; margin: 0 auto 12px; opacity: 0.3; }
+.empty h3 { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.empty p { font-size: 14px; max-width: 360px; margin: 0 auto; line-height: 1.5; }
+
+/* ---- success flash ---- */
+.flash-success { animation: flash-green 1.2s ease-out; }
+@keyframes flash-green { 0% { background: var(--open-green-bg); } 100% { background: transparent; } }
 
 /* reduced motion */
 @media (prefers-reduced-motion: reduce) {
