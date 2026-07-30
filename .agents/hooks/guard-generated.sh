@@ -21,14 +21,17 @@ case "$rel" in
   docs/*.html)             generated="docs/ (bron: de .md bestanden)" ;;
   components/index.html)   generated="components/index.html (bron: catalog.json)" ;;
   components/*/index.html) generated="$rel (bron: catalog.json)" ;;
+  .commandcode/taste/taste.md)
+                            generated="$rel (bron: kater-dev-tools/.agents/registry/taste.yaml)" ;;
+  .cursor/rules/taste.mdc) generated="$rel (bron: kater-dev-tools/.agents/registry/taste.yaml)" ;;
 esac
 
 if [ -n "$generated" ]; then
   jq -n --arg g "$generated" --arg p "$rel" '{
     permission: "deny",
     user_message: ("Geblokkeerd: " + $p + " is gegenereerd."),
-    agent_message: ("Dit bestand is output van ds build: " + $g +
-      ". Wijzig de bron of de generator (ds) en draai daarna ./ds build.")
+    agent_message: ("Dit bestand is gegenereerde output: " + $g +
+      ". Wijzig de genoemde bron en draai de bijbehorende generator.")
   }'
   exit 0
 fi

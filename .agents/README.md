@@ -33,11 +33,24 @@ echo '{"tool_name":"Write","tool_input":{"path":"docs/index.html"}}' | .agents/h
 echo '{"file_path":"brain/Home.md"}' | .agents/hooks/brain-build.sh
 ```
 
-## Buiten scope (besloten 2026-07-30)
+## Gedeelde agent-taste (consumer)
 
-Agent-gedrag-taste hoort **niet** in dit repo. Canonieke bron komt in een
-gedeeld punt in `kater-dev-tools` (PR https://github.com/OnlineChefGroep/kater-dev-tools/pull/174): `taste.yaml` + generators naar
-per-tool overlays. Zie `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
+Agent-gedrag-taste heeft zijn canonieke bron in `kater-dev-tools`
+(PR https://github.com/OnlineChefGroep/kater-dev-tools/pull/174):
+`.agents/registry/taste.yaml`.
 
-`.commandcode/taste/` blijft voorlopig zijn eigen bron tot die generator
-bestaat; daarna wordt het gegenereerd artefact (+ evt. dunne overlay).
+Dit repo consumeert de gegenereerde overlays:
+
+- `.commandcode/taste/taste.md`
+- `.cursor/rules/taste.mdc`
+- `CLAUDE.md` tussen `<!-- TASTE:START -->` en `<!-- TASTE:END -->`
+
+Regenereren/checken vanuit de kater-dev-tools checkout:
+
+```bash
+uv run python .agents/scripts/generate-taste.py --target /home/joep/design-system
+uv run python .agents/scripts/generate-taste.py --target /home/joep/design-system --check
+```
+
+Deze bestanden zijn output, niet handmatig bewerken. Zie
+`brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.

@@ -241,6 +241,11 @@
 <p><strong>buiten dit repo</strong> (besluit 2026-07-30): gedeeld punt in <code>kater-dev-tools</code></p>
 <p>(PR https://github.com/OnlineChefGroep/kater-dev-tools/pull/174). Zie <code>brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md</code>.</p>
 <p>Geen <code>.agents/registry/taste.yaml</code> hier aanmaken.</p>
+<p>Dit repo <strong>consumeert</strong> wel de gegenereerde overlays:</p>
+<p><code>.commandcode/taste/taste.md</code>, <code>.cursor/rules/taste.mdc</code> en de gemarkeerde</p>
+<p>taste-sectie in <code>CLAUDE.md</code>. Regenereren/checken gebeurt met</p>
+<p><code>kater-dev-tools/.agents/scripts/generate-taste.py --target &lt;repo&gt;</code>.</p>
+<p>Nooit de gegenereerde overlays handmatig bewerken.</p>
 <h2>Design-regels (harde bans, uit DESIGN.md §10)</h2>
 <ul>
 <li>Geen spinners/loaders — activiteit = worked-row + tool-ripples (1.1s, stopt)</li>

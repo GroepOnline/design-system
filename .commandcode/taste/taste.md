@@ -1,0 +1,12 @@
+# GENERATED from .agents/registry/taste.yaml - do not edit by hand
+
+- Communiceer in het Nederlands tenzij de gebruiker expliciet Engels vraagt. `dutch-communication`
+- Bij multi-stap of onduidelijke scope: eerst verkennen, dan plan, dan implementeren. Geen stille big-bang. `plan-then-implement`
+- Beoordeel streng: relevantie en kwaliteit van bestanden/assets eerst inspecteren, niet blind accepteren of alleen opsommen. `strict-critical-eval`
+- Bij git status: geef een volledig overzicht (local status, branches local+remote, recente commits, remotes, open PRs via gh). `comprehensive-git-status`
+- Herstel context uit eerdere sessies en tools (Cursor, Pi, cmd) wanneer relevant; herhaal geen afgerond werk. `cross-session-continuity`
+- Accepteer en integreer artefacts van peer-agents (docs, files) zonder het werk over te doen; pak zelf git/PR op wanneer dat de taak is. `accept-peer-agent-artifacts`
+- Geen inline comments tenzij expliciet gevraagd of de logica niet-triviaal is. `no-inline-comments-unless-asked`
+- Conventional commits; geen AI-signatuur of co-authored bot-regels tenzij de repo dat eist. `conventional-commits`
+- Zero-bloat: geen boilerplate, geen overbodige abstractielaag, geen marketing-copy. `brutalist-minimal`
+- Nooit secrets, tokens of DSNs in chat/PR/commits; rapporteer hoogstens korte fingerprints. `no-secrets-in-output`

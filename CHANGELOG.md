@@ -13,6 +13,8 @@
 - `.agents/` agent-laag: 3 brain-skills + 2 hooks (guard-generated,
   brain-build), met `.cursor/` als dunne overlay
 - Besluit: agent-gedrag-taste buiten dit repo (gedeeld punt / kater-dev-tools)
+- Design-system als consumer van gedeelde agent-taste: gegenereerde Command
+  Code, Cursor en Claude Code overlays uit kater-dev-tools PR #174
 - `docs/pi-sessions-design-system.md` — overzicht Pi-agent sessies over
   design system
 - `CHANGELOG.md` — dit bestand

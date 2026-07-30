@@ -10,7 +10,8 @@ tags: [decision, agents, taste]
 - **Keuze**: Agent-gedrag-taste hoort **niet** in `design-system`. Canonieke bron komt in een gedeeld punt (richting `kater-dev-tools` of equivalent): `taste.yaml` + generators naar per-tool overlays. Dit repo houdt alleen UI-taste (`taste/`), Second Brain (`brain/`), en de dunne `.agents/` skills/hooks rond brain + gegenereerde output.
 - **Gevolgen**:
   - Geen `.agents/registry/taste.yaml` in dit repo
-  - `.commandcode/taste/` blijft voorlopig ongemoeid tot de gedeelde generator bestaat; daarna wordt het gegenereerd artefact + evt. dunne overlay
+  - Dit repo consumeert gegenereerde artefacts: `.commandcode/taste/taste.md`, `.cursor/rules/taste.mdc` en de taste-sectie in `CLAUDE.md`
+  - Regenereren en drift-checken gebeurt vanuit `kater-dev-tools` met `generate-taste.py --target /home/joep/design-system`
   - Precedence later: canonieke yaml is inhoud; overlays voegen alleen tool-syntax toe, nooit regels overschrijven
   - Pi/Agy-formaat en globale vs repo-lokale Command Code-layers worden in dat gedeelde traject uitgezocht, niet hier
 - **Follow-up**: scaffold + PR in kater-dev-tools: https://github.com/OnlineChefGroep/kater-dev-tools/pull/174

@@ -51,6 +51,9 @@ Nieuw component of variant:
 | `brain/` | Obsidian Second Brain (bron) |
 | `brain-site/` | brain-notes als site (gegenereerd) |
 | `.agents/` | agent-skills + hooks (canoniek; `.cursor/` wijst hierheen) |
+| `.commandcode/taste/taste.md` | gegenereerde agent-taste uit `kater-dev-tools` |
+| `.cursor/rules/taste.mdc` | gegenereerde Cursor agent-taste uit `kater-dev-tools` |
+| `CLAUDE.md` | gegenereerde Claude taste-sectie uit `kater-dev-tools` |
 | `templates/` + `new-project.sh` | scaffold voor nieuwe producten |
 | `references/` | meetlat-screenshots (Devin-product, eigen states) |
 | `surfaces/` | per-surface ontwerpbriefs |

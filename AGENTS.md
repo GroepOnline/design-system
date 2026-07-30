@@ -77,6 +77,12 @@ Agent-gedrag-taste (canonieke `taste.yaml` met per-tool generators) staat
 (PR https://github.com/OnlineChefGroep/kater-dev-tools/pull/174). Zie `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
 Geen `.agents/registry/taste.yaml` hier aanmaken.
 
+Dit repo **consumeert** wel de gegenereerde overlays:
+`.commandcode/taste/taste.md`, `.cursor/rules/taste.mdc` en de gemarkeerde
+taste-sectie in `CLAUDE.md`. Regenereren/checken gebeurt met
+`kater-dev-tools/.agents/scripts/generate-taste.py --target <repo>`.
+Nooit de gegenereerde overlays handmatig bewerken.
+
 ## Design-regels (harde bans, uit DESIGN.md §10)
 
 - Geen spinners/loaders — activiteit = worked-row + tool-ripples (1.1s, stopt)
