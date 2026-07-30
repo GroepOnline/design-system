@@ -246,12 +246,13 @@
 <li>[ ] All pickers keyboard-complete without mouse.</li>
 <li>[ ] No layout shift when attachments added (chips reserve row height from first keystroke).</li>
 </ul></div>
-<div class="gen">gegenereerd uit surfaces/composer.md op 2026-07-28 · bewerk de .md, niet deze pagina</div>
+<div class="gen">gegenereerd uit surfaces/composer.md op 2026-07-30 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <script>
 const seg = document.getElementById("themeSeg");
 const sseg = document.getElementById("styleSeg");
+let curTheme = "", curStyle = "";
 function applyToFrames(fn) {
   document.querySelectorAll("iframe").forEach(f => { try { fn(f.contentDocument.documentElement); } catch(e) {} });
 }
@@ -283,7 +284,6 @@ document.querySelectorAll(".cell > .ch").forEach(ch => {
     ch.parentElement.classList.toggle("closed");
   });
 });
-let curTheme = "", curStyle = "";
 function fitFrames() {
   document.querySelectorAll("iframe[data-fit]").forEach(f => {
     try {

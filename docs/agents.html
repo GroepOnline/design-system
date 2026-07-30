@@ -244,13 +244,50 @@
 <p>Typografie- en icon-regels: DESIGN.md §11-§13 (schaal-tokens verplicht,</p>
 <p>sprite-svg&#x27;s altijd fill:none + stroke:currentColor).</p>
 <h2>Bestandskaart</h2>
-<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting)</td></tr><tr><td><code>components/icons.svg</code></td><td>29 Lucide symbols (<code>&lt;use href=&quot;...#i-*&quot;&gt;</code>)</td></tr><tr><td><code>components/lib.js</code></td><td>thema deep-link + switch-gedrag voor varianten</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td></tr><tr><td><code>motion-spec.md</code></td><td>motion-fysica (gelockt)</td></tr><tr><td><code>new-project.sh</code></td><td>scaffold nieuw product vanuit dit systeem</td></tr></tbody></table></div>
-<div class="gen">gegenereerd uit AGENTS.md op 2026-07-28 · bewerk de .md, niet deze pagina</div>
+<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting)</td></tr><tr><td><code>components/icons.svg</code></td><td>29 Lucide symbols (<code>&lt;use href=&quot;...#i-*&quot;&gt;</code>)</td></tr><tr><td><code>components/lib.js</code></td><td>thema deep-link + switch-gedrag voor varianten</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td></tr><tr><td><code>motion-spec.md</code></td><td>motion-fysica (gelockt)</td></tr><tr><td><code>new-project.sh</code></td><td>scaffold nieuw product vanuit dit systeem</td></tr></tbody></table>
+<h2>Cursor Cloud specific instructions</h2>
+<p>Standalone static design-system. No package manager, no third-party deps: the</p>
+<p><code>ds</code> CLI is pure Python 3.12 stdlib. There is nothing to install, and the repo</p>
+<p>carries no <code>.cursor/environment.json</code> or setup script: when Cursor Cloud asks</p>
+<p>for an install/update command, <code>python3 --version</code> is enough as a runtime check.</p>
+<ul>
+<li>Lint/validate: <code>./ds check</code> (source of truth for the <code>check</code> CI step).</li>
+<p>Warnings (non-URL sources, em-dashes) are expected and do not fail; only</p>
+<p><code>errors</code> matter.</p>
+<li>Build/generate: <code>./ds build</code>. Generated output (<code>components/*/index.html</code>,</li>
+<p><code>components/index.html</code>, <code>docs/</code>, <code>taste-site/</code>) is committed. CI&#x27;s</p>
+<p><code>python3 ds build --check</code> step is effectively a plain build (the <code>--check</code></p>
+<p>arg is ignored by <code>main()</code>), so after any <code>ds</code> mutation keep the tree</p>
+<p>idempotent: run <code>./ds build</code> and confirm <code>git diff</code> is empty.</p>
+<li>Run/serve (dev): serve from the repo root, e.g.</li>
+<p><code>python3 -m http.server 8000</code>, then open</p>
+<p><code>http://localhost:8000/components/</code>. You MUST serve from root, not <code>file://</code>:</p>
+<p>generated pages use root-absolute asset paths (<code>/tokens.css</code>,</p>
+<p><code>/components/icons.svg#…</code>, <code>/components/lib.js</code>).</p>
+<li>Any <code>./ds ... add|select|remove</code> mutation auto-rebuilds the web output, so no</li>
+<p>separate build step is needed after CLI mutations.</p>
+<li>Theme/style live in the generated shell script (<code>SHELL_FOOT</code> in <code>ds</code>), not in</li>
+<p><code>components/lib.js</code>: the bottom-left toggles write <code>ds-theme</code> / <code>ds-style</code> to</p>
+<p><code>localStorage</code>, and on load the page restores those values or the</p>
+<p><code>?theme=dark</code> / <code>?style=strak</code> deep-link, with the URL param winning. Change</p>
+<p>this in the generator, never in the generated HTML. <code>components/lib.js</code> only</p>
+<p>applies <code>?theme=</code> plus the gallery postMessage on standalone variant pages;</p>
+<p>it handles neither style nor persistence.</p>
+<li>Caveat when you test that: the restore path is currently broken. <code>setTheme</code></li>
+<p>runs at the top level before <code>let curTheme, curStyle</code> is initialized, so any</p>
+<p>load with a theme or style to restore throws a ReferenceError and aborts the</p>
+<p>rest of the shell script (<code>/components/?theme=dark</code> still renders light).</p>
+<p>Moving that declaration above the calls in <code>ds</code> and rebuilding fixes it.</p>
+<li>Fonts load from external CDNs (Fontshare/Google); offline the layout still</li>
+<p>works with fallback fonts.</p>
+</ul></div>
+<div class="gen">gegenereerd uit AGENTS.md op 2026-07-30 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <script>
 const seg = document.getElementById("themeSeg");
 const sseg = document.getElementById("styleSeg");
+let curTheme = "", curStyle = "";
 function applyToFrames(fn) {
   document.querySelectorAll("iframe").forEach(f => { try { fn(f.contentDocument.documentElement); } catch(e) {} });
 }
@@ -282,7 +319,6 @@ document.querySelectorAll(".cell > .ch").forEach(ch => {
     ch.parentElement.classList.toggle("closed");
   });
 });
-let curTheme = "", curStyle = "";
 function fitFrames() {
   document.querySelectorAll("iframe[data-fit]").forEach(f => {
     try {

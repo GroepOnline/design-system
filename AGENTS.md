@@ -83,3 +83,40 @@ sprite-svg's altijd fill:none + stroke:currentColor).
 | `surfaces/` | per-surface briefs |
 | `motion-spec.md` | motion-fysica (gelockt) |
 | `new-project.sh` | scaffold nieuw product vanuit dit systeem |
+
+## Cursor Cloud specific instructions
+
+Standalone static design-system. No package manager, no third-party deps: the
+`ds` CLI is pure Python 3.12 stdlib. There is nothing to install, and the repo
+carries no `.cursor/environment.json` or setup script: when Cursor Cloud asks
+for an install/update command, `python3 --version` is enough as a runtime check.
+
+- Lint/validate: `./ds check` (source of truth for the `check` CI step).
+  Warnings (non-URL sources, em-dashes) are expected and do not fail; only
+  `errors` matter.
+- Build/generate: `./ds build`. Generated output (`components/*/index.html`,
+  `components/index.html`, `docs/`, `taste-site/`) is committed. CI's
+  `python3 ds build --check` step is effectively a plain build (the `--check`
+  arg is ignored by `main()`), so after any `ds` mutation keep the tree
+  idempotent: run `./ds build` and confirm `git diff` is empty.
+- Run/serve (dev): serve from the repo root, e.g.
+  `python3 -m http.server 8000`, then open
+  `http://localhost:8000/components/`. You MUST serve from root, not `file://`:
+  generated pages use root-absolute asset paths (`/tokens.css`,
+  `/components/icons.svg#…`, `/components/lib.js`).
+- Any `./ds ... add|select|remove` mutation auto-rebuilds the web output, so no
+  separate build step is needed after CLI mutations.
+- Theme/style live in the generated shell script (`SHELL_FOOT` in `ds`), not in
+  `components/lib.js`: the bottom-left toggles write `ds-theme` / `ds-style` to
+  `localStorage`, and on load the page restores those values or the
+  `?theme=dark` / `?style=strak` deep-link, with the URL param winning. Change
+  this in the generator, never in the generated HTML. `components/lib.js` only
+  applies `?theme=` plus the gallery postMessage on standalone variant pages;
+  it handles neither style nor persistence.
+- Caveat when you test that: the restore path is currently broken. `setTheme`
+  runs at the top level before `let curTheme, curStyle` is initialized, so any
+  load with a theme or style to restore throws a ReferenceError and aborts the
+  rest of the shell script (`/components/?theme=dark` still renders light).
+  Moving that declaration above the calls in `ds` and rebuilding fixes it.
+- Fonts load from external CDNs (Fontshare/Google); offline the layout still
+  works with fallback fonts.

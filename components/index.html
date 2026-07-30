@@ -260,12 +260,13 @@
   </a>
 </div>
 
-<div class="gen">gegenereerd door ds build op 2026-07-28</div>
+<div class="gen">gegenereerd door ds build op 2026-07-30</div>
 
 </div></main>
 <script>
 const seg = document.getElementById("themeSeg");
 const sseg = document.getElementById("styleSeg");
+let curTheme = "", curStyle = "";
 function applyToFrames(fn) {
   document.querySelectorAll("iframe").forEach(f => { try { fn(f.contentDocument.documentElement); } catch(e) {} });
 }
@@ -297,7 +298,6 @@ document.querySelectorAll(".cell > .ch").forEach(ch => {
     ch.parentElement.classList.toggle("closed");
   });
 });
-let curTheme = "", curStyle = "";
 function fitFrames() {
   document.querySelectorAll("iframe[data-fit]").forEach(f => {
     try {
