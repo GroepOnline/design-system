@@ -167,6 +167,7 @@
   <a class="it sys" href="/components/studio/"><span class="tile"><svg><use href="/components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="/docs/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="/taste-site/"><span class="tile"><svg><use href="/components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="/brain-site/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
   <a class="it sys" href="/DESIGN.md"><span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="/AGENTS.md"><span class="tile"><svg><use href="/components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
@@ -191,12 +192,13 @@
 <p>Devin-producttaal (gemeten aan hun live site), met eigen motion-discipline en</p>
 <p>Nederlandse copy-stem.</p>
 <p><strong>Live (tailnet):</strong> <code>https://joep.tail86a8f2.ts.net:8443/</code></p>
-<h2>De vier tools</h2>
-<table><thead><tr><th>Tool</th><th>Waar</th><th>Wat</th></tr></thead><tbody><tr><td><strong>catalogus</strong></td><td><code>components/</code> + <code>./ds</code></td><td>alle varianten ooit: self + external. Lock-model: vast tot expliciete select/remove</td></tr><tr><td><strong>studio</strong></td><td><code>/components/studio/</code></td><td>visueel afstellen zonder code: presets (incl. <strong>Vanaf nul</strong>), accent, warmte, radius, tekstgrootte. Tabs: Afstellen + <strong>Docs</strong> (de taal lezen terwijl je stelt). Export: Kopieer tokens</td></tr><tr><td><strong>docs</strong></td><td><code>/docs/</code></td><td>alle .md-documenten gerenderd als lees-laag. De .md blijft de bron</td></tr><tr><td><strong>taste</strong></td><td><code>/taste-site/</code></td><td>het lerende smaak-systeem: bindende regels + observatie-log. Onderhoud via de <code>joep-design-taste</code> skill, gekoppeld aan alles via het propagatie-contract</td></tr></tbody></table>
+<h2>De vijf tools</h2>
+<table><thead><tr><th>Tool</th><th>Waar</th><th>Wat</th></tr></thead><tbody><tr><td><strong>catalogus</strong></td><td><code>components/</code> + <code>./ds</code></td><td>alle varianten ooit: self + external. Lock-model: vast tot expliciete select/remove</td></tr><tr><td><strong>studio</strong></td><td><code>/components/studio/</code></td><td>visueel afstellen zonder code: presets (incl. <strong>Vanaf nul</strong>), accent, warmte, radius, tekstgrootte. Tabs: Afstellen + <strong>Docs</strong> (de taal lezen terwijl je stelt). Export: Kopieer tokens</td></tr><tr><td><strong>docs</strong></td><td><code>/docs/</code></td><td>alle .md-documenten gerenderd als lees-laag. De .md blijft de bron</td></tr><tr><td><strong>taste</strong></td><td><code>/taste-site/</code></td><td>het lerende smaak-systeem: bindende regels + observatie-log. Onderhoud via de <code>joep-design-taste</code> skill, gekoppeld aan alles via het propagatie-contract</td></tr><tr><td><strong>brain</strong></td><td><code>/brain-site/</code> + <code>brain/</code></td><td>niet-bindende context: research, decisions, concept-graph (Obsidian vault). Productregels lopen nog steeds via taste</td></tr></tbody></table>
 <h2>Snelstart</h2>
 <pre><code>./ds list                    # overzicht van alles
 ./ds button list             # één component in detail
-./ds build                   # web herbouwen (catalogus + docs + taste)
+./ds build                   # web herbouwen (catalogus + docs + taste + brain)
+./ds brain new decision &quot;…&quot;  # decision-note in de vault
 ./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem</code></pre>
 <p>Nieuw component of variant:</p>
 <pre><code># 1. experimenteer in playground/ (vrij, relatieve paden ok)
@@ -205,7 +207,7 @@
 # 3. selecteer als dé knop
 ./ds button select mijn-knop</code></pre>
 <h2>Mappen</h2>
-<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives + typografie-schaal + icon-maten</td></tr><tr><td><code>components/&lt;naam&gt;/</code></td><td>catalog.json (bron) + self/ + external/ + index.html (gegenereerd)</td></tr><tr><td><code>components/icons.svg</code></td><td>31 Lucide symbols</td></tr><tr><td><code>playground/</code></td><td>experimentzone — kan de catalogus nooit corrupt maken</td></tr><tr><td><code>docs/</code></td><td>gerenderde .md-pagina&#x27;s (gegenereerd)</td></tr><tr><td><code>taste-site/</code></td><td>taste-regels + log als site (gegenereerd uit taste/*.md)</td></tr><tr><td><code>templates/</code> + <code>new-project.sh</code></td><td>scaffold voor nieuwe producten</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface ontwerpbriefs</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr></tbody></table>
+<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives + typografie-schaal + icon-maten</td></tr><tr><td><code>components/&lt;naam&gt;/</code></td><td>catalog.json (bron) + self/ + external/ + index.html (gegenereerd)</td></tr><tr><td><code>components/icons.svg</code></td><td>31 Lucide symbols</td></tr><tr><td><code>playground/</code></td><td>experimentzone — kan de catalogus nooit corrupt maken</td></tr><tr><td><code>docs/</code></td><td>gerenderde .md-pagina&#x27;s (gegenereerd)</td></tr><tr><td><code>taste-site/</code></td><td>taste-regels + log als site (gegenereerd uit taste/*.md)</td></tr><tr><td><code>brain/</code></td><td>Obsidian Second Brain (bron)</td></tr><tr><td><code>brain-site/</code></td><td>brain-notes als site (gegenereerd)</td></tr><tr><td><code>.agents/</code></td><td>agent-skills + hooks (canoniek; <code>.cursor/</code> wijst hierheen)</td></tr><tr><td><code>templates/</code> + <code>new-project.sh</code></td><td>scaffold voor nieuwe producten</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface ontwerpbriefs</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr></tbody></table>
 <h2>Regels in het kort</h2>
 <ul>
 <li>Geen spinners (activiteit = worked-row + ripples), geen emoji-iconen (Lucide),</li>
@@ -213,8 +215,8 @@
 <p>first-class. Volledig: <code>DESIGN.md</code> §10-13.</p>
 <li>Catalogus is <strong>vast</strong>: entries veranderen nooit stilletjes. Selecteren en</li>
 <p>verwijderen zijn de enige mutaties, altijd via <code>ds</code>.</p>
-<li>Gegenereerde bestanden (<code>components/*/index.html</code>, <code>docs/</code>, <code>taste-site/</code>)</li>
-<p>nooit handmatig bewerken.</p>
+<li>Gegenereerde bestanden (<code>components/*/index.html</code>, <code>docs/</code>, <code>taste-site/</code>,</li>
+<p><code>brain-site/</code>) nooit handmatig bewerken.</p>
 </ul>
 <p>Meer: <code>hoe-wat.md</code> (grote gids) · <code>AGENTS.md</code> (agent-contract) ·</p>
 <p><code>WORKFLOW.md</code> (processen) · <code>DESIGN.md</code> (de taal)</p></div>

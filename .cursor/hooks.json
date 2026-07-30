@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": ".agents/hooks/guard-generated.sh",
+        "matcher": "Write",
+        "timeout": 10
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": ".agents/hooks/brain-build.sh",
+        "timeout": 30
+      }
+    ]
+  }
+}

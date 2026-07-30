@@ -10,4 +10,4 @@ jobs:
       - run: python3 ds build --check
         name: "ds build (idempotent — failt als gegenereerde bestanden verouderd zijn)"
       - run: python3 ds check
-        name: "ds check (catalogus validatie, sprite referenties, em-dash scan)"
+        name: "ds check (catalogus, sprites, em-dash, brain wikilinks)"

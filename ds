@@ -18,6 +18,11 @@ Selecteren:      ds <c> select <id>   (demote huidige active automatisch)
 Verwijderen:     ds <c> remove <id>   (expliciet)
 
 Web is desktop-first app-shell; CLI en web lezen hetzelfde manifest.
+
+Brain (vijfde tool):
+  brain/              Obsidian vault (bron, niet-bindende context)
+  brain-site/         GEGENEREERD door ds build / ds brain build
+  ./ds brain build|check|new decision|new research
 """
 import html as htmlmod
 import json
@@ -28,7 +33,10 @@ from datetime import date
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 COMP = os.path.join(ROOT, "components")
+BRAIN = os.path.join(ROOT, "brain")
+BRAIN_SITE = os.path.join(ROOT, "brain-site")
 STYLES_JSON = os.path.join(ROOT, "styles.json")
+WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
     if os.path.exists(STYLES_JSON):
@@ -57,6 +65,7 @@ SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
     ("/docs/", "i-file", "docs", "alle .md"),
     ("/taste-site/", "i-check", "taste", "regels+log"),
+    ("/brain-site/", "i-panel", "brain", "context"),
     ("/DESIGN.md", "i-book", "DESIGN.md", "taal"),
     ("/WORKFLOW.md", "i-queue", "WORKFLOW.md", "proces"),
     ("/AGENTS.md", "i-terminal", "AGENTS.md", "voor ai"),
@@ -799,6 +808,191 @@ def build_taste():
     # /taste/ is bezet door de .md-map; serveer via taste-site en link daarheen
     print(f"  {_c('32','✓')} {bold('taste'):<14} regels + log {dim('(uit taste/*.md)')}")
 
+# ---------- brain (Obsidian vault → brain-site) ----------
+
+def brain_note_paths():
+    """All .md files under brain/, relative path with / separators."""
+    if not os.path.isdir(BRAIN):
+        return []
+    out = []
+    for dirpath, _dirs, files in os.walk(BRAIN):
+        if ".obsidian" in dirpath.split(os.sep):
+            continue
+        for fn in files:
+            if not fn.endswith(".md"):
+                continue
+            abs_p = os.path.join(dirpath, fn)
+            rel = os.path.relpath(abs_p, BRAIN).replace(os.sep, "/")
+            out.append(rel)
+    return sorted(out)
+
+def brain_slug(rel):
+    base = os.path.splitext(rel)[0]
+    return re.sub(r"[^a-zA-Z0-9]+", "-", base).strip("-").lower() or "note"
+
+def brain_title(rel):
+    return os.path.splitext(os.path.basename(rel))[0]
+
+def brain_title_index():
+    """Obsidian-style: note basename (without .md) → slug. Last wins on collision."""
+    idx = {}
+    for rel in brain_note_paths():
+        idx[brain_title(rel)] = brain_slug(rel)
+        # also allow path-without-ext for [[Indexes/Taste]] style
+        idx[os.path.splitext(rel)[0]] = brain_slug(rel)
+    return idx
+
+def brain_strip_frontmatter(md):
+    if md.startswith("---\n"):
+        end = md.find("\n---\n", 4)
+        if end != -1:
+            return md[end + 5:]
+    return md
+
+def brain_rewrite_wikilinks(md, title_idx):
+    def repl(m):
+        target = m.group(1).strip()
+        alias = (m.group(2) or target).strip()
+        slug = title_idx.get(target)
+        if not slug:
+            # try basename of path-like target
+            slug = title_idx.get(os.path.basename(target))
+        if slug:
+            return f"[{alias}](/brain-site/{slug}.html)"
+        return alias
+    return WIKILINK_RE.sub(repl, md)
+
+def build_brain():
+    os.makedirs(BRAIN_SITE, exist_ok=True)
+    notes = brain_note_paths()
+    title_idx = brain_title_index()
+    # clear old html pages (keep dir)
+    for fn in os.listdir(BRAIN_SITE):
+        if fn.endswith(".html"):
+            os.remove(os.path.join(BRAIN_SITE, fn))
+    groups = {"home": [], "Indexes": [], "Concepts": [], "Decisions": [], "Research": [],
+              "Templates": [], "other": []}
+    for rel in notes:
+        slug = brain_slug(rel)
+        title = brain_title(rel)
+        raw = open(os.path.join(BRAIN, rel), encoding="utf-8").read()
+        body_md = brain_rewrite_wikilinks(brain_strip_frontmatter(raw), title_idx)
+        content = md_to_html(body_md)
+        page = (
+            f'<div class="pagehead"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span>'
+            f'<div><h1>{htmlmod.escape(title)}</h1>'
+            f'<div class="cat caps">brain · bron: brain/{htmlmod.escape(rel)}</div></div>'
+            f'<div class="meta"><a href="/brain-site/" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div>'
+            f'<div class="md">{content}</div>'
+            f'<div class="gen">gegenereerd uit brain/{htmlmod.escape(rel)} op {date.today()} · bewerk de .md, niet deze pagina</div>'
+        )
+        with open(os.path.join(BRAIN_SITE, slug + ".html"), "w", encoding="utf-8") as f:
+            f.write(_shell(title, page, MD_CSS))
+        top = rel.split("/")[0] if "/" in rel else ("home" if title in ("Home", "README") else "other")
+        if top in groups:
+            groups[top].append((slug, title, rel))
+        elif title in ("Home", "README"):
+            groups["home"].append((slug, title, rel))
+        else:
+            groups["other"].append((slug, title, rel))
+    sections = []
+    order = [("home", "Ingang"), ("Indexes", "Indexes"), ("Concepts", "Concepts"),
+             ("Decisions", "Decisions"), ("Research", "Research"),
+             ("Templates", "Templates"), ("other", "Overig")]
+    for key, label in order:
+        items = groups.get(key) or []
+        if not items:
+            continue
+        cells = "".join(
+            f'  <a class="cell" href="/brain-site/{slug}.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)">'
+            f'<span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0">'
+            f'<svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span>'
+            f'<span style="font-weight:500;font-size:var(--text-lg);min-width:150px">{htmlmod.escape(title)}</span>'
+            f'<span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">{htmlmod.escape(rel)}</span></a>'
+            for slug, title, rel in items)
+        sections.append(f'<div class="caps" style="margin:20px 2px 8px">{label}</div><div class="grid" style="grid-template-columns:1fr">{cells}</div>')
+    index_body = (
+        f'<div class="pagehead"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span>'
+        f'<div><h1>Brain</h1><div class="cat caps">{len(notes)} notes · niet-bindende context</div></div></div>'
+        f'<div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. '
+        f'Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div>'
+        + "\n".join(sections)
+        + f'<div class="gen">gegenereerd door ds brain build op {date.today()} · bron: brain/**/*.md</div>'
+    )
+    with open(os.path.join(BRAIN_SITE, "index.html"), "w", encoding="utf-8") as f:
+        f.write(_shell("brain", index_body, MD_CSS))
+    print(f"  {_c('32','✓')} {bold('brain'):<14} {len(notes)} notes {dim('(uit brain/**/*.md)')}")
+
+def check_brain_wikilinks():
+    """Return list of warning strings for unresolved [[wikilinks]] / issues in brain/."""
+    warnings = []
+    title_idx = brain_title_index()
+    # duplicate basenames (Obsidian ambiguity)
+    basenames = {}
+    for rel in brain_note_paths():
+        bn = brain_title(rel)
+        basenames.setdefault(bn, []).append(rel)
+    for bn, rels in sorted(basenames.items()):
+        if len(rels) > 1:
+            warnings.append(f"brain: duplicate note title '{bn}' → {', '.join(rels)}")
+    for rel in brain_note_paths():
+        raw = open(os.path.join(BRAIN, rel), encoding="utf-8").read()
+        if "—" in raw:
+            warnings.append(f"brain/{rel}: em-dash in copy")
+        if not raw.startswith("---\n"):
+            warnings.append(f"brain/{rel}: missing frontmatter")
+        for m in WIKILINK_RE.finditer(raw):
+            target = m.group(1).strip()
+            if target in title_idx:
+                continue
+            if os.path.basename(target) in title_idx:
+                continue
+            warnings.append(f"brain/{rel}: unresolved wikilink [[{target}]]")
+    return warnings
+
+def cmd_brain_new(kind, title):
+    kind = kind.lower()
+    if kind not in ("decision", "research"):
+        err("gebruik: ds brain new decision|research <titel>")
+    folder = "Decisions" if kind == "decision" else "Research"
+    tpl_name = "New Decision.md" if kind == "decision" else "New Research.md"
+    tpl_path = os.path.join(BRAIN, "Templates", tpl_name)
+    if not os.path.exists(tpl_path):
+        err(f"template ontbreekt: brain/Templates/{tpl_name}")
+    tpl = open(tpl_path, encoding="utf-8").read()
+    safe = re.sub(r"[^\w\s\-]+", "", title, flags=re.UNICODE).strip()
+    safe = re.sub(r"\s+", " ", safe)
+    if not safe:
+        err("lege titel")
+    fname = f"{date.today().isoformat()} {safe}.md"
+    dest = os.path.join(BRAIN, folder, fname)
+    if os.path.exists(dest):
+        err(f"bestaat al: brain/{folder}/{fname}")
+    body = tpl.replace("{{title}}", safe).replace("{{date}}", str(date.today()))
+    body = body.replace("type: template", f"type: {kind}")
+    with open(dest, "w", encoding="utf-8") as f:
+        f.write(body)
+    ok(f"aangemaakt brain/{folder}/{fname}")
+    build_brain()
+
+def cmd_brain(args):
+    if not args:
+        err("gebruik: ds brain build|check|new decision|new research")
+    if args[0] == "build":
+        build_brain()
+        ok("brain-site bijgewerkt")
+    elif args[0] == "check":
+        ws = check_brain_wikilinks()
+        for w in ws:
+            wrn(w)
+        ok(f"brain check {dim(f'— {len(ws)} warnings')}")
+    elif args[0] == "new":
+        if len(args) < 3:
+            err("gebruik: ds brain new decision|research <titel>")
+        cmd_brain_new(args[1], " ".join(args[2:]))
+    else:
+        err("gebruik: ds brain build|check|new decision|new research")
+
 def cmd_build(only=None):
     targets = [only] if only else components()
     for c in targets:
@@ -812,7 +1006,8 @@ def cmd_build(only=None):
     else:
         build_docs()
         build_taste()
-        ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery + docs + taste)')}")
+        build_brain()
+        ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery + docs + taste + brain)')}")
 
 # ---------- main ----------
 
@@ -893,6 +1088,8 @@ def cmd_check():
             raw = open(os.path.join(ROOT, fn)).read()
             if "—" in raw:
                 warnings.append(f"em-dash in {fn}")
+    # brain wikilinks (warning-only, same level as em-dash)
+    warnings.extend(check_brain_wikilinks())
     for e in errors:
         errp(e)
     for w in warnings:
@@ -913,6 +1110,8 @@ def main():
         cmd_list()
     elif args[0] == "build":
         cmd_build()
+    elif args[0] == "brain":
+        cmd_brain(args[1:])
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()

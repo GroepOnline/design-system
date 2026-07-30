@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>brain — design-system</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  html, body { height: 100%; }
+  body { display: flex; overflow: hidden; }
+  /* ---- rail: gecategoriseerde component-blokken ---- */
+  .rail {
+    width: 276px; flex-shrink: 0; border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; background: var(--bg);
+    overflow-y: auto; padding: 14px 12px 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); }
+  .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+  .rail .lbl { margin: 14px 10px 5px; color: var(--text-muted); }
+  .rail a.it {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 10px 6px 8px; margin-bottom: 1px;
+    border-radius: var(--r-md); border: 1px solid transparent;
+    text-decoration: none;
+  }
+  .rail a.it:hover { background: var(--hover); }
+  .rail a.it.on { background: var(--surface); border-color: var(--line); box-shadow: var(--shadow-xs); }
+  .rail a.it.on .tile { border-color: var(--accent); }
+  .rail a.it.on .tile svg { color: var(--accent-ink); }
+  .rail .tile {
+    width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+    border: 1px solid var(--line); background: var(--surface);
+    display: grid; place-items: center;
+  }
+  .rail .tile svg { width: 17px; height: 17px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .rail a.it.sys { padding: 5px 10px 5px 13px; }
+  .rail a.it.sys .tile { width: 18px; height: 18px; border: none; background: transparent; }
+  .rail a.it.sys .tile svg { width: 14px; height: 14px; color: var(--text-faint); }
+  .rail a.it.sys .nm { font-size: var(--text-md); font-weight: 400; color: var(--text-muted); }
+  .rail .nm { font-size: var(--text-md); font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
+  .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
+  .rail .n { margin-left: auto; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; }
+  .rail .foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
+  .rail .foot .seg { flex: 1; }
+  .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
+  /* ---- content ---- */
+  .main { flex: 1; overflow-y: auto; min-width: 0;
+    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+  .main::-webkit-scrollbar { width: 10px; }
+  .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
+  .main::-webkit-scrollbar-track { background: transparent; }
+  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  .rail { scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  /* code-blokken ook dun */
+  .cell pre { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+  .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
+  .cell pre::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 40px 64px; }
+  /* ---- pagina-header ---- */
+  .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
+  .pagehead .tile { width: 44px; height: 44px; border-radius: 11px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex-shrink: 0; }
+  .pagehead .tile svg { width: 22px; height: 22px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pagehead h1 { margin: 0; }
+  .pagehead .cat { margin-left: 2px; }
+  .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; }
+  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; max-width: 720px; line-height: 1.55; }
+  .sub code, .legend code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .legend { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; font-size: var(--text-sm); color: var(--text-faint); flex-wrap: wrap; }
+  /* ---- gebruik-paneel (actieve variant) ---- */
+  .use-now { display: flex; align-items: center; gap: 12px; border: 1px solid var(--accent); background: var(--accent-soft); border-radius: var(--r-lg); padding: 11px 15px; margin-bottom: 26px; font-size: var(--text-md); }
+  .use-now .lbl2 { font-weight: 500; color: var(--accent-ink); flex-shrink: 0; }
+  .use-now code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface); border: 1px solid var(--line); padding: 2px 8px; border-radius: 6px; }
+  .use-now .cp { margin-left: auto; }
+  /* ---- docs cards ---- */
+  .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
+  .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; background: var(--surface); }
+  .doc .dt { margin-bottom: 7px; }
+  .doc.use .dt { color: var(--open-green); }
+  .doc.avoid .dt { color: var(--red); }
+  .doc.contract .dt { color: var(--accent-ink); }
+  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; }
+  .doc ul { padding-left: 17px; }
+  .doc li { margin: 2px 0; }
+  .doc li::marker { color: var(--text-faint); }
+  .doc code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+  /* ---- variant grid ---- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
+  .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+  .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .cell .ch { display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--bg); font-size: var(--text-md); cursor: pointer; user-select: none; }
+  .cell .ch:hover { background: var(--hover); }
+  .cell .ch .caret { width: 13px; height: 13px; color: var(--text-faint); transition: transform 200ms var(--ease-out); flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; }
+  .cell.closed .ch .caret { transform: rotate(-90deg); }
+  .cell.closed iframe, .cell.closed .cf, .cell.closed details { display: none; }
+  .cell.closed .ch { border-bottom: none; }
+  .cell .ch .id { font-weight: 500; }
+  .cell .ch .note { color: var(--text-faint); font-size: var(--text-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+  .st { font-family: var(--mono); font-size: 10px; padding: 2.5px 9px; border-radius: 200px; letter-spacing: 0.04em; }
+  .st.active { background: var(--open-green-bg); color: var(--open-green); }
+  .st.locked { border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }
+  .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
+  .org.external { color: var(--accent-ink); }
+  .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .cf { display: flex; gap: 10px; align-items: center; padding: 7px 13px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
+  .cell .cf a { color: var(--accent-ink); text-decoration: none; }
+  .cell details { border-top: 1px solid var(--line); }
+  .cell summary { padding: 7px 13px; font-size: var(--text-sm); color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; }
+  .cell summary:hover { color: var(--text); }
+  .cell summary .copy { margin-left: auto; }
+  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
+  .gen { margin-top: 32px; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
+  @media (max-width: 860px) {
+    body { flex-direction: column; overflow: auto; }
+    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
+    .rail .lbl, .rail a.it .n, .rail .nm .ds { display: none; }
+    .rail .foot { margin: 0 0 0 auto; border: none; padding: 0; }
+    .main { overflow: visible; }
+    .wrap { padding: 20px 16px 40px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .md { max-width: 780px; }
+  .md h1 { font-size: 26px; margin: 8px 0 10px; }
+  .md h2 { font-size: 19px; margin: 30px 0 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .md h3 { font-size: 15.5px; margin: 22px 0 6px; }
+  .md h4 { font-size: 14px; margin: 18px 0 4px; }
+  .md p, .md li { font-size: 14.5px; line-height: 1.65; color: var(--text-muted); }
+  .md p { margin: 8px 0; }
+  .md ul, .md ol { padding-left: 20px; margin: 8px 0; }
+  .md li { margin: 3px 0; }
+  .md strong { color: var(--text); font-weight: 500; }
+  .md code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .md pre { background: var(--surface-sunk); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; overflow-x: auto; margin: 12px 0; scrollbar-width: thin; }
+  .md pre code { background: none; padding: 0; font-size: 12px; line-height: 1.6; }
+  .md table { border-collapse: collapse; margin: 14px 0; width: 100%; font-size: 13.5px; }
+  .md th { text-align: left; font-weight: 500; color: var(--text); padding: 8px 12px; border-bottom: 1px solid var(--line-strong); }
+  .md td { padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--text-muted); vertical-align: top; }
+  .md a { color: var(--accent-ink); text-decoration: none; }
+  .md a:hover { text-decoration: underline; }
+  .md blockquote { border-left: 2px solid var(--accent); padding: 4px 14px; margin: 12px 0; color: var(--text-muted); }
+  .md hr { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
+</style>
+</head>
+<body>
+<aside class="rail">
+  <a class="brand" href="/"><span class="logo">d</span>design-system</a>
+  <div class="lbl caps">Primitieven</div>
+  <a class="it" href="/components/badge/"><span class="tile"><svg><use href="/components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
+  <a class="it" href="/components/button/"><span class="tile"><svg><use href="/components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">btn + gbtn + kbd</span></span><span class="act"></span></a>
+  <div class="lbl caps">Gesprek</div>
+  <a class="it" href="/components/approval/"><span class="tile"><svg><use href="/components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
+  <a class="it" href="/components/composer/"><span class="tile"><svg><use href="/components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
+  <a class="it" href="/components/transcript/"><span class="tile"><svg><use href="/components/icons.svg#i-message"/></svg></span><span class="nm">transcript<span class="ds">user-pill, prose, meta</span></span><span class="act"></span></a>
+  <a class="it" href="/components/worked-row/"><span class="tile"><svg><use href="/components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
+  <div class="lbl caps">Bewijs</div>
+  <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
+  <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
+  <div class="lbl caps">Structuur</div>
+  <a class="it" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
+  <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Systeem</div>
+  <a class="it sys" href="/components/studio/"><span class="tile"><svg><use href="/components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
+  <a class="it sys" href="/docs/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
+  <a class="it sys" href="/taste-site/"><span class="tile"><svg><use href="/components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="/brain-site/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
+  <a class="it sys" href="/DESIGN.md"><span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
+  <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
+  <a class="it sys" href="/AGENTS.md"><span class="tile"><svg><use href="/components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
+  <a class="it sys" href="/references/"><span class="tile"><svg><use href="/components/icons.svg#i-external"/></svg></span><span class="nm">references</span><span class="n">shots</span></a>
+  <div class="foot" style="flex-direction:column;align-items:stretch">
+    <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button></div>
+    <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
+  </div>
+</aside>
+<main class="main"><div class="wrap">
+<div class="pagehead"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><div><h1>Brain</h1><div class="cat caps">21 notes · niet-bindende context</div></div></div><div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div><div class="caps" style="margin:20px 2px 8px">Ingang</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/brain-site/home.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Home</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Home.md</span></a>  <a class="cell" href="/brain-site/readme.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">README</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">README.md</span></a></div>
+<div class="caps" style="margin:20px 2px 8px">Indexes</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/brain-site/indexes-components.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Components</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Indexes/Components.md</span></a>  <a class="cell" href="/brain-site/indexes-concepts.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Concepts</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Indexes/Concepts.md</span></a>  <a class="cell" href="/brain-site/indexes-decisions.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Decisions</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Indexes/Decisions.md</span></a>  <a class="cell" href="/brain-site/indexes-design-language.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Design Language</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Indexes/Design Language.md</span></a>  <a class="cell" href="/brain-site/indexes-research.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Research</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Indexes/Research.md</span></a>  <a class="cell" href="/brain-site/indexes-surfaces.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Surfaces</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Indexes/Surfaces.md</span></a>  <a class="cell" href="/brain-site/indexes-taste.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Taste</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Indexes/Taste.md</span></a></div>
+<div class="caps" style="margin:20px 2px 8px">Concepts</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/brain-site/concepts-gegenereerde-bestanden.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Gegenereerde bestanden</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Concepts/Gegenereerde bestanden.md</span></a>  <a class="cell" href="/brain-site/concepts-lock-model.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Lock-model</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Concepts/Lock-model.md</span></a>  <a class="cell" href="/brain-site/concepts-origin-split.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Origin-split</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Concepts/Origin-split.md</span></a>  <a class="cell" href="/brain-site/concepts-playground.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Playground</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Concepts/Playground.md</span></a>  <a class="cell" href="/brain-site/concepts-single-active.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Single-active</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Concepts/Single-active.md</span></a>  <a class="cell" href="/brain-site/concepts-taste-propagatie.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">Taste-propagatie</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Concepts/Taste-propagatie.md</span></a></div>
+<div class="caps" style="margin:20px 2px 8px">Decisions</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/brain-site/decisions-2026-07-30-agent-laag-in-punt-agents.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">2026-07-30 Agent-laag in punt-agents</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Decisions/2026-07-30 Agent-laag in punt-agents.md</span></a>  <a class="cell" href="/brain-site/decisions-2026-07-30-agent-taste-buiten-dit-repo.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">2026-07-30 Agent-taste buiten dit repo</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Decisions/2026-07-30 Agent-taste buiten dit repo.md</span></a>  <a class="cell" href="/brain-site/decisions-2026-07-30-brain-als-vijfde-tool.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">2026-07-30 Brain als vijfde tool</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Decisions/2026-07-30 Brain als vijfde tool.md</span></a></div>
+<div class="caps" style="margin:20px 2px 8px">Research</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/brain-site/research-2026-07-30-devin-meetlat-pointers.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">2026-07-30 Devin meetlat pointers</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Research/2026-07-30 Devin meetlat pointers.md</span></a></div>
+<div class="caps" style="margin:20px 2px 8px">Templates</div><div class="grid" style="grid-template-columns:1fr">  <a class="cell" href="/brain-site/templates-new-decision.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">New Decision</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Templates/New Decision.md</span></a>  <a class="cell" href="/brain-site/templates-new-research.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)"><span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span><span style="font-weight:500;font-size:var(--text-lg);min-width:150px">New Research</span><span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">Templates/New Research.md</span></a></div><div class="gen">gegenereerd door ds brain build op 2026-07-30 · bron: brain/**/*.md</div>
+</div></main>
+<script>
+const seg = document.getElementById("themeSeg");
+const sseg = document.getElementById("styleSeg");
+let curTheme = "", curStyle = "";
+function applyToFrames(fn) {
+  document.querySelectorAll("iframe").forEach(f => { try { fn(f.contentDocument.documentElement); } catch(e) {} });
+}
+function setTheme(t) {
+  curTheme = t;
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem("ds-theme", t); } catch(e) {}
+  seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
+  applyToFrames(r => r.dataset.theme = t);
+}
+function setStyle(v) {
+  curStyle = v;
+  document.documentElement.dataset.style = v;
+  try { localStorage.setItem("ds-style", v); } catch(e) {}
+  sseg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.s === v));
+  applyToFrames(r => r.dataset.style = v);
+}
+seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setTheme(b.dataset.t)));
+sseg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setStyle(b.dataset.s)));
+const q = new URLSearchParams(location.search);
+const wantTheme = q.get("theme") || (() => { try { return localStorage.getItem("ds-theme"); } catch(e) { return null; } })();
+const wantStyle = q.get("style") || (() => { try { return localStorage.getItem("ds-style"); } catch(e) { return null; } })();
+if (wantTheme) { window.addEventListener("load", () => setTheme(wantTheme)); setTheme(wantTheme); }
+if (wantStyle) { window.addEventListener("load", () => setStyle(wantStyle)); setStyle(wantStyle); }
+/* cell in/uitklappen via header */
+document.querySelectorAll(".cell > .ch").forEach(ch => {
+  ch.addEventListener("click", e => {
+    if (e.target.closest("a") || e.target.closest("button")) return;
+    ch.parentElement.classList.toggle("closed");
+  });
+});
+function fitFrames() {
+  document.querySelectorAll("iframe[data-fit]").forEach(f => {
+    try {
+      const r = f.contentDocument.documentElement;
+      r.dataset.theme = curTheme;
+      r.dataset.style = curStyle;
+      const h = r.scrollHeight;
+      if (h > 0) f.style.height = Math.max(140, h + 2) + "px";
+    } catch(e) {}
+  });
+}
+window.addEventListener("load", () => {
+  fitFrames();
+  setTimeout(fitFrames, 400);
+  setTimeout(fitFrames, 1500);
+});
+document.querySelectorAll("[data-copy-path]").forEach(btn => {
+  btn.addEventListener("click", async () => {
+    const codes = btn.closest(".use-now").querySelectorAll("code");
+    try { await navigator.clipboard.writeText(codes[codes.length-1].textContent); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer pad", 1400); } catch(e) {}
+  });
+});
+document.querySelectorAll("[data-copy]").forEach(btn => {
+  btn.addEventListener("click", async e => {
+    e.preventDefault();
+    const tgt = btn.dataset.copy ? btn.closest(btn.dataset.copy) : null;
+    const pre = btn.closest("details") ? btn.closest("details").querySelector("pre") : null;
+    const txt = pre ? pre.textContent : (tgt ? tgt.textContent : "");
+    try { await navigator.clipboard.writeText(txt); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
+  });
+});
+</script>
+</body>
+</html>

@@ -167,6 +167,7 @@
   <a class="it sys" href="/components/studio/"><span class="tile"><svg><use href="/components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="/docs/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="/taste-site/"><span class="tile"><svg><use href="/components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="/brain-site/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
   <a class="it sys" href="/DESIGN.md"><span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="/AGENTS.md"><span class="tile"><svg><use href="/components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
@@ -198,9 +199,9 @@
 <p>overschrijven; nieuwe versie = nieuwe id of expliciete remove+add.</p>
 <li><strong>Origin-split.</strong> <code>self/</code> = eigen ontwerpen (incl. aangepaste externe).</li>
 <p><code>external/</code> = ongewijzigde referenties met <code>source</code>-veld verplicht.</p>
-<li><strong>Gegenereerde bestanden.</strong> <code>components/*/index.html</code> en <code>components/index.html</code></li>
-<p>zijn output van <code>ds build</code>. Nooit handmatig bewerken — wijzig het manifest</p>
-<p>of de generator (<code>ds</code>).</p>
+<li><strong>Gegenereerde bestanden.</strong> <code>components/*/index.html</code>, <code>components/index.html</code>,</li>
+<p><code>docs/</code>, <code>taste-site/</code> en <code>brain-site/</code> zijn output van <code>ds build</code>. Nooit</p>
+<p>handmatig bewerken — wijzig het manifest, <code>brain/*<em>/</em>.md</code>, of de generator (<code>ds</code>).</p>
 <li><strong>Playground.</strong> Experimenten alleen in <code>playground/</code>. Promotie uitsluitend</li>
 <p>via <code>ds &lt;comp&gt; add</code>. De CLI maakt paden root-absoluut bij promotie.</p>
 <li><strong>Single-active.</strong> Exact 1 entry per component heeft status <code>active</code>.</li>
@@ -212,9 +213,34 @@
 ./ds &lt;comp&gt; select &lt;id&gt;                    # active wisselen + web rebuild
 ./ds &lt;comp&gt; add &lt;pad&gt; --id x --origin self|external [--source s] [--note n]
 ./ds &lt;comp&gt; remove &lt;id&gt; [--yes]            # --yes vereist als entry ACTIEF is
-./ds build                                 # volledige web rebuild</code></pre>
+./ds build                                 # volledige web rebuild (catalogus + docs + taste + brain)
+./ds brain build                           # brain/**/*.md → brain-site/
+./ds brain check                           # unresolved wikilinks (warning-only)
+./ds brain new decision &lt;titel&gt;            # scaffold decision-note
+./ds brain new research &lt;titel&gt;            # scaffold research-note</code></pre>
 <p>Elke mutatie herbouwt web automatisch. CLI en web lezen hetzelfde manifest;</p>
 <p>er bestaat geen tweede bron.</p>
+<h2>Brain (niet-bindende context)</h2>
+<p>Agents mogen <code>brain/*<em>/</em>.md</code> lezen en schrijven voor research/decisions.</p>
+<p>Product-waarheid blijft <code>DESIGN.md</code>, <code>tokens.css</code>, <code>taste/</code>,</p>
+<p><code>components/*/catalog.json</code>. Productregels lopen uitsluitend via de</p>
+<p>bestaande taste-propagatie (taste-log → taste-rules → DESIGN.md). Een</p>
+<p><code>brain/Decisions/</code>-note overschrijft nooit DESIGN.md, tokens.css of</p>
+<p>catalog.json direct. Geen <code>obsidian</code>-CLI-calls in geautomatiseerde flows —</p>
+<p>alleen directe file-writes.</p>
+<p>Optioneel lokaal (Obsidian GUI moet open, vault <strong>brain</strong>):</p>
+<p><code>XDG_RUNTIME_DIR=/run/user/$UID obsidian vault=brain files|search|read …</code>.</p>
+<p>Zie <code>brain/README.md</code>.</p>
+<h2>Agent-laag (<code>.agents/</code>)</h2>
+<p>Canonieke, tool-onafhankelijke skills en hooks. <code>.cursor/</code> is een dunne</p>
+<p>overlay: symlinks naar <code>.agents/skills/*</code> plus <code>.cursor/hooks.json</code> als wiring.</p>
+<p>Nooit een tweede bron aanmaken.</p>
+<table><thead><tr><th>Skill</th><th>Waarvoor</th></tr></thead><tbody><tr><td><code>design-system-brain</code></td><td>vault gebruiken, <code>ds brain</code>, grenzen, Obsidian CLI</td></tr><tr><td><code>brain-note-hygiene</code></td><td>frontmatter, wikilinks, naamgeving, 0 warnings</td></tr><tr><td><code>brain-decision-capture</code></td><td>decision, research of taste-log kiezen</td></tr></tbody></table>
+<table><thead><tr><th>Hook</th><th>Event</th><th>Gedrag</th></tr></thead><tbody><tr><td><code>guard-generated.sh</code></td><td><code>preToolUse</code> (Write)</td><td>weigert edits in gegenereerde output (invariant 3)</td></tr><tr><td><code>brain-build.sh</code></td><td><code>afterFileEdit</code></td><td>herbouwt <code>brain-site/</code> na een vault-note edit</td></tr></tbody></table>
+<p>Agent-gedrag-taste (canonieke <code>taste.yaml</code> met per-tool generators) staat</p>
+<p><strong>buiten dit repo</strong> (besluit 2026-07-30): gedeeld punt richting</p>
+<p><code>kater-dev-tools</code>. Zie <code>brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md</code>.</p>
+<p>Geen <code>.agents/registry/taste.yaml</code> hier aanmaken.</p>
 <h2>Design-regels (harde bans, uit DESIGN.md §10)</h2>
 <ul>
 <li>Geen spinners/loaders — activiteit = worked-row + tool-ripples (1.1s, stopt)</li>
@@ -244,7 +270,7 @@
 <p>Typografie- en icon-regels: DESIGN.md §11-§13 (schaal-tokens verplicht,</p>
 <p>sprite-svg&#x27;s altijd fill:none + stroke:currentColor).</p>
 <h2>Bestandskaart</h2>
-<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting)</td></tr><tr><td><code>components/icons.svg</code></td><td>29 Lucide symbols (<code>&lt;use href=&quot;...#i-*&quot;&gt;</code>)</td></tr><tr><td><code>components/lib.js</code></td><td>thema deep-link + switch-gedrag voor varianten</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td></tr><tr><td><code>motion-spec.md</code></td><td>motion-fysica (gelockt)</td></tr><tr><td><code>new-project.sh</code></td><td>scaffold nieuw product vanuit dit systeem</td></tr></tbody></table>
+<table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting)</td></tr><tr><td><code>components/icons.svg</code></td><td>29 Lucide symbols (<code>&lt;use href=&quot;...#i-*&quot;&gt;</code>)</td></tr><tr><td><code>components/lib.js</code></td><td>thema deep-link + switch-gedrag voor varianten</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td></tr><tr><td><code>motion-spec.md</code></td><td>motion-fysica (gelockt)</td></tr><tr><td><code>brain/</code></td><td>Obsidian Second Brain (niet-bindende context)</td></tr><tr><td><code>brain-site/</code></td><td>gegenereerde leeslaag uit <code>brain/</code> (<code>ds brain build</code>)</td></tr><tr><td><code>.agents/</code></td><td>canonieke agent-skills + hooks (<code>.cursor/</code> is overlay)</td></tr><tr><td><code>new-project.sh</code></td><td>scaffold nieuw product vanuit dit systeem</td></tr></tbody></table>
 <h2>Cursor Cloud specific instructions</h2>
 <p>Standalone static design-system. No package manager, no third-party deps: the</p>
 <p><code>ds</code> CLI is pure Python 3.12 stdlib. There is nothing to install, and the repo</p>
@@ -255,7 +281,7 @@
 <p>Warnings (non-URL sources, em-dashes) are expected and do not fail; only</p>
 <p><code>errors</code> matter.</p>
 <li>Build/generate: <code>./ds build</code>. Generated output (<code>components/*/index.html</code>,</li>
-<p><code>components/index.html</code>, <code>docs/</code>, <code>taste-site/</code>) is committed. CI&#x27;s</p>
+<p><code>components/index.html</code>, <code>docs/</code>, <code>taste-site/</code>, <code>brain-site/</code>) is committed. CI&#x27;s</p>
 <p><code>python3 ds build --check</code> step is effectively a plain build (the <code>--check</code></p>
 <p>arg is ignored by <code>main()</code>), so after any <code>ds</code> mutation keep the tree</p>
 <p>idempotent: run <code>./ds build</code> and confirm <code>git diff</code> is empty.</p>

@@ -147,15 +147,36 @@ Joep ziet iets
 Propagatie is **geen optie.** Een regel in taste-rules.md die nergens anders
 staat, bestaat niet.
 
+## Brain — context naast taste
+
+`brain/` is de Obsidian Second Brain (research, decisions, concept-graph).
+`brain-site/` is de gegenereerde leeslaag (`./ds brain build`, ook via `./ds build`).
+
+```
+Decisions/Research note in brain/
+  → eenmalige context: blijft in brain/
+  → productregel: ALSNOG door de taste-loop hierboven
+    (brain-note is geen kortere weg naar DESIGN.md)
+```
+
+```bash
+./ds brain build
+./ds brain check
+./ds brain new decision "titel"
+./ds brain new research "titel"
+```
+
+Open vault: Obsidian → Open folder as vault → `brain/`.
+
 ## CI
 
 `.github/workflows/validate.yml` draait op elke push/PR:
 
 1. **`ds build --check`** — idempotentiecheck: de gegenereerde bestanden moeten
-   up-to-date zijn met de manifesten (git diff ≡ 0 na build).
+   up-to-date zijn met de manifesten (git diff ≡ 0 na build), inclusief `brain-site/`.
 2. **`ds check`** — validatie: catalogus-schema (1 active per component, bestaan
    van bestanden), sprite-referenties, em-dash vrije copy in .md bestanden
-   (warning-only).
+   (warning-only), unresolved `[[wikilinks]]` in `brain/` (warning-only).
 
 Zolang GitHub Actions minuten op private repos beperkt zijn, draai je lokaal:
 ```bash
@@ -174,7 +195,10 @@ Zolang GitHub Actions minuten op private repos beperkt zijn, draai je lokaal:
 | `surfaces/` | per-surface briefs | nieuwe surfaces |
 | `prototype-v2.html` | referentie-app | meerdere componenten tegelijk |
 | `references/` | meetlat-screenshots | twijfel over "hoe ziet goed eruit" |
-| `taste/` | lerend systeem | continu |
+| `taste/` | lerend UI-systeem | continu |
+| `brain/` | Second Brain (Obsidian) | research / decisions / concepts |
+| `brain-site/` | gegenereerde brain-leeslaag | via `ds brain build` / `ds build` |
+| `.agents/` | agent-skills + hooks (canoniek) | agent-gedrag rond brain en output |
 | `new-project.sh` + `templates/` | X-scaffolder | scaffold-verbeteringen |
 | `playground/` | experimenteerzone | elke oefensessie |
 | `.github/workflows/` | CI | validatie-automatisering |

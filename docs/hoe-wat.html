@@ -167,6 +167,7 @@
   <a class="it sys" href="/components/studio/"><span class="tile"><svg><use href="/components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="/docs/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="/taste-site/"><span class="tile"><svg><use href="/components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="/brain-site/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
   <a class="it sys" href="/DESIGN.md"><span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="/AGENTS.md"><span class="tile"><svg><use href="/components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
@@ -207,9 +208,10 @@
 <p>product-UI (2026-07-27), met eigen motion-discipline en een zelflerend</p>
 <p>taste-systeem.</p>
 <hr>
-<h2>2. De vier tools</h2>
-<p>Dit systeem heeft vier samenhangende gereedschappen. Ze werken vanuit dezelfde</p>
-<p>data (catalog.json per component) en spreken dezelfde taal.</p>
+<h2>2. De vijf tools</h2>
+<p>Dit systeem heeft vijf samenhangende gereedschappen. Catalogus, studio, docs en</p>
+<p>taste delen dezelfde product-SSOT. Brain is de niet-bindende context-laag</p>
+<p>(research, decisions, concept-graph).</p>
 <h3>Catalogus, <code>ds</code> CLI + web</h3>
 <p>De CLI is het hart. Elk commando wijzigt een manifest en herbouwt de web-gallery:</p>
 <pre><code>./ds list                              # alle componenten + actieve variant
@@ -217,7 +219,8 @@
 ./ds button select primary             # active wisselen (rest wordt locked)
 ./ds button add playground/x.html --id x --origin self --note &quot;...&quot;
 ./ds button remove x --yes             # expliciet verwijderen
-./ds build                             # web volledig herbouwen (gaat automatisch bij mutaties)</code></pre>
+./ds build                             # web volledig herbouwen (catalogus + docs + taste + brain)
+./ds brain build|check|new …           # Second Brain (zie hieronder)</code></pre>
 <p>Web (statisch gegenereerd uit manifests):</p>
 <ul>
 <li><code>/</code>, index</li>
@@ -232,11 +235,11 @@
 <li>De docs-tab raadplegen per component (gebruik/vermijd)</li>
 <li>Vanaf nul een nieuwe variant bouwen in <code>playground/</code> en die via de CLI promoveren</li>
 </ul>
-<p>Open de studio door <code>python3 -m http.server 8765 --bind 127.0.0.1</code> te draaien</p>
-<p>in de design-system-root en <code>http://127.0.0.1:8765/components/</code> te openen.</p>
+<p>Open de studio door <code>python3 -m http.server 8000</code> te draaien</p>
+<p>in de design-system-root en <code>http://localhost:8000/components/</code> te openen.</p>
 <h3>Docs</h3>
 <p>Elk <code>.md</code>-bestand in de repo is onderdeel van de documentatie. De belangrijkste:</p>
-<table><thead><tr><th>Bestand</th><th>Wat staat erin</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>De gelockte taal: kleur, type, iconen, componenten, layout, stem, bans</td></tr><tr><td><code>WORKFLOW.md</code></td><td>Hoe je een nieuw product start (X), een surface bouwt (Y), en de taste-loop</td></tr><tr><td><code>AGENTS.md</code></td><td>Instructies voor AI-agents: invarianten, commando&#x27;s, harde bans</td></tr><tr><td><code>motion-spec.md</code></td><td>De gelockte motion-fysica (spring 180/26, timing-curves)</td></tr><tr><td><code>surfaces/*.md</code></td><td>Per-surface design briefs (session, composer, palette, settings, etc.)</td></tr><tr><td><code>taste/taste-rules.md</code></td><td>Geleerde regels uit Joeps reacties, binding voor nieuw werk</td></tr><tr><td><code>taste/taste-log.md</code></td><td>Het logboek: shown/reaction/signal/delta per observatie</td></tr></tbody></table>
+<table><thead><tr><th>Bestand</th><th>Wat staat erin</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>De gelockte taal: kleur, type, iconen, componenten, layout, stem, bans</td></tr><tr><td><code>WORKFLOW.md</code></td><td>Hoe je een nieuw product start (X), een surface bouwt (Y), en de taste-loop</td></tr><tr><td><code>AGENTS.md</code></td><td>Instructies voor AI-agents: invarianten, commando&#x27;s, harde bans</td></tr><tr><td><code>motion-spec.md</code></td><td>De gelockte motion-fysica (spring 180/26, timing-curves)</td></tr><tr><td><code>surfaces/*.md</code></td><td>Per-surface design briefs (session, composer, palette, settings, etc.)</td></tr><tr><td><code>taste/taste-rules.md</code></td><td>Geleerde regels uit Joeps reacties, binding voor nieuw werk</td></tr><tr><td><code>taste/taste-log.md</code></td><td>Het logboek: shown/reaction/signal/delta per observatie</td></tr><tr><td><code>brain/</code></td><td>Obsidian Second Brain (niet-bindende context)</td></tr></tbody></table>
 <h3>Taste, het lerende systeem</h3>
 <p>Taste is geen losse tool maar een proces. Het werkt zo:</p>
 <ol>
@@ -247,6 +250,15 @@
 <li>Commit met prefix <code>taste: &lt;wat&gt;</code></li>
 </ol>
 <p>Een regel die alleen in taste-rules.md staat en nergens anders, bestaat niet.</p>
+<h3>Brain, de Second Brain</h3>
+<p><code>brain/</code> is een Obsidian-vault (wikilinks, graph). <code>brain-site/</code> is de</p>
+<p>gegenereerde leeslaag. Brain overschrijft nooit product-SSOT; productregels</p>
+<p>lopen uitsluitend via de taste-loop.</p>
+<pre><code>./ds brain build
+./ds brain check
+./ds brain new decision &quot;titel&quot;
+./ds brain new research &quot;titel&quot;</code></pre>
+<p>Open in Obsidian: folder as vault → <code>brain/</code>. Leeslaag: <code>/brain-site/</code>.</p>
 <hr>
 <h2>3. Hoe start je iets nieuws</h2>
 <p>Een nieuw product (hier X genoemd) scaffold je met het meegeleverde script:</p>

@@ -27,10 +27,11 @@ taste-systeem.
 
 ---
 
-## 2. De vier tools
+## 2. De vijf tools
 
-Dit systeem heeft vier samenhangende gereedschappen. Ze werken vanuit dezelfde
-data (catalog.json per component) en spreken dezelfde taal.
+Dit systeem heeft vijf samenhangende gereedschappen. Catalogus, studio, docs en
+taste delen dezelfde product-SSOT. Brain is de niet-bindende context-laag
+(research, decisions, concept-graph).
 
 ### Catalogus, `ds` CLI + web
 
@@ -42,7 +43,8 @@ De CLI is het hart. Elk commando wijzigt een manifest en herbouwt de web-gallery
 ./ds button select primary             # active wisselen (rest wordt locked)
 ./ds button add playground/x.html --id x --origin self --note "..."
 ./ds button remove x --yes             # expliciet verwijderen
-./ds build                             # web volledig herbouwen (gaat automatisch bij mutaties)
+./ds build                             # web volledig herbouwen (catalogus + docs + taste + brain)
+./ds brain build|check|new …           # Second Brain (zie hieronder)
 ```
 
 Web (statisch gegenereerd uit manifests):
@@ -60,8 +62,8 @@ De studio is de visuele werkplek. Hier kun je:
 - De docs-tab raadplegen per component (gebruik/vermijd)
 - Vanaf nul een nieuwe variant bouwen in `playground/` en die via de CLI promoveren
 
-Open de studio door `python3 -m http.server 8765 --bind 127.0.0.1` te draaien
-in de design-system-root en `http://127.0.0.1:8765/components/` te openen.
+Open de studio door `python3 -m http.server 8000` te draaien
+in de design-system-root en `http://localhost:8000/components/` te openen.
 
 ### Docs
 
@@ -76,6 +78,7 @@ Elk `.md`-bestand in de repo is onderdeel van de documentatie. De belangrijkste:
 | `surfaces/*.md` | Per-surface design briefs (session, composer, palette, settings, etc.) |
 | `taste/taste-rules.md` | Geleerde regels uit Joeps reacties, binding voor nieuw werk |
 | `taste/taste-log.md` | Het logboek: shown/reaction/signal/delta per observatie |
+| `brain/` | Obsidian Second Brain (niet-bindende context) |
 
 ### Taste, het lerende systeem
 
@@ -88,6 +91,21 @@ Taste is geen losse tool maar een proces. Het werkt zo:
 4. Commit met prefix `taste: <wat>`
 
 Een regel die alleen in taste-rules.md staat en nergens anders, bestaat niet.
+
+### Brain, de Second Brain
+
+`brain/` is een Obsidian-vault (wikilinks, graph). `brain-site/` is de
+gegenereerde leeslaag. Brain overschrijft nooit product-SSOT; productregels
+lopen uitsluitend via de taste-loop.
+
+```bash
+./ds brain build
+./ds brain check
+./ds brain new decision "titel"
+./ds brain new research "titel"
+```
+
+Open in Obsidian: folder as vault → `brain/`. Leeslaag: `/brain-site/`.
 
 ---
 

@@ -1,0 +1,9 @@
+{
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "Decisions",
+  "useMarkdownLinks": false,
+  "showUnsupportedFiles": false,
+  "readableLineLength": false,
+  "attachmentFolderPath": "Attachments"
+}

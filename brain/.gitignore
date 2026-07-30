@@ -1,0 +1,9 @@
+# Machine-specific Obsidian state
+workspace.json
+workspace-mobile.json
+
+# Plugin data can hold API keys even before we add plugins
+plugins/*/data.json
+
+# Local attachments (keep vault notes text-first)
+Attachments/

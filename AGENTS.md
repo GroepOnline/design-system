@@ -15,9 +15,9 @@ Bron van waarheid per component: `components/<naam>/catalog.json`.
    overschrijven; nieuwe versie = nieuwe id of expliciete remove+add.
 2. **Origin-split.** `self/` = eigen ontwerpen (incl. aangepaste externe).
    `external/` = ongewijzigde referenties met `source`-veld verplicht.
-3. **Gegenereerde bestanden.** `components/*/index.html` en `components/index.html`
-   zijn output van `ds build`. Nooit handmatig bewerken — wijzig het manifest
-   of de generator (`ds`).
+3. **Gegenereerde bestanden.** `components/*/index.html`, `components/index.html`,
+   `docs/`, `taste-site/` en `brain-site/` zijn output van `ds build`. Nooit
+   handmatig bewerken — wijzig het manifest, `brain/**/*.md`, of de generator (`ds`).
 4. **Playground.** Experimenten alleen in `playground/`. Promotie uitsluitend
    via `ds <comp> add`. De CLI maakt paden root-absoluut bij promotie.
 5. **Single-active.** Exact 1 entry per component heeft status `active`.
@@ -31,11 +31,51 @@ Bron van waarheid per component: `components/<naam>/catalog.json`.
 ./ds <comp> select <id>                    # active wisselen + web rebuild
 ./ds <comp> add <pad> --id x --origin self|external [--source s] [--note n]
 ./ds <comp> remove <id> [--yes]            # --yes vereist als entry ACTIEF is
-./ds build                                 # volledige web rebuild
+./ds build                                 # volledige web rebuild (catalogus + docs + taste + brain)
+./ds brain build                           # brain/**/*.md → brain-site/
+./ds brain check                           # unresolved wikilinks (warning-only)
+./ds brain new decision <titel>            # scaffold decision-note
+./ds brain new research <titel>            # scaffold research-note
 ```
 
 Elke mutatie herbouwt web automatisch. CLI en web lezen hetzelfde manifest;
 er bestaat geen tweede bron.
+
+## Brain (niet-bindende context)
+
+Agents mogen `brain/**/*.md` lezen en schrijven voor research/decisions.
+Product-waarheid blijft `DESIGN.md`, `tokens.css`, `taste/`,
+`components/*/catalog.json`. Productregels lopen uitsluitend via de
+bestaande taste-propagatie (taste-log → taste-rules → DESIGN.md). Een
+`brain/Decisions/`-note overschrijft nooit DESIGN.md, tokens.css of
+catalog.json direct. Geen `obsidian`-CLI-calls in geautomatiseerde flows —
+alleen directe file-writes.
+
+Optioneel lokaal (Obsidian GUI moet open, vault **brain**):
+`XDG_RUNTIME_DIR=/run/user/$UID obsidian vault=brain files|search|read …`.
+Zie `brain/README.md`.
+
+## Agent-laag (`.agents/`)
+
+Canonieke, tool-onafhankelijke skills en hooks. `.cursor/` is een dunne
+overlay: symlinks naar `.agents/skills/*` plus `.cursor/hooks.json` als wiring.
+Nooit een tweede bron aanmaken.
+
+| Skill | Waarvoor |
+|---|---|
+| `design-system-brain` | vault gebruiken, `ds brain`, grenzen, Obsidian CLI |
+| `brain-note-hygiene` | frontmatter, wikilinks, naamgeving, 0 warnings |
+| `brain-decision-capture` | decision, research of taste-log kiezen |
+
+| Hook | Event | Gedrag |
+|---|---|---|
+| `guard-generated.sh` | `preToolUse` (Write) | weigert edits in gegenereerde output (invariant 3) |
+| `brain-build.sh` | `afterFileEdit` | herbouwt `brain-site/` na een vault-note edit |
+
+Agent-gedrag-taste (canonieke `taste.yaml` met per-tool generators) staat
+**buiten dit repo** (besluit 2026-07-30): gedeeld punt richting
+`kater-dev-tools`. Zie `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
+Geen `.agents/registry/taste.yaml` hier aanmaken.
 
 ## Design-regels (harde bans, uit DESIGN.md §10)
 
@@ -82,6 +122,9 @@ sprite-svg's altijd fill:none + stroke:currentColor).
 | `references/` | meetlat-screenshots (Devin-product, eigen states) |
 | `surfaces/` | per-surface briefs |
 | `motion-spec.md` | motion-fysica (gelockt) |
+| `brain/` | Obsidian Second Brain (niet-bindende context) |
+| `brain-site/` | gegenereerde leeslaag uit `brain/` (`ds brain build`) |
+| `.agents/` | canonieke agent-skills + hooks (`.cursor/` is overlay) |
 | `new-project.sh` | scaffold nieuw product vanuit dit systeem |
 
 ## Cursor Cloud specific instructions
@@ -95,7 +138,7 @@ for an install/update command, `python3 --version` is enough as a runtime check.
   Warnings (non-URL sources, em-dashes) are expected and do not fail; only
   `errors` matter.
 - Build/generate: `./ds build`. Generated output (`components/*/index.html`,
-  `components/index.html`, `docs/`, `taste-site/`) is committed. CI's
+  `components/index.html`, `docs/`, `taste-site/`, `brain-site/`) is committed. CI's
   `python3 ds build --check` step is effectively a plain build (the `--check`
   arg is ignored by `main()`), so after any `ds` mutation keep the tree
   idempotent: run `./ds build` and confirm `git diff` is empty.

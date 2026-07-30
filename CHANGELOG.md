@@ -6,6 +6,13 @@
 ## [Unreleased]
 
 ### Added
+- **Brain** (vijfde tool): `brain/` Obsidian vault + `brain-site/` leeslaag
+- `./ds brain build|check|new decision|new research`
+- Concept-notes, Indexes (incl. Decisions/Research/Concepts), Templates
+- Graph-tags + wikilink/orphan-hygiëne; `ds check` brain warnings
+- `.agents/` agent-laag: 3 brain-skills + 2 hooks (guard-generated,
+  brain-build), met `.cursor/` als dunne overlay
+- Besluit: agent-gedrag-taste buiten dit repo (gedeeld punt / kater-dev-tools)
 - `docs/pi-sessions-design-system.md` — overzicht Pi-agent sessies over
   design system
 - `CHANGELOG.md` — dit bestand

@@ -7,7 +7,7 @@ Nederlandse copy-stem.
 
 **Live (tailnet):** `https://joep.tail86a8f2.ts.net:8443/`
 
-## De vier tools
+## De vijf tools
 
 | Tool | Waar | Wat |
 |---|---|---|
@@ -15,13 +15,15 @@ Nederlandse copy-stem.
 | **studio** | `/components/studio/` | visueel afstellen zonder code: presets (incl. **Vanaf nul**), accent, warmte, radius, tekstgrootte. Tabs: Afstellen + **Docs** (de taal lezen terwijl je stelt). Export: Kopieer tokens |
 | **docs** | `/docs/` | alle .md-documenten gerenderd als lees-laag. De .md blijft de bron |
 | **taste** | `/taste-site/` | het lerende smaak-systeem: bindende regels + observatie-log. Onderhoud via de `joep-design-taste` skill, gekoppeld aan alles via het propagatie-contract |
+| **brain** | `/brain-site/` + `brain/` | niet-bindende context: research, decisions, concept-graph (Obsidian vault). Productregels lopen nog steeds via taste |
 
 ## Snelstart
 
 ```bash
 ./ds list                    # overzicht van alles
 ./ds button list             # één component in detail
-./ds build                   # web herbouwen (catalogus + docs + taste)
+./ds build                   # web herbouwen (catalogus + docs + taste + brain)
+./ds brain new decision "…"  # decision-note in de vault
 ./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem
 ```
 
@@ -46,6 +48,9 @@ Nieuw component of variant:
 | `playground/` | experimentzone — kan de catalogus nooit corrupt maken |
 | `docs/` | gerenderde .md-pagina's (gegenereerd) |
 | `taste-site/` | taste-regels + log als site (gegenereerd uit taste/*.md) |
+| `brain/` | Obsidian Second Brain (bron) |
+| `brain-site/` | brain-notes als site (gegenereerd) |
+| `.agents/` | agent-skills + hooks (canoniek; `.cursor/` wijst hierheen) |
 | `templates/` + `new-project.sh` | scaffold voor nieuwe producten |
 | `references/` | meetlat-screenshots (Devin-product, eigen states) |
 | `surfaces/` | per-surface ontwerpbriefs |
@@ -58,8 +63,8 @@ Nieuw component of variant:
   first-class. Volledig: `DESIGN.md` §10-13.
 - Catalogus is **vast**: entries veranderen nooit stilletjes. Selecteren en
   verwijderen zijn de enige mutaties, altijd via `ds`.
-- Gegenereerde bestanden (`components/*/index.html`, `docs/`, `taste-site/`)
-  nooit handmatig bewerken.
+- Gegenereerde bestanden (`components/*/index.html`, `docs/`, `taste-site/`,
+  `brain-site/`) nooit handmatig bewerken.
 
 Meer: `hoe-wat.md` (grote gids) · `AGENTS.md` (agent-contract) ·
 `WORKFLOW.md` (processen) · `DESIGN.md` (de taal)

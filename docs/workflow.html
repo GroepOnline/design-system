@@ -167,6 +167,7 @@
   <a class="it sys" href="/components/studio/"><span class="tile"><svg><use href="/components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="/docs/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="/taste-site/"><span class="tile"><svg><use href="/components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="/brain-site/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
   <a class="it sys" href="/DESIGN.md"><span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="/WORKFLOW.md"><span class="tile"><svg><use href="/components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="/AGENTS.md"><span class="tile"><svg><use href="/components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
@@ -291,19 +292,31 @@
   → commit prefix &quot;taste: &lt;wat&gt;&quot;</code></pre>
 <p>Propagatie is <strong>geen optie.</strong> Een regel in taste-rules.md die nergens anders</p>
 <p>staat, bestaat niet.</p>
+<h2>Brain — context naast taste</h2>
+<p><code>brain/</code> is de Obsidian Second Brain (research, decisions, concept-graph).</p>
+<p><code>brain-site/</code> is de gegenereerde leeslaag (<code>./ds brain build</code>, ook via <code>./ds build</code>).</p>
+<pre><code>Decisions/Research note in brain/
+  → eenmalige context: blijft in brain/
+  → productregel: ALSNOG door de taste-loop hierboven
+    (brain-note is geen kortere weg naar DESIGN.md)</code></pre>
+<pre><code>./ds brain build
+./ds brain check
+./ds brain new decision &quot;titel&quot;
+./ds brain new research &quot;titel&quot;</code></pre>
+<p>Open vault: Obsidian → Open folder as vault → <code>brain/</code>.</p>
 <h2>CI</h2>
 <p><code>.github/workflows/validate.yml</code> draait op elke push/PR:</p>
 <ol>
 <li><strong><code>ds build --check</code></strong> — idempotentiecheck: de gegenereerde bestanden moeten</li>
-<p>up-to-date zijn met de manifesten (git diff ≡ 0 na build).</p>
+<p>up-to-date zijn met de manifesten (git diff ≡ 0 na build), inclusief <code>brain-site/</code>.</p>
 <li><strong><code>ds check</code></strong> — validatie: catalogus-schema (1 active per component, bestaan</li>
 <p>van bestanden), sprite-referenties, em-dash vrije copy in .md bestanden</p>
-<p>(warning-only).</p>
+<p>(warning-only), unresolved <code>[[wikilinks]]</code> in <code>brain/</code> (warning-only).</p>
 </ol>
 <p>Zolang GitHub Actions minuten op private repos beperkt zijn, draai je lokaal:</p>
 <pre><code>./ds check &amp;&amp; python3 ds build --check</code></pre>
 <h2>Bestandskaart</h2>
-<table><thead><tr><th>Pad</th><th>Rol</th><th>Wanneer aanraken</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>gelockte taal</td><td>taste-loop of Joep-beslissing</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives</td><td>elke token/primitieve-wijziging</td></tr><tr><td><code>styles.json</code></td><td>stijl-registratie</td><td>nieuwe skin toevoegen (ds style add)</td></tr><tr><td><code>components/</code></td><td>standalone componenten + catalogus</td><td>nieuw patroon of propagatie</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica</td><td>zelden — gelockt</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td><td>nieuwe surfaces</td></tr><tr><td><code>prototype-v2.html</code></td><td>referentie-app</td><td>meerdere componenten tegelijk</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots</td><td>twijfel over &quot;hoe ziet goed eruit&quot;</td></tr><tr><td><code>taste/</code></td><td>lerend systeem</td><td>continu</td></tr><tr><td><code>new-project.sh</code> + <code>templates/</code></td><td>X-scaffolder</td><td>scaffold-verbeteringen</td></tr><tr><td><code>playground/</code></td><td>experimenteerzone</td><td>elke oefensessie</td></tr><tr><td><code>.github/workflows/</code></td><td>CI</td><td>validatie-automatisering</td></tr></tbody></table></div>
+<table><thead><tr><th>Pad</th><th>Rol</th><th>Wanneer aanraken</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>gelockte taal</td><td>taste-loop of Joep-beslissing</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives</td><td>elke token/primitieve-wijziging</td></tr><tr><td><code>styles.json</code></td><td>stijl-registratie</td><td>nieuwe skin toevoegen (ds style add)</td></tr><tr><td><code>components/</code></td><td>standalone componenten + catalogus</td><td>nieuw patroon of propagatie</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica</td><td>zelden — gelockt</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td><td>nieuwe surfaces</td></tr><tr><td><code>prototype-v2.html</code></td><td>referentie-app</td><td>meerdere componenten tegelijk</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots</td><td>twijfel over &quot;hoe ziet goed eruit&quot;</td></tr><tr><td><code>taste/</code></td><td>lerend UI-systeem</td><td>continu</td></tr><tr><td><code>brain/</code></td><td>Second Brain (Obsidian)</td><td>research / decisions / concepts</td></tr><tr><td><code>brain-site/</code></td><td>gegenereerde brain-leeslaag</td><td>via <code>ds brain build</code> / <code>ds build</code></td></tr><tr><td><code>.agents/</code></td><td>agent-skills + hooks (canoniek)</td><td>agent-gedrag rond brain en output</td></tr><tr><td><code>new-project.sh</code> + <code>templates/</code></td><td>X-scaffolder</td><td>scaffold-verbeteringen</td></tr><tr><td><code>playground/</code></td><td>experimenteerzone</td><td>elke oefensessie</td></tr><tr><td><code>.github/workflows/</code></td><td>CI</td><td>validatie-automatisering</td></tr></tbody></table></div>
 <div class="gen">gegenereerd uit WORKFLOW.md op 2026-07-30 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
