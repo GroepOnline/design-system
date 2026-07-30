@@ -91,19 +91,21 @@ Standalone static design-system. No package manager, no third-party deps: the
 carries no `.cursor/environment.json` or setup script: when Cursor Cloud asks
 for an install/update command, `python3 --version` is enough as a runtime check.
 
-- Lint/validate: `python3 ds check` (source of truth for the `check` CI step).
+- Lint/validate: `./ds check` (source of truth for the `check` CI step).
   Warnings (non-URL sources, em-dashes) are expected and do not fail; only
   `errors` matter.
-- Build/generate: `python3 ds build`. Generated output (`components/*/index.html`,
+- Build/generate: `./ds build`. Generated output (`components/*/index.html`,
   `components/index.html`, `docs/`, `taste-site/`) is committed. CI's
   `python3 ds build --check` step is effectively a plain build (the `--check`
   arg is ignored by `main()`), so after any `ds` mutation keep the tree
-  idempotent: run `python3 ds build` and confirm `git diff` is empty.
+  idempotent: run `./ds build` and confirm `git diff` is empty.
 - Run/serve (dev): serve from the repo root, e.g.
-  `python3 -m http.server 8765 --bind 127.0.0.1`, then open
-  `http://127.0.0.1:8765/components/`. You MUST serve from root, not `file://`:
+  `python3 -m http.server 8000`, then open
+  `http://localhost:8000/components/`. You MUST serve from root, not `file://`:
   generated pages use root-absolute asset paths (`/tokens.css`,
   `/components/icons.svg#…`, `/components/lib.js`).
+- Any `./ds ... add|select|remove` mutation auto-rebuilds the web output, so no
+  separate build step is needed after CLI mutations.
 - Theme/style live in the generated shell script (`SHELL_FOOT` in `ds`), not in
   `components/lib.js`: the bottom-left toggles write `ds-theme` / `ds-style` to
   `localStorage`, and on load the page restores those values or the

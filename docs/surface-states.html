@@ -241,12 +241,13 @@
 <li>[ ] Onboarding → first task started in ≤3 minutes measured.</li>
 <li>[ ] Every hint dismissible forever, server-persisted.</li>
 </ul></div>
-<div class="gen">gegenereerd uit surfaces/states.md op 2026-07-28 · bewerk de .md, niet deze pagina</div>
+<div class="gen">gegenereerd uit surfaces/states.md op 2026-07-30 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <script>
 const seg = document.getElementById("themeSeg");
 const sseg = document.getElementById("styleSeg");
+let curTheme = "", curStyle = "";
 function applyToFrames(fn) {
   document.querySelectorAll("iframe").forEach(f => { try { fn(f.contentDocument.documentElement); } catch(e) {} });
 }
@@ -278,7 +279,6 @@ document.querySelectorAll(".cell > .ch").forEach(ch => {
     ch.parentElement.classList.toggle("closed");
   });
 });
-let curTheme = "", curStyle = "";
 function fitFrames() {
   document.querySelectorAll("iframe[data-fit]").forEach(f => {
     try {
