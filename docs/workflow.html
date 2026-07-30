@@ -302,7 +302,10 @@
 <pre><code>./ds brain build
 ./ds brain check
 ./ds brain new decision &quot;titel&quot;
-./ds brain new research &quot;titel&quot;</code></pre>
+./ds brain new research &quot;titel&quot;
+./ds brain signal &quot;tekst&quot;   # expliciet; geen auto-write
+./ds brain eval             # scorecard.json
+./ds brain gate             # hard fail bij drempels (ook in CI)</code></pre>
 <p>Open vault: Obsidian → Open folder as vault → <code>brain/</code>.</p>
 <h2>CI</h2>
 <p><code>.github/workflows/validate.yml</code> draait op elke push/PR:</p>

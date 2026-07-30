@@ -217,7 +217,10 @@
 ./ds brain build                           # brain/**/*.md → brain-site/
 ./ds brain check                           # unresolved wikilinks (warning-only)
 ./ds brain new decision &lt;titel&gt;            # scaffold decision-note
-./ds brain new research &lt;titel&gt;            # scaffold research-note</code></pre>
+./ds brain new research &lt;titel&gt;            # scaffold research-note
+./ds brain signal &quot;tekst&quot;                  # expliciete signal (geen auto-write)
+./ds brain eval                            # scorecard → brain/eval/scorecard.json
+./ds brain gate                            # eval + hard fail bij drempels</code></pre>
 <p>Elke mutatie herbouwt web automatisch. CLI en web lezen hetzelfde manifest;</p>
 <p>er bestaat geen tweede bron.</p>
 <h2>Brain (niet-bindende context)</h2>
@@ -228,6 +231,10 @@
 <p><code>brain/Decisions/</code>-note overschrijft nooit DESIGN.md, tokens.css of</p>
 <p>catalog.json direct. Geen <code>obsidian</code>-CLI-calls in geautomatiseerde flows —</p>
 <p>alleen directe file-writes.</p>
+<p>Signals (<code>brain/signals/signals.yaml</code>) alleen via <code>./ds brain signal</code>.</p>
+<p>Scorecard (<code>brain/eval/scorecard.json</code>) via <code>./ds brain eval</code>; CI hard-failt</p>
+<p>met <code>./ds brain gate</code>. Zie decision</p>
+<p><code>brain/Decisions/2026-07-30 Brain signals eval dual gate.md</code>.</p>
 <p>Optioneel lokaal (Obsidian GUI moet open, vault <strong>brain</strong>):</p>
 <p><code>XDG_RUNTIME_DIR=/run/user/$UID obsidian vault=brain files|search|read …</code>.</p>
 <p>Zie <code>brain/README.md</code>.</p>
@@ -304,11 +311,11 @@
 <p>this in the generator, never in the generated HTML. <code>components/lib.js</code> only</p>
 <p>applies <code>?theme=</code> plus the gallery postMessage on standalone variant pages;</p>
 <p>it handles neither style nor persistence.</p>
-<li>Caveat when you test that: the restore path is currently broken. <code>setTheme</code></li>
-<p>runs at the top level before <code>let curTheme, curStyle</code> is initialized, so any</p>
-<p>load with a theme or style to restore throws a ReferenceError and aborts the</p>
-<p>rest of the shell script (<code>/components/?theme=dark</code> still renders light).</p>
-<p>Moving that declaration above the calls in <code>ds</code> and rebuilding fixes it.</p>
+<li>Caveat when you test that: the restore path had a TDZ issue where <code>setTheme</code></li>
+<p>ran at the top level before <code>let curTheme, curStyle</code> was initialized. This was</p>
+<p><strong>fixed in v2</strong> — <code>curTheme</code>/<code>curStyle</code> declarations are now placed above the</p>
+<p>restore calls in <code>SHELL_FOOT</code> (<code>ds</code> line 449). If <code>?theme=dark</code> still renders</p>
+<p>light, check that <code>let curTheme</code> appears before the <code>wantTheme</code> restore block.</p>
 <li>Fonts load from external CDNs (Fontshare/Google); offline the layout still</li>
 <p>works with fallback fonts.</p>
 </ul></div>
