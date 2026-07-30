@@ -6,6 +6,9 @@
 ## [Unreleased]
 
 ### Added
+- **Brain signals + eval gate**: `brain/signals/`, `brain/eval/`,
+  `./ds brain signal|eval|gate`; CI `ds brain gate` + nightly `brain-eval.yml`
+  (artefact, geen auto-commit)
 - **Brain** (vijfde tool): `brain/` Obsidian vault + `brain-site/` leeslaag
 - `./ds brain build|check|new decision|new research`
 - Concept-notes, Indexes (incl. Decisions/Research/Concepts), Templates

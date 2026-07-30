@@ -9,6 +9,7 @@ Hub voor besluiten. Productregels lopen nooit hiernaartoe als shortcut - zie [[T
 
 ## Notes
 
+- [[2026-07-30 Brain signals eval dual gate]]
 - [[2026-07-30 Brain als vijfde tool]]
 - [[2026-07-30 Agent-laag in punt-agents]]
 - [[2026-07-30 Agent-taste buiten dit repo]]

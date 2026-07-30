@@ -36,6 +36,9 @@ Bron van waarheid per component: `components/<naam>/catalog.json`.
 ./ds brain check                           # unresolved wikilinks (warning-only)
 ./ds brain new decision <titel>            # scaffold decision-note
 ./ds brain new research <titel>            # scaffold research-note
+./ds brain signal "tekst"                  # expliciete signal (geen auto-write)
+./ds brain eval                            # scorecard → brain/eval/scorecard.json
+./ds brain gate                            # eval + hard fail bij drempels
 ```
 
 Elke mutatie herbouwt web automatisch. CLI en web lezen hetzelfde manifest;
@@ -50,6 +53,11 @@ bestaande taste-propagatie (taste-log → taste-rules → DESIGN.md). Een
 `brain/Decisions/`-note overschrijft nooit DESIGN.md, tokens.css of
 catalog.json direct. Geen `obsidian`-CLI-calls in geautomatiseerde flows —
 alleen directe file-writes.
+
+Signals (`brain/signals/signals.yaml`) alleen via `./ds brain signal`.
+Scorecard (`brain/eval/scorecard.json`) via `./ds brain eval`; CI hard-failt
+met `./ds brain gate`. Zie decision
+`brain/Decisions/2026-07-30 Brain signals eval dual gate.md`.
 
 Optioneel lokaal (Obsidian GUI moet open, vault **brain**):
 `XDG_RUNTIME_DIR=/run/user/$UID obsidian vault=brain files|search|read …`.

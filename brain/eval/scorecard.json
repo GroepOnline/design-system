@@ -1,0 +1,18 @@
+{
+  "ts": "2026-07-30T10:47:02Z",
+  "pass": true,
+  "plane": "design-brain",
+  "metrics": {
+    "unresolved_wikilinks": 0,
+    "brain_orphans": 0,
+    "ds_check_errors": 0,
+    "open_critical_signals": 0,
+    "open_signals": 0,
+    "days_since_score_refresh": 0.0,
+    "days_since_taste_log": 2.45,
+    "open_candidate_rules": 4,
+    "agent_taste_check": "ok"
+  },
+  "failures": [],
+  "warnings": []
+}

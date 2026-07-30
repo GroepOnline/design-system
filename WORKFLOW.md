@@ -164,6 +164,9 @@ Decisions/Research note in brain/
 ./ds brain check
 ./ds brain new decision "titel"
 ./ds brain new research "titel"
+./ds brain signal "tekst"   # expliciet; geen auto-write
+./ds brain eval             # scorecard.json
+./ds brain gate             # hard fail bij drempels (ook in CI)
 ```
 
 Open vault: Obsidian → Open folder as vault → `brain/`.

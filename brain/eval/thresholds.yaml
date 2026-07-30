@@ -1,0 +1,14 @@
+version: 1
+# Hard thresholds for `ds brain gate`
+unresolved_wikilinks_max: 0
+brain_orphans_max: 0
+ds_check_errors_max: 0
+open_critical_signals_max: 0
+# Soft warn after N days without score_refresh; hard fail only when enforce_score_freshness
+days_since_score_refresh_warn: 2
+days_since_score_refresh_fail: 7
+enforce_score_freshness: false
+# UI taste: days since last ## entry in taste/taste-log.md
+taste_log_stale_warn_days: 30
+# Open candidate rules in taste-log (lines with candidate rule without promoted)
+open_candidate_rules_warn: 20

@@ -16,13 +16,13 @@ overlays die hiernaar wijzen, nooit een tweede bron.
 |---|---|
 | `design-system-brain` | Brain-vault gebruiken: `ds brain`, grenzen, Obsidian CLI |
 | `brain-note-hygiene` | Notes die de graph en `ds brain check` schoon houden |
-| `brain-decision-capture` | Decision, research of taste-log: welke route |
+| `brain-decision-capture` | Decision, research, taste-log of signal: welke route |
 
 ## Hooks
 
 | Hook | Event | Gedrag |
 |---|---|---|
-| `guard-generated.sh` | `preToolUse` (Write) | weigert handmatige edits in gegenereerde output |
+| `guard-generated.sh` | `preToolUse` (Write) | weigert handmatige edits in gegenereerde output (incl. scorecard) |
 | `brain-build.sh` | `afterFileEdit` | herbouwt `brain-site/` na een vault-note edit |
 
 Beide falen open (exit 0) als iets onverwachts is, behalve de expliciete deny.
@@ -54,3 +54,15 @@ uv run python .agents/scripts/generate-taste.py --target /home/joep/design-syste
 
 Deze bestanden zijn output, niet handmatig bewerken. Zie
 `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
+
+## Signals + eval gate
+
+```bash
+./ds brain signal "…"
+./ds brain eval
+./ds brain gate
+```
+
+Scorecard: `brain/eval/scorecard.json` (gegenereerd). Nightly:
+`.github/workflows/brain-eval.yml`. Shared fleet runner leeft in
+kater-dev-tools `scripts/run-taste-brain-eval.sh`.

@@ -11,3 +11,5 @@ jobs:
         name: "ds build (idempotent — failt als gegenereerde bestanden verouderd zijn)"
       - run: python3 ds check
         name: "ds check (catalogus, sprites, em-dash, brain wikilinks)"
+      - run: python3 ds brain gate
+        name: "ds brain gate (signals + scorecard)"

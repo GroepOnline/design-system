@@ -24,6 +24,7 @@ case "$rel" in
   .commandcode/taste/taste.md)
                             generated="$rel (bron: kater-dev-tools/.agents/registry/taste.yaml)" ;;
   .cursor/rules/taste.mdc) generated="$rel (bron: kater-dev-tools/.agents/registry/taste.yaml)" ;;
+  brain/eval/scorecard.json) generated="$rel (bron: ds brain eval)" ;;
 esac
 
 if [ -n "$generated" ]; then

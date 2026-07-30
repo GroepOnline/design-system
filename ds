@@ -23,18 +23,22 @@ Brain (vijfde tool):
   brain/              Obsidian vault (bron, niet-bindende context)
   brain-site/         GEGENEREERD door ds build / ds brain build
   ./ds brain build|check|new decision|new research
+  ./ds brain signal|eval|gate
 """
 import html as htmlmod
 import json
 import os
 import re
 import sys
-from datetime import date
+from datetime import date, datetime, timezone
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 COMP = os.path.join(ROOT, "components")
 BRAIN = os.path.join(ROOT, "brain")
 BRAIN_SITE = os.path.join(ROOT, "brain-site")
+BRAIN_SIGNALS = os.path.join(BRAIN, "signals", "signals.yaml")
+BRAIN_THRESHOLDS = os.path.join(BRAIN, "eval", "thresholds.yaml")
+BRAIN_SCORECARD = os.path.join(BRAIN, "eval", "scorecard.json")
 STYLES_JSON = os.path.join(ROOT, "styles.json")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
@@ -814,10 +818,16 @@ def brain_note_paths():
     """All .md files under brain/, relative path with / separators."""
     if not os.path.isdir(BRAIN):
         return []
+    skip_tops = {".obsidian", "signals", "eval", "Attachments"}
     out = []
-    for dirpath, _dirs, files in os.walk(BRAIN):
-        if ".obsidian" in dirpath.split(os.sep):
+    for dirpath, dirs, files in os.walk(BRAIN):
+        # prune non-note dirs
+        rel_dir = os.path.relpath(dirpath, BRAIN)
+        top = rel_dir.split(os.sep)[0] if rel_dir != "." else ""
+        if top in skip_tops:
+            dirs.clear()
             continue
+        dirs[:] = [d for d in dirs if d not in skip_tops and d != ".obsidian"]
         for fn in files:
             if not fn.endswith(".md"):
                 continue
@@ -975,9 +985,472 @@ def cmd_brain_new(kind, title):
     ok(f"aangemaakt brain/{folder}/{fname}")
     build_brain()
 
+# ---------- brain signals / eval / gate (stdlib YAML subset) ----------
+
+_SIGNAL_PLANES = ("design-brain", "ui-taste", "agent-taste")
+_SIGNAL_KINDS = ("observation", "promotion_candidate", "gate_fail", "score_refresh")
+_SIGNAL_SOURCES = ("human", "agent", "schedule")
+_SIGNAL_STATUSES = ("open", "acked", "promoted", "dismissed")
+
+def _yaml_scalar(v):
+    if v is None:
+        return "null"
+    if isinstance(v, bool):
+        return "true" if v else "false"
+    if isinstance(v, (int, float)):
+        return str(v)
+    s = str(v)
+    if s == "" or any(c in s for c in ":#{}[]&*!|>'\"%@`\n") or s.strip() != s:
+        return json.dumps(s, ensure_ascii=False)
+    return s
+
+def _parse_yaml_scalar(s):
+    s = s.strip()
+    if s in ("null", "~", ""):
+        return None
+    if s in ("true", "True"):
+        return True
+    if s in ("false", "False"):
+        return False
+    if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
+        try:
+            return json.loads(s.replace("'", '"') if s.startswith("'") else s)
+        except json.JSONDecodeError:
+            return s[1:-1]
+    try:
+        if "." in s:
+            return float(s)
+        return int(s)
+    except ValueError:
+        return s
+
+def dump_signals_yaml(data):
+    """Write version+entries YAML for our fixed signal schema (no PyYAML)."""
+    lines = [f"version: {int(data.get('version', 1))}", "entries:"]
+    entries = data.get("entries") or []
+    if not entries:
+        lines.append("[]")
+        # fix: empty list should be `entries: []` on one line
+        return "version: 1\nentries: []\n"
+    for e in entries:
+        lines.append(f"- id: {_yaml_scalar(e.get('id'))}")
+        for k in ("ts", "plane", "kind", "source", "signal", "score_hint", "status"):
+            if k == "score_hint" and "score_hint" not in e:
+                lines.append(f"  score_hint: null")
+            else:
+                lines.append(f"  {k}: {_yaml_scalar(e.get(k))}")
+        refs = e.get("refs") or []
+        if not refs:
+            lines.append("  refs: []")
+        else:
+            lines.append("  refs:")
+            for r in refs:
+                lines.append(f"    - {_yaml_scalar(r)}")
+    return "\n".join(lines) + "\n"
+
+def load_signals_yaml(path=None):
+    path = path or BRAIN_SIGNALS
+    if not os.path.exists(path):
+        return {"version": 1, "entries": []}
+    text = open(path, encoding="utf-8").read()
+    # Prefer PyYAML when present (kater sibling / local uv)
+    try:
+        import yaml  # type: ignore
+        data = yaml.safe_load(text) or {}
+        if isinstance(data, dict):
+            data.setdefault("version", 1)
+            data.setdefault("entries", [])
+            return data
+    except Exception:
+        pass
+    entries = []
+    cur = None
+    in_refs = False
+    for raw in text.splitlines():
+        line = raw.rstrip()
+        if not line or line.lstrip().startswith("#"):
+            continue
+        if line.startswith("version:"):
+            continue
+        if line.startswith("entries:"):
+            rest = line.split(":", 1)[1].strip()
+            if rest == "[]":
+                return {"version": 1, "entries": []}
+            continue
+        if line.startswith("- "):
+            if cur:
+                entries.append(cur)
+            cur = {"refs": []}
+            in_refs = False
+            # `- id: value` or bare `-`
+            body = line[2:].strip()
+            if ":" in body:
+                k, v = body.split(":", 1)
+                cur[k.strip()] = _parse_yaml_scalar(v)
+            continue
+        if cur is None:
+            continue
+        if re.match(r"^\s+refs:\s*\[\]\s*$", line):
+            cur["refs"] = []
+            in_refs = False
+            continue
+        if re.match(r"^\s+refs:\s*$", line):
+            cur["refs"] = []
+            in_refs = True
+            continue
+        mref = re.match(r"^\s+-\s+(.*)$", line)
+        if in_refs and mref:
+            cur["refs"].append(_parse_yaml_scalar(mref.group(1)))
+            continue
+        m = re.match(r"^\s+([a-z_]+):\s*(.*)$", line)
+        if m:
+            in_refs = False
+            cur[m.group(1)] = _parse_yaml_scalar(m.group(2))
+    if cur:
+        entries.append(cur)
+    return {"version": 1, "entries": entries}
+
+def load_thresholds_yaml(path=None):
+    path = path or BRAIN_THRESHOLDS
+    defaults = {
+        "unresolved_wikilinks_max": 0,
+        "brain_orphans_max": 0,
+        "ds_check_errors_max": 0,
+        "open_critical_signals_max": 0,
+        "days_since_score_refresh_warn": 2,
+        "days_since_score_refresh_fail": 7,
+        "enforce_score_freshness": False,
+        "taste_log_stale_warn_days": 30,
+        "open_candidate_rules_warn": 20,
+    }
+    if not os.path.exists(path):
+        return defaults
+    text = open(path, encoding="utf-8").read()
+    try:
+        import yaml  # type: ignore
+        data = yaml.safe_load(text) or {}
+        if isinstance(data, dict):
+            defaults.update({k: v for k, v in data.items() if k in defaults or k == "version"})
+            return {**defaults, **{k: data[k] for k in defaults if k in data}}
+    except Exception:
+        pass
+    for raw in text.splitlines():
+        line = raw.split("#", 1)[0].rstrip()
+        if not line or ":" not in line:
+            continue
+        k, v = line.split(":", 1)
+        k, v = k.strip(), v.strip()
+        if k in defaults or k == "version":
+            defaults[k] = _parse_yaml_scalar(v)
+    return defaults
+
+def brain_orphan_notes():
+    """Notes never targeted by any wikilink (excluding Home/Templates)."""
+    title_to_rel = {}
+    for rel in brain_note_paths():
+        title_to_rel[brain_title(rel)] = rel
+        title_to_rel[os.path.splitext(rel)[0]] = rel
+    linked = set()
+    for rel in brain_note_paths():
+        raw = open(os.path.join(BRAIN, rel), encoding="utf-8").read()
+        for m in WIKILINK_RE.finditer(raw):
+            target = m.group(1).strip()
+            if target in title_to_rel:
+                linked.add(title_to_rel[target])
+            elif os.path.basename(target) in title_to_rel:
+                linked.add(title_to_rel[os.path.basename(target)])
+    orphans = []
+    for rel in brain_note_paths():
+        if rel.startswith("Templates/"):
+            continue
+        if brain_title(rel) in ("Home", "README"):
+            continue
+        if rel not in linked:
+            orphans.append(rel)
+    return orphans
+
+def signal_is_critical(entry):
+    if entry.get("status") != "open":
+        return False
+    if entry.get("kind") == "gate_fail":
+        return True
+    hint = entry.get("score_hint")
+    if hint is not None:
+        try:
+            return float(hint) < 0.4
+        except (TypeError, ValueError):
+            return False
+    return False
+
+def parse_iso_ts(ts):
+    if not ts:
+        return None
+    try:
+        s = str(ts)
+        if s.endswith("Z"):
+            s = s[:-1] + "+00:00"
+        return datetime.fromisoformat(s)
+    except ValueError:
+        return None
+
+def days_since_score_refresh(entries):
+    latest = None
+    for e in entries:
+        if e.get("kind") != "score_refresh":
+            continue
+        dt = parse_iso_ts(e.get("ts"))
+        if dt and (latest is None or dt > latest):
+            latest = dt
+    if latest is None and os.path.exists(BRAIN_SCORECARD):
+        latest = datetime.fromtimestamp(os.path.getmtime(BRAIN_SCORECARD), tz=timezone.utc)
+        # scorecard mtime alone does not count as refresh signal; only warn path uses None
+        return None
+    if latest is None:
+        return None
+    if latest.tzinfo is None:
+        latest = latest.replace(tzinfo=timezone.utc)
+    return (datetime.now(timezone.utc) - latest).total_seconds() / 86400.0
+
+def taste_log_stats():
+    """Return (days_since_last_entry, open_candidate_rules)."""
+    path = os.path.join(ROOT, "taste", "taste-log.md")
+    if not os.path.exists(path):
+        return None, 0
+    raw = open(path, encoding="utf-8").read()
+    dates = re.findall(r"^##\s+(\d{4}-\d{2}-\d{2})\b", raw, re.M)
+    days = None
+    if dates:
+        try:
+            last = datetime.strptime(max(dates), "%Y-%m-%d").replace(tzinfo=timezone.utc)
+            days = (datetime.now(timezone.utc) - last).total_seconds() / 86400.0
+        except ValueError:
+            days = None
+    open_cand = 0
+    for block in re.split(r"^##\s+", raw, flags=re.M)[1:]:
+        low = block.lower()
+        if "candidate rule" not in low and "kandidaat" not in low:
+            continue
+        if "promoted" in low or "gepropageerd" in low or "→ *direct" in low or "-> *direct" in low:
+            continue
+        if "*→ direct" in low or "*watch" in low:
+            # still counting watches as open unless promoted
+            if "promoted" in low or "gepropageerd" in low:
+                continue
+        if "promoted to" in low or "direct naar taste-rules" in low or "direct gepropageerd" in low:
+            continue
+        open_cand += 1
+    return days, open_cand
+
+def agent_taste_check_status():
+    """Run kater generate-taste --check --target if sibling checkout exists."""
+    candidates = [
+        os.environ.get("KATER_DEV_TOOLS"),
+        os.path.join(os.path.dirname(ROOT), "kater-dev-tools"),
+        os.path.join(os.path.expanduser("~"), "Documents", "Github", "OnlineChefGroep", "kater-dev-tools-agent-taste"),
+        os.path.join(os.path.expanduser("~"), "Documents", "Github", "OnlineChefGroep", "kater-dev-tools"),
+    ]
+    for base in candidates:
+        if not base:
+            continue
+        script = os.path.join(base, ".agents", "scripts", "generate-taste.py")
+        if not os.path.isfile(script):
+            continue
+        import subprocess
+        r = subprocess.run(
+            [sys.executable, script, "--target", ROOT, "--check"],
+            capture_output=True, text=True,
+        )
+        if r.returncode == 0:
+            return "ok"
+        return "drift"
+    return "skipped"
+
+def collect_check_errors_only():
+    """Mirror cmd_check error collection without printing or exiting."""
+    errors = []
+    with open(os.path.join(COMP, "icons.svg")) as f:
+        sprite_ids = set(re.findall(r'id="([^"]+)"', f.read()))
+    del sprite_ids  # reserved for future sprite checks
+    for c in sorted(components()):
+        m = load_manifest(c)
+        entries = m["entries"]
+        actives = [e for e in entries if e["status"] == "active"]
+        if len(actives) == 0:
+            errors.append(f"{c}: geen actieve variant")
+        elif len(actives) > 1:
+            es = ", ".join(e.get("id", "?") for e in actives)
+            errors.append(f"{c}: {len(actives)} actieve varianten — {es}")
+        for e in entries:
+            if e["status"] not in ("active", "locked"):
+                errors.append(f"{c}/{e['id']}: ongeldige status '{e['status']}'")
+            if e["origin"] not in ("self", "self-modified", "external"):
+                errors.append(f"{c}/{e['id']}: ongeldige origin '{e['origin']}'")
+            entry_dir = "self" if e.get("origin", "self") in ("self", "self-modified") else "external"
+            fname = os.path.join(COMP, c, entry_dir, e["id"] + ".html")
+            if not os.path.exists(fname):
+                errors.append(f"{c}/{e['id']}: bestand niet gevonden ({fname})")
+    return errors
+
+def brain_eval(*, enforce_freshness=False, write_refresh=False):
+    thr = load_thresholds_yaml()
+    sig = load_signals_yaml()
+    entries = sig.get("entries") or []
+    wl = check_brain_wikilinks()
+    unresolved = [w for w in wl if "unresolved wikilink" in w]
+    orphans = brain_orphan_notes()
+    check_errs = collect_check_errors_only()
+    open_crit = sum(1 for e in entries if signal_is_critical(e))
+    open_all = sum(1 for e in entries if e.get("status") == "open")
+    days = days_since_score_refresh(entries)
+    taste_days, open_cand = taste_log_stats()
+    agent_st = agent_taste_check_status()
+
+    failures = []
+    warnings = []
+
+    if len(unresolved) > int(thr.get("unresolved_wikilinks_max", 0)):
+        failures.append(f"unresolved_wikilinks={len(unresolved)} > max {thr.get('unresolved_wikilinks_max', 0)}")
+    if len(orphans) > int(thr.get("brain_orphans_max", 0)):
+        failures.append(f"brain_orphans={len(orphans)} > max {thr.get('brain_orphans_max', 0)}: {', '.join(orphans[:5])}")
+    if len(check_errs) > int(thr.get("ds_check_errors_max", 0)):
+        failures.append(f"ds_check_errors={len(check_errs)} > max {thr.get('ds_check_errors_max', 0)}")
+    if open_crit > int(thr.get("open_critical_signals_max", 0)):
+        failures.append(f"open_critical_signals={open_crit} > max {thr.get('open_critical_signals_max', 0)}")
+
+    warn_d = float(thr.get("days_since_score_refresh_warn", 2))
+    fail_d = float(thr.get("days_since_score_refresh_fail", 7))
+    do_fresh = enforce_freshness or bool(thr.get("enforce_score_freshness", False))
+    if days is None:
+        warnings.append("days_since_score_refresh: never refreshed")
+        if do_fresh:
+            failures.append("days_since_score_refresh: never refreshed (freshness enforced)")
+    else:
+        if days > warn_d:
+            warnings.append(f"days_since_score_refresh={days:.1f} > warn {warn_d}")
+        if do_fresh and days > fail_d:
+            failures.append(f"days_since_score_refresh={days:.1f} > fail {fail_d}")
+
+    stale_warn = float(thr.get("taste_log_stale_warn_days", 30))
+    if taste_days is not None and taste_days > stale_warn:
+        warnings.append(f"days_since_taste_log={taste_days:.1f} > warn {stale_warn}")
+    cand_warn = int(thr.get("open_candidate_rules_warn", 20))
+    if open_cand > cand_warn:
+        warnings.append(f"open_candidate_rules={open_cand} > warn {cand_warn}")
+
+    if agent_st == "drift":
+        failures.append("agent_taste_check=drift (kater generate-taste --check --target)")
+    elif agent_st == "skipped":
+        warnings.append("agent_taste_check=skipped (kater-dev-tools not available)")
+
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    card = {
+        "ts": now,
+        "pass": len(failures) == 0,
+        "plane": "design-brain",
+        "metrics": {
+            "unresolved_wikilinks": len(unresolved),
+            "brain_orphans": len(orphans),
+            "ds_check_errors": len(check_errs),
+            "open_critical_signals": open_crit,
+            "open_signals": open_all,
+            "days_since_score_refresh": None if days is None else round(days, 2),
+            "days_since_taste_log": None if taste_days is None else round(taste_days, 2),
+            "open_candidate_rules": open_cand,
+            "agent_taste_check": agent_st,
+        },
+        "failures": failures,
+        "warnings": warnings,
+    }
+    os.makedirs(os.path.dirname(BRAIN_SCORECARD), exist_ok=True)
+    with open(BRAIN_SCORECARD, "w", encoding="utf-8") as f:
+        json.dump(card, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+    if write_refresh and card["pass"]:
+        data = load_signals_yaml()
+        data.setdefault("entries", [])
+        ts = datetime.now(timezone.utc)
+        data["entries"].append({
+            "id": ts.strftime("%Y-%m-%dT%H-%M-%SZ") + "-score-refresh",
+            "ts": ts.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "plane": "design-brain",
+            "kind": "score_refresh",
+            "source": "schedule",
+            "signal": "ds brain eval pass",
+            "refs": [],
+            "score_hint": 1.0,
+            "status": "acked",
+        })
+        with open(BRAIN_SIGNALS, "w", encoding="utf-8") as f:
+            f.write(dump_signals_yaml(data))
+
+    return card
+
+def cmd_brain_signal(args):
+    """./ds brain signal "tekst" [--kind observation] [--ref path] [--plane design-brain]"""
+    if not args:
+        err('gebruik: ds brain signal "tekst" [--kind observation] [--ref path] [--plane design-brain]')
+    # first non-flag token(s) until -- form the signal text if quoted as one argv
+    text_parts = []
+    kind = "observation"
+    plane = "design-brain"
+    source = "human"
+    status = "open"
+    refs = []
+    score_hint = None
+    i = 0
+    while i < len(args):
+        a = args[i]
+        if a == "--kind":
+            kind = args[i + 1]; i += 2; continue
+        if a == "--plane":
+            plane = args[i + 1]; i += 2; continue
+        if a == "--source":
+            source = args[i + 1]; i += 2; continue
+        if a == "--status":
+            status = args[i + 1]; i += 2; continue
+        if a == "--ref":
+            refs.append(args[i + 1]); i += 2; continue
+        if a == "--score-hint":
+            score_hint = float(args[i + 1]); i += 2; continue
+        if a.startswith("--"):
+            err(f"onbekende flag: {a}")
+        text_parts.append(a); i += 1
+    signal = " ".join(text_parts).strip()
+    if not signal:
+        err("lege signal-tekst")
+    if plane not in _SIGNAL_PLANES:
+        err(f"plane moet een van {_SIGNAL_PLANES} zijn")
+    if kind not in _SIGNAL_KINDS:
+        err(f"kind moet een van {_SIGNAL_KINDS} zijn")
+    if source not in _SIGNAL_SOURCES:
+        err(f"source moet een van {_SIGNAL_SOURCES} zijn")
+    if status not in _SIGNAL_STATUSES:
+        err(f"status moet een van {_SIGNAL_STATUSES} zijn")
+    now = datetime.now(timezone.utc)
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", signal.lower()).strip("-")[:40] or "signal"
+    entry = {
+        "id": now.strftime("%Y-%m-%dT%H-%M-%SZ") + "-" + slug,
+        "ts": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "plane": plane,
+        "kind": kind,
+        "source": source,
+        "signal": signal,
+        "refs": refs,
+        "score_hint": score_hint,
+        "status": status,
+    }
+    os.makedirs(os.path.dirname(BRAIN_SIGNALS), exist_ok=True)
+    data = load_signals_yaml()
+    data.setdefault("entries", [])
+    data["entries"].append(entry)
+    with open(BRAIN_SIGNALS, "w", encoding="utf-8") as f:
+        f.write(dump_signals_yaml(data))
+    ok(f"signal {entry['id']} → brain/signals/signals.yaml")
+
 def cmd_brain(args):
     if not args:
-        err("gebruik: ds brain build|check|new decision|new research")
+        err("gebruik: ds brain build|check|new|signal|eval|gate")
     if args[0] == "build":
         build_brain()
         ok("brain-site bijgewerkt")
@@ -990,8 +1463,30 @@ def cmd_brain(args):
         if len(args) < 3:
             err("gebruik: ds brain new decision|research <titel>")
         cmd_brain_new(args[1], " ".join(args[2:]))
+    elif args[0] == "signal":
+        cmd_brain_signal(args[1:])
+    elif args[0] == "eval":
+        enforce = "--enforce-freshness" in args
+        refresh = "--write-refresh-signal" in args
+        card = brain_eval(enforce_freshness=enforce, write_refresh=refresh)
+        print(json.dumps(card, indent=2, ensure_ascii=False))
+        if card["pass"]:
+            ok("scorecard → brain/eval/scorecard.json")
+        else:
+            for f in card["failures"]:
+                wrn(f"FAIL: {f}")
+            ok("scorecard geschreven (fail)")
+    elif args[0] == "gate":
+        enforce = "--enforce-freshness" in args
+        card = brain_eval(enforce_freshness=enforce, write_refresh=False)
+        print(json.dumps(card, indent=2, ensure_ascii=False))
+        if not card["pass"]:
+            for f in card["failures"]:
+                errp(f)
+            err(f"brain gate failed ({len(card['failures'])} failures)")
+        ok("brain gate pass")
     else:
-        err("gebruik: ds brain build|check|new decision|new research")
+        err("gebruik: ds brain build|check|new|signal|eval|gate")
 
 def cmd_build(only=None):
     targets = [only] if only else components()

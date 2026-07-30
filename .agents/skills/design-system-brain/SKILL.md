@@ -1,6 +1,6 @@
 ---
 name: design-system-brain
-description: Werken met de design-system Second Brain in brain/ (Obsidian vault) en de brain-site leeslaag. Gebruik bij research, decisions, concept-notes, ds brain build|check|new, of vragen over de vault in dit repo. Niet joep-brain (bc-scan-arm) en niet de UI taste-loop.
+description: Werken met de design-system Second Brain in brain/ (Obsidian vault) en de brain-site leeslaag. Gebruik bij research, decisions, concept-notes, ds brain build|check|new|signal|eval|gate, of vragen over de vault in dit repo. Niet joep-brain (bc-scan-arm) en niet de UI taste-loop.
 domain: memory-brain
 surfaces:
 - design-system
@@ -43,12 +43,19 @@ alsnog via taste-log naar taste-rules naar DESIGN.md. Zie skill
 ./ds brain check                  # wikilinks, frontmatter, em-dash, dubbele titels
 ./ds brain new decision "titel"   # uit Templates/New Decision.md
 ./ds brain new research "titel"   # uit Templates/New Research.md
+./ds brain signal "tekst"         # expliciete signal entry (geen auto-write)
+./ds brain eval                   # schrijft brain/eval/scorecard.json
+./ds brain gate                   # eval + exit 1 bij drempelfail
 ./ds build                        # volledige rebuild, brain-site inbegrepen
 ```
 
 `ds brain new` en `ds brain build` schrijven zelf de leeslaag. Na elke
 handmatige note-wijziging hoort `./ds brain build` te lopen zodat `git diff`
 schoon blijft (CI doet regenerate-en-diff).
+
+Signals zijn **expliciet alleen** (`ds brain signal`). Eval/scorecard is
+on-demand + nachtelijk (GHA + fleet). Scorecard is gegenereerd: niet
+handmatig bewerken.
 
 ## Structuur
 
@@ -60,7 +67,9 @@ brain/
 ├── Concepts/            6 notes: de 5 invarianten + Taste-propagatie
 ├── Decisions/           besluiten met datum-prefix
 ├── Research/            onderzoek met datum-prefix
-└── Templates/           New Decision, New Research
+├── Templates/           New Decision, New Research
+├── signals/             expliciete signal-log (signals.yaml)
+└── eval/                thresholds + gegenereerde scorecard.json
 ```
 
 Nieuwe note hoort in een bestaande map en moet vanuit de bijhorende index

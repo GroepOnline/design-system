@@ -37,9 +37,15 @@ Drie routes, één keuze. De verkeerde route maakt de vault een sluiproute om
    Ja, dan `./ds brain new research "titel"`. Verwijs naar `references/` en
    `DESIGN.md`; kopieer geen DNA in de vault.
 
+4. **Is het een korte provenance-/gate-gebeurtenis zonder decision-note?**
+   Ja, dan `./ds brain signal "…"`. Voorbeelden: eval faalde, candidate voor
+   latere promote, handmatige observatie die nog geen taste-log-entry is.
+   Geen auto-write op elke edit. Critical open signals (`gate_fail` of
+   `score_hint < 0.4`) laten `ds brain gate` falen.
+
 Twijfel tussen 1 en 2: als de uitkomst bepaalt hoe UI eruitziet, is het altijd
 route 1. Een decision-note mag route 1 beschrijven, maar vervangt die nooit.
-
+Signal is geen vervanging van taste-log of decision; het is de dunne log.
 ## Decision-note vullen
 
 De template dwingt de velden af. Vul ze echt in, leeg is waardeloos:
