@@ -70,6 +70,12 @@ Baseline is shadcn/ui-denken: simpele variants, hairline borders, rustige hovers
 | `.switch` | 36×20px, full-radius (200px). `[aria-checked=true]` = accent fill. `:focus-visible` outline 2px accent |
 | `.nav-item` | h-28px, px `0 10px 0 6`, r-6px, 13px/500. `:focus-visible` outline 2px accent |
 | `.input, .select` | h-28px, px-10px, 13px, r-6px. Focus = accent border + 3px accent-soft ring. `:focus-visible` implicit via `:focus` |
+| `.tbl` | wide layout. border 1px `--line`, r-lg. th 11.5px/500 caps, td 13px. zebra `nth-child(even)` bg `--bg`. hover → `--hover`. `td.mono` font-family var(--mono) tabular-nums. inline `.badge` (green/amber/red) voor status |
+
+## 6.3 Dashboard compositie
+
+Dashboard views componeren uit bestaande primitives (Sidebar + Card + Table + Chart),
+nooit hand-gerolled. Shadcn conventie: gebruik variants en semantic colors, nooit raw waarden.
 
 ## 7. De activiteitsindicator (signatuur)
 

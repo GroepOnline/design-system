@@ -52,4 +52,18 @@
 - **reaction**: gemodelleerd naar de Devin baseline via global tokens.
 - **signal**: "moet specifieker volledig er gretiger" 
 - **delta**: .select en .input expliciet 28px. .nav-item exacte afmetingen. Global tokens `--r-md` (werd 6px) en `--r-lg` (werd 10px) bijgewerkt om radii systemisch uit te rollen voor controls en cards in de default skin.
-- **candidate rule**: h28/r6 is de harde norm voor secundaire controls en densiteit-lijsten in de Devin-taal. Cards en sub-grouping opereren op r10. -> *Direct gepropageerd naar taste-rules.*
+ - **candidate rule**: h28/r6 is de harde norm voor secundaire controls en densiteit-lijsten in de Devin-taal. Cards en sub-grouping opereren op r10. -> *Direct gepropageerd naar taste-rules.*
+
+## 2026-07-31 · Dashboard table (compositie)
+- **shown**: table component in playground, gepromoveerd via `ds add`, gecataloguseerd onder "bewijs"
+- **reaction**: zebra striping `tr:nth-child(even)` en inline .badge (green/amber/red) voor status — scannen zonder klikken
+- **signal**: "componeren uit primitives, niet opnieuw bedenken" + shadcn dashboard = Sidebar + Card + Table
+- **delta**: nieuw table component met hairline borders, r-lg, zebra, hover states, monospace data
+- **candidate rule**: Data-tabellen gebruiken zebra striping voor scanbaarheid en inline gekleurde badges voor status. Dashboard views componeren uit Sidebar + Card + Table primitives. *Watch for recurrence.*
+
+## 2026-07-31 · Shadcn skill geinstalleerd
+- **shown**: `npx skills find shadcn` → shadcn/ui@shadcn (260K installs, officieel)
+- **reaction**: geïnstalleerd — principles toepasbaar op pure-HTML design system
+- **signal**: shadcn's "compose, don't reinvent" en "semantic colors" bevestigen onze tokens.css aanpak
+- **delta**: geen nieuwe code — bestaande patterns (badge, card, focus-visible) matcht shadcn conventies
+- **candidate rule**: shadcn/ui compositie-pattern (Sidebar + Card + Table + Chart) is een vast handvat voor dashboard builds. Watch: zijn alle shadcn rules (gap-*, semantic colors, Skeleton) overal van toepassing?

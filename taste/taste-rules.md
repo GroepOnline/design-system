@@ -38,6 +38,7 @@
 ### structure
 - **DO** real SVG icons (Lucide/shadcn style, 1.5px stroke, 15-16px grid). **DON'T** emoji/emoticons as UI icons — not in buttons, badges, attachments, status, nowhere. *(2026-07-27: "geen emoticons"; consistent with workspace anti-slop stance)*
 - **DO** shadcn/ui component conventions as baseline (button variants, badge pill, card border + hairline, ghost icon buttons). Devin's product UI is shadcn-shaped; Joep recognizes and prefers it. *(2026-07-27: "shadcn of soortgelijk gebruiken voor components van hun")*
+- **DO** compose dashboard views from primitives (Sidebar + Card + Table + Chart), never hand-rolled. Data tables use zebra striping for scanability and inline color-coded badges for status. *(2026-07-31: dashboard table + shadcn skill install)*
 
 ### direction
 - **WIP (1 observation)**: Devin's visual language beats own new signatures — teal Stroom redirected toward Devin warm-neutral + blue. Watch: does De Stroom line/motion system survive as element, or fully absorbed into Devin-style rows? *(2026-07-27)*

@@ -139,7 +139,7 @@
   <div class="lbl caps">Bewijs</div>
   <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
   <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
-  <a class="it on" href="/components/table/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="n">1</span></a>
+  <a class="it on" href="/components/table/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="act"></span></a>
   <div class="lbl caps">Structuur</div>
   <a class="it" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
@@ -172,20 +172,26 @@
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
   <span>wijzigt alleen via <code>ds table select|remove</code> · experimenten in <code>playground/</code></span>
 </div>
+<div class="use-now">
+  <span class="lbl2">Gebruik nu</span>
+  <span>actieve variant <code>default</code></span>
+  <code>components/table/self/default.html</code>
+  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
+</div>
 
 <div class="docs">
   <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>data-tabellen met meerdere kolommen</li><li>status badges inline (groen/amber/rood)</li><li>monospace voor datakolommen</li><li>hover highlight voor scanbaarheid</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>te veel column headers — maximaliseer horizontaal scrolfen</li><li>hover effecten buiten de tabel</li><li>raw kleuren in badges — gebruik .badge.waarde</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.tbl border 1px var(--line), r-lg</code></li><li><code>th 11.5px/500 caps, td 13px</code></li><li><code>tr:nth-child(even) td --bg zebra</code></li><li><code>td.mono font-family var(--mono) tabular-nums</code></li><li><code>.badge green/amber/red status variants</code></li></ul></div>
 </div>
 
 <div class="grid">
-  <div class="cell">
+  <div class="cell active">
     <div class="ch">
       <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">default</span>
       <span class="note">basis, hairline dividers, hover, status badges</span>
       <span class="right">
         <span class="org ">zelf</span>
-        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+        <span class="st active">ACTIEF</span>
       </span>
     </div>
     <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
