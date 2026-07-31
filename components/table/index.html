@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>components — design-system</title>
+<title>table — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/tokens.css">
@@ -139,7 +139,7 @@
   <div class="lbl caps">Bewijs</div>
   <a class="it" href="/components/artifact/"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
   <a class="it" href="/components/pr-card/"><span class="tile"><svg><use href="/components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
-  <a class="it" href="/components/table/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="n">1</span></a>
+  <a class="it on" href="/components/table/"><span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="n">1</span></a>
   <div class="lbl caps">Structuur</div>
   <a class="it" href="/components/nav/"><span class="tile"><svg><use href="/components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="/components/settings/"><span class="tile"><svg><use href="/components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
@@ -161,116 +161,129 @@
 <div class="pagehead">
   <span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span>
   <div>
-    <h1>Components</h1>
-    <div class="cat caps">11 componenten · 18 varianten</div>
+    <h1>table</h1>
+    <div class="cat caps">bewijs</div>
+  </div>
+  <div class="meta">1 varianten<br>1 zelf · 0 extern</div>
+</div>
+<div class="sub">dashboard-tabellen met hairlines, hover, inline status badges · manifest: <code>components/table/catalog.json</code></div>
+<div class="legend">
+  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
+  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
+  <span>wijzigt alleen via <code>ds table select|remove</code> · experimenten in <code>playground/</code></span>
+</div>
+
+<div class="docs">
+  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>data-tabellen met meerdere kolommen</li><li>status badges inline (groen/amber/rood)</li><li>monospace voor datakolommen</li><li>hover highlight voor scanbaarheid</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>te veel column headers — maximaliseer horizontaal scrolfen</li><li>hover effecten buiten de tabel</li><li>raw kleuren in badges — gebruik .badge.waarde</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.tbl border 1px var(--line), r-lg</code></li><li><code>th 11.5px/500 caps, td 13px</code></li><li><code>tr:nth-child(even) td --bg zebra</code></li><li><code>td.mono font-family var(--mono) tabular-nums</code></li><li><code>.badge green/amber/red status variants</code></li></ul></div>
+</div>
+
+<div class="grid">
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">default</span>
+      <span class="note">basis, hairline dividers, hover, status badges</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-31</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nl&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;table — design-system&lt;/title&gt;
+&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/tokens.css&quot;&gt;
+&lt;style&gt;
+  body { padding: 32px 24px; max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .cat { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); font-weight: 600; margin-bottom: 22px; }
+  .note { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5; }
+
+  /* ---- table ---- */
+  .tbl {
+    border-collapse: collapse; width: 100%; font-size: 13px;
+    border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden;
+    background: var(--surface);
+  }
+  .tbl th {
+    text-align: left; font-weight: 500; font-size: 11.5px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-faint); padding: 9px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tbl td { padding: 8px 14px; border-top: 1px solid var(--line); color: var(--text); }
+  .tbl td.mono { font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .tbl tr:hover td { background: var(--hover); }
+  .tbl tbody tr:first-child td { border-top: none; }
+  /* status badges */
+  .tbl .badge { font-size: 11px; font-family: var(--mono); }
+  .tbl .green { background: var(--open-green-bg); color: var(--open-green); }
+  .tbl .amber { background: var(--hold-amber-bg); color: var(--hold-amber); }
+  .tbl .red { background: var(--danger-bg); color: var(--red); }
+  /* zebra — subtle */
+  .tbl tbody tr:nth-child(even) td { background: var(--bg); }
+  .tbl tbody tr:hover td { background: var(--hover); }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;table&lt;/h1&gt;
+&lt;div class=&quot;cat&quot;&gt;bewijs&lt;/div&gt;
+&lt;div class=&quot;note&quot;&gt;Dashboard-tabellen met hairline dividers, hover states, en inline status badges. Monospace voor datakolommen.&lt;/div&gt;
+
+&lt;table class=&quot;tbl&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Component&lt;/th&gt;
+      &lt;th&gt;Variants&lt;/th&gt;
+      &lt;th&gt;Eigen&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+      &lt;th&gt;Gewijzigd&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;button&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;&lt;span class=&quot;badge green&quot;&gt;ACTIEF&lt;/span&gt;&lt;/td&gt;
+      &lt;td class=&quot;mono&quot;&gt;2026-07-28&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;settings&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;&lt;span class=&quot;badge amber&quot;&gt;LOCKED&lt;/span&gt;&lt;/td&gt;
+      &lt;td class=&quot;mono&quot;&gt;2026-07-30&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;studio&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;&lt;span class=&quot;badge green&quot;&gt;ACTIEF&lt;/span&gt;&lt;/td&gt;
+      &lt;td class=&quot;mono&quot;&gt;2026-07-27&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;pr-card&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;&lt;span class=&quot;badge red&quot;&gt;ERROR&lt;/span&gt;&lt;/td&gt;
+      &lt;td class=&quot;mono&quot;&gt;2026-07-29&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></details>
   </div>
 </div>
-<div class="sub">Per component een catalogus met alle varianten ooit: onze eigen (self) en externe referenties (external). Alles is vast tot expliciete select of remove via de CLI.</div>
-<div class="caps" style="margin:20px 2px 8px">Primitieven</div>
-<div class="grid" style="grid-template-columns:1fr">
-  <a class="cell" href="/components/badge/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-tag"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">badge</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">git-status + meta</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-  <a class="cell" href="/components/button/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-click"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">button</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">btn + gbtn + kbd</span>
-    <span class="org" style="min-width:58px;text-align:center">5 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">2 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-</div>
-
-<div class="caps" style="margin:20px 2px 8px">Gesprek</div>
-<div class="grid" style="grid-template-columns:1fr">
-  <a class="cell" href="/components/approval/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-alert"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">approval</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">wacht-op-jou, toetsen 1/2/3</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-  <a class="cell" href="/components/composer/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-pencil"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">composer</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">invoer + wachtrij</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-  <a class="cell" href="/components/transcript/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-message"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">transcript</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">user-pill, prose, meta</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-  <a class="cell" href="/components/worked-row/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-clock"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">worked-row</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">signatuur: activiteit zonder spinner</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-</div>
-
-<div class="caps" style="margin:20px 2px 8px">Bewijs</div>
-<div class="grid" style="grid-template-columns:1fr">
-  <a class="cell" href="/components/artifact/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-panel"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">artifact</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">before/after bewijs</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-  <a class="cell" href="/components/pr-card/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-git-pr"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">pr-card</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">bewijs van werk</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-  <a class="cell" href="/components/table/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-file"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">table</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">dashboard-tabellen met hairlines, hover, inline status badges</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right"></span>
-  </a>
-</div>
-
-<div class="caps" style="margin:20px 2px 8px">Structuur</div>
-<div class="grid" style="grid-template-columns:1fr">
-  <a class="cell" href="/components/nav/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-inbox"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">nav</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">sidebar-onderdelen</span>
-    <span class="org" style="min-width:58px;text-align:center">1 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-  <a class="cell" href="/components/settings/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#i-settings"/></svg></span>
-    <span style="font-weight:500;font-size:var(--text-md);min-width:120px">settings</span>
-    <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">volledige instellingen-surface</span>
-    <span class="org" style="min-width:58px;text-align:center">2 zelf</span>
-    <span class="org external" style="min-width:64px;text-align:center">0 extern</span>
-    <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">actief: default</span>
-  </a>
-</div>
-
-<div class="gen">gegenereerd door ds build op 2026-07-31</div>
+<div class="gen">gegenereerd door ds build op 2026-07-31 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <script>

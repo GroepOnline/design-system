@@ -1,0 +1,37 @@
+{
+  "component": "table",
+  "title": "table",
+  "desc": "dashboard-tabellen met hairlines, hover, inline status badges",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-07-31",
+      "note": "basis, hairline dividers, hover, status badges"
+    }
+  ],
+  "docs": {
+    "use": [
+      "data-tabellen met meerdere kolommen",
+      "status badges inline (groen/amber/rood)",
+      "monospace voor datakolommen",
+      "hover highlight voor scanbaarheid"
+    ],
+    "avoid": [
+      "te veel column headers — maximaliseer horizontaal scrolfen",
+      "hover effecten buiten de tabel",
+      "raw kleuren in badges — gebruik .badge.waarde"
+    ],
+    "contract": [
+      ".tbl border 1px var(--line), r-lg",
+      "th 11.5px/500 caps, td 13px",
+      "tr:nth-child(even) td --bg zebra",
+      "td.mono font-family var(--mono) tabular-nums",
+      ".badge green/amber/red status variants"
+    ]
+  },
+  "cat": "bewijs"
+}
