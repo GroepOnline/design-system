@@ -1,4 +1,4 @@
-# WORKFLOW.md — hoe je dit systeem gebruikt
+# WORKFLOW.md -- hoe je dit systeem gebruikt
 
 > Compleet circuit: van nieuw product (X) naar gebouwde surface (Y) naar
 > style-toevoegen (Z) naar taste-leren (terug naar het systeem). Alles loopt
@@ -6,7 +6,7 @@
 
 ---
 
-## X — Nieuw product starten
+## X -- Nieuw product starten
 
 ```bash
 cd /home/joep/design-system
@@ -40,7 +40,7 @@ components/button/
 ├── catalog.json      manifest (enige bron: id, origin, source, status, note)
 ├── self/             on/onze varianten
 ├── external/         externe referenties
-└── index.html        GEGENEREERD (ds build) — nooit handmatig
+└── index.html        GEGENEREERD (ds build) -- nooit handmatig
 ```
 
 **Statussen:** `active` (1 per component, geselecteerd voor gebruik) en `locked`
@@ -67,7 +67,7 @@ experimenteer-zone, promotie alleen via `ds add`.
 `/components/` = gallery · `/<component>/` = catalogus met ACTIEF, badges,
 zelf/extern per rij, iframes per variant. CLI en web lezen hetzelfde manifest.
 
-## Y — Bouwdiscipline
+## Y -- Bouwdiscipline
 
 1. **Eerst `taste/taste-rules.md` lezen.** Dat zijn geleerde regels. Binding.
 2. **Bestaande componenten gebruiken** voor standaardpatronen. Iets nieuws
@@ -79,7 +79,7 @@ zelf/extern per rij, iframes per variant. CLI en web lezen hetzelfde manifest.
 6. **Toon in browser, niet in beschrijving.** Serveer met
    `python3 -m http.server <poort> --directory <product>` of via tailscale serve.
 
-## Z — Nieuwe stijl (skin) toevoegen
+## Z -- Nieuwe stijl (skin) toevoegen
 
 Elke skin heeft een `data-style` block in `tokens.css` + registratie in
 `styles.json`. De shell genereert de stijl-switch dynamisch uit `styles.json`.
@@ -121,14 +121,14 @@ Je kunt een studio-preset promoten naar een skin door de export in te lezen:
 ## Home page (WIP)
 
 De root `index.html` is architectuur-placeholder. De echte home page wordt een
-theatrale, interactieve ervaring — geïnspireerd op:
+theatrale, interactieve ervaring -- geïnspireerd op:
 - **Fable 5** announcement (cinematische product-reveal animation)
 - **Kimi 3** announcement (motion-heavy intro)
-- **Dans site** (rode vlinders die uit het scherm komen — depth/parallax effect)
+- **Dans site** (rode vlinders die uit het scherm komen -- depth/parallax effect)
 
 Zie `/home/joep/design-system-prototype` voor de volgende iteratie.
 
-## Taste-loop — terug in het systeem
+## Taste-loop -- terug in het systeem
 
 ```
 Joep ziet iets
@@ -147,7 +147,7 @@ Joep ziet iets
 Propagatie is **geen optie.** Een regel in taste-rules.md die nergens anders
 staat, bestaat niet.
 
-## Brain — context naast taste
+## Brain -- context naast taste
 
 `brain/` is de Obsidian Second Brain (research, decisions, concept-graph).
 `brain-site/` is de gegenereerde leeslaag (`./ds brain build`, ook via `./ds build`).
@@ -175,9 +175,9 @@ Open vault: Obsidian → Open folder as vault → `brain/`.
 
 `.github/workflows/validate.yml` draait op elke push/PR:
 
-1. **`ds build --check`** — idempotentiecheck: de gegenereerde bestanden moeten
+1. **`ds build --check`** -- idempotentiecheck: de gegenereerde bestanden moeten
    up-to-date zijn met de manifesten (git diff ≡ 0 na build), inclusief `brain-site/`.
-2. **`ds check`** — validatie: catalogus-schema (1 active per component, bestaan
+2. **`ds check`** -- validatie: catalogus-schema (1 active per component, bestaan
    van bestanden), sprite-referenties, em-dash vrije copy in .md bestanden
    (warning-only), unresolved `[[wikilinks]]` in `brain/` (warning-only).
 
@@ -194,7 +194,7 @@ Zolang GitHub Actions minuten op private repos beperkt zijn, draai je lokaal:
 | `tokens.css` | tokens + primitives | elke token/primitieve-wijziging |
 | `styles.json` | stijl-registratie | nieuwe skin toevoegen (ds style add) |
 | `components/` | standalone componenten + catalogus | nieuw patroon of propagatie |
-| `motion-spec.md` | fysica | zelden — gelockt |
+| `motion-spec.md` | fysica | zelden -- gelockt |
 | `surfaces/` | per-surface briefs | nieuwe surfaces |
 | `prototype-v2.html` | referentie-app | meerdere componenten tegelijk |
 | `references/` | meetlat-screenshots | twijfel over "hoe ziet goed eruit" |

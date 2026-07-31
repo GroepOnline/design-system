@@ -52,7 +52,7 @@
       "id": "shadcn-default",
       "file": "external/shadcn-default.html",
       "origin": "external",
-      "source": "shadcn/ui",
+      "source": "https://ui.shadcn.com",
       "status": "locked",
       "added": "2026-07-27",
       "note": "zinc-schaal, radius 6, shadow-xs, 36px hoog"
@@ -61,7 +61,7 @@
       "id": "devin-square",
       "file": "external/devin-square.html",
       "origin": "external",
-      "source": "devin.ai (gemeten)",
+      "source": "https://devin.ai",
       "status": "locked",
       "added": "2026-07-27",
       "note": "radius 0, marketing-site stijl"

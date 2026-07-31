@@ -1,4 +1,4 @@
-# DESIGN.md — v2
+# DESIGN.md -- v2
 
 > De design language. Standalone systeem, niet gekoppeld aan één product.
 > v1 was "Stroom" (teal, eigen signatuurlijn). v2 richt zich volledig op de
@@ -25,7 +25,7 @@ Drie pijlers:
 | tekst | `rgb(25,25,25)` | exact |
 | link-blauw | `rgb(68,109,205)` | als `--accent-ink` familie |
 | merk-blauw | `#317CFF` (uit product-UI) | als `--accent` |
-| badge-blauw | `#2200FF` (NEW-pill) | niet — te hard |
+| badge-blauw | `#2200FF` (NEW-pill) | niet -- te hard |
 | marketing-cards | radius 16px | product: 12px (`--r-lg`) |
 | knoppen (marketing) | radius 0px | product: 8px (`--r-md`) |
 | headings | weight 500, tracking −4% | weight 500, tracking −2% (product) |
@@ -75,12 +75,12 @@ Baseline is shadcn/ui-denken: simpele variants, hairline borders, rustige hovers
 
 **Geen spinners.** Activiteit toont als:
 
-1. **Worked-row**: `Aan het werk 2m 14s` — live timer in tabular mono, links een 2px streep.
+1. **Worked-row**: `Aan het werk 2m 14s` -- live timer in tabular mono, links een 2px streep.
    Streep is `--line-strong` in rust, `--accent` tijdens run. Uitklapbaar: elke stap met tijdstip.
 2. **Tool-ripples**: per tool-call een 18px golfje dat eenmaal heen-en-weer schaal­t (1.1s).
    Blauw = lezen, groen = schrijven, amber = extern. Geen infinite loops: ripple stopt zodra de call klaar is.
 3. **Hold-marker**: bij approval stopt de timer (niet resetten), approval-card verschijnt inline, toetsen 1/2/3.
-4. **Klaar**: rij wordt `Gewerkt 4m 13s +25 −131` — statisch, diff in groen/rood.
+4. **Klaar**: rij wordt `Gewerkt 4m 13s +25 −131` -- statisch, diff in groen/rood.
 
 Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1,0.36,1),
 140/280/420ms). Alles settle-t vroeg; niets bounct; niets ambients.
@@ -103,7 +103,7 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 ## 9. Stem (copy)
 
 - Warm, direct, menselijk Nederlands op gebruikersvlakken.
-- "Wacht op jou: test draaien op productie-domein" — niet "Approval required for external execution".
+- "Wacht op jou: test draaien op productie-domein" -- niet "Approval required for external execution".
 - **Verboden**: em-dashes, buzzwords, verzonnen metrics, emoji, "AI"-gebezigheid in labels.
 - Statuslijn: "Klaar voor instructies". Eén sparkle-icoon, geen animatie.
 
@@ -131,7 +131,7 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 
 ## 12. Status
 
-**v2 actief** — prototype-v2.html is de bron van waarheid voor feel.
+**v2 actief** -- prototype-v2.html is de bron van waarheid voor feel.
 Open: naam voor de taal (werktitel "Devin-richting" is geen naam, is een richting).
 
 ---
@@ -160,9 +160,9 @@ Regels:
 
 ## §12 Iconen (v2.1, icon-system skill)
 
-- Grid 24×24, stroke 2, round caps/joins — Lucide-conventie, sprite `components/icons.svg`
+- Grid 24×24, stroke 2, round caps/joins -- Lucide-conventie, sprite `components/icons.svg`
 - Maten: `.ic` (15, standaard) · `.ic-13` (compact) · `.ic-18` (knoppen) · `.ic-24` (hero)
-- Elke svg die een sprite-symbol gebruikt MOET `fill:none;stroke:currentColor` hebben (via `.ic` of expliciet) — symbols erven niets van de sprite-root
+- Elke svg die een sprite-symbol gebruikt MOET `fill:none;stroke:currentColor` hebben (via `.ic` of expliciet) -- symbols erven niets van de sprite-root
 - Icon-tiles in navigatie: 28px tile / 14px icon; pagina-headers 44px / 20px
 - Nieuwe symbols: Lucide-path kopiëren, id `i-<naam>`, toevoegen vóór `</svg>`
 

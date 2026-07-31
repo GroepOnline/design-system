@@ -1,4 +1,4 @@
-# AGENTS.md — instructies voor AI-agents die met dit design-system werken
+# AGENTS.md -- instructies voor AI-agents die met dit design-system werken
 
 > Machine-gericht. Menselijke uitleg: `README.md` en `WORKFLOW.md`.
 > Taste-regels (binding): `taste/taste-rules.md`. Taal: `DESIGN.md`.
@@ -17,7 +17,7 @@ Bron van waarheid per component: `components/<naam>/catalog.json`.
    `external/` = ongewijzigde referenties met `source`-veld verplicht.
 3. **Gegenereerde bestanden.** `components/*/index.html`, `components/index.html`,
    `docs/`, `taste-site/` en `brain-site/` zijn output van `ds build`. Nooit
-   handmatig bewerken — wijzig het manifest, `brain/**/*.md`, of de generator (`ds`).
+   handmatig bewerken -- wijzig het manifest, `brain/**/*.md`, of de generator (`ds`).
 4. **Playground.** Experimenten alleen in `playground/`. Promotie uitsluitend
    via `ds <comp> add`. De CLI maakt paden root-absoluut bij promotie.
 5. **Single-active.** Exact 1 entry per component heeft status `active`.
@@ -51,7 +51,7 @@ Product-waarheid blijft `DESIGN.md`, `tokens.css`, `taste/`,
 `components/*/catalog.json`. Productregels lopen uitsluitend via de
 bestaande taste-propagatie (taste-log → taste-rules → DESIGN.md). Een
 `brain/Decisions/`-note overschrijft nooit DESIGN.md, tokens.css of
-catalog.json direct. Geen `obsidian`-CLI-calls in geautomatiseerde flows —
+catalog.json direct. Geen `obsidian`-CLI-calls in geautomatiseerde flows --
 alleen directe file-writes.
 
 Signals (`brain/signals/signals.yaml`) alleen via `./ds brain signal`.
@@ -93,8 +93,8 @@ Nooit de gegenereerde overlays handmatig bewerken.
 
 ## Design-regels (harde bans, uit DESIGN.md §10)
 
-- Geen spinners/loaders — activiteit = worked-row + tool-ripples (1.1s, stopt)
-- Geen emoji als icoon — Lucide SVG (`components/icons.svg`, 29 symbols)
+- Geen spinners/loaders -- activiteit = worked-row + tool-ripples (1.1s, stopt)
+- Geen emoji als icoon -- Lucide SVG (`components/icons.svg`, 29 symbols)
 - Geen em-dashes in copy
 - Eén accent (`--accent`). Groen = git, amber = wacht-op-jou, rood = destructief/diff-del. Gereserveerd, nooit decoratief
 - Koppen weight 500, tracking −0.02em. Mono alleen voor data (timer, diff, branch, cmd, pad)
@@ -172,7 +172,7 @@ for an install/update command, `python3 --version` is enough as a runtime check.
   it handles neither style nor persistence.
 - Caveat when you test that: the restore path had a TDZ issue where `setTheme`
   ran at the top level before `let curTheme, curStyle` was initialized. This was
-  **fixed in v2** — `curTheme`/`curStyle` declarations are now placed above the
+  **fixed in v2** -- `curTheme`/`curStyle` declarations are now placed above the
   restore calls in `SHELL_FOOT` (`ds` line 449). If `?theme=dark` still renders
   light, check that `let curTheme` appears before the `wantTheme` restore block.
 - Fonts load from external CDNs (Fontshare/Google); offline the layout still

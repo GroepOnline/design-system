@@ -45,7 +45,7 @@ Nieuw component of variant:
 | `tokens.css` | tokens + primitives + typografie-schaal + icon-maten |
 | `components/<naam>/` | catalog.json (bron) + self/ + external/ + index.html (gegenereerd) |
 | `components/icons.svg` | 31 Lucide symbols |
-| `playground/` | experimentzone — kan de catalogus nooit corrupt maken |
+| `playground/` | experimentzone -- kan de catalogus nooit corrupt maken |
 | `docs/` | gerenderde .md-pagina's (gegenereerd) |
 | `taste-site/` | taste-regels + log als site (gegenereerd uit taste/*.md) |
 | `brain/` | Obsidian Second Brain (bron) |
