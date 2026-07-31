@@ -58,7 +58,7 @@ geleerde regels actief.
 | Studio v3 | ✅ presets → export → `ds style add` |
 | CI | ✅ validate.yml (build + check) |
 | Devin-DNA | ✅ settings beide thema's live gemeten + gearchiveerd |
-| Home page | ❌ placeholder -- moet theatrale landing worden |
+| Home page | ✅ theatrale landing met parallax + live stats (build_home()) |
 | Settings-component | ✅ grouped-card patroon toegevoegd (A.1) |
 | Perfection pass | ❌ gepland, niet uitgevoerd |
 
@@ -85,7 +85,7 @@ Meer schermen via de live Brave-sessie (`agent-browser --session devin-live`):
 - per scherm: tokens (al bekend), component-metingen, 1 screenshot
 - output: `references/devin-app-dna.md` + screenshots in `references/`
 
-### Fase C -- Home page (volgende grote)
+### Fase C -- Home page ✅ (2026-07-31)
 
 Theatrale, interactieve landing -- Fable5/Kimi3-niveau, rode-vlinders-vibe
 (depth/parallax, iets dat uit het scherm komt). Eisen:
@@ -94,11 +94,15 @@ Theatrale, interactieve landing -- Fable5/Kimi3-niveau, rode-vlinders-vibe
 - interactief: reageert op muis, niet alleen scroll
 - NL copy, direct, geen marketing-buzzwords
 
+Uitgevoerd: `build_home()` met parallax hero (3 lagen), live stats (11/20/2),
+componenten-grid per categorie, skins-preview, processtappen, intent reveals,
+responsive (680px), reduced-motion. `ds check` clean. ✅
+
 ### Fase D -- Perfection pass
 
 - elke pagina nalopen op verhoudingen/alignment (icoon-maten, rij-hoogtes)
-- `ds check` warnings wegwerken waar zinnig (em-dash in .md copy)
-- beide skins × beide thema's visueel doorlopen
+- `ds check` warnings gewerkkt (em-dash purge, source URLs) ✅
+- restant: alignment pass op prototype, beide skins × thema's doorlopen
 
 ### Fase E -- Groei (doorlopend)
 
