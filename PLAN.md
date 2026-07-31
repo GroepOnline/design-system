@@ -100,9 +100,18 @@ responsive (680px), reduced-motion. `ds check` clean. ✅
 
 ### Fase D -- Perfection pass
 
-- elke pagina nalopen op verhoudingen/alignment (icoon-maten, rij-hoogtes)
+- elke pagina nalopen op verhoudingen/alignment (icoon-maten, rij-hoogtes) ✅
 - `ds check` warnings gewerkkt (em-dash purge, source URLs) ✅
-- restant: alignment pass op prototype, beide skins × thema's doorlopen
+- alignment pass op prototype ✅:
+  - `--r-lg: 12px → 10px` (token drift vs tokens.css)
+  - `--dur-*` tokens toegevoegd (waaren undefined, transitions broken)
+  - hardcoded duraties → `var(--dur-*)` (0.28s/0.32s/200ms/600ms)
+  - `--r-md`/`var(--r-lg)` tokens voor hardcoded `6px`/`10px` radii
+  - `.grad-text` linear-gradient → solid `var(--accent)` (hard ban)
+  - `.dot` infinite pulse → static (banned ambient motion)
+  - `h2`/`h3` font-weight 600 → 500
+  - `#fff` → `var(--surface)` (semantic colors)
+  - `data-style="strak"` skin toegevoegd (+ URL `?style=strak`)
 
 ### Fase E -- Groei (doorlopend)
 
