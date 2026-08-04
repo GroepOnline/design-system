@@ -7,7 +7,7 @@ overlays die hiernaar wijzen, nooit een tweede bron.
 |---|---|---|
 | Canoniek | `.agents/skills/<naam>/SKILL.md` | wat agents moeten weten |
 | Canoniek | `.agents/hooks/*.sh` | wat agents niet mogen breken |
-| Overlay | `.cursor/skills/<naam>` | symlink naar `.agents/skills/<naam>` |
+| Overlay | `.cursor/skills/<naam>` | symlink naar `.agents/skills/<naam>` (4 skills, waaronder non-design-pipeline) |
 | Overlay | `.cursor/hooks.json` | wiring, want Cursor leest alleen daar |
 
 ## Skills
@@ -15,8 +15,20 @@ overlays die hiernaar wijzen, nooit een tweede bron.
 | Skill | Waarvoor |
 |---|---|
 | `design-system-brain` | Brain-vault gebruiken: `ds brain`, grenzen, Obsidian CLI |
-| `brain-note-hygiene` | Notes die de graph en `ds brain check` schoon houden |
+| `brain-note-hygiene` | Notes die graph en `ds brain check` schoon houden |
 | `brain-decision-capture` | Decision, research, taste-log of signal: welke route |
+| `non-design-pipeline` | Chained orchestratie Fase 1-3 (foundation-repair → dna-propagation → ci-agent-sync) met gates |
+
+## Subagents (`.agents/subagents/`)
+
+Tool-onafhankelijke fase-definities. Elk heeft een vaste `skills_chain`, `gates`, en `output`-contract.
+
+| Subagent | Fase | Werk |
+|---|---|---|
+| `foundation-repair` | 1 | relatief-pad reparatie, regressies herstellen, build/check idempotentie |
+| `dna-propagation` | 2 | Devin-DNA meting → `references/`, PLAN.md blokkades labels |
+| `ci-agent-sync` | 3 | CI + org-sync (GroepOnline), taste-overlays regenereren, docs, .gitignore |
+| `design-polish` | 4 | visueel design — gated op expliciete Joep-goedkeuring |
 
 ## Hooks
 

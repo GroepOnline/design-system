@@ -62,8 +62,8 @@ De studio is de visuele werkplek. Hier kun je:
 - De docs-tab raadplegen per component (gebruik/vermijd)
 - Vanaf nul een nieuwe variant bouwen in `playground/` en die via de CLI promoveren
 
-Open de studio door `python3 -m http.server 8000` te draaien
-in de design-system-root en `http://localhost:8000/components/` te openen.
+Open de studio door `./ds serve` te draaien (default poort 8085)
+in de design-system-root en `http://localhost:8085/components/` te openen.
 
 ### Docs
 
@@ -221,8 +221,8 @@ Commit-prefix: `taste: <wat>` of `component: <wat>`.
 
 ### Studio gebruiken
 
-1. **Start de server:** `./ds serve 8765` in de design-system-root
-2. **Open `http://127.0.0.1:8765/components/`**, hier zie je de gallery met alle componenten
+1. **Start de server:** `./ds serve` in de design-system-root (default poort 8085)
+2. **Open `http://localhost:8085/components/`**, hier zie je de gallery met alle componenten
 3. **Klik op een component** voor de detailpagina met alle varianten, iframes, docs-tab
 4. **Toggle thema** met de dark-mode knop of via `?theme=dark` in de URL
 
@@ -319,7 +319,7 @@ Een nieuwe versie krijgt een nieuwe id of je doet een expliciete
 **Hoe test ik dark mode?**
 
 Voeg `?theme=dark` toe aan elke component-pagina of gallery-URL.
-Bijvoorbeeld: `http://127.0.0.1:8765/components/button/?theme=dark`.
+Bijvoorbeeld: `http://localhost:8085/components/button/?theme=dark`.
 Andere productsurfaces die `<html data-theme="dark">` ondersteunen doen
 hetzelfde. De thema-toggle in de gallery werkt ook. Light- en dark-mode
 zijn allebei first-class; test altijd beide.

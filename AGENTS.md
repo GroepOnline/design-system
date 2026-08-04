@@ -66,15 +66,24 @@ Zie `brain/README.md`.
 
 ## Agent-laag (`.agents/`)
 
-Canonieke, tool-onafhankelijke skills en hooks. `.cursor/` is een dunne
+Canonieke, tool-onafhankelijke skills, subagents en hooks. `.cursor/` is een dunne
 overlay: symlinks naar `.agents/skills/*` plus `.cursor/hooks.json` als wiring.
-Nooit een tweede bron aanmaken.
+Subagents (`.agents/subagents/`) voeren fase-werk uit; de `non-design-pipeline`
+skill orkestreert Fase 1-3 in volgorde met gates. Nooit een tweede bron aanmaken.
 
 | Skill | Waarvoor |
 |---|---|
 | `design-system-brain` | vault gebruiken, `ds brain`, grenzen, Obsidian CLI |
 | `brain-note-hygiene` | frontmatter, wikilinks, naamgeving, 0 warnings |
 | `brain-decision-capture` | decision, research of taste-log kiezen |
+| `non-design-pipeline` | chained orchestratie Fase 1-3 (foundation-repair → dna-propagation → ci-agent-sync) met gates |
+
+| Subagent | Fase |
+|---|---|
+| `foundation-repair` | 1: relatief-pad reparatie, regressies, build/check idempotentie |
+| `dna-propagation` | 2: Devin-DNA meting → references/, PLAN.md blokkades |
+| `ci-agent-sync` | 3: CI + org-sync, taste-overlays, docs, .gitignore |
+| `design-polish` | 4: visueel design (gated op Joep-goedkeuring) |
 
 | Hook | Event | Gedrag |
 |---|---|---|
@@ -148,6 +157,9 @@ Standalone static design-system. No package manager, no third-party deps: the
 `ds` CLI is pure Python 3.12 stdlib. There is nothing to install, and the repo
 carries no `.cursor/environment.json` or setup script: when Cursor Cloud asks
 for an install/update command, `python3 --version` is enough as a runtime check.
+Remote: `https://github.com/GroepOnline/design-system.git` (org: GroepOnline).
+CI: `.github/workflows/validate.yml` (build + check + brain gate) en
+`.github/workflows/brain-eval.yml` (nightly scorecard + issues op gate-fail).
 
 - Lint/validate: `./ds check` (source of truth for the `check` CI step).
   Warnings (non-URL sources, em-dashes) are expected and do not fail; only
