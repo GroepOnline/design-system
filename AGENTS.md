@@ -154,9 +154,10 @@ for an install/update command, `python3 --version` is enough as a runtime check.
   `errors` matter.
 - Build/generate: `./ds build`. Generated output (`components/*/index.html`,
   `components/index.html`, `docs/`, `taste-site/`, `brain-site/`) is committed. CI's
-  `python3 ds build --check` step is effectively a plain build (the `--check`
-  arg is ignored by `main()`), so after any `ds` mutation keep the tree
-  idempotent: run `./ds build` and confirm `git diff` is empty.
+  `python3 ds build --check` runs a full build and then fails hard if the
+  working tree shows drift (`git status --porcelain` non-empty), so after any
+  `ds` mutation keep the tree idempotent: run `./ds build --check` and confirm
+  it reports "idempotent (geen drift)".
 - Run/serve (dev): serve from the repo root, prefer `./ds serve` (default port
   8085; override with `./ds serve <port>`), then open
   `http://localhost:<port>/components/`. `python3 -m http.server` is a plain

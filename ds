@@ -1860,7 +1860,20 @@ def cmd_brain(args):
     else:
         err("gebruik: ds brain build|check|new|signal|eval|gate")
 
-def cmd_build(only=None):
+def check_build_idempotent():
+    """build --check: fail hard als de werkboom na build drift vertoont vs git."""
+    import subprocess
+    r = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        err("build --check: geen geldige git-omgeving")
+    if r.stdout.strip():
+        n = len(r.stdout.strip().splitlines())
+        err(f"build --check: werkboom wijkt af van git ({n} regels drift). "
+            f"Draai ./ds build en commit de gegenereerde output.")
+    ok("build --check: idempotent (geen drift)")
+
+def cmd_build(only=None, check=False):
     targets = [only] if only else components()
     for c in targets:
         build_catalog(c)
@@ -1876,6 +1889,8 @@ def cmd_build(only=None):
         build_taste()
         build_brain()
         ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery + docs + taste + brain)')}")
+    if check:
+        check_build_idempotent()
 
 # ---------- main ----------
 
@@ -1999,7 +2014,7 @@ def main():
     if args[0] == "list":
         cmd_list()
     elif args[0] == "build":
-        cmd_build()
+        cmd_build(check="--check" in args)
     elif args[0] == "serve":
         port = int(args[1]) if len(args) > 1 and args[1].isdigit() else 8085
         cmd_serve(port)

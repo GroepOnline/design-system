@@ -296,9 +296,10 @@
 <p><code>errors</code> matter.</p>
 <li>Build/generate: <code>./ds build</code>. Generated output (<code>components/*/index.html</code>,</li>
 <p><code>components/index.html</code>, <code>docs/</code>, <code>taste-site/</code>, <code>brain-site/</code>) is committed. CI&#x27;s</p>
-<p><code>python3 ds build --check</code> step is effectively a plain build (the <code>--check</code></p>
-<p>arg is ignored by <code>main()</code>), so after any <code>ds</code> mutation keep the tree</p>
-<p>idempotent: run <code>./ds build</code> and confirm <code>git diff</code> is empty.</p>
+<p><code>python3 ds build --check</code> runs a full build and then fails hard if the</p>
+<p>working tree shows drift (<code>git status --porcelain</code> non-empty), so after any</p>
+<p><code>ds</code> mutation keep the tree idempotent: run <code>./ds build --check</code> and confirm</p>
+<p>it reports &quot;idempotent (geen drift)&quot;.</p>
 <li>Run/serve (dev): serve from the repo root, prefer <code>./ds serve</code> (default port</li>
 <p>8085; override with <code>./ds serve &lt;port&gt;</code>), then open</p>
 <p><code>http://localhost:&lt;port&gt;/components/</code>. <code>python3 -m http.server</code> is a plain</p>
