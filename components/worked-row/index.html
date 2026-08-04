@@ -296,7 +296,7 @@
     content: &quot;&quot;; position: absolute; left: 0; right: 0; top: 4px; height: 2px;
     background: currentColor; border-radius: 1px; opacity: 0.35;
   }
-  .ripple.on::before { animation: rippleflow 1.1s linear infinite; opacity: 0.9; }
+  .ripple.go::before { animation: rippleflow 1.1s var(--ease-out) 1; opacity: 0.9; }
   @keyframes rippleflow {
     0% { transform: scaleX(0.15); transform-origin: left; }
     45% { transform: scaleX(1); transform-origin: left; }
@@ -358,17 +358,28 @@
 const start = performance.now();
 const steps = [];
 function fmt(ms){const s=Math.floor(ms/1000);return `${Math.floor(s/60)}m ${String(s%60).padStart(2,&quot;0&quot;)}s`}
-(function tick(){document.getElementById(&quot;t1&quot;).textContent=fmt(performance.now()-start);requestAnimationFrame(tick)})();
+/* 1 update/sec — geen rAF-ambient-loop */
+let lastSec = -1;
+setInterval(() =&gt; {
+  const s = Math.floor((performance.now()-start)/1000);
+  if (s === lastSec) return;
+  lastSec = s;
+  document.getElementById(&quot;t1&quot;).textContent = fmt(performance.now()-start);
+}, 250);
 const icons={r:&quot;#i-file&quot;,w:&quot;#i-pencil&quot;,x:&quot;#i-terminal&quot;};
 const labels={r:&quot;lees src/styles/*.scss&quot;,w:&quot;schrijf _text-gradient.scss&quot;,x:&quot;curl productie-domein&quot;};
 function rip(kind){
   const box=document.getElementById(&quot;tools1&quot;);
   const el=document.createElement(&quot;span&quot;);
-  el.className=`ripple ${kind} on`;box.appendChild(el);
+  el.className=`ripple ${kind}`;box.appendChild(el);
+  void el.offsetWidth;
+  el.classList.add(&quot;go&quot;);
   steps.push({kind,t:fmt(performance.now()-start)});
   document.getElementById(&quot;d1&quot;).innerHTML=steps.map(s=&gt;
     `&lt;div class=&quot;step&quot;&gt;&lt;span class=&quot;st&quot;&gt;${s.t}&lt;/span&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;${icons[s.kind]}&quot;/&gt;&lt;/svg&gt;&lt;span&gt;${labels[s.kind]}&lt;/span&gt;&lt;/div&gt;`).join(&quot;&quot;);
-  setTimeout(()=&gt;{el.classList.remove(&quot;on&quot;);setTimeout(()=&gt;el.remove(),400)},2600);
+  /* één golfje (1.1s), daarna weg — nooit infinite */
+  el.addEventListener(&quot;animationend&quot;, () =&gt; el.remove(), { once: true });
+  setTimeout(() =&gt; { if (el.parentNode) el.remove(); }, 1300);
 }
 &lt;/script&gt;
 

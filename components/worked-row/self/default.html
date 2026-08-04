@@ -42,7 +42,7 @@
     content: ""; position: absolute; left: 0; right: 0; top: 4px; height: 2px;
     background: currentColor; border-radius: 1px; opacity: 0.35;
   }
-  .ripple.on::before { animation: rippleflow 1.1s linear infinite; opacity: 0.9; }
+  .ripple.go::before { animation: rippleflow 1.1s var(--ease-out) 1; opacity: 0.9; }
   @keyframes rippleflow {
     0% { transform: scaleX(0.15); transform-origin: left; }
     45% { transform: scaleX(1); transform-origin: left; }
@@ -104,17 +104,28 @@
 const start = performance.now();
 const steps = [];
 function fmt(ms){const s=Math.floor(ms/1000);return `${Math.floor(s/60)}m ${String(s%60).padStart(2,"0")}s`}
-(function tick(){document.getElementById("t1").textContent=fmt(performance.now()-start);requestAnimationFrame(tick)})();
+/* 1 update/sec — geen rAF-ambient-loop */
+let lastSec = -1;
+setInterval(() => {
+  const s = Math.floor((performance.now()-start)/1000);
+  if (s === lastSec) return;
+  lastSec = s;
+  document.getElementById("t1").textContent = fmt(performance.now()-start);
+}, 250);
 const icons={r:"#i-file",w:"#i-pencil",x:"#i-terminal"};
 const labels={r:"lees src/styles/*.scss",w:"schrijf _text-gradient.scss",x:"curl productie-domein"};
 function rip(kind){
   const box=document.getElementById("tools1");
   const el=document.createElement("span");
-  el.className=`ripple ${kind} on`;box.appendChild(el);
+  el.className=`ripple ${kind}`;box.appendChild(el);
+  void el.offsetWidth;
+  el.classList.add("go");
   steps.push({kind,t:fmt(performance.now()-start)});
   document.getElementById("d1").innerHTML=steps.map(s=>
     `<div class="step"><span class="st">${s.t}</span><svg class="ic"><use href="${icons[s.kind]}"/></svg><span>${labels[s.kind]}</span></div>`).join("");
-  setTimeout(()=>{el.classList.remove("on");setTimeout(()=>el.remove(),400)},2600);
+  /* één golfje (1.1s), daarna weg — nooit infinite */
+  el.addEventListener("animationend", () => el.remove(), { once: true });
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 1300);
 }
 </script>
 
