@@ -1,0 +1,165 @@
+{
+  "url": "https://app.devin.ai/org/joep-4dc8eed2850b45a1bf574a97aa5a032b",
+  "title": "Devin Ask",
+  "viewport": {
+    "w": 1607,
+    "h": 976
+  },
+  "measurements": {
+    "url": "https://app.devin.ai/org/joep-4dc8eed2850b45a1bf574a97aa5a032b",
+    "title": "Devin Ask",
+    "viewport": {
+      "w": 1607,
+      "h": 976
+    },
+    "body": {
+      "w": 1607,
+      "h": 976,
+      "bg": "rgb(20, 20, 20)",
+      "color": "rgba(255, 255, 255, 0.9)",
+      "fs": "20px",
+      "fw": "400",
+      "radius": "0px",
+      "p": "0px/0px/0px/0px"
+    },
+    "nav": {
+      "w": 280,
+      "h": 168,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgba(255, 255, 255, 0.9)",
+      "fs": "20px",
+      "fw": "400",
+      "radius": "0px",
+      "p": "0px/0px/0px/0px"
+    },
+    "main": {
+      "w": 1306,
+      "h": 921,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgba(255, 255, 255, 0.9)",
+      "fs": "20px",
+      "fw": "400",
+      "radius": "0px",
+      "p": "0px/0px/0px/0px"
+    },
+    "btn0": {
+      "w": 105,
+      "h": 35,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgba(255, 255, 255, 0.9)",
+      "fs": "16.25px",
+      "fw": "400",
+      "radius": "6px",
+      "p": "6px/9px/6px/9px"
+    },
+    "btn1": {
+      "w": 35,
+      "h": 35,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgba(255, 255, 255, 0.52)",
+      "fs": "20px",
+      "fw": "400",
+      "radius": "6px",
+      "p": "0px/0px/0px/0px"
+    },
+    "input0": {
+      "w": 0,
+      "h": 0,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgba(255, 255, 255, 0.9)",
+      "fs": "20px",
+      "fw": "400",
+      "radius": "0px",
+      "p": "0px/0px/0px/0px"
+    },
+    "avatar": null,
+    "badge": null,
+    "btns": [
+      {
+        "text": "JJoep",
+        "h": 35,
+        "w": 105,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "6px"
+      },
+      {
+        "text": "",
+        "h": 35,
+        "w": 35,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "6px"
+      },
+      {
+        "text": "",
+        "h": 35,
+        "w": 35,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "6px"
+      },
+      {
+        "text": "",
+        "h": 30,
+        "w": 30,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "6px"
+      },
+      {
+        "text": "",
+        "h": 30,
+        "w": 30,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "6px"
+      },
+      {
+        "text": "",
+        "h": 0,
+        "w": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px"
+      },
+      {
+        "text": "",
+        "h": 0,
+        "w": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px"
+      },
+      {
+        "text": "",
+        "h": 0,
+        "w": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px"
+      },
+      {
+        "text": "",
+        "h": 0,
+        "w": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px"
+      },
+      {
+        "text": "",
+        "h": 0,
+        "w": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px"
+      },
+      {
+        "text": "",
+        "h": 0,
+        "w": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px"
+      },
+      {
+        "text": "",
+        "h": 0,
+        "w": 0,
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px"
+      }
+    ],
+    "headings": []
+  }
+}

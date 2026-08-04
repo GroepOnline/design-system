@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-30T10:47:02Z",
+  "ts": "2026-08-04T10:30:52Z",
   "pass": true,
   "plane": "design-brain",
   "metrics": {
@@ -8,11 +8,13 @@
     "ds_check_errors": 0,
     "open_critical_signals": 0,
     "open_signals": 0,
-    "days_since_score_refresh": 0.0,
-    "days_since_taste_log": 2.45,
-    "open_candidate_rules": 4,
+    "days_since_score_refresh": 4.99,
+    "days_since_taste_log": 4.44,
+    "open_candidate_rules": 6,
     "agent_taste_check": "ok"
   },
   "failures": [],
-  "warnings": []
+  "warnings": [
+    "days_since_score_refresh=5.0 > warn 2.0"
+  ]
 }

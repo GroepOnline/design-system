@@ -1,0 +1,31 @@
+⚠ invalid config file /home/joep/.agent-browser/config.json: invalid type: sequence, expected a string at line 5 column 20
+{
+  "measurements": {
+    "avatar": null,
+    "badge": null,
+    "body": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(0, 0, 0)",
+      "fs": "16px",
+      "fw": "400",
+      "p": "0px/0px/0px/0px",
+      "radius": "0px",
+      "rect": {
+        "h": 561,
+        "w": 1264
+      },
+      "text": "rgb(0, 0, 0)"
+    },
+    "btn-primary": null,
+    "btn-secondary": null,
+    "composer": null,
+    "input": null,
+    "main": null,
+    "msg": null,
+    "nav-sidebar": null,
+    "sidebar-link": null,
+    "worked-row": null
+  },
+  "title": "",
+  "url": "about:blank"
+}

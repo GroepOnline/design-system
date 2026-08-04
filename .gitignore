@@ -3,6 +3,9 @@
 .commandcode/taste/*/
 .commandcode/design/
 
+# Debug-dump screenshots (fout/)
+/fout/
+
 # IDE/tool configs die niet bij dit repo horen
 .mcp.json
 .prettierignore
