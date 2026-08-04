@@ -10,3 +10,4 @@
 - Conventional commits; geen AI-signatuur of co-authored bot-regels tenzij de repo dat eist. `conventional-commits`
 - Zero-bloat: geen boilerplate, geen overbodige abstractielaag, geen marketing-copy. `brutalist-minimal`
 - Nooit secrets, tokens of DSNs in chat/PR/commits; rapporteer hoogstens korte fingerprints. `no-secrets-in-output`
+- Prefers `./ds serve` (default port 8085) over `python3 -m http.server` for local studio hosting — use the repo's own CLI, not ad-hoc Python servers. Confidence: 0.9

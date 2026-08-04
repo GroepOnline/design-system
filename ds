@@ -324,9 +324,9 @@ SHELL_HEAD = """<!DOCTYPE html>
     display: flex; flex-direction: column; background: var(--bg);
     overflow-y: auto; padding: 14px 12px 12px;
   }
-  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 14px; font-weight: 500; font-size: 14.5px; text-decoration: none; color: var(--text); border-radius: var(--r-md); }
-  .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 11px; font-weight: 600; transition: background var(--dur-fast), color var(--dur-fast); }
-  .brand:hover .logo { background: var(--accent); color: #fff; }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 14px; font-weight: 500; font-size: var(--text-lg); text-decoration: none; color: var(--text); border-radius: var(--r-md); }
+  .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: var(--text-xs); font-weight: 600; transition: background var(--dur-fast), color var(--dur-fast); }
+  .brand:hover .logo { background: var(--accent); color: var(--bg); }
   .rail .lbl { margin: 16px 10px 6px; color: var(--text-muted); font-weight: 500; }
   .rail a.it {
     position: relative;
@@ -349,7 +349,7 @@ SHELL_HEAD = """<!DOCTYPE html>
     transition: border-color var(--dur-fast);
   }
   .rail a.it:hover .tile { border-color: var(--line-strong); }
-  .rail .tile svg { width: 17px; height: 17px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .rail .tile svg { width: 14px; height: 14px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .rail a.it.sys { padding: 5px 10px 5px 13px; }
   .rail a.it.sys .tile { width: 18px; height: 18px; border: none; background: transparent; }
   .rail a.it.sys .tile svg { width: 14px; height: 14px; color: var(--text-faint); }
@@ -373,16 +373,16 @@ SHELL_HEAD = """<!DOCTYPE html>
   /* code-blokken ook dun */
   .cell pre { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
-  .cell pre::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+  .cell pre::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; }
   .wrap { max-width: 1280px; margin: 0 auto; padding: 36px 40px 64px; }
   /* ---- pagina-header ---- */
   .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-  .pagehead .tile { width: 46px; height: 46px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex-shrink: 0; }
-  .pagehead .tile svg { width: 22px; height: 22px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .pagehead h1 { margin: 0; font-size: 27px; letter-spacing: -0.02em; }
+  .pagehead .tile { width: 44px; height: 44px; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex-shrink: 0; }
+  .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pagehead h1 { margin: 0; font-size: var(--text-2xl); letter-spacing: -0.02em; }
   .pagehead .cat { margin-left: 2px; }
   .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; }
-  .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; max-width: 660px; line-height: 1.6; }
+  .sub { color: var(--text-muted); font-size: var(--text-md); margin-bottom: 24px; max-width: 660px; line-height: 1.6; }
   .sub code, .legend code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
   .legend { display: flex; gap: 12px; align-items: center; margin-bottom: 26px; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); font-size: var(--text-sm); color: var(--text-faint); flex-wrap: wrap; }
   /* ---- gebruik-paneel (actieve variant) ---- */
@@ -438,7 +438,7 @@ SHELL_HEAD = """<!DOCTYPE html>
   .cell .ch .id { font-weight: 500; }
   .cell .ch .note { color: var(--text-faint); font-size: var(--text-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cell .ch .right { margin-left: auto; display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
-  .st { font-family: var(--mono); font-size: 10px; padding: 2.5px 9px; border-radius: 200px; letter-spacing: 0.04em; }
+  .st { font-family: var(--mono); font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 200px; letter-spacing: 0.04em; }
   .st.active { background: var(--open-green-bg); color: var(--open-green); }
   .st.locked { border: 1px solid var(--line-strong); color: var(--text-faint); display: inline-flex; align-items: center; gap: 4px; }
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
@@ -450,10 +450,10 @@ SHELL_HEAD = """<!DOCTYPE html>
   .cell summary { padding: 8px 14px; font-size: var(--text-sm); color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; transition: color var(--dur-fast); }
   .cell summary:hover { color: var(--text); }
   .cell summary .copy { margin-left: auto; }
-  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: 11px; line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
+  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
   .gen { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   /* ---- reveal (subtiel, reduced-motion-safe) ---- */
-  .reveal { opacity: 0; transform: translateY(8px); transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out); }
+  .reveal { opacity: 0; transform: translateY(8px); transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   @media (max-width: 860px) {
     body { flex-direction: column; overflow: auto; }
@@ -623,18 +623,18 @@ HOME_HEAD = """<!DOCTYPE html>
     margin: 0 0 12px; line-height: 1.15; color: var(--text);
   }
   .hero .sub {
-    font-size: 16.5px; color: var(--text-muted); max-width: 500px; margin: 0 auto 24px;
+    font-size: var(--text-lg); color: var(--text-muted); max-width: 500px; margin: 0 auto 24px;
     line-height: 1.5;
   }
   .hero-actions { display: flex; gap: 10px; justify-content: center; }
-  .hero-actions .btn { font-size: 14px; height: 34px; padding: 0 19px; text-decoration: none; }
+  .hero-actions .btn { font-size: 13px; height: 32px; padding: 0 19px; text-decoration: none; }
   /* ---- sections ---- */
   .section { padding: 64px 24px; max-width: 1120px; margin: 0 auto; }
   .section h2 {
-    font-size: 22px; font-weight: 500; letter-spacing: -0.02em; text-wrap: balance;
+    font-size: var(--text-xl); font-weight: 500; letter-spacing: -0.02em; text-wrap: balance;
     margin: 0 0 8px;
   }
-  .section .sdesc { color: var(--text-muted); font-size: 14.5px; max-width: 560px; margin-bottom: 28px; line-height: 1.5; }
+  .section .sdesc { color: var(--text-muted); font-size: var(--text-lg); max-width: 560px; margin-bottom: 28px; line-height: 1.5; }
   /* ---- stats ---- */
   .stats { display: flex; gap: 20px; flex-wrap: wrap; }
   .stat {
@@ -643,7 +643,7 @@ HOME_HEAD = """<!DOCTYPE html>
   }
   .stat .num { font-size: 32px; font-weight: 500; letter-spacing: -0.02em; font-family: var(--mono); font-variant-numeric: tabular-nums; }
   .stat .num.accent { color: var(--accent-ink); }
-  .stat .nl { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .stat .nl { font-size: var(--text-sm); color: var(--text-muted); margin-top: 2px; }
   /* ---- component grid ---- */
   .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
   .comp-card {
@@ -656,14 +656,14 @@ HOME_HEAD = """<!DOCTYPE html>
   .comp-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .comp-card:active { transform: scale(0.985); }
   .comp-card .ci {
-    width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line);
+    width: 36px; height: 36px; border-radius: var(--r-lg); border: 1px solid var(--line);
     background: var(--bg); display: grid; place-items: center; flex-shrink: 0;
   }
-  .comp-card .ci svg { width: 19px; height: 19px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .comp-card .ci svg { width: 18px; height: 18px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .comp-card .cb { flex: 1; min-width: 0; }
-  .comp-card .cn { font-weight: 500; font-size: 14.5px; }
-  .comp-card .cd { font-size: 12.5px; color: var(--text-faint); margin-top: 1px; }
-  .comp-card .cm { display: flex; gap: 8px; margin-top: 6px; font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); }
+  .comp-card .cn { font-weight: 500; font-size: var(--text-lg); }
+  .comp-card .cd { font-size: var(--text-sm); color: var(--text-faint); margin-top: 1px; }
+  .comp-card .cm { display: flex; gap: 8px; margin-top: 6px; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   /* ---- skins ---- */
   .skin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .skin-card {
