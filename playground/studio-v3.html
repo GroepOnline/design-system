@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>studio — design-system</title>
+<title>studio · design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -34,34 +34,49 @@
   .ctl { margin-bottom: 22px; }
   .ctl .lb { font-size: 13.5px; font-weight: 500; margin-bottom: 2px; }
   .ctl .ds { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
-  .ctl .val { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 6px; display: flex; justify-content: space-between; }
+  .ctl .val { font-size: 11.5px; color: var(--text-faint); margin-top: 6px; display: flex; justify-content: space-between; }
+  .ctl .val .v { font-family: var(--mono); font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
   input[type="range"] {
-    -webkit-appearance: none; width: 100%; height: 2px;
+    -webkit-appearance: none; appearance: none; width: 100%; height: 2px;
     background: var(--line-strong); border-radius: 1px; outline: none;
   }
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; width: 17px; height: 17px; border-radius: 50%;
     background: var(--surface); border: 1.5px solid var(--text);
-    cursor: pointer; transition: transform 120ms var(--ease-out);
+    cursor: pointer; transition: border-color var(--dur-fast);
   }
-  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--surface); border: 1.5px solid var(--text);
+    cursor: pointer; transition: border-color var(--dur-fast);
+  }
+  input[type="range"]:hover::-webkit-slider-thumb { border-color: var(--accent); }
+  input[type="range"]:hover::-moz-range-thumb { border-color: var(--accent); }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--accent); outline-offset: 2px; }
+  input[type="range"]:focus-visible::-moz-range-thumb { outline: 2px solid var(--accent); outline-offset: 2px; }
+  input[type="range"]::-moz-focus-outer { border: 0; }
   .swatches { display: flex; gap: 7px; margin-top: 10px; flex-wrap: wrap; }
   .swb {
     width: 30px; height: 30px; border-radius: 8px; cursor: pointer;
     border: 2px solid transparent; padding: 0;
-    transition: transform 120ms var(--ease-out), border-color 120ms;
+    transition: border-color var(--dur-fast), transform 120ms var(--ease-out);
   }
-  .swb:hover { transform: scale(1.1); }
+  .swb:hover { border-color: var(--line-strong); }
+  .swb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .swb:active { transition-duration: 90ms; transform: scale(0.985); }
   .swb.on { border-color: var(--text); }
   .presets { display: flex; flex-direction: column; gap: 6px; }
   .preset {
     display: flex; align-items: center; gap: 10px;
     padding: 9px 11px; border: 1px solid var(--line);
     border-radius: var(--r-md); cursor: pointer; background: var(--surface);
-    transition: border-color 140ms; text-align: left; width: 100%;
+    transition: border-color var(--dur-fast), transform 120ms var(--ease-out);
+    text-align: left; width: 100%;
     font-family: var(--font);
   }
   .preset:hover { border-color: var(--line-strong); }
+  .preset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .preset:active { transition-duration: 90ms; transform: scale(0.985); }
   .preset.on { border-color: var(--accent); }
   .preset .dots { display: flex; gap: 3px; }
   .preset .dots span { width: 12px; height: 12px; border-radius: 4px; border: 1px solid var(--line); }
@@ -71,7 +86,7 @@
   /* ---- preview canvas ---- */
   .canvas { flex: 1; padding: 26px 30px 60px; background: var(--bg); }
   .cv-wrap { max-width: 660px; margin: 0 auto; }
-  .cv-label { font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin: 26px 0 8px; }
+  .cv-label { margin: 26px 0 8px; }
   .cv-label:first-child { margin-top: 0; }
 
   /* component-stijlen voor preview (kopie uit components/) */
@@ -79,17 +94,39 @@
   .msg-user .txt { flex: 1; }
   .avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; flex-shrink: 0; display: grid; place-items: center; font-size: 11px; font-weight: 600; }
   .msg-agent { font-size: 14.5px; line-height: 1.6; margin: 14px 0; }
-  .worked { display: flex; align-items: center; gap: 9px; padding: 6px 10px 6px 13px; position: relative; font-size: 13px; color: var(--text-muted); border-radius: var(--r-md); margin: 8px 0; }
-  .worked::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px; border-radius: 1px; background: var(--line-strong); transition: background 0.4s; }
+  .worked {
+    display: flex; align-items: center; gap: 9px; padding: 6px 10px 6px 13px;
+    position: relative; font-size: 13px; color: var(--text-muted);
+    border-radius: var(--r-md); margin: 8px 0; width: 100%;
+    cursor: pointer; user-select: none; text-align: left;
+    background: transparent; border: none; font-family: var(--font);
+    transition: background var(--dur-fast);
+  }
+  .worked:hover { background: var(--hover); }
+  .worked:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .worked::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px; border-radius: 1px; background: var(--line-strong); transition: background var(--dur-slow); }
   .worked.live::before { background: var(--accent); }
+  .worked .chev { transition: transform var(--dur-med) var(--ease-out); display: inline-flex; color: var(--text-faint); }
+  .worked.open .chev { transform: rotate(90deg); }
   .worked .timer { font-family: var(--mono); font-size: 12.5px; color: var(--text); font-variant-numeric: tabular-nums; }
   .worked .diff { font-family: var(--mono); font-size: 11.5px; }
   .worked .diff .add { color: var(--open-green); }
   .worked .diff .del { color: var(--red); }
-  .worked .tools { margin-left: auto; display: flex; gap: 4px; }
+  .worked .tools { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .worked-detail {
+    margin: -4px 0 8px; padding: 0 10px 0 25px;
+    font-family: var(--mono); font-size: 12px; color: var(--text-muted);
+    display: none;
+  }
+  .worked-detail.open { display: block; animation: fadeSlide var(--dur-med) var(--ease-out); }
+  .worked-detail .step { padding: 3px 0; display: flex; gap: 8px; align-items: center; }
+  .worked-detail .step .st { color: var(--text-faint); width: 52px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .worked-detail .step .ic { width: 12px; height: 12px; }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(-4px); } }
+  /* tool-ripple: één golfje per tool-call (1.1s), stopt daarna. Nooit een loop. */
   .ripple { width: 18px; height: 10px; position: relative; }
-  .ripple::before { content: ""; position: absolute; left: 0; right: 0; top: 4px; height: 2px; background: currentColor; border-radius: 1px; }
-  .ripple.on::before { animation: rippleflow 1.1s linear infinite; }
+  .ripple::before { content: ""; position: absolute; left: 0; right: 0; top: 4px; height: 2px; background: currentColor; border-radius: 1px; opacity: 0.35; }
+  .ripple.go::before { animation: rippleflow 1.1s var(--ease-out) 1; opacity: 0.9; }
   @keyframes rippleflow { 0%{transform:scaleX(.15);transform-origin:left} 45%{transform:scaleX(1);transform-origin:left} 46%{transform-origin:right} 100%{transform:scaleX(.15);transform-origin:right} }
   .ripple.r { color: var(--accent); } .ripple.w { color: var(--open-green); }
   .pr-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 12px 15px; margin: 8px 0; }
@@ -101,7 +138,7 @@
   .pr-meta .branch { font-family: var(--mono); font-size: 11px; background: var(--surface-sunk); padding: 1.5px 7px; border-radius: 6px; }
   .pr-meta .diff { font-family: var(--mono); font-size: 11.5px; margin-left: auto; }
   .pr-meta .diff .add { color: var(--open-green); } .pr-meta .diff .del { color: var(--red); }
-  .composer { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-lg); padding: 12px 12px 8px; transition: border-color .25s, box-shadow .25s; }
+  .composer { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-lg); padding: 12px 12px 8px; transition: border-color var(--dur-fast), box-shadow var(--dur-fast); }
   .composer:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
   .composer textarea { width: 100%; border: none; outline: none; resize: none; font-family: var(--font); font-size: 14.5px; background: transparent; color: var(--text); min-height: 22px; }
   .composer textarea::placeholder { color: var(--text-faint); }
@@ -110,16 +147,21 @@
   .model-chip { font-size: 12px; color: var(--text-muted); padding: 4px 9px; border-radius: var(--r-md); display: flex; gap: 5px; align-items: center; }
   .btnrow { display: flex; gap: 8px; flex-wrap: wrap; }
   .status-line { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-faint); margin-top: 14px; }
-  .copyok { color: var(--open-green) !important; }
-  /* tabs: afstellen / docs */
-  .tabs { display: flex; gap: 2px; background: var(--surface-sunk); border-radius: var(--r-md); padding: 2px; }
-  .tabs button { border: none; background: transparent; padding: 5px 13px; border-radius: calc(var(--r-md) - 2px); font-family: var(--font); font-size: 12.5px; color: var(--text-muted); cursor: pointer; }
-  .tabs button.on { background: var(--surface); color: var(--text); font-weight: 500; box-shadow: var(--shadow-xs); }
+  /* copy-knop: icon-swap copy → check met d-state fade, geen kleurflits */
+  #copyBtn svg { transition: opacity var(--dur-fast); }
+  #copyBtn.swap svg { opacity: 0; }
   .docsview { display: none; flex: 1; min-height: 0; }
   .docsview.on { display: flex; }
   .docsview iframe { flex: 1; border: none; background: var(--bg); height: calc(100vh - 57px); }
   body.mode-docs .studio { display: none; }
   body.mode-docs .docsview { display: flex; }
+  /* intent reveal (Motion 2): 220ms outward, stagger max 3 × 40ms, geen layout shift */
+  .rv { opacity: 0; transform: translateY(12px); }
+  .rv.in { opacity: 1; transform: translateY(0); transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1), transform 220ms cubic-bezier(0.22, 1, 0.36, 1); }
+  @media (prefers-reduced-motion: reduce) {
+    .rv { opacity: 1; transform: none; }
+    .rv.in { transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -127,7 +169,7 @@
 <div class="top">
   <h1>studio</h1>
   <span class="hint">Stel het uiterlijk af zonder code. Alles wat je ziet reageert direct.</span>
-  <div class="tabs" id="tabs">
+  <div class="seg" id="tabs">
     <button class="on" data-mode="">Afstellen</button>
     <button data-mode="docs">Docs</button>
   </div>
@@ -158,22 +200,22 @@
     <div class="ctl">
       <div class="lb">Warmte van de achtergrond</div>
       <div class="ds">Koel grijs links, warm zand rechts.</div>
-      <input type="range" id="warmth" min="0" max="100" value="60">
-      <div class="val"><span>koel</span><span id="warmthVal">60%</span><span>warm</span></div>
+      <input type="range" id="warmth" min="0" max="100" value="60" aria-label="Warmte van de achtergrond">
+      <div class="val"><span>koel</span><span class="v" id="warmthVal">60%</span><span>warm</span></div>
     </div>
 
     <div class="ctl">
       <div class="lb">Hoekronding</div>
       <div class="ds">Hoe rond knoppen en kaarten zijn. 0 = vierkant (Devin-marketing).</div>
-      <input type="range" id="radius" min="0" max="16" value="8">
-      <div class="val"><span>vierkant</span><span id="radiusVal">8px</span><span>rond</span></div>
+      <input type="range" id="radius" min="0" max="16" value="8" aria-label="Hoekronding">
+      <div class="val"><span>vierkant</span><span class="v" id="radiusVal">8px</span><span>rond</span></div>
     </div>
 
     <div class="ctl">
       <div class="lb">Tekstgrootte</div>
       <div class="ds">Basis voor de hele interface. 15 is de referentie.</div>
-      <input type="range" id="fsize" min="13" max="17" value="15">
-      <div class="val"><span>13</span><span id="fsizeVal">15px</span><span>17</span></div>
+      <input type="range" id="fsize" min="13" max="17" value="15" aria-label="Tekstgrootte">
+      <div class="val"><span>13</span><span class="v" id="fsizeVal">15px</span><span>17</span></div>
     </div>
   </aside>
 
@@ -181,37 +223,43 @@
   <main class="canvas">
     <div class="cv-wrap">
 
-      <div class="cv-label">Knoppen</div>
-      <div class="btnrow">
+      <div class="cv-label caps rv">Knoppen</div>
+      <div class="btnrow rv">
         <button class="btn primary">Primaire actie</button>
         <button class="btn">Standaard</button>
         <button class="btn">Met hint <kbd>2</kbd></button>
-        <button class="gbtn"><svg class="ic"><use href="../components/icons.svg#i-plus"/></svg></button>
-        <button class="gbtn solid"><svg class="ic"><use href="../components/icons.svg#i-arrow-up"/></svg></button>
+        <button class="gbtn" aria-label="Toevoegen"><svg class="ic"><use href="../components/icons.svg#i-plus"/></svg></button>
+        <button class="gbtn solid" aria-label="Versturen"><svg class="ic"><use href="../components/icons.svg#i-arrow-up"/></svg></button>
       </div>
 
-      <div class="cv-label">Gesprek</div>
-      <div class="msg msg-user">
+      <div class="cv-label caps rv">Gesprek</div>
+      <div class="msg msg-user rv">
         <div class="txt">Migreer alle gradient-tekst naar #317CFF in beide repo's, en test daarna</div>
         <div class="avatar">J</div>
       </div>
-      <div class="msg msg-agent">Ik migreer alle gradient-tekst in beide repo's en test daarna de wijzigingen. Ik begin nu.</div>
+      <div class="msg msg-agent rv">Ik migreer alle gradient-tekst in beide repo's en test daarna de wijzigingen. Ik begin nu.</div>
 
-      <div class="worked live">
-        <svg class="ic sm" style="color:var(--text-faint)"><use href="../components/icons.svg#i-chevron"/></svg>
+      <button class="worked live rv" id="workedLive" aria-expanded="false" aria-controls="wdLive">
+        <span class="chev"><svg class="ic sm"><use href="../components/icons.svg#i-chevron"/></svg></span>
         <span>Aan het werk</span>
         <span class="timer" id="t">0m 00s</span>
-        <div class="tools"><span class="ripple r on"></span><span class="ripple w on"></span></div>
-      </div>
-      <div class="worked">
-        <svg class="ic sm" style="color:var(--text-faint)"><use href="../components/icons.svg#i-chevron"/></svg>
+        <span class="tools"><span class="ripple r" id="ripR"></span><span class="ripple w" id="ripW"></span></span>
+      </button>
+      <div class="worked-detail" id="wdLive"></div>
+      <button class="worked rv" id="workedDone" aria-expanded="false" aria-controls="wdDone">
+        <span class="chev"><svg class="ic sm"><use href="../components/icons.svg#i-chevron"/></svg></span>
         <span>Gewerkt</span>
         <span class="timer">4m 13s</span>
         <span class="diff"><span class="add">+25</span> <span class="del">−131</span></span>
+      </button>
+      <div class="worked-detail" id="wdDone">
+        <div class="step"><span class="st">0m 04s</span><svg class="ic"><use href="../components/icons.svg#i-file"/></svg><span>lees src/styles/*.scss</span></div>
+        <div class="step"><span class="st">1m 52s</span><svg class="ic"><use href="../components/icons.svg#i-pencil"/></svg><span>schrijf _text-gradient.scss</span></div>
+        <div class="step"><span class="st">4m 13s</span><svg class="ic"><use href="../components/icons.svg#i-check"/></svg><span>tests groen in beide repo's</span></div>
       </div>
 
-      <div class="cv-label">Bewijs</div>
-      <div class="pr-card">
+      <div class="cv-label caps rv">Bewijs</div>
+      <div class="pr-card rv">
         <div class="pr-head">
           <span class="badge green"><svg class="ic sm"><use href="../components/icons.svg#i-git-pr"/></svg>Open</span>
           <span class="pr-repo">cognition/cognition-website</span>
@@ -226,19 +274,19 @@
         </div>
       </div>
 
-      <div class="cv-label">Invoer</div>
-      <div class="composer">
-        <textarea rows="1" placeholder="Vraag om features te bouwen, bugs te fixen, of aan je code te werken"></textarea>
+      <div class="cv-label caps rv">Invoer</div>
+      <div class="composer rv">
+        <textarea rows="1" aria-label="Instructie voor de agent" placeholder="Vraag om features te bouwen, bugs te fixen, of aan je code te werken"></textarea>
         <div class="composer-bar">
-          <button class="gbtn"><svg class="ic lg"><use href="../components/icons.svg#i-plus"/></svg></button>
+          <button class="gbtn" aria-label="Bijlage toevoegen"><svg class="ic lg"><use href="../components/icons.svg#i-plus"/></svg></button>
           <div class="right">
             <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="../components/icons.svg#i-chevrons-updown"/></svg></div>
-            <button class="gbtn"><svg class="ic"><use href="../components/icons.svg#i-mic"/></svg></button>
-            <button class="gbtn solid"><svg class="ic"><use href="../components/icons.svg#i-arrow-up"/></svg></button>
+            <button class="gbtn" aria-label="Dicteren"><svg class="ic"><use href="../components/icons.svg#i-mic"/></svg></button>
+            <button class="gbtn solid" aria-label="Verstuur instructie"><svg class="ic"><use href="../components/icons.svg#i-arrow-up"/></svg></button>
           </div>
         </div>
       </div>
-      <div class="status-line"><svg class="ic sm"><use href="../components/icons.svg#i-sparkle"/></svg>Klaar voor instructies</div>
+      <div class="status-line rv"><svg class="ic sm"><use href="../components/icons.svg#i-sparkle"/></svg>Klaar voor instructies</div>
 
     </div>
   </main>
@@ -355,20 +403,82 @@ $("copyBtn").addEventListener("click", async () => {
 }`;
   try {
     await navigator.clipboard.writeText(css);
-    const lbl = $("copyBtn").querySelector("span");
-    lbl.textContent = "Gekopieerd";
-    $("copyBtn").classList.add("copyok");
-    setTimeout(() => { lbl.textContent = "Kopieer tokens"; $("copyBtn").classList.remove("copyok"); }, 1600);
+    const btn = $("copyBtn");
+    const useEl = btn.querySelector("use");
+    const lbl = btn.querySelector("span");
+    btn.classList.add("swap");
+    setTimeout(() => {
+      useEl.setAttribute("href", "../components/icons.svg#i-check");
+      lbl.textContent = "Gekopieerd";
+      btn.classList.remove("swap");
+    }, 150);
+    setTimeout(() => {
+      btn.classList.add("swap");
+      setTimeout(() => {
+        useEl.setAttribute("href", "../components/icons.svg#i-copy");
+        lbl.textContent = "Kopieer tokens";
+        btn.classList.remove("swap");
+      }, 150);
+    }, 1350);
   } catch(e) { prompt("Kopieer handmatig:", css); }
 });
 
-/* ---------- timer demo ---------- */
+/* ---------- timer demo (1 update per seconde, geen rAF-loop) ---------- */
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 const start = performance.now();
-(function tick(){
+let lastSec = -1;
+setInterval(() => {
   const s = Math.floor((performance.now()-start)/1000);
+  if (s === lastSec) return;
+  lastSec = s;
   $("t").textContent = `${Math.floor(s/60)}m ${String(s%60).padStart(2,"0")}s`;
-  requestAnimationFrame(tick);
-})();
+}, 250);
+
+/* ---------- tool-ripples: eindige run (4 calls), daarna stil — geen ambient loop ---------- */
+const stepDefs = [
+  { kind: "r", icon: "i-file",   text: "lees src/styles/*.scss" },
+  { kind: "w", icon: "i-pencil", text: "schrijf _text-gradient.scss" },
+  { kind: "r", icon: "i-search", text: "zoek gradient-referenties" },
+  { kind: "w", icon: "i-pencil", text: "schrijf tokens.css" },
+];
+const liveSteps = [];
+function fireRipple(def) {
+  if (reduced.matches || document.hidden) return;
+  const el = $(def.kind === "r" ? "ripR" : "ripW");
+  el.classList.remove("go");
+  void el.offsetWidth;
+  el.classList.add("go");
+  el.addEventListener("animationend", () => el.classList.remove("go"), { once: true });
+  liveSteps.push({ t: $("t").textContent, icon: def.icon, text: def.text });
+  $("wdLive").innerHTML = liveSteps.map(s =>
+    `<div class="step"><span class="st">${s.t}</span><svg class="ic"><use href="../components/icons.svg#${s.icon}"/></svg><span>${s.text}</span></div>`
+  ).join("");
+}
+/* één golfje per tool-call, ~1.6s uit elkaar; stopt na de run (geen setInterval) */
+stepDefs.forEach((def, i) => setTimeout(() => fireRipple(def), 700 + i * 1600));
+
+/* ---------- worked-rows: uitklapbaar (click + toetsenbord via button) ---------- */
+[["workedLive","wdLive"],["workedDone","wdDone"]].forEach(([r, d]) => {
+  $(r).addEventListener("click", () => {
+    const open = $(r).classList.toggle("open");
+    $(d).classList.toggle("open", open);
+    $(r).setAttribute("aria-expanded", String(open));
+  });
+});
+
+/* ---------- intent reveals (Motion 2): stagger max 3 × 40ms ---------- */
+const rvEls = [...document.querySelectorAll(".rv")];
+if (reduced.matches) {
+  rvEls.forEach(el => el.classList.add("in"));
+} else {
+  rvEls.forEach((el, i) => {
+    el.style.willChange = "opacity, transform";
+    setTimeout(() => {
+      el.classList.add("in");
+      el.addEventListener("transitionend", () => { el.style.willChange = ""; }, { once: true });
+    }, 60 + Math.min(i, 2) * 40);
+  });
+}
 
 /* ---------- ui: tabs ---------- */
 $("tabs").querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
