@@ -1,8 +1,11 @@
-# Devin App DNA — live gemeten (2026-07-28, dark mode)
+# Devin App DNA — live gemeten (2026-07-28 + hermeting 2026-08-04, dark mode, viewport 1607×976)
 
 Bron: CDP via Brave (Chrome/151). 4 schermen + settings (zie `devin-settings-dna.md`
 voor complete dark/light metingen). screenshots: `devin-app-home.png`,
 `devin-app-session.png`, `devin-app-usage.png`.
+
+Hermeting 2026-08-04 (app.devin.ai, dark, viewport 1607×976): gearchiveerd in
+`.commandcode/devin-home.json`, screenshot `devin-home.png` (hernieuwd).
 
 ## 1. Home (sessie-overzicht)
 
@@ -40,6 +43,10 @@ Volledige meting via `devin-app-usage.png`.
 | Composer hoogte | 20px input | — | Super-klein input | Ons `.input` 32px — goed voor een tool |
 | Send button | h30 r6 transparent | ons `.btn`? | Devin ghost-style btn | Ons `.gbtn` matcht (ghost) |
 | Nav links | icon + text | ons rail | Devin kleiner, compact | Ons rail 248px + 17px icon ✓ |
+| Nav breedte (2026-08-04) | 280px | ons rail 248px | Devin 32px breder | Railbreedte blijft beslisbaar; 280px als optie |
+| Main kolom (2026-08-04) | 1306px bij viewport 1607px | — | Hoofdinhoud krijgt rest van breedte | — |
+| Avatar-knop JJoep (2026-08-04) | h35 r6, 105×35 | — | Avatar + naam in één knop | — |
+| Composer/input (2026-08-04) | Geen vaste textarea; input 0×0 gemeten (contenteditable) | ons `.input` 32px | Bevestigt compacte composer | Ons 32px `.input` blijft (tool-context) |
 
 ## Kernwaarden (Devin) vs ons
 

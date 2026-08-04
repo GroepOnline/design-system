@@ -81,7 +81,8 @@ geleerde regels actief.
 
 Meer schermen via de live Brave-sessie (`agent-browser --session devin-live`):
 - hoofdapp (sessie-lijst, chat, composer)
-- Review / DeepWiki / Usage & Limits
+- Review / DeepWiki / Usage & Limits -- **vereist ingelogde live Devin-sessie
+  (OAuth) -- geblokkeerd op Joep**
 - per scherm: tokens (al bekend), component-metingen, 1 screenshot
 - output: `references/devin-app-dna.md` + screenshots in `references/`
 
