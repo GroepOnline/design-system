@@ -20,12 +20,13 @@ draait de gates en doet de review + commits.
 | `foundation-repair` | 1 | relative-pad reparatie, regressies terugzetten, build/check idempotentie |
 | `dna-propagation` | 2 | Devin-meting (json → references) propageren, PLAN.md blokkades labelen |
 | `ci-agent-sync` | 3 | CI + org-sync, taste-overlays regenereren, docs/agents syncen, .gitignore |
+| `design-polish` | 4 | VISUEEL DESIGN, gated op Joep-goedkeuring: sub-pagina's + Studio v3 naar Raycraft/Linear-niveau |
 
 ## Chained skill
 
-`../skills/non-design-pipeline/SKILL.md` orkestreert de drie fasen in volgorde
+`../skills/non-design-pipeline/SKILL.md` orkestreert Fase 1-3 in volgorde
 (1 → 2 → 3) en definieert de gates per fase. Designwerk (Fase 4) zit daar
-bewust buiten; dat vereist expliciete Joep-goedkeuring.
+bewust buiten; dat vereist expliciete Joep-goedkeuring via `design-polish`.
 
 ## Gebruik
 

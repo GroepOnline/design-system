@@ -56,7 +56,8 @@ python3 ds build --check                                    # Fase 3: groen
 - Commits: orchestrator/primary maakt logische commits na review
   (`fix:` paden, `chore:` tooling, `feat:` agents). Geen `--no-verify`.
 - Fase 4 (design) start alleen na expliciete Joep-goedkeuring en NIET via
-  deze chain.
+  deze chain. Klaargezet in `../../subagents/design-polish.md` (scope, chain,
+  gates, blokkade).
 
 ## Regels tijdens de chain
 
