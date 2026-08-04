@@ -21,7 +21,7 @@
 
 Agent checkt git status van `~/design-system/`:
 - Working tree **schoon**, `main` up-to-date met `origin/main`
-- Remote: `git@github.com:OnlineChefGroep/design-system.git`
+- Remote: `git@github.com:GroepOnline/design-system.git`
 - Laatste commit: `settings: grouped-card variant (Devin DNA propage) + tokens.css sgroup.primitive`
 - Branch `cursor/setup-dev-environment-0173` staat nog op remote
 - Agent test of er PR's openstaan (geen)

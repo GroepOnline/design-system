@@ -76,7 +76,8 @@ zelf/extern per rij, iframes per variant. CLI en web lezen hetzelfde manifest.
    geen em-dashes, één accent, groen alleen voor git, amber voor wacht-op-jou.
 4. **Test beide thema's.** `?theme=dark` werkt overal.
 5. **Test beide stijlen.** `?style=strak` schakelt naar de tweede skin.
-6. **Toon in browser, niet in beschrijving.** Serveer met
+6. **Toon in browser, niet in beschrijving.** Voor dit repo: `./ds serve [poort]`
+   (default 8085, serveert vanuit de root). Voor een los product:
    `python3 -m http.server <poort> --directory <product>` of via tailscale serve.
 
 ## Z -- Nieuwe stijl (skin) toevoegen

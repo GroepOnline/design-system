@@ -221,7 +221,7 @@ Commit-prefix: `taste: <wat>` of `component: <wat>`.
 
 ### Studio gebruiken
 
-1. **Start de server:** `python3 -m http.server 8765 --bind 127.0.0.1` in de design-system-root
+1. **Start de server:** `./ds serve 8765` in de design-system-root
 2. **Open `http://127.0.0.1:8765/components/`**, hier zie je de gallery met alle componenten
 3. **Klik op een component** voor de detailpagina met alle varianten, iframes, docs-tab
 4. **Toggle thema** met de dark-mode knop of via `?theme=dark` in de URL

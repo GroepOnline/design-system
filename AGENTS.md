@@ -32,6 +32,7 @@ Bron van waarheid per component: `components/<naam>/catalog.json`.
 ./ds <comp> add <pad> --id x --origin self|external [--source s] [--note n]
 ./ds <comp> remove <id> [--yes]            # --yes vereist als entry ACTIEF is
 ./ds build                                 # volledige web rebuild (catalogus + docs + taste + brain)
+./ds serve [port]                          # lokale web-server vanaf de root (default 8085)
 ./ds brain build                           # brain/**/*.md → brain-site/
 ./ds brain check                           # unresolved wikilinks (warning-only)
 ./ds brain new decision <titel>            # scaffold decision-note
@@ -156,10 +157,11 @@ for an install/update command, `python3 --version` is enough as a runtime check.
   `python3 ds build --check` step is effectively a plain build (the `--check`
   arg is ignored by `main()`), so after any `ds` mutation keep the tree
   idempotent: run `./ds build` and confirm `git diff` is empty.
-- Run/serve (dev): serve from the repo root, e.g.
-  `python3 -m http.server 8000`, then open
-  `http://localhost:8000/components/`. You MUST serve from root, not `file://`:
-  generated pages use root-absolute asset paths (`/tokens.css`,
+- Run/serve (dev): serve from the repo root, prefer `./ds serve` (default port
+  8085; override with `./ds serve <port>`), then open
+  `http://localhost:<port>/components/`. `python3 -m http.server` is a plain
+  fallback for the same root-absolute layout. You MUST serve from root, not
+  `file://`: generated pages use root-absolute asset paths (`/tokens.css`,
   `/components/icons.svg#…`, `/components/lib.js`).
 - Any `./ds ... add|select|remove` mutation auto-rebuilds the web output, so no
   separate build step is needed after CLI mutations.

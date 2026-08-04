@@ -55,6 +55,12 @@ uv run python .agents/scripts/generate-taste.py --target /home/joep/design-syste
 Deze bestanden zijn output, niet handmatig bewerken. Zie
 `brain/Decisions/2026-07-30 Agent-taste buiten dit repo.md`.
 
+## Lokale server
+
+```bash
+./ds serve [port]   # serveer de repo-web vanaf de root (default 8085)
+```
+
 ## Signals + eval gate
 
 ```bash
