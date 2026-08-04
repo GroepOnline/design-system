@@ -6,7 +6,7 @@
 <title>component: approval</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="../../../tokens.css">
 <style>
   body { padding: 40px 32px; max-width: 780px; }
   .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
@@ -43,7 +43,7 @@
 <div class="group">
   <div class="lbl">extern commando</div>
   <div class="approval">
-    <div class="kind"><svg class="ic"><use href="/components/icons.svg#i-alert"/></svg>Wacht op jou: test draaien op productie-domein</div>
+    <div class="kind"><svg class="ic"><use href="../../../components/icons.svg#i-alert"/></svg>Wacht op jou: test draaien op productie-domein</div>
     <div class="cmd">curl -sI https://cognition.ai | grep -i x-gradient && pnpm test:visual</div>
     <div class="btns">
       <button class="btn primary">Een keer <kbd>1</kbd></button>
@@ -56,7 +56,7 @@
 <div class="group">
   <div class="lbl">destructief (weigeren wordt primair-achtig)</div>
   <div class="approval" style="border-color:rgba(207,34,46,.35)">
-    <div class="kind" style="color:var(--red)"><svg class="ic"><use href="/components/icons.svg#i-alert"/></svg>Wacht op jou: 14 bestanden verwijderen</div>
+    <div class="kind" style="color:var(--red)"><svg class="ic"><use href="../../../components/icons.svg#i-alert"/></svg>Wacht op jou: 14 bestanden verwijderen</div>
     <div class="cmd">rm -rf dist/ node_modules/.cache coverage/</div>
     <div class="btns">
       <button class="btn primary">Een keer <kbd>1</kbd></button>

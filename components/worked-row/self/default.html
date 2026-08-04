@@ -6,7 +6,7 @@
 <title>component: worked-row (signatuur)</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="../../../tokens.css">
 <style>
   body { padding: 40px 32px; max-width: 780px; }
   .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
@@ -72,31 +72,31 @@
 <div class="group">
   <div class="lbl">live (klik = uitklappen, knoppen = tool-ripples)</div>
   <div class="worked live open" id="w1" onclick="this.classList.toggle('open');document.getElementById('d1').classList.toggle('open')">
-    <span class="chev"><svg class="ic sm"><use href="/components/icons.svg#i-chevron"/></svg></span>
+    <span class="chev"><svg class="ic sm"><use href="../../../components/icons.svg#i-chevron"/></svg></span>
     <span>Aan het werk</span>
     <span class="timer" id="t1">0m 00s</span>
     <div class="tools" id="tools1"></div>
   </div>
   <div class="worked-detail open" id="d1"></div>
   <div class="row" style="margin-top:10px;display:flex;gap:6px">
-    <button class="btn" onclick="rip('r')"><svg class="ic sm"><use href="/components/icons.svg#i-file"/></svg>read</button>
-    <button class="btn" onclick="rip('w')"><svg class="ic sm"><use href="/components/icons.svg#i-pencil"/></svg>write</button>
-    <button class="btn" onclick="rip('x')"><svg class="ic sm"><use href="/components/icons.svg#i-terminal"/></svg>extern</button>
+    <button class="btn" onclick="rip('r')"><svg class="ic sm"><use href="../../../components/icons.svg#i-file"/></svg>read</button>
+    <button class="btn" onclick="rip('w')"><svg class="ic sm"><use href="../../../components/icons.svg#i-pencil"/></svg>write</button>
+    <button class="btn" onclick="rip('x')"><svg class="ic sm"><use href="../../../components/icons.svg#i-terminal"/></svg>extern</button>
   </div>
 </div>
 
 <div class="group">
   <div class="lbl">klaar (statisch, diff zichtbaar)</div>
   <div class="worked" onclick="this.classList.toggle('open');document.getElementById('d2').classList.toggle('open')">
-    <span class="chev"><svg class="ic sm"><use href="/components/icons.svg#i-chevron"/></svg></span>
+    <span class="chev"><svg class="ic sm"><use href="../../../components/icons.svg#i-chevron"/></svg></span>
     <span>Gewerkt</span>
     <span class="timer">4m 13s</span>
     <span class="diff"><span class="add">+25</span> <span class="del">−131</span></span>
   </div>
   <div class="worked-detail" id="d2">
-    <div class="step"><span class="st">0m 04s</span><svg class="ic"><use href="/components/icons.svg#i-file"/></svg><span>lees src/styles/*.scss</span></div>
-    <div class="step"><span class="st">1m 52s</span><svg class="ic"><use href="/components/icons.svg#i-pencil"/></svg><span>schrijf _text-gradient.scss</span></div>
-    <div class="step"><span class="st">4m 13s</span><svg class="ic"><use href="/components/icons.svg#i-check"/></svg><span>run afgerond, diff gereed</span></div>
+    <div class="step"><span class="st">0m 04s</span><svg class="ic"><use href="../../../components/icons.svg#i-file"/></svg><span>lees src/styles/*.scss</span></div>
+    <div class="step"><span class="st">1m 52s</span><svg class="ic"><use href="../../../components/icons.svg#i-pencil"/></svg><span>schrijf _text-gradient.scss</span></div>
+    <div class="step"><span class="st">4m 13s</span><svg class="ic"><use href="../../../components/icons.svg#i-check"/></svg><span>run afgerond, diff gereed</span></div>
   </div>
 </div>
 

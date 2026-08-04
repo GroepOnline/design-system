@@ -127,9 +127,12 @@ def components():
                   and os.path.exists(os.path.join(COMP, d, "catalog.json")))
 
 def rewrite_paths(text):
-    text = re.sub(r'href="(?:\.\./)+tokens\.css"', 'href="/tokens.css"', text)
-    text = re.sub(r'href="(?:\.\./)*components/icons\.svg#', 'href="/components/icons.svg#', text)
-    text = re.sub(r'src="(?:\.\./)*components/lib\.js"', 'src="/components/lib.js"', text)
+    # Component-bronnen (self/external) staan 3 niveaus diep onder root.
+    # Normaliseer absolute root-paden naar ../../../ zodat ze zowel via file://
+    # als via ./ds serve correct laden.
+    text = text.replace('href="/tokens.css"', 'href="../../../tokens.css"')
+    text = text.replace('href="/components/icons.svg', 'href="../../../components/icons.svg')
+    text = text.replace('src="/components/lib.js"', 'src="../../../components/lib.js"')
     return text
 
 def counts(m):
@@ -308,7 +311,7 @@ SHELL_HEAD = """<!DOCTYPE html>
 <title>{title} — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="{rel_root}/tokens.css">
 <style>
   html, body { height: 100%; }
   body { display: flex; overflow: hidden; }
@@ -429,7 +432,7 @@ SHELL_HEAD = """<!DOCTYPE html>
 </head>
 <body>
 <aside class="rail">
-  <a class="brand" href="/"><span class="logo">d</span>design-system</a>
+  <a class="brand" href="{rel_root}/index.html"><span class="logo">d</span>design-system</a>
 {nav}
   <div class="lbl caps">Systeem</div>
 {sysnav}
@@ -522,7 +525,7 @@ HOME_HEAD = """<!DOCTYPE html>
 <title>design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="{rel_root}/tokens.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   body { overflow-x: hidden; }
@@ -669,9 +672,9 @@ HOME_BODY = """<div class="hero" id="hero">
     <h1>design-system</h1>
     <div class="sub">De UI-basislaag voor producten. Gemeten uit Devin-DNA, gebouwd met shadcn-conventies, lerend via taste. Standalone — kopieer wat je nodig hebt.</div>
     <div class="hero-actions">
-      <a href="/components/" class="btn primary">Componenten bekijken</a>
-      <a href="/prototype-v2.html" class="btn">Prototype</a>
-      <a href="/docs/" class="btn">Docs</a>
+      <a href="./components/index.html" class="btn primary">Componenten bekijken</a>
+      <a href="./prototype-v2.html" class="btn">Prototype</a>
+      <a href="./docs/index.html" class="btn">Docs</a>
     </div>
   </div>
 </div>
@@ -709,22 +712,22 @@ HOME_BODY = """<div class="hero" id="hero">
   <div class="sdesc reveal">Geen npm, geen dependencies. Het design-system is een lerend, zelf-meten systeem. Elke schakel voedt de volgende.</div>
   <div class="proc-grid">
     <div class="proc-card reveal">
-      <div class="pi"><svg><use href="/components/icons.svg#i-external"/></svg></div>
+      <div class="pi"><svg><use href="./components/icons.svg#i-external"/></svg></div>
       <h4>Meten</h4>
       <p>Live Devin-schermen analyseren via CDP. Exacte waarden, geen moodboards. Alles landt in references/.</p>
     </div>
     <div class="proc-card reveal">
-      <div class="pi"><svg><use href="/components/icons.svg#i-file"/></svg></div>
+      <div class="pi"><svg><use href="./components/icons.svg#i-file"/></svg></div>
       <h4>Catalogeren</h4>
       <p>Elk component in catalog.json met lock-model. Self voor eigen, external voor referentie. Alles vast tot expliciete select.</p>
     </div>
     <div class="proc-card reveal">
-      <div class="pi"><svg><use href="/components/icons.svg#i-sparkle"/></svg></div>
+      <div class="pi"><svg><use href="./components/icons.svg#i-sparkle"/></svg></div>
       <h4>Bouwen</h4>
       <p><code>./ds build</code> herbouwt alles. Gallery, docs, brain-site — alles uit manifest. Nooit handmatig HTML bewerken.</p>
     </div>
     <div class="proc-card reveal">
-      <div class="pi"><svg><use href="/components/icons.svg#i-queue"/></svg></div>
+      <div class="pi"><svg><use href="./components/icons.svg#i-queue"/></svg></div>
       <h4>Leren</h4>
       <p>Elke correctie wordt een taste-log entry. Twee signalen → regel → propagatie naar DESIGN.md, tokens.css, en componenten.</p>
     </div>
@@ -735,10 +738,10 @@ HOME_BODY = """<div class="hero" id="hero">
   <h2 class="reveal">Begin hier</h2>
   <div class="sdesc reveal" style="margin-left:auto;margin-right:auto">Kies je ingang: designer, developer, of agent.</div>
   <div class="cta-row reveal">
-    <a href="/components/" class="btn primary">Componenten</a>
-    <a href="/components/studio/" class="btn">Studio (visueel)</a>
-    <a href="/docs/" class="btn">Documentatie</a>
-    <a href="/brain-site/" class="btn">Brain (context)</a>
+    <a href="./components/index.html" class="btn primary">Componenten</a>
+    <a href="./playground/studio-v3.html" class="btn">Studio (visueel)</a>
+    <a href="./docs/index.html" class="btn">Documentatie</a>
+    <a href="./brain-site/index.html" class="btn">Brain (context)</a>
   </div>
 </div>
 
@@ -800,7 +803,7 @@ HOME_FOOT = """<script>
 """
 
 CATALOG_BODY = """<div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>
+  <span class="tile"><svg><use href="../../components/icons.svg#{icon}"/></svg></span>
   <div>
     <h1>{title}</h1>
     <div class="cat caps">{cat}</div>
@@ -850,7 +853,7 @@ CELL = """  <div class="cell{cls}"{wide}>
   </div>"""
 
 GALLERY_BODY = """<div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span>
+  <span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span>
   <div>
     <h1>Components</h1>
     <div class="cat caps">{nc} componenten · {nv} varianten</div>
@@ -867,8 +870,8 @@ GALLERY_GROUP = """<div class="caps" style="margin:20px 2px 8px">{cat}</div>
 </div>
 """
 
-GALLERY_ITEM = """  <a class="cell" href="/components/{name}/" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
-    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="/components/icons.svg#{icon}"/></svg></span>
+GALLERY_ITEM = """  <a class="cell" href="./{name}/index.html" style="display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;color:var(--text)">
+    <span style="width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:17px;height:17px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><use href="../components/icons.svg#{icon}"/></svg></span>
     <span style="font-weight:500;font-size:var(--text-md);min-width:120px">{title}</span>
     <span style="color:var(--text-faint);font-size:var(--text-md);flex:1">{desc}</span>
     <span class="org" style="min-width:58px;text-align:center">{nself} zelf</span>
@@ -876,7 +879,7 @@ GALLERY_ITEM = """  <a class="cell" href="/components/{name}/" style="display:fl
     <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--open-green);min-width:104px;text-align:right">{active}</span>
   </a>"""
 
-def nav_html(current=None):
+def nav_html(current=None, rel_root="."):
     out = []
     for cat, label in CATS:
         comps = [c for c in components() if load_manifest(c).get("cat") == cat]
@@ -891,19 +894,22 @@ def nav_html(current=None):
             icon = ICONS.get(c, "i-file")
             desc = m.get("desc", "")
             out.append(
-                f'  <a class="it{on}" href="/components/{c}/">'
-                f'<span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>'
+                f'  <a class="it{on}" href="{rel_root}/components/{c}/index.html">'
+                f'<span class="tile"><svg><use href="{rel_root}/components/icons.svg#{icon}"/></svg></span>'
                 f'<span class="nm">{c}<span class="ds">{desc}</span></span>'
                 f'{marker}</a>'
             )
     return "\n".join(out)
 
-def sysnav_html():
+def sysnav_html(rel_root="."):
     out = []
     for href, icon, label, meta in SYS_LINKS:
+        target = f"{rel_root}/{href.lstrip('/')}"
+        if target.endswith("/"):
+            target += "index.html"
         out.append(
-            f'  <a class="it sys" href="{href}">'
-            f'<span class="tile"><svg><use href="/components/icons.svg#{icon}"/></svg></span>'
+            f'  <a class="it sys" href="{target}">'
+            f'<span class="tile"><svg><use href="{rel_root}/components/icons.svg#{icon}"/></svg></span>'
             f'<span class="nm">{label}</span>'
             f'<span class="n">{meta}</span></a>'
         )
@@ -960,8 +966,9 @@ def build_catalog(c):
         usenow=usenow, docs=docs_html(m), cells="\n".join(cells), today=str(date.today()),
     )
     page = (SHELL_HEAD.replace("{title}", m.get("title", c))
-            .replace("{nav}", nav_html(current=c))
-            .replace("{sysnav}", sysnav_html())
+            .replace("{rel_root}", "../..")
+            .replace("{nav}", nav_html(current=c, rel_root="../.."))
+            .replace("{sysnav}", sysnav_html(rel_root="../.."))
             .replace("{mdcss}", "")
             .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT)
@@ -991,8 +998,9 @@ def build_gallery():
         groups.append(GALLERY_GROUP.format(cat=label, items="\n".join(items)))
     body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), today=str(date.today()))
     page = (SHELL_HEAD.replace("{title}", "components")
-            .replace("{nav}", nav_html())
-            .replace("{sysnav}", sysnav_html())
+            .replace("{rel_root}", "..")
+            .replace("{nav}", nav_html(rel_root=".."))
+            .replace("{sysnav}", sysnav_html(rel_root=".."))
             .replace("{mdcss}", "")
             .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT)
@@ -1024,8 +1032,8 @@ def build_home():
             acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
             active_str = "actief: " + ",".join(acts) if acts else ""
             comps_html += (
-                f'<a class="comp-card reveal" href="/components/{c}/">'
-                f'<span class="ci"><svg><use href="/components/icons.svg#{ICONS.get(c, "i-file")}"/></svg></span>'
+                f'<a class="comp-card reveal" href="./components/{c}/index.html">'
+                f'<span class="ci"><svg><use href="./components/icons.svg#{ICONS.get(c, "i-file")}"/></svg></span>'
                 f'<span class="cb">'
                 f'<span class="cn">{m.get("title", c)}</span>'
                 f'<span class="cd">{m.get("desc", "")}</span>'
@@ -1041,8 +1049,8 @@ def build_home():
             acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
             active_str = "actief: " + ",".join(acts) if acts else ""
             comps_html += (
-                f'<a class="comp-card reveal" href="/components/{c}/">'
-                f'<span class="ci"><svg><use href="/components/icons.svg#{ICONS.get(c, "i-file")}"/></svg></span>'
+                f'<a class="comp-card reveal" href="./components/{c}/index.html">'
+                f'<span class="ci"><svg><use href="./components/icons.svg#{ICONS.get(c, "i-file")}"/></svg></span>'
                 f'<span class="cb">'
                 f'<span class="cn">{m.get("title", c)}</span>'
                 f'<span class="cd">{m.get("desc", "")}</span>'
@@ -1072,12 +1080,13 @@ def build_home():
         comps_html=comps_html, skins_html=skins_html, today=str(date.today()),
     )
     page = HOME_HEAD + body + HOME_FOOT
+    page = page.replace("{rel_root}", ".")
     with open(os.path.join(ROOT, "index.html"), "w") as f:
         f.write(page)
     print(f"  {_c('32','✓')} {bold('home'):<14} {nc} componenten {dim(f'({nv} varianten, {nskins} skins)')}")
 
 DOCS_INDEX_BODY = """<div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#i-file"/></svg></span>
+  <span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span>
   <div>
     <h1>Docs</h1>
     <div class="cat caps">{nd} documenten</div>
@@ -1089,12 +1098,12 @@ DOCS_INDEX_BODY = """<div class="pagehead">
 """
 
 DOC_PAGE_BODY = """<div class="pagehead">
-  <span class="tile"><svg><use href="/components/icons.svg#i-book"/></svg></span>
+  <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
   <div>
     <h1>{title}</h1>
     <div class="cat caps">{cat} · bron: {src}</div>
   </div>
-  <div class="meta"><a href="/docs/" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
+  <div class="meta"><a href="../docs/index.html" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
 </div>
 <div class="md">{content}</div>
 <div class="gen">gegenereerd uit {src} op {today} · bewerk de .md, niet deze pagina</div>
@@ -1106,10 +1115,11 @@ def styleseg_html():
         f'<button{" class=\"on\"" if i == 0 else ""} data-s="{x["id"]}">{x["label"]}</button>'
         for i, x in enumerate(st))
 
-def _shell(title, body, mdcss=""):
+def _shell(title, body, mdcss="", rel_root=".."):
     return (SHELL_HEAD.replace("{title}", title)
-            .replace("{nav}", nav_html())
-            .replace("{sysnav}", sysnav_html())
+            .replace("{rel_root}", rel_root)
+            .replace("{nav}", nav_html(rel_root=rel_root))
+            .replace("{sysnav}", sysnav_html(rel_root=rel_root))
             .replace("{mdcss}", mdcss)
             .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT)
@@ -1135,8 +1145,8 @@ def build_docs():
         if cat not in cats:
             continue
         items = "".join(
-            f'  <a class="cell" href="/docs/{slug}.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)">'
-            f'<span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-book"/></svg></span>'
+            f'  <a class="cell" href="./{slug}.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)">'
+            f'<span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0"><svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="../components/icons.svg#i-book"/></svg></span>'
             f'<span style="font-weight:500;font-size:var(--text-lg);min-width:150px">{title}</span>'
             f'<span style="color:var(--text-faint);font-size:var(--text-md);flex:1">{desc}</span>'
             f'<span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--text-faint)">.md</span></a>'
@@ -1161,7 +1171,7 @@ def build_taste():
                 "<span>taste-log → (2+ observaties) → regel hier → propagatie naar "
                 "<code>DESIGN.md</code> + <code>tokens.css</code> + <code>components/</code> in dezelfde commit. "
                 "Onderhoud via de <code>joep-design-taste</code> skill, niet handmatig op deze pagina.</span></div>")
-    body = ("<div class='pagehead'><span class='tile'><svg><use href='/components/icons.svg#i-check'/></svg></span>"
+    body = ("<div class='pagehead'><span class='tile'><svg><use href='../components/icons.svg#i-check'/></svg></span>"
             "<div><h1>Taste</h1><div class='cat caps'>onderhoudssysteem · apart van studio · gekoppeld</div></div></div>"
             "<div class='sub'>Het lerende smaak-systeem: regels zijn binding voor elke surface, de log is het bewijs. "
             "Studio stelt visueel af; taste beslist wat mag.</div>"
@@ -1230,7 +1240,7 @@ def brain_rewrite_wikilinks(md, title_idx):
             # try basename of path-like target
             slug = title_idx.get(os.path.basename(target))
         if slug:
-            return f"[{alias}](/brain-site/{slug}.html)"
+            return f"[{alias}](./{slug}.html)"
         return alias
     return WIKILINK_RE.sub(repl, md)
 
@@ -1251,10 +1261,10 @@ def build_brain():
         body_md = brain_rewrite_wikilinks(brain_strip_frontmatter(raw), title_idx)
         content = md_to_html(body_md)
         page = (
-            f'<div class="pagehead"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span>'
+            f'<div class="pagehead"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span>'
             f'<div><h1>{htmlmod.escape(title)}</h1>'
             f'<div class="cat caps">brain · bron: brain/{htmlmod.escape(rel)}</div></div>'
-            f'<div class="meta"><a href="/brain-site/" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div>'
+            f'<div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div>'
             f'<div class="md">{content}</div>'
             f'<div class="gen">gegenereerd uit brain/{htmlmod.escape(rel)} op {date.today()} · bewerk de .md, niet deze pagina</div>'
         )
@@ -1276,15 +1286,15 @@ def build_brain():
         if not items:
             continue
         cells = "".join(
-            f'  <a class="cell" href="/brain-site/{slug}.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)">'
+            f'  <a class="cell" href="./{slug}.html" style="display:flex;align-items:center;gap:14px;padding:10px 14px;text-decoration:none;color:var(--text)">'
             f'<span style="width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;flex-shrink:0">'
-            f'<svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="/components/icons.svg#i-panel"/></svg></span>'
+            f'<svg style="width:15px;height:15px;color:var(--text-muted);fill:none;stroke:currentColor;stroke-width:2"><use href="../components/icons.svg#i-panel"/></svg></span>'
             f'<span style="font-weight:500;font-size:var(--text-lg);min-width:150px">{htmlmod.escape(title)}</span>'
             f'<span style="color:var(--text-faint);font-size:var(--text-md);flex:1;font-family:var(--mono)">{htmlmod.escape(rel)}</span></a>'
             for slug, title, rel in items)
         sections.append(f'<div class="caps" style="margin:20px 2px 8px">{label}</div><div class="grid" style="grid-template-columns:1fr">{cells}</div>')
     index_body = (
-        f'<div class="pagehead"><span class="tile"><svg><use href="/components/icons.svg#i-panel"/></svg></span>'
+        f'<div class="pagehead"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span>'
         f'<div><h1>Brain</h1><div class="cat caps">{len(notes)} notes · niet-bindende context</div></div></div>'
         f'<div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. '
         f'Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div>'
@@ -1959,6 +1969,28 @@ def cmd_check():
     return ec
 
 
+def cmd_serve(port=8085):
+    import http.server
+    import socketserver
+
+    os.chdir(ROOT)
+    handler = http.server.SimpleHTTPRequestHandler
+    handler.extensions_map.update({
+        '.css': 'text/css',
+        '.js': 'text/javascript',
+        '.json': 'application/json',
+        '.html': 'text/html',
+        '.svg': 'image/svg+xml',
+    })
+
+    with socketserver.TCPServer(("", port), handler) as httpd:
+        print(bold(f"Serving design-system op http://localhost:{port}/"))
+        print(dim("Druk Ctrl+C om te stoppen."))
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("\nServer gestopt.")
+
 def main():
     args = sys.argv[1:]
     if not args or args[0] in ("-h", "--help", "help"):
@@ -1968,6 +2000,9 @@ def main():
         cmd_list()
     elif args[0] == "build":
         cmd_build()
+    elif args[0] == "serve":
+        port = int(args[1]) if len(args) > 1 and args[1].isdigit() else 8085
+        cmd_serve(port)
     elif args[0] == "brain":
         cmd_brain(args[1:])
     elif args[0] == "style":
