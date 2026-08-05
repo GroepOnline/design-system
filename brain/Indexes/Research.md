@@ -9,6 +9,7 @@ Hub voor onderzoek. Verwijst naar repo-bronnen (`references/`, `DESIGN.md`); gee
 
 ## Notes
 
+- [[2026-08-04 Web motion refs]]
 - [[2026-07-30 Devin meetlat pointers]]
 
 ## Nieuw
