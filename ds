@@ -2592,13 +2592,14 @@ def check_build_idempotent():
     real_drift = []
     gen_drift = []
     for line in lines:
-        path = line[3:] if len(line) > 3 else line
+        # git status --porcelain: "XY pad" — split op eerste whitespace voor het pad
+        path = line.split(None, 1)[-1]
         if path in generated_drift:
             gen_drift.append(path)
         else:
             real_drift.append(line)
     if gen_drift:
-        warn(f"build --check: gegenereerde drift genegeerd ({', '.join(gen_drift)})")
+        print(f"  {_c('33;1','⚠')} build --check: gegenereerde drift genegeerd ({', '.join(gen_drift)})")
     if real_drift:
         err(f"build --check: werkboom wijkt af van git ({len(real_drift)} regels drift). "
             f"Draai ./ds build en commit de gegenereerde output.")
