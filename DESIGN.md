@@ -115,6 +115,7 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 - Transcript: max 720px kolom, gecentreerd. Composer plakt onderaan, zelfde kolombreedte.
 - Artifact: rapport/diff/browser. Toggle via panel-icoon in topbar. <1100px: verborgen. <760px: sidebar weg.
 - **Elke pagina is een blad:** de Y-meetlat draagt klikbare sectie-registers (`data-reg`), de actieve sectie licht op (40%-lijn), frac-chips per sectie worden gemeten via JS, nooit hardcoded. Blad-plaat rechtsonder (SHEET-id · REV D). Mobiel: meetlat en plaat weg, modeline blijft.
+- **Secties zijn doorsneden:** op de home hangt elke sectie aan een doorsnede-regel (sectie-index uit de REGSECS-volgorde, JS-gevuld, nooit handmatig; hairline; gemeten frac) die een verticale maatlijn op de wrap-rand kruist; die maatlijn loopt van sec-inhoud tot in de footer door, over sectie-grenzen heen. Een hairline zonder metriek is decoratie; een hairline met index en frac is maatvoering.
 
 ## 9. Stem (copy)
 

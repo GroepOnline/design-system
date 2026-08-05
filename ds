@@ -873,10 +873,18 @@ HOME_HEAD = """<!DOCTYPE html>
   .hero-sess .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; }
 
   /* ---- section shell: secties hangen aan het blad via gedeelde registratie ---- */
-  .sec { padding: 84px 0; position: relative; z-index: 1; border-top: 1px solid var(--line); }
-  .sec:first-of-type, .hero + .sec { border-top: none; }
+  .sec { padding: 84px 0; position: relative; z-index: 1; }
   .sec-head { margin-bottom: 36px; position: relative; }
-  .sec-head .coord { position: absolute; top: -22px; right: 0; font-family: var(--mono); font-size: 10px; color: var(--text-faint); letter-spacing: 0.05em; opacity: 0.65; }
+  /* ---- doorsnede-systeem: secties hangen aan gedeelde maatlijnen ---- */
+  .wrap { position: relative; }
+  .wrap.sec::before, .cta > .wrap::before, .footer > .wrap::before {
+    content: ""; position: absolute; left: 11px; top: 0; bottom: 0; width: 1px; background: var(--line); }
+  .sec-rule { display: flex; align-items: center; gap: 12px; margin: 0 0 26px -13px;
+    font-family: var(--mono); font-size: 10px; color: var(--text-faint); letter-spacing: 0.06em; }
+  .sec-rule .si { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .sec-rule .sr-line { flex: 1; height: 1px; background: var(--line); }
+  .sec-rule .coord { letter-spacing: 0.05em; font-variant-numeric: tabular-nums; }
+  .band .eyebrow .si, .ledger-head .si { color: var(--text-faint); font-variant-numeric: tabular-nums; margin-left: 8px; letter-spacing: 0.06em; }
   .sec-head .eyebrow { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 8px; }
   .sec-head h2 { margin: 0; font-size: clamp(26px, 3.6vw, 34px); font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 1.15; }
   .sec-head .desc { color: var(--text-muted); font-size: 15px; max-width: 580px; margin-top: 10px; line-height: 1.55; }
@@ -1072,7 +1080,9 @@ HOME_HEAD = """<!DOCTYPE html>
     .topbar nav { display: none; }
     .sec { padding: 56px 0; }
     .ruler-x { display: none; }
-    .ruler-y .reg .rgl { display: none; }
+    .ruler-y { display: none; }
+    .wrap.sec::before, .cta > .wrap::before, .footer > .wrap::before { display: none; }
+    .sec-rule { margin-left: 0; }
     .titelblok { display: none; }
     .cropmark { display: none; }
     .modeline { padding-left: 12px; gap: 10px; }
@@ -1136,7 +1146,7 @@ HOME_BODY = """<div class="topbar">
 <div class="ledger" id="ledger">
   <div class="wrap">
     <div class="ledger-head">
-      <span class="lh-live"></span> sessie-replay — zo ziet agent-werk eruit
+      <span class="lh-live"></span> sessie-replay — zo ziet agent-werk eruit <span class="si"></span>
       <span class="rhs"><span id="ledgerMeta">0 tool-calls</span><button class="replay" id="ledgerReplay">↻ opnieuw</button></span>
     </div>
     <div class="ledger-rows" id="ledgerRows"></div>
@@ -1146,7 +1156,7 @@ HOME_BODY = """<div class="topbar">
 <div class="band" id="sec-band">
   <div class="wrap sec">
     <div class="sec-head reveal">
-      <div class="eyebrow">Signatuur</div>
+      <div class="eyebrow">Signatuur <span class="si"></span></div>
       <h2>Activiteit zonder spinner.</h2>
       <div class="desc">De identiteit van dit systeem is de stroom: werk is zichtbaar als rijen en rimpels, nooit als een cirkel die draait.</div>
     </div>
@@ -1159,8 +1169,8 @@ HOME_BODY = """<div class="topbar">
 </div>
 
 <div class="wrap sec" id="sec-inhoud">
+  <div class="sec-rule reveal"><span class="si"></span><span class="sr-line"></span><span class="coord">0.00</span></div>
   <div class="sec-head reveal">
-    <span class="coord" aria-hidden="true">0.26</span>
     <div class="eyebrow">Inhoud</div>
     <h2>Wat er nu in zit.</h2>
     <div class="desc">Live uit de catalogus, geen handmatige telling.</div>
@@ -1176,8 +1186,8 @@ HOME_BODY = """<div class="topbar">
 </div>
 
 <div class="wrap sec" id="sec-catalogus">
+  <div class="sec-rule reveal"><span class="si"></span><span class="sr-line"></span><span class="coord">0.00</span></div>
   <div class="sec-head reveal">
-    <span class="coord" aria-hidden="true">0.41</span>
     <div class="eyebrow">Catalogus</div>
     <h2>Componenten per categorie.</h2>
     <div class="desc">Gegroepeerd zoals in de zijbalk. Klik voor live voorbeelden in light en dark.</div>
@@ -1186,8 +1196,8 @@ HOME_BODY = """<div class="topbar">
 </div>
 
 <div class="wrap sec" id="sec-richtingen">
+  <div class="sec-rule reveal"><span class="si"></span><span class="sr-line"></span><span class="coord">0.00</span></div>
   <div class="sec-head reveal">
-    <span class="coord" aria-hidden="true">0.58</span>
     <div class="eyebrow">Richtingen</div>
     <h2>Twee richtingen.</h2>
     <div class="desc">Wissel de hele feel met één data-attribuut. Beide zijn first-class.</div>
@@ -1198,8 +1208,8 @@ HOME_BODY = """<div class="topbar">
 </div>
 
 <div class="wrap sec" id="sec-proces">
+  <div class="sec-rule reveal"><span class="si"></span><span class="sr-line"></span><span class="coord">0.00</span></div>
   <div class="sec-head reveal">
-    <span class="coord" aria-hidden="true">0.72</span>
     <div class="eyebrow">Proces</div>
     <h2>Hoe het werkt.</h2>
     <div class="desc">Geen npm, geen dependencies. Drie stappen van experiment naar actief.</div>
@@ -1231,6 +1241,7 @@ HOME_BODY = """<div class="topbar">
 
 <div class="cta" id="sec-start">
   <div class="wrap">
+    <div class="sec-rule reveal"><span class="si"></span><span class="sr-line"></span><span class="coord">0.00</span></div>
     <div class="cta-inner">
       <h2 class="reveal">Klaar om te bouwen?</h2>
       <p class="reveal">Kies je ingang. Begin bij de catalogus — de rest volgt.</p>
@@ -1458,7 +1469,7 @@ HOME_FOOT = """<script>
     regMarks = [];
     var docH = document.documentElement.scrollHeight || 1;
     var track = ryEl.clientHeight || 1;
-    REGSECS.forEach(function(pair) {
+    REGSECS.forEach(function(pair, idx) {
       var sec = document.getElementById(pair[0]); if (!sec) return;
       var frac = Math.min(Math.max(sec.offsetTop / docH, 0), 1);
       var m = document.createElement("button");
@@ -1472,8 +1483,10 @@ HOME_FOOT = """<script>
       m.addEventListener("click", function(){ sec.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); });
       ryEl.appendChild(m);
       regMarks.push({ el: m, id: pair[0], frac: frac });
-      var chip = sec.querySelector(".sec-head .coord");
+      var chip = sec.querySelector(".coord");
       if (chip) chip.textContent = frac.toFixed(2);
+      var si = sec.querySelector(".si");
+      if (si) si.textContent = String(idx + 1).padStart(2, "0") + "/" + String(REGSECS.length).padStart(2, "0");
     });
     var row = document.querySelector(".footer .coord-row");
     if (row) {

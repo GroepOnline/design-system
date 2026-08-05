@@ -147,3 +147,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: "4 volledig verbeteren" — registratie hoort op elk blad, niet alleen de home
 - **delta**: sectie-registers (`data-reg`) nu op alle shell-pagina's: catalogus (kop/gebruik/contract/varianten/colofon), gallery (per categorie), docs (h2-slugs met haakjes-strip + woordgrens-afkapping), taste, brain. Marks clampen in de viewport en volgen hun sectie; actieve sectie onder de 40%-lijn stuurt modeline + accent. Frac-chips per sectie gemeten via JS. Blad-plaat rechtsonder met SHEET-id per pagina; plaat-datum via JS zodat `build --check` idempotent blijft.
 - **candidate rule**: een blad zonder register is geen blad — elke gegenereerde pagina draagt zijn inhoudsopgave OP de meetlat. Slugs voor registers worden gesaneerd (haakjes weg, woordgrens), nooit afgekapt midden in een woord.
+
+## 2026-08-05 · Home-cohesie: doorsneden van één blad
+
+- **shown**: home met registers maar nog steeds "losse blokken" — kale border-tops tussen secties, zwevende coord-chips, geen gedeelde maatvoering
+- **reaction**: beoogde richting (dit was het laatste open brief-item: "home visual cohesion beyond stacked blocks")
+- **signal**: blokken voelen los zolang elke sectie zijn eigen metriek draagt in plaats van aan één systeem te hangen
+- **delta**: (1) doorsnede-regel per sectie (`sec-rule`): sectie-index (04/08, uit REGSECS-volgorde gevuld, nooit handmatig) — hairline — gemeten frac; (2) verticale maatlijn op de wrap-rand loopt van sec-inhoud tot in de footer door, dwars over sectie-grenzen heen; de doorsnede-regels kruisen hem; (3) ledger (02) en band (03) dragen hun index in eigen kop — climax-vlakken breken het ritme maar blijven genummerd; (4) mobiel: meetlatten volledig weg (waren half verborgen, y-labels overlapten content), maatlijn weg, doorsnede-regel blijft (index + frac zijn informatie, geen versiering).
+- **candidate rule**: secties op een blad zijn doorsneden — genummerd, gemeten, en gekruist door een gedeelde maatlijn. Een hairline zonder metriek is decoratie; een hairline met index en frac is maatvoering.

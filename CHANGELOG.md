@@ -6,6 +6,12 @@
 ## [Unreleased]
 
 ### Added
+- **Home-cohesie: doorsneden van één blad**: elke home-sectie krijgt een
+  doorsnede-regel (sectie-index uit de REGSECS-volgorde + gemeten frac +
+  hairline) die een nieuwe verticale maatlijn op de wrap-rand kruist; die
+  maatlijn loopt van sec-inhoud tot in de footer door over sectie-grenzen
+  heen. Ledger en band dragen hun index in eigen kop. Mobiel: meetlatten
+  volledig verborgen (y-labels overlapten content), doorsnede-regel blijft.
 - **Sectie-register op elk blad**: klikbare marks op de Y-meetlat van elke
   shell-pagina (12 catalogus-bladen, gallery, docs, taste, brain). Marks
   clampen in de viewport en volgen hun sectie; de actieve sectie (40%-lijn)
