@@ -81,3 +81,10 @@
 - **signal**: (1) comp-card naam (500) botste inline tegen beschrijving (faint) — geen layout-scheiding, alleen vertrouwd op markup-flow; (2) rail collapse op ≤860px werd een ongestructureerde flex-wrap jumble zonder categorie-context
 - **delta**: `.cn`/`.cd` → `display: block` (tekstparen scheiden via layout, nooit via whitespace); mobiele rail → brand-rij met seg's rechts + horizontale scroll-chipstrip (`.rail-links`, nowrap, overflow-x, verborgen scrollbar); geverifieerd op 390px light+dark en desktop
 - **candidate rule**: mobiel (390px) is first-class viewport — testen naast light/dark bij elke web-wijziging. *2e observatie (Fase C responsive-eis + deze correctie) → GEEPROMOVEERD naar taste-rules + AGENTS.md.* Tekstpaar-scheiding via layout: 1e observatie, watch.
+
+## 2026-08-05 · Hero: van statisch naar Stroom-veld
+- **shown**: home hero met faint grid + één dunne accent-lijn (1 lopende dot)
+- **reaction**: gecorrigeerd — "ik wil echt iets indrukwekkends", daarna "kom op!"
+- **signal**: statische grid + één 2px-lijn met dot leest als een wireframe, niet als een identiteit. De signatuur moet LEVEN: meerdere streams, echte aanwezigheid (secties reageren), en de beweging moet voelbaar zijn — niet half-invisible om 'subtiel' te blijven.
+- **delta**: `.current` → `.stroom`-veld: streams op gridkolommen (main = accent-Current), seg-pulses als voelende werk-bursts, markers gekoppeld aan live sessie-teller (tool-calls), pointer-near highlight, klik-ripple langs dichtstbijzijnde stream. h1 78→92. Hero is nu wezenlijk aanwezig — geen wallpaper meer.
+- **candidate rule**: zichtbare aanwezigheid > verstopte subtiliteit als het om identiteit gaat — een eerste-observatie die al gemarkeerd staat bij 'structure'; dit is de 2e, promoveer als: **DO** de signatuur-magnaam (Stroom/Current) LEVEN met meerdere kanalen en voelbare activiteit (pulses = werk, markers = events, near = aandacht). **DON'T** verzwakken tot een décoratief achtergrond-detail dat niemand ziet.
