@@ -13,6 +13,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: python -m pip install ruff
+        name: "Installeer Ruff voor Python"
+      - run: npm install --global markdownlint-cli
+        name: "Installeer markdownlint voor Markdown"
+      - run: ./scripts/lint.sh
+        name: "Lint per bestandstype"
       - run: python3 ds build --check
         name: "ds build --check (failt als gegenereerde output drift vertoont)"
       - run: python3 ds check

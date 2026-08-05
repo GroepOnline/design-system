@@ -1,6 +1,6 @@
 #!/bin/sh
 # Pre-push hook voor design-system
-# Draait: ruff → ds check → ds brain gate → ds build --check
+# Draait: toepasselijke linters → ds check → ds brain gate → ds build --check
 # Gebruik: chmod +x .git/hooks/pre-push
 # Of: make hook / scripts/git-hooks-install.sh
 
@@ -8,13 +8,13 @@ set -e
 
 echo "🔍 pre-push checks..."
 
-# 1. Linter (ruff)
-echo "  → ruff check ds..."
-if ! ruff check ds >/dev/null 2>&1; then
-    echo "✗ ruff heeft errors — run 'ruff check ds' voor details"
+# 1. Linters (alleen voor hun eigen bestandstype)
+echo "  → toepasselijke linters..."
+if ! ./scripts/lint.sh >/dev/null 2>&1; then
+    echo "✗ lint gefaald — run './scripts/lint.sh' voor details"
     exit 1
 fi
-echo "    ✓ ruff: 0 errors"
+echo "    ✓ toepasselijke linters: pass"
 
 # 2. Component catalogus check
 echo "  → ds check..."

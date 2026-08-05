@@ -15,9 +15,9 @@ check:
 brain:
 	./ds brain gate
 
-# Lint (ruff)
+# Lint: per bestandstype (ruff voor Python, markdownlint voor Markdown)
 lint:
-	ruff check ds
+	./scripts/lint.sh
 
 # Installeer git hooks voor deze clone
 hook hooks-install:
