@@ -67,3 +67,10 @@
 - **signal**: shadcn's "compose, don't reinvent" en "semantic colors" bevestigen onze tokens.css aanpak
 - **delta**: geen nieuwe code — bestaande patterns (badge, card, focus-visible) matcht shadcn conventies
 - **candidate rule**: shadcn/ui compositie-pattern (Sidebar + Card + Table + Chart) is een vast handvat voor dashboard builds. Watch: zijn alle shadcn rules (gap-*, semantic colors, Skeleton) overal van toepassing?
+
+## 2026-08-05 · Home v2: stil + mat, Current als signatuur
+- **shown**: Fase C home met parallax-blobs/glow vs. nieuwe richting (gemaskeerd grid + verticale Current met pulse, solid topbar, live worked-row demo-band)
+- **reaction**: redirect (2026-08-04, vastgelegd op branch `feat/ui-ux-polish-devin-signaal` + research-note "Web motion refs" met Joep-override)
+- **signal**: "hero stil en mat — glow, parallax en em-dashes uit home" (commit 337c879); uitgewerkt in home v2 (commit 9b35de2)
+- **delta**: (1) parallax/glow definitief uit home — de Current (motion-spec Motion 1) is het enige hero-signatuur; (2) glassmorphism-ban ook op marketing/catalogus gehandhaafd (topbar backdrop-blur → solid `var(--bg)`); (3) motion-spec §7 gehandhaafd: pulse animeert transform-only, geen `top`
+- **candidate rule**: gegenereerde web-oppervlakken (home, gallery, docs) volgen dezelfde bans als het product (geen glow, glass, gradients, em-dashes). *Versterkt bestaande ban — geen nieuwe regel nodig.*

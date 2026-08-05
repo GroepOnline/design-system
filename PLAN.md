@@ -58,7 +58,7 @@ geleerde regels actief.
 | Studio v3 | ✅ presets → export → `ds style add` |
 | CI | ✅ validate.yml (build + check) |
 | Devin-DNA | ✅ settings beide thema's live gemeten + gearchiveerd |
-| Home page | ✅ theatrale landing met parallax + live stats (build_home()) |
+| Home page | ✅ v2: stille landing (grid + Current-pulse, live worked-row demo, build_home()) |
 | Settings-component | ✅ grouped-card patroon toegevoegd (A.1) |
 | Perfection pass | ❌ gepland, niet uitgevoerd |
 
@@ -95,9 +95,14 @@ Theatrale, interactieve landing -- Fable5/Kimi3-niveau, rode-vlinders-vibe
 - interactief: reageert op muis, niet alleen scroll
 - NL copy, direct, geen marketing-buzzwords
 
-Uitgevoerd: `build_home()` met parallax hero (3 lagen), live stats (11/20/2),
-componenten-grid per categorie, skins-preview, processtappen, intent reveals,
-responsive (680px), reduced-motion. `ds check` clean. ✅
+Uitgevoerd: `build_home()` met live stats, componenten-grid per categorie,
+skins-preview, processtappen, intent reveals, responsive, reduced-motion. ✅
+
+**Herziening 2026-08-05 (v2):** parallax/glow uit de hero (Joep-signaal
+2026-08-04: "stil en mat"). Vervangen door gemaskeerd grid + verticale Current
+met pulse (transform-only, motion-spec §7) + sticky solid topbar (geen
+backdrop-blur, glassmorphism-ban) + signature-band met live worked-row demo.
+Zie taste-log 2026-08-05 en `brain/Research/2026-08-04 Web motion refs.md`.
 
 ### Fase D -- Perfection pass
 
