@@ -9,7 +9,11 @@
 <link rel="stylesheet" href="../tokens.css">
 <style>
   html, body { height: 100%; }
-  body { display: flex; overflow: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { display: flex; overflow: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+  ::selection { background: var(--accent-soft); color: var(--text); }
+  body::-webkit-scrollbar { width: 10px; height: 10px; }
+  body::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; }
+  body::-webkit-scrollbar-track { background: transparent; }
   /* ---- rail: gecategoriseerde component-blokken ---- */
   .rail {
     width: 280px; flex-shrink: 0; border-right: 1px solid var(--line);
@@ -49,7 +53,7 @@
   .rail .nm { font-size: var(--text-md); font-weight: 500; color: var(--text); line-height: 1.25; white-space: nowrap; }
   .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
   .rail .n { margin-left: auto; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
-  .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; }
+  .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; align-self: flex-start; margin-top: 5px; }
   .rail .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
   .rail .foot .seg { flex: 1; }
   .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
@@ -68,12 +72,19 @@
   .cell pre::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; }
   .wrap { max-width: 1280px; margin: 0 auto; padding: 36px 40px 64px; }
   /* ---- pagina-header ---- */
-  .pagehead { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+  .pagehead { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 8px; animation: phIn 320ms var(--ease-out) both; }
   .pagehead .tile { width: 44px; height: 44px; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; flex-shrink: 0; }
   .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .pagehead h1 { margin: 0; font-size: var(--text-2xl); letter-spacing: -0.02em; }
+  .pagehead .ph-text { min-width: 0; flex: 1; }
+  .pagehead .eyebrow { font-family: var(--mono); font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 4px; }
+  .pagehead h1 { margin: 0; font-size: var(--text-2xl); letter-spacing: -0.02em; font-weight: 500; line-height: 1.15; }
+  .pagehead .ph-sub { color: var(--text-muted); font-size: var(--text-sm); margin-top: 3px; line-height: 1.5; }
   .pagehead .cat { margin-left: 2px; }
-  .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; }
+  .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .lede { color: var(--text-muted); font-size: var(--text-md); margin: 0 0 24px; max-width: 680px; line-height: 1.6; }
+  .lede code, .ph-sub code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; color: var(--text); }
+  @keyframes phIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .pagehead { animation: none; } }
   .sub { color: var(--text-muted); font-size: var(--text-md); margin-bottom: 24px; max-width: 660px; line-height: 1.6; }
   .sub code, .legend code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
   .legend { display: flex; gap: 12px; align-items: center; margin-bottom: 26px; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); font-size: var(--text-sm); color: var(--text-faint); flex-wrap: wrap; }
@@ -103,17 +114,20 @@
   .card .ct svg { width: 16px; height: 16px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .card .cn { font-weight: 500; font-size: var(--text-lg); min-width: 150px; }
   .card .cd { color: var(--text-faint); font-size: var(--text-md); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card .cmeta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .card .cmeta .cnt { font-size: 10.5px; color: var(--text-faint); }
+  .card .cmeta .act { font-size: 10.5px; color: var(--open-green); }
   .card .cm { font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
   /* ---- docs cards ---- */
   .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
-  .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 13px 15px; background: var(--surface); }
-  .doc .dt { margin-bottom: 7px; font-weight: 500; }
+  .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 15px 17px; background: var(--surface); }
+  .doc .dt { margin-bottom: 9px; font-weight: 500; }
   .doc.use .dt { color: var(--open-green); }
   .doc.avoid .dt { color: var(--red); }
   .doc.contract .dt { color: var(--accent-ink); }
-  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; }
-  .doc ul { padding-left: 17px; }
-  .doc li { margin: 2px 0; }
+  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.7; }
+  .doc ul { padding-left: 18px; }
+  .doc li { margin: 3px 0; }
   .doc li::marker { color: var(--text-faint); }
   .doc code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
   /* ---- variant grid ---- */
@@ -253,7 +267,7 @@
 <li><a href="./home.html">Home</a></li>
 <li><a href="./indexes-surfaces.html">Surfaces</a></li>
 <li><a href="./indexes-design-language.html">Design Language</a></li>
-</ul></div><div class="gen">gegenereerd uit brain/Indexes/Components.md op 2026-08-04 · bewerk de .md, niet deze pagina</div>
+</ul></div><div class="gen">gegenereerd uit brain/Indexes/Components.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 </div></main>
 <script>
 const seg = document.getElementById("themeSeg");

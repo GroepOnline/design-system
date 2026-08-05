@@ -15,7 +15,7 @@ Bron van waarheid per component: `components/<naam>/catalog.json`.
    overschrijven; nieuwe versie = nieuwe id of expliciete remove+add.
 2. **Origin-split.** `self/` = eigen ontwerpen (incl. aangepaste externe).
    `external/` = ongewijzigde referenties met `source`-veld verplicht.
-3. **Gegenereerde bestanden.** `components/*/index.html`, `components/index.html`,
+3. **Gegenereerde bestanden.** `index.html`, `components/*/index.html`, `components/index.html`,
    `docs/`, `taste-site/` en `brain-site/` zijn output van `ds build`. Nooit
    handmatig bewerken -- wijzig het manifest, `brain/**/*.md`, of de generator (`ds`).
 4. **Playground.** Experimenten alleen in `playground/`. Promotie uitsluitend
@@ -104,7 +104,7 @@ Nooit de gegenereerde overlays handmatig bewerken.
 ## Design-regels (harde bans, uit DESIGN.md §10)
 
 - Geen spinners/loaders -- activiteit = worked-row + tool-ripples (1.1s, stopt)
-- Geen emoji als icoon -- Lucide SVG (`components/icons.svg`, 29 symbols)
+- Geen emoji als icoon -- Lucide SVG (`components/icons.svg`, 31 symbols)
 - Geen em-dashes in copy
 - Eén accent (`--accent`). Groen = git, amber = wacht-op-jou, rood = destructief/diff-del. Gereserveerd, nooit decoratief
 - Koppen weight 500, tracking −0.02em. Mono alleen voor data (timer, diff, branch, cmd, pad)
@@ -139,8 +139,9 @@ sprite-svg's altijd fill:none + stroke:currentColor).
 | Pad | Rol |
 |---|---|
 | `ds` | CLI + web-generator (python3, geen deps) |
+| `index.html` | gegenereerde landingspagina (`ds build`, HOME_HEAD/BODY/FOOT in `ds`) |
 | `tokens.css` | tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting) |
-| `components/icons.svg` | 29 Lucide symbols (`<use href="...#i-*">`) |
+| `components/icons.svg` | 31 Lucide symbols (`<use href="...#i-*">`) |
 | `components/lib.js` | thema deep-link + switch-gedrag voor varianten |
 | `prototype-v2.html` | volledige referentie-app (3-pane sessie) |
 | `references/` | meetlat-screenshots (Devin-product, eigen states) |
@@ -164,7 +165,7 @@ CI: `.github/workflows/validate.yml` (build + check + brain gate) en
 - Lint/validate: `./ds check` (source of truth for the `check` CI step).
   Warnings (non-URL sources, em-dashes) are expected and do not fail; only
   `errors` matter.
-- Build/generate: `./ds build`. Generated output (`components/*/index.html`,
+- Build/generate: `./ds build`. Generated output (`index.html`, `components/*/index.html`,
   `components/index.html`, `docs/`, `taste-site/`, `brain-site/`) is committed. CI's
   `python3 ds build --check` runs a full build and then fails hard if the
   working tree shows drift (`git status --porcelain` non-empty), so after any
