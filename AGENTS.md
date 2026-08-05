@@ -103,7 +103,9 @@ Nooit de gegenereerde overlays handmatig bewerken.
 
 ## Design-regels (harde bans, uit DESIGN.md §10)
 
-- Geen spinners/loaders -- activiteit = worked-row + tool-ripples (1.1s, stopt)
+- Geen spinners/loaders -- activiteit = worked-row + tool-ripples (1.1s, stopt).
+  worked-row is **agent-output, nooit input**: in productie vult een agent de rijen;
+  de knoppen in de demo bootsen tool-calls alleen na. Een human klikt alleen om uit te klappen.
 - Geen emoji als icoon -- Lucide SVG (`components/icons.svg`, 31 symbols)
 - Geen em-dashes in copy
 - Eén accent (`--accent`). Groen = git, amber = wacht-op-jou, rood = destructief/diff-del. Gereserveerd, nooit decoratief
