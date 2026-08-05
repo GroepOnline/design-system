@@ -689,8 +689,9 @@ HOME_HEAD = """<!DOCTYPE html>
   .hero-sess { margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
   .hero-sess .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; }
 
-  /* ---- section shell ---- */
-  .sec { padding: 84px 0; position: relative; z-index: 1; }
+  /* ---- section shell: secties hangen aan het blad via gedeelde registratie ---- */
+  .sec { padding: 84px 0; position: relative; z-index: 1; border-top: 1px solid var(--line); }
+  .sec:first-of-type, .hero + .sec { border-top: none; }
   .sec-head { margin-bottom: 36px; position: relative; }
   .sec-head .coord { position: absolute; top: -22px; right: 0; font-family: var(--mono); font-size: 10px; color: var(--text-faint); letter-spacing: 0.05em; opacity: 0.65; }
   .sec-head .eyebrow { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 8px; }
