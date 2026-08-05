@@ -270,6 +270,16 @@
 ./ds build                   # web herbouwen (catalogus + docs + taste + brain)
 ./ds brain new decision &quot;…&quot;  # decision-note in de vault
 ./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem</code></pre>
+<h2>Linters en formattering</h2>
+<pre><code>npm install --global markdownlint-cli prettier  # eenmalig voor Zed + CLI
+python3 -m pip install --user ruff              # eenmalig voor Python
+./scripts/lint.sh                               # Ruff + markdownlint per bestandstype
+make lint                                       # alias</code></pre>
+<p>Zed formatteert bij opslaan per taal: Ruff voor Python, Prettier voor Markdown,</p>
+<p>JavaScript/TypeScript, JSON, YAML, CSS en HTML. Ruff sorteert imports en voert</p>
+<p>veilige fixes uit via Code Actions. Markdownlint blijft beschikbaar voor</p>
+<p>warnings en quick fixes. Gegenereerde mappen en <code>.commandcode/</code> worden niet</p>
+<p>meegenomen in de repo-lint.</p>
 <p>Nieuw component of variant:</p>
 <pre><code># 1. experimenteer in playground/ (vrij, relatieve paden ok)
 # 2. promoveer naar de catalogus

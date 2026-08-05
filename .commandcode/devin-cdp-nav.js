@@ -20,7 +20,6 @@ JS_MEASURE = """
   }
   var btns = document.querySelectorAll('button');
   var inputs = document.querySelectorAll('input, textarea');
-  var links = document.querySelectorAll('a');
   return {
     url: location.href,
     title: document.title,
@@ -72,15 +71,11 @@ async def measure(url, label):
         result = await send_recv('Runtime.evaluate', {'expression': JS_MEASURE, 'returnByValue': True})
         val = result['result']['result']['value']
 
-        await send_recv('Page.captureScreenshot', {'format': 'png', 'captureBeyondViewport': True})
-        # Full page screenshot
-        ss = await send_recv('Page.captureSnapshot', {'format': 'png'})
-
         out = {'url': val['url'], 'title': val['title'], 'data': val}
+        os.makedirs('.commandcode', exist_ok=True)
         with open(f'.commandcode/devin-{label}.json', 'w') as f:
             json.dump(out, f, indent=2)
 
-        # Save full-page screenshot as PNG via CDP
         ss_resp = await send_recv('Page.captureScreenshot', {
             'format': 'png',
             'captureBeyondViewport': True,
@@ -89,6 +84,7 @@ async def measure(url, label):
         if 'base64' in ss_resp.get('result', {}):
             import base64
             png = base64.b64decode(ss_resp['result']['base64'])
+            os.makedirs('references', exist_ok=True)
             with open(f'references/devin-{label}.png', 'wb') as f:
                 f.write(png)
             print(f"Screenshot: references/devin-{label}.png ({len(png)} bytes)")

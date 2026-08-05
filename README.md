@@ -27,6 +27,21 @@ Nederlandse copy-stem.
 ./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem
 ```
 
+## Linters en formattering
+
+```bash
+npm install --global markdownlint-cli prettier  # eenmalig voor Zed + CLI
+python3 -m pip install --user ruff              # eenmalig voor Python
+./scripts/lint.sh                               # Ruff + markdownlint per bestandstype
+make lint                                       # alias
+```
+
+Zed formatteert bij opslaan per taal: Ruff voor Python, Prettier voor Markdown,
+JavaScript/TypeScript, JSON, YAML, CSS en HTML. Ruff sorteert imports en voert
+veilige fixes uit via Code Actions. Markdownlint blijft beschikbaar voor
+warnings en quick fixes. Gegenereerde mappen en `.commandcode/` worden niet
+meegenomen in de repo-lint.
+
 Nieuw component of variant:
 
 ```bash
