@@ -119,18 +119,21 @@
   .card .cmeta .cnt { font-size: 10.5px; color: var(--text-faint); }
   .card .cmeta .act { font-size: 10.5px; color: var(--open-green); }
   .card .cm { font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
-  /* ---- docs cards ---- */
-  .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px; }
-  .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 15px 17px; background: var(--surface); }
-  .doc .dt { margin-bottom: 9px; font-weight: 500; }
+  /* ---- docs cards: gelijke kolommen, strakke baseline, chips breken niet mid-woord ---- */
+  .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin-bottom: 26px; align-items: stretch; }
+  .doc { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 15px 17px; background: var(--surface); display: flex; flex-direction: column; }
+  .doc .dt { margin-bottom: 10px; font-weight: 600; font-size: var(--text-sm); letter-spacing: 0.04em; }
   .doc.use .dt { color: var(--open-green); }
   .doc.avoid .dt { color: var(--red); }
   .doc.contract .dt { color: var(--accent-ink); }
-  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.7; }
-  .doc ul { padding-left: 18px; }
-  .doc li { margin: 3px 0; }
+  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; }
+  .doc ul { padding-left: 18px; margin: 0; }
+  .doc li { margin: 4px 0; }
   .doc li::marker { color: var(--text-faint); }
-  .doc code { font-family: var(--mono); font-size: var(--text-xs); background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+  .doc code { font-family: var(--mono); font-size: 0.86em; background: var(--surface-sunk); padding: 1.5px 6px; border-radius: 4px; white-space: normal; word-break: break-word; line-height: 1.5; display: inline-block; }
+  /* contract-chips: geen <li>-bullet, strakke lijst */
+  .doc.contract ul { list-style: none; padding-left: 0; }
+  .doc.contract li { margin: 6px 0; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); transition: border-color var(--dur-fast); }
@@ -414,7 +417,11 @@
 <p>Signaal (Joep): &quot;goor onderzoek naar wat nadere hebben&quot; + &quot;je erg weinig verandert zie ik&quot;. Onderzoek via 4 parallelle research-agents (agent-product sites, awwwards-patronen, motion 2025-26, terminal/blueprint-esthetiek) — alle vier convergeerden op hetzelfde.</p>
 <p>Correctie: volledige rewrite van de home naar &quot;het blad&quot;: randmeetlatten met meelopende coördinaten, cropmarks, ISO-titelblok, modeline (utc-klok + y-uitlezing + actieve sectie), crosshair gesnapt op 8px-grid, Sora 800 op 120px met scramble-decode + blokcaret, ledger (5 rijen sessie-replay) als eerste bewijs boven de fold, één geïnverteerde zwarte sectie als climax, linear()-spring als token (--spring in tokens.css).</p>
 <p>Richting: decoratie wordt meetinstrument. Elke lijn meet iets; de pagina is één artefact. Bewijs boven belofte: de ledger replayt agent-werk in plaats van het te beschrijven. Waarde-drama (één zwarte sectie) in plaats van tint-drama.</p>
-<p>Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, cropmarks, titelblok, modeline) hoort bij de identiteit; (2) bewijs boven belofte: live replay van het signatuur-component als hero; (3) accent in drie banen: focus/staat, primaire actie, live-pulse — verder alleen inkt-trappen.</p></div><div class='gen'>gegenereerd uit taste/*.md op 2026-08-05</div>
+<p>Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, cropmarks, titelblok, modeline) hoort bij de identiteit; (2) bewijs boven belofte: live replay van het signatuur-component als hero; (3) accent in drie banen: focus/staat, primaire actie, live-pulse — verder alleen inkt-trappen.</p>
+<h2>2026-08-05 · Catalogus-kaarten: uitlijning + chips</h2>
+<p><strong>Signaal (Joep):</strong> &quot;dubbel onder select elementen, geen goeie uitlijning jezus&quot; — op de component-detailpagina&#x27;s (GEBRUIK/VERMIJD/CONTRACT-kaarten).</p>
+<p><strong>Regel:</strong> doc-kaarten staan op gelijke hoogte (align-items: stretch + flex-column), contract-chips zijn bulleted-loze blokken die niet mid-woord breken (inline-block + word-break), kaart-titels krijgen gewicht 600 + caps. Losse code-chips in een &lt;ul&gt;-bullet-lijst = altijd lelijke wrap.</p>
+<p><strong>Doorgifte:</strong> gallery + 12 catalogus-pagina&#x27;s. Kandidaat-regel: kaartgrids gebruiken stretch, nooit auto-height.</p></div><div class='gen'>gegenereerd uit taste/*.md op 2026-08-05</div>
 </div></main>
 <script>
 const seg = document.getElementById("themeSeg");

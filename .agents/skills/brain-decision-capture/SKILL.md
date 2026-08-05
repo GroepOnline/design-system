@@ -1,6 +1,6 @@
 ---
 name: brain-decision-capture
-description: Kiezen waar een bevinding landt in het design-system: brain decision, brain research, of de bindende taste-loop. Gebruik na een ontwerpkeuze, een Joep-reactie op UI, of onderzoek dat vastgelegd moet worden, en om te voorkomen dat een brain-note DESIGN.md omzeilt.
+description: Kiezen waar een bevinding landt in het design-system brain decision, brain research, of de bindende taste-loop.
 domain: governance-meta
 surfaces:
 - design-system

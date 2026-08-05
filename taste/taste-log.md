@@ -107,3 +107,8 @@ Signaal (Joep): "goor onderzoek naar wat nadere hebben" + "je erg weinig verande
 Correctie: volledige rewrite van de home naar "het blad": randmeetlatten met meelopende coördinaten, cropmarks, ISO-titelblok, modeline (utc-klok + y-uitlezing + actieve sectie), crosshair gesnapt op 8px-grid, Sora 800 op 120px met scramble-decode + blokcaret, ledger (5 rijen sessie-replay) als eerste bewijs boven de fold, één geïnverteerde zwarte sectie als climax, linear()-spring als token (--spring in tokens.css).
 Richting: decoratie wordt meetinstrument. Elke lijn meet iets; de pagina is één artefact. Bewijs boven belofte: de ledger replayt agent-werk in plaats van het te beschrijven. Waarde-drama (één zwarte sectie) in plaats van tint-drama.
 Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, cropmarks, titelblok, modeline) hoort bij de identiteit; (2) bewijs boven belofte: live replay van het signatuur-component als hero; (3) accent in drie banen: focus/staat, primaire actie, live-pulse — verder alleen inkt-trappen.
+
+## 2026-08-05 · Catalogus-kaarten: uitlijning + chips
+**Signaal (Joep):** "dubbel onder select elementen, geen goeie uitlijning jezus" — op de component-detailpagina's (GEBRUIK/VERMIJD/CONTRACT-kaarten).
+**Regel:** doc-kaarten staan op gelijke hoogte (align-items: stretch + flex-column), contract-chips zijn bulleted-loze blokken die niet mid-woord breken (inline-block + word-break), kaart-titels krijgen gewicht 600 + caps. Losse code-chips in een <ul>-bullet-lijst = altijd lelijke wrap.
+**Doorgifte:** gallery + 12 catalogus-pagina's. Kandidaat-regel: kaartgrids gebruiken stretch, nooit auto-height.
