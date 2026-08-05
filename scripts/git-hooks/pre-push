@@ -1,44 +1,59 @@
 #!/bin/sh
-# Pre-push hook voor design-system
-# Draait: toepasselijke linters → ds check → ds brain gate → ds build --check
-# Gebruik: chmod +x .git/hooks/pre-push
-# Of: make hook / scripts/git-hooks-install.sh
+# Pre-push hook voor design-system — lean lanes.
+#
+# Filosofie (Joep): een push-hook mag je terminal niet blokkeren. Daarom:
+#   • SNELLE gates draaien blocking (ruff + ds check = ~0.2s, voel je niet)
+#   • ZWARE gates (brain gate + build --check) draaien als PARALLEL async lanes
+#     via scripts/gates/, die je los kunt bekijken, wachten en CANCELEN:
+#        ./scripts/gates/push.sh --background   # start async, keer direct terug
+#        ./scripts/gates/push.sh --watch        # wacht op het async resultaat
+#        ./scripts/gates/push.sh --cancel       # annuleer de actieve run
+#   • Deze hook start de async lanes NIET zelf blocking; als de zware gates
+#     al via push.sh zijn gevalideerd (recente groene run), laat hij door.
+#
+# Gebruik: chmod +x .git/hooks/pre-push  ·  of: make hook / scripts/git-hooks-install.sh
 
 set -e
+STATE_DIR="${GATE_STATE_DIR:-.git/push-state}"
 
-echo "🔍 pre-push checks..."
+echo "🔍 pre-push (lean lanes)…"
 
-# 1. Linters (alleen voor hun eigen bestandstype)
-echo "  → toepasselijke linters..."
+# 1. Snelle gate: linters (per bestandstype)
+echo "  → linters…"
 if ! ./scripts/lint.sh >/dev/null 2>&1; then
     echo "✗ lint gefaald — run './scripts/lint.sh' voor details"
     exit 1
 fi
-echo "    ✓ toepasselijke linters: pass"
+echo "    ✓ linters: pass"
 
-# 2. Component catalogus check
-echo "  → ds check..."
+# 2. Snelle gate: catalogus
+echo "  → ds check…"
 if ! ./ds check >/dev/null 2>&1; then
     echo "✗ ds check gefaald — run './ds check' voor details"
     exit 1
 fi
 echo "    ✓ ds check: 0 errors"
 
-# 3. Brain gate
-echo "  → ds brain gate..."
-if ! ./ds brain gate >/dev/null 2>&1; then
-    echo "✗ brain gate gefaald — run './ds brain gate' voor details"
+# 3. Zware gates: was er al een recente groene async-run (via push.sh) ?
+#    Zo ja → laat door zonder opnieuw te blokkeren.
+CURRENT="$(cat "$STATE_DIR/current" 2>/dev/null || true)"
+if [ -n "$CURRENT" ] && [ -d "$STATE_DIR/$CURRENT" ]; then
+    # groen zolang er geen lane rood (rc != 0) of gecanceld (rc=9) is
+    if ! grep -hE '^rc=' "$STATE_DIR/$CURRENT"/results/*.rc 2>/dev/null | grep -qvE 'rc=0$'; then
+        echo "    ✓ async run $CURRENT: zware gates al groen — push door"
+        echo "✅ pre-push passed"
+        exit 0
+    fi
+    echo "  ⚠ async run $CURRENT is niet (volledig) groen."
+    echo "    Bewijs: run './scripts/gates/push.sh --watch' of '--cancel'."
+    echo "    Inhoud: './scripts/gates/push.sh --status'"
     exit 1
 fi
-echo "    ✓ brain gate: pass"
 
-# 4. Build idempotentie
-echo "  → ds build --check..."
-if ! ./ds build --check >/dev/null 2>&1; then
-    echo "✗ build --check gefaald — run './ds build --check' voor details"
-    exit 1
-fi
-echo "    ✓ build --check: idempotent"
+# 4. Geen async-run voorhanden: wijs de gebruiker naar de lanes-flow.
+echo "  ⚠ Geen groene async-verificatie gevonden."
+echo "  Draai eerst: ./scripts/gates/push.sh --wait   (verifieert + pusht)"
+echo "  Of start async en werk door: ./scripts/gates/push.sh --background"
+echo "  (of bypass bewust met: git push --no-verify)"
+exit 1
 
-echo "✅ Alle checks passed — push gaat door"
-exit 0

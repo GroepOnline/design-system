@@ -13,6 +13,7 @@ for rc_file in "$RES_DIR"/results/*.rc; do
     [ -e "$rc_file" ] || continue
     name="$(basename "$rc_file" .rc)"
     rc="$(cat "$rc_file")"
+    rc="${rc#rc=}"                    # strip 'rc=' prefix → '0' / '1' / '9'
     [ "$rc" = "0" ] && mark="✓" || mark="✗"
     echo "  $mark $name (exit $rc)"
 done
