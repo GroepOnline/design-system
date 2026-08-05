@@ -37,8 +37,9 @@
   --hold-line: rgba(191,91,0,0.35);
 
   /* ---- type ---- */
+  --font-display: "Sora", "Space Grotesk", "General Sans", system-ui, sans-serif;
   --font: "General Sans", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
   --h-weight: 500;            /* devin meetwaarde: koppen zijn medium, niet bold */
   --h-tracking: -0.02em;      /* product-UI; marketing-hero: -0.04em */
 

@@ -88,3 +88,10 @@
 - **signal**: statische grid + één 2px-lijn met dot leest als een wireframe, niet als een identiteit. De signatuur moet LEVEN: meerdere streams, echte aanwezigheid (secties reageren), en de beweging moet voelbaar zijn — niet half-invisible om 'subtiel' te blijven.
 - **delta**: `.current` → `.stroom`-veld: streams op gridkolommen (main = accent-Current), seg-pulses als voelende werk-bursts, markers gekoppeld aan live sessie-teller (tool-calls), pointer-near highlight, klik-ripple langs dichtstbijzijnde stream. h1 78→92. Hero is nu wezenlijk aanwezig — geen wallpaper meer.
 - **candidate rule**: zichtbare aanwezigheid > verstopte subtiliteit als het om identiteit gaat — een eerste-observatie die al gemarkeerd staat bij 'structure'; dit is de 2e, promoveer als: **DO** de signatuur-magnaam (Stroom/Current) LEVEN met meerdere kanalen en voelbare activiteit (pulses = werk, markers = events, near = aandacht). **DON'T** verzwakken tot een décoratief achtergrond-detail dat niemand ziet.
+
+## 2026-08-05 · Typografie + verfijning Stroom-veld
+- **shown**: Stroom-veld v1 (streams + pulses) met Inter/General Sans
+- **reaction**: gecorrigeerd — "streep in het midden te heftig en geen mooi lettertypen, effecten mogen mooier"
+- **signal**: de accent-main (2px) overschreeuwde de rest; de font-stack was generiek; de pulses waren nog te dot-achtig. Identiteit = lettertype + beweging die het systeem LEVEN, niet decoratief.
+- **delta**: Sora als display-font (--font-display) + Space Grotesk fallback + IBM Plex Mono; main-streep terug naar 1px/.26; pulses kregen glow + head/tail + ademende scaleY; markers met halo; dichtere interval. Hero voelt nu als werkend systeem, niet als wireframe.
+- **candidate rule**: de signatuur-streep moet DIENEN (pulse draagt de kleur, niet de lijn zelf); display-font (Sora) ≠ body-font (General Sans) — 2e observatie dat Joep op font-niveau kijkt.
