@@ -362,7 +362,8 @@ SHELL_HEAD = """<!DOCTYPE html>
   .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
   .rail .n { margin-left: auto; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
   .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; align-self: flex-start; margin-top: 5px; }
-  .rail .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
+  .rail .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+  .rail-links { display: contents; }
   .rail .foot .seg { flex: 1; }
   .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
   /* ---- content ---- */
@@ -471,10 +472,14 @@ SHELL_HEAD = """<!DOCTYPE html>
   .reveal.visible { opacity: 1; transform: translateY(0); }
   @media (max-width: 860px) {
     body { flex-direction: column; overflow: auto; }
-    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
+    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 10px 12px 4px; }
+    .rail .brand { padding: 2px 6px 2px 2px; }
+    .rail .rail-links { display: flex; flex-wrap: nowrap; overflow-x: auto; width: 100%; order: 3; padding: 4px 2px 6px; scrollbar-width: none; }
+    .rail .rail-links::-webkit-scrollbar { display: none; }
     .rail .lbl, .rail a.it .n, .rail .nm .ds { display: none; }
+    .rail a.it { flex-shrink: 0; }
     .rail a.it.on::before { display: none; }
-    .rail .foot { margin: 0 0 0 auto; border: none; padding: 0; }
+    .rail .foot { order: 2; margin: 0 0 0 auto; border: none; padding: 0; flex-direction: row; align-items: center; gap: 6px; }
     .main { overflow: visible; }
     .wrap { padding: 22px 16px 40px; }
     .grid { grid-template-columns: 1fr; }
@@ -491,10 +496,12 @@ SHELL_HEAD = """<!DOCTYPE html>
 <body>
 <aside class="rail">
   <a class="brand" href="{rel_root}/index.html"><span class="logo">d</span>design-system</a>
+  <div class="rail-links">
 {nav}
-  <div class="lbl caps">Systeem</div>
+    <div class="lbl caps">Systeem</div>
 {sysnav}
-  <div class="foot" style="flex-direction:column;align-items:stretch">
+  </div>
+  <div class="foot">
     <div class="seg" id="styleSeg">{styleseg}</div>
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
   </div>
@@ -704,8 +711,8 @@ HOME_HEAD = """<!DOCTYPE html>
   .comp-card .ci svg { width: 18px; height: 18px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: color var(--dur-fast); }
   .comp-card:hover .ci svg { color: var(--accent-ink); }
   .comp-card .cb { flex: 1; min-width: 0; }
-  .comp-card .cn { font-weight: 500; font-size: 14.5px; }
-  .comp-card .cd { font-size: 12.5px; color: var(--text-faint); margin-top: 2px; line-height: 1.4; }
+  .comp-card .cn { display: block; font-weight: 500; font-size: 14.5px; }
+  .comp-card .cd { display: block; font-size: 12.5px; color: var(--text-faint); margin-top: 2px; line-height: 1.4; }
   .comp-card .arrow { align-self: center; color: var(--text-faint); font-size: 16px; transition: transform var(--dur-fast), color var(--dur-fast); }
   .comp-card:hover .arrow { color: var(--accent-ink); transform: translateX(3px); }
 

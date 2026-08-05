@@ -54,7 +54,8 @@
   .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
   .rail .n { margin-left: auto; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
   .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; align-self: flex-start; margin-top: 5px; }
-  .rail .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
+  .rail .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+  .rail-links { display: contents; }
   .rail .foot .seg { flex: 1; }
   .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
   /* ---- content ---- */
@@ -163,10 +164,14 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
   @media (max-width: 860px) {
     body { flex-direction: column; overflow: auto; }
-    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
+    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 10px 12px 4px; }
+    .rail .brand { padding: 2px 6px 2px 2px; }
+    .rail .rail-links { display: flex; flex-wrap: nowrap; overflow-x: auto; width: 100%; order: 3; padding: 4px 2px 6px; scrollbar-width: none; }
+    .rail .rail-links::-webkit-scrollbar { display: none; }
     .rail .lbl, .rail a.it .n, .rail .nm .ds { display: none; }
+    .rail a.it { flex-shrink: 0; }
     .rail a.it.on::before { display: none; }
-    .rail .foot { margin: 0 0 0 auto; border: none; padding: 0; }
+    .rail .foot { order: 2; margin: 0 0 0 auto; border: none; padding: 0; flex-direction: row; align-items: center; gap: 6px; }
     .main { overflow: visible; }
     .wrap { padding: 22px 16px 40px; }
     .grid { grid-template-columns: 1fr; }
@@ -183,6 +188,7 @@
 <body>
 <aside class="rail">
   <a class="brand" href="../index.html"><span class="logo">d</span>design-system</a>
+  <div class="rail-links">
   <div class="lbl caps">Primitieven</div>
   <a class="it" href="../components/badge/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
   <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">btn + gbtn + kbd</span></span><span class="act"></span></a>
@@ -198,7 +204,7 @@
   <div class="lbl caps">Structuur</div>
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
-  <div class="lbl caps">Systeem</div>
+    <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../taste-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
@@ -207,7 +213,8 @@
   <a class="it sys" href="../WORKFLOW.md"><span class="tile"><svg><use href="../components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="../AGENTS.md"><span class="tile"><svg><use href="../components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
   <a class="it sys" href="../references/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="nm">references</span><span class="n">shots</span></a>
-  <div class="foot" style="flex-direction:column;align-items:stretch">
+  </div>
+  <div class="foot">
     <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button></div>
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
   </div>

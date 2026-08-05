@@ -54,7 +54,8 @@
   .rail .nm .ds { display: block; font-size: var(--text-2xs); font-weight: 400; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 152px; margin-top: 1px; }
   .rail .n { margin-left: auto; font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); flex-shrink: 0; font-variant-numeric: tabular-nums; }
   .rail .act { margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; align-self: flex-start; margin-top: 5px; }
-  .rail .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; }
+  .rail .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+  .rail-links { display: contents; }
   .rail .foot .seg { flex: 1; }
   .rail .foot .seg button { flex: 1; font-size: var(--text-sm); }
   /* ---- content ---- */
@@ -163,10 +164,14 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
   @media (max-width: 860px) {
     body { flex-direction: column; overflow: auto; }
-    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 8px; }
+    .rail { width: 100%; border-right: none; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; padding: 10px 12px 4px; }
+    .rail .brand { padding: 2px 6px 2px 2px; }
+    .rail .rail-links { display: flex; flex-wrap: nowrap; overflow-x: auto; width: 100%; order: 3; padding: 4px 2px 6px; scrollbar-width: none; }
+    .rail .rail-links::-webkit-scrollbar { display: none; }
     .rail .lbl, .rail a.it .n, .rail .nm .ds { display: none; }
+    .rail a.it { flex-shrink: 0; }
     .rail a.it.on::before { display: none; }
-    .rail .foot { margin: 0 0 0 auto; border: none; padding: 0; }
+    .rail .foot { order: 2; margin: 0 0 0 auto; border: none; padding: 0; flex-direction: row; align-items: center; gap: 6px; }
     .main { overflow: visible; }
     .wrap { padding: 22px 16px 40px; }
     .grid { grid-template-columns: 1fr; }
@@ -207,6 +212,7 @@
 <body>
 <aside class="rail">
   <a class="brand" href="../index.html"><span class="logo">d</span>design-system</a>
+  <div class="rail-links">
   <div class="lbl caps">Primitieven</div>
   <a class="it" href="../components/badge/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
   <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">btn + gbtn + kbd</span></span><span class="act"></span></a>
@@ -222,7 +228,7 @@
   <div class="lbl caps">Structuur</div>
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
-  <div class="lbl caps">Systeem</div>
+    <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../taste-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
@@ -231,7 +237,8 @@
   <a class="it sys" href="../WORKFLOW.md"><span class="tile"><svg><use href="../components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
   <a class="it sys" href="../AGENTS.md"><span class="tile"><svg><use href="../components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
   <a class="it sys" href="../references/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="nm">references</span><span class="n">shots</span></a>
-  <div class="foot" style="flex-direction:column;align-items:stretch">
+  </div>
+  <div class="foot">
     <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button></div>
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
   </div>
@@ -281,6 +288,7 @@
 <li><strong>DO</strong> real SVG icons (Lucide/shadcn style, 1.5px stroke, 15-16px grid). <strong>DON&#x27;T</strong> emoji/emoticons as UI icons — not in buttons, badges, attachments, status, nowhere. <em>(2026-07-27: &quot;geen emoticons&quot;; consistent with workspace anti-slop stance)</em></li>
 <li><strong>DO</strong> shadcn/ui component conventions as baseline (button variants, badge pill, card border + hairline, ghost icon buttons). Devin&#x27;s product UI is shadcn-shaped; Joep recognizes and prefers it. <em>(2026-07-27: &quot;shadcn of soortgelijk gebruiken voor components van hun&quot;)</em></li>
 <li><strong>DO</strong> compose dashboard views from primitives (Sidebar + Card + Table + Chart), never hand-rolled. Data tables use zebra striping for scanability and inline color-coded badges for status. <em>(2026-07-31: dashboard table + shadcn skill install)</em></li>
+<li><strong>DO</strong> treat mobile (390px) as a first-class viewport: test every generated page at 390px next to light and dark before commit. <strong>DON&#x27;T</strong> let rails/navs collapse into unstructured wraps — mobile nav is a horizontal scroll-strip or a deliberate pattern, never an accidental flex-wrap jumble. <em>(2026-08-05: Joep &quot;bovenin 1 zooi&quot; op iPhone + Fase C responsive-eis)</em></li>
 </ul>
 <h3>direction</h3>
 <ul>
@@ -372,6 +380,14 @@
 <li><strong>signal</strong>: &quot;hero stil en mat — glow, parallax en em-dashes uit home&quot; (commit 337c879); uitgewerkt in home v2 (commit 9b35de2)</li>
 <li><strong>delta</strong>: (1) parallax/glow definitief uit home — de Current (motion-spec Motion 1) is het enige hero-signatuur; (2) glassmorphism-ban ook op marketing/catalogus gehandhaafd (topbar backdrop-blur → solid <code>var(--bg)</code>); (3) motion-spec §7 gehandhaafd: pulse animeert transform-only, geen <code>top</code></li>
 <li><strong>candidate rule</strong>: gegenereerde web-oppervlakken (home, gallery, docs) volgen dezelfde bans als het product (geen glow, glass, gradients, em-dashes). <em>Versterkt bestaande ban — geen nieuwe regel nodig.</em></li>
+</ul>
+<h2>2026-08-05 · Mobiel: comp-card botsing + rail-zooi</h2>
+<ul>
+<li><strong>shown</strong>: home v2 + gallery op mobiel (390px, iPhone Safari via tailscale)</li>
+<li><strong>reaction</strong>: gecorrigeerd — &quot;dik gedrukte zit tegen dunne tekst zonder spatie of tab&quot; en &quot;bovenin ook 1 zooi&quot;; expliciete kwaliteitslat-vraag: &quot;zo ga je beginnen aan opencodex / chefgroep-os / vault?&quot;</li>
+<li><strong>signal</strong>: (1) comp-card naam (500) botste inline tegen beschrijving (faint) — geen layout-scheiding, alleen vertrouwd op markup-flow; (2) rail collapse op ≤860px werd een ongestructureerde flex-wrap jumble zonder categorie-context</li>
+<li><strong>delta</strong>: <code>.cn</code>/<code>.cd</code> → <code>display: block</code> (tekstparen scheiden via layout, nooit via whitespace); mobiele rail → brand-rij met seg&#x27;s rechts + horizontale scroll-chipstrip (<code>.rail-links</code>, nowrap, overflow-x, verborgen scrollbar); geverifieerd op 390px light+dark en desktop</li>
+<li><strong>candidate rule</strong>: mobiel (390px) is first-class viewport — testen naast light/dark bij elke web-wijziging. <em>2e observatie (Fase C responsive-eis + deze correctie) → GEEPROMOVEERD naar taste-rules + AGENTS.md.</em> Tekstpaar-scheiding via layout: 1e observatie, watch.</li>
 </ul></div><div class='gen'>gegenereerd uit taste/*.md op 2026-08-05</div>
 </div></main>
 <script>

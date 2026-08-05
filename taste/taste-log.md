@@ -74,3 +74,10 @@
 - **signal**: "hero stil en mat — glow, parallax en em-dashes uit home" (commit 337c879); uitgewerkt in home v2 (commit 9b35de2)
 - **delta**: (1) parallax/glow definitief uit home — de Current (motion-spec Motion 1) is het enige hero-signatuur; (2) glassmorphism-ban ook op marketing/catalogus gehandhaafd (topbar backdrop-blur → solid `var(--bg)`); (3) motion-spec §7 gehandhaafd: pulse animeert transform-only, geen `top`
 - **candidate rule**: gegenereerde web-oppervlakken (home, gallery, docs) volgen dezelfde bans als het product (geen glow, glass, gradients, em-dashes). *Versterkt bestaande ban — geen nieuwe regel nodig.*
+
+## 2026-08-05 · Mobiel: comp-card botsing + rail-zooi
+- **shown**: home v2 + gallery op mobiel (390px, iPhone Safari via tailscale)
+- **reaction**: gecorrigeerd — "dik gedrukte zit tegen dunne tekst zonder spatie of tab" en "bovenin ook 1 zooi"; expliciete kwaliteitslat-vraag: "zo ga je beginnen aan opencodex / chefgroep-os / vault?"
+- **signal**: (1) comp-card naam (500) botste inline tegen beschrijving (faint) — geen layout-scheiding, alleen vertrouwd op markup-flow; (2) rail collapse op ≤860px werd een ongestructureerde flex-wrap jumble zonder categorie-context
+- **delta**: `.cn`/`.cd` → `display: block` (tekstparen scheiden via layout, nooit via whitespace); mobiele rail → brand-rij met seg's rechts + horizontale scroll-chipstrip (`.rail-links`, nowrap, overflow-x, verborgen scrollbar); geverifieerd op 390px light+dark en desktop
+- **candidate rule**: mobiel (390px) is first-class viewport — testen naast light/dark bij elke web-wijziging. *2e observatie (Fase C responsive-eis + deze correctie) → GEEPROMOVEERD naar taste-rules + AGENTS.md.* Tekstpaar-scheiding via layout: 1e observatie, watch.

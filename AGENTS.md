@@ -109,7 +109,7 @@ Nooit de gegenereerde overlays handmatig bewerken.
 - Eén accent (`--accent`). Groen = git, amber = wacht-op-jou, rood = destructief/diff-del. Gereserveerd, nooit decoratief
 - Koppen weight 500, tracking −0.02em. Mono alleen voor data (timer, diff, branch, cmd, pad)
 - Geen paars, geen gradients in UI, geen glassmorphism, geen cards-in-cards, geen shadow op product-cards
-- Light én dark (`data-theme="dark"`) zijn first-class; test beide (`?theme=dark`)
+- Light én dark (`data-theme="dark"`) én mobiel (390px) zijn first-class; test alle drie (`?theme=dark`, smal viewport)
 
 ## Componenten toevoegen of wijzigen
 
