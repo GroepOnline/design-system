@@ -104,6 +104,15 @@ met pulse (transform-only, motion-spec §7) + sticky solid topbar (geen
 backdrop-blur, glassmorphism-ban) + signature-band met live worked-row demo.
 Zie taste-log 2026-08-05 en `brain/Research/2026-08-04 Web motion refs.md`.
 
+**Herziening 2026-08-05 (v3, "het blad"):** na Joep-signaal "te weinig
+verandert" + wow-factor brief + 4-agent design-research (agent-product sites,
+awwwards, motion, terminal-esthetiek): de pagina ALS technische tekening.
+Randmeetlatten met meelopende coördinaten, cropmarks, ISO-titelblok, modeline
+(utc + y + actieve sectie), crosshair gesnapt op 8px, Sora 800 + scramble +
+blokcaret, ledger (sessie-replay) als hero-bewijs, één geïnverteerde zwarte
+sectie als climax, `--spring: linear()` als veer-token. Decoratie wordt
+meetinstrument; bewijs boven belofte.
+
 ### Fase D -- Perfection pass
 
 - elke pagina nalopen op verhoudingen/alignment (icoon-maten, rij-hoogtes) ✅

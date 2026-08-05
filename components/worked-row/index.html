@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>worked-row — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../tokens.css">
 <style>
   html, body { height: 100%; }
@@ -274,6 +274,7 @@
   .demo-head a { color: var(--accent-ink); text-decoration: none; }
   .group { margin-bottom: 34px; }
   .group &gt; .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+  .row { margin-top: 10px; display: flex; gap: 6px; }
 
   /* ==== COMPONENT CSS (copy vanaf hier) ==== */
   .worked {
@@ -352,7 +353,7 @@
     &lt;div class=&quot;tools&quot; id=&quot;tools1&quot;&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;worked-detail open&quot; id=&quot;d1&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;row&quot; style=&quot;margin-top:10px;display:flex;gap:6px&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
     &lt;button class=&quot;btn&quot; onclick=&quot;rip(&#x27;r&#x27;)&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;read&lt;/button&gt;
     &lt;button class=&quot;btn&quot; onclick=&quot;rip(&#x27;w&#x27;)&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-pencil&quot;/&gt;&lt;/svg&gt;write&lt;/button&gt;
     &lt;button class=&quot;btn&quot; onclick=&quot;rip(&#x27;x&#x27;)&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-terminal&quot;/&gt;&lt;/svg&gt;extern&lt;/button&gt;
@@ -376,7 +377,9 @@
 &lt;/div&gt;
 
 &lt;script&gt;
-if (new URLSearchParams(location.search).has(&quot;embed&quot;)) document.body.classList.add(&quot;embed&quot;);
+var q = new URLSearchParams(location.search);
+if (q.has(&quot;embed&quot;)) document.body.classList.add(&quot;embed&quot;);
+if (q.get(&quot;theme&quot;)) document.documentElement.dataset.theme = q.get(&quot;theme&quot;);
 const start = performance.now();
 const steps = [];
 function fmt(ms){const s=Math.floor(ms/1000);return `${Math.floor(s/60)}m ${String(s%60).padStart(2,&quot;0&quot;)}s`}

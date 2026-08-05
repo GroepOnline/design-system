@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AGENTS — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
 <style>
   html, body { height: 100%; }
@@ -325,7 +325,9 @@
 <p>Nooit de gegenereerde overlays handmatig bewerken.</p>
 <h2>Design-regels (harde bans, uit DESIGN.md §10)</h2>
 <ul>
-<li>Geen spinners/loaders -- activiteit = worked-row + tool-ripples (1.1s, stopt)</li>
+<li>Geen spinners/loaders -- activiteit = worked-row + tool-ripples (1.1s, stopt).</li>
+<p>worked-row is <strong>agent-output, nooit input</strong>: in productie vult een agent de rijen;</p>
+<p>de knoppen in de demo bootsen tool-calls alleen na. Een human klikt alleen om uit te klappen.</p>
 <li>Geen emoji als icoon -- Lucide SVG (<code>components/icons.svg</code>, 31 symbols)</li>
 <li>Geen em-dashes in copy</li>
 <li>Eén accent (<code>--accent</code>). Groen = git, amber = wacht-op-jou, rood = destructief/diff-del. Gereserveerd, nooit decoratief</li>

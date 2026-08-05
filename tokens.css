@@ -52,6 +52,7 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring-soft: cubic-bezier(0.22, 1.2, 0.36, 1); /* licht overshoot voor expand */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);        /* cijfer-telling */
+  --spring: linear(0, .06, .25 3.2%, .68 8.1%, 1.02 13.6%, 1.13 19%, 1.08 25%, 1 32%, .99 40%, 1); /* echte veer: hover/press/reveal */
   --dur-fast: 140ms;
   --dur-expand: 420ms;
   --dur-pulse-cycle: 2400ms;

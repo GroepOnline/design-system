@@ -13,6 +13,7 @@
   .demo-head a { color: var(--accent-ink); text-decoration: none; }
   .group { margin-bottom: 34px; }
   .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+  .row { margin-top: 10px; display: flex; gap: 6px; }
 
   /* ==== COMPONENT CSS (copy vanaf hier) ==== */
   .worked {
@@ -91,7 +92,7 @@
     <div class="tools" id="tools1"></div>
   </div>
   <div class="worked-detail open" id="d1"></div>
-  <div class="row" style="margin-top:10px;display:flex;gap:6px">
+  <div class="row">
     <button class="btn" onclick="rip('r')"><svg class="ic sm"><use href="../../../components/icons.svg#i-file"/></svg>read</button>
     <button class="btn" onclick="rip('w')"><svg class="ic sm"><use href="../../../components/icons.svg#i-pencil"/></svg>write</button>
     <button class="btn" onclick="rip('x')"><svg class="ic sm"><use href="../../../components/icons.svg#i-terminal"/></svg>extern</button>
@@ -115,7 +116,9 @@
 </div>
 
 <script>
-if (new URLSearchParams(location.search).has("embed")) document.body.classList.add("embed");
+var q = new URLSearchParams(location.search);
+if (q.has("embed")) document.body.classList.add("embed");
+if (q.get("theme")) document.documentElement.dataset.theme = q.get("theme");
 const start = performance.now();
 const steps = [];
 function fmt(ms){const s=Math.floor(ms/1000);return `${Math.floor(s/60)}m ${String(s%60).padStart(2,"0")}s`}

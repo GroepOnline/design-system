@@ -25,6 +25,7 @@ Brain (vijfde tool):
   ./ds brain build|check|new decision|new research
   ./ds brain signal|eval|gate
 """
+import hashlib
 import html as htmlmod
 import json
 import os
@@ -313,7 +314,7 @@ SHELL_HEAD = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{rel_root}/tokens.css">
 <style>
   html, body { height: 100%; }
@@ -605,7 +606,7 @@ HOME_HEAD = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>design-system · basislaag voor agent-producten</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{rel_root}/tokens.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -776,8 +777,104 @@ HOME_HEAD = """<!DOCTYPE html>
   .footer .coord-row { display: flex; justify-content: space-between; font-size: 10px; opacity: 0.55; margin-bottom: 10px; letter-spacing: 0.04em; }
   .footer .wrap { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 24px; }
 
+  /* ---- blad-chrome: de pagina als technische tekening ---- */
+  body { padding-bottom: 30px; }
+  .ruler { position: fixed; z-index: 60; pointer-events: none; background: var(--bg); font-family: var(--mono); font-size: 9px; color: var(--text-faint); }
+  .ruler-x { top: 56px; left: 0; right: 0; height: 18px; border-bottom: 1px solid var(--line);
+    background-image: repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px 40px),
+                      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 8px);
+    background-position: 0 100%, 0 100%; background-size: 100% 10px, 100% 5px; background-repeat: no-repeat; }
+  .ruler-y { top: 56px; left: 0; bottom: 30px; width: 20px; border-right: 1px solid var(--line);
+    background-image: repeating-linear-gradient(0deg, var(--line-strong) 0 1px, transparent 1px 40px),
+                      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
+    background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
+  .ruler .rl { position: absolute; opacity: 0.7; letter-spacing: 0.02em; }
+  .ruler-x .rl { top: 2px; transform: translateX(3px); }
+  .ruler-y .rl { left: 1px; transform: translateY(-4px); }
+  .cropmark { position: fixed; width: 14px; height: 14px; z-index: 60; pointer-events: none; }
+  .cropmark::before, .cropmark::after { content: ""; position: absolute; background: var(--line-strong); }
+  .cropmark::before { width: 14px; height: 1px; }
+  .cropmark::after { width: 1px; height: 14px; }
+  .cropmark.tl { top: 62px; left: 26px; }
+  .cropmark.tr { top: 62px; right: 8px; transform: scaleX(-1); }
+  .cropmark.bl { bottom: 36px; left: 26px; transform: scaleY(-1); }
+  .cropmark.br { bottom: 36px; right: 8px; transform: scale(-1); }
+  .titelblok { position: fixed; right: 10px; bottom: 38px; z-index: 60; pointer-events: none;
+    border: 1px solid var(--line-strong); background: var(--bg); padding: 7px 10px;
+    font-family: var(--mono); font-size: 9.5px; line-height: 1.7; color: var(--text-faint); letter-spacing: 0.03em; }
+  .titelblok b { color: var(--text-muted); font-weight: 500; }
+  .modeline { position: fixed; left: 0; right: 0; bottom: 0; height: 30px; z-index: 70;
+    display: flex; align-items: center; gap: 14px; padding: 0 12px 0 26px;
+    border-top: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.02em;
+    white-space: nowrap; overflow: hidden; }
+  .modeline .ml-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; animation: mlBreathe 2.4s ease-in-out infinite; }
+  @keyframes mlBreathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+  .modeline .ml-sec { color: var(--text-muted); }
+  .modeline .ml-right { margin-left: auto; display: flex; gap: 14px; }
+  .xhair { position: fixed; z-index: 55; pointer-events: none; mix-blend-mode: difference; display: none; }
+  .xhair.on { display: block; }
+  .xhair-h { left: 0; right: 0; height: 1px; background: #fff; opacity: 0.35; }
+  .xhair-v { top: 0; bottom: 0; width: 1px; background: #fff; opacity: 0.35; }
+  .xhair-label { position: fixed; z-index: 55; pointer-events: none; font-family: var(--mono); font-size: 9.5px;
+    color: #fff; mix-blend-mode: difference; letter-spacing: 0.04em; padding: 2px 4px; }
+
+  /* ---- hero v3: schaalcontrast + caret ---- */
+  .hero h1 { font-weight: 800; font-size: clamp(44px, 9.2vw, 120px); letter-spacing: -0.045em; }
+  .hero .caret { display: inline-block; width: 0.52em; height: 0.82em; margin-left: 0.06em;
+    background: var(--accent); transform: translateY(0.08em); animation: caretBlink 1.06s steps(1) infinite; }
+  @keyframes caretBlink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+  .hero .eyebrow { letter-spacing: 0.16em; }
+
+  /* ---- ledger: sessie-replay als eerste bewijs ---- */
+  .ledger { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+  .ledger-head { display: flex; align-items: baseline; gap: 12px; padding: 13px 16px; border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 11.5px; color: var(--text-muted); }
+  .ledger-head .lh-live { width: 7px; height: 7px; border-radius: 50%; background: var(--open-green); align-self: center; animation: mlBreathe 2.4s ease-in-out infinite; }
+  .ledger-head .rhs { margin-left: auto; display: flex; gap: 12px; align-items: center; color: var(--text-faint); }
+  .ledger-head .replay { font-family: var(--mono); font-size: 10.5px; color: var(--accent-ink); background: none;
+    border: 1px solid var(--line-strong); border-radius: var(--r-md); padding: 3px 9px; cursor: pointer; }
+  .ledger-head .replay:hover { border-color: var(--accent); }
+  .ledger-rows { padding: 8px 16px 12px; }
+  .lrow { display: flex; align-items: center; gap: 10px; padding: 7px 12px 7px 14px; position: relative;
+    border-radius: var(--r-md); font-size: 13px; color: var(--text-muted);
+    opacity: 0; transform: translateX(-6px); transition: opacity 280ms var(--ease-out), transform 340ms var(--spring); }
+  .lrow.in { opacity: 1; transform: none; }
+  .lrow::before { content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 2px; border-radius: 1px;
+    background: var(--line-strong); transition: background 0.4s; }
+  .lrow.live::before { background: var(--accent); }
+  .lrow.live { box-shadow: var(--glow-live); animation: lrowBreathe var(--dur-pulse-cycle) ease-in-out infinite; color: var(--text); }
+  @keyframes lrowBreathe { 0%, 100% { box-shadow: var(--glow-live); } 50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--open-green) 55%, transparent), 0 0 18px 5px color-mix(in srgb, var(--open-green) 45%, transparent); } }
+  .lrow .lname { font-weight: 500; color: var(--text); }
+  .lrow .ltimer { font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .lrow .ltools { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .lrow .ldiff { font-family: var(--mono); font-size: 11.5px; font-variant-numeric: tabular-nums; display: none; }
+  .lrow.done .ldiff { display: inline; }
+  .lrow.done { filter: saturate(0.85); }
+  .lrow .ldiff .add { color: var(--open-green); }
+  .lrow .ldiff .del { color: var(--red); }
+  .lrow .lstep { font-family: var(--mono); font-size: 11px; color: var(--text-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 34vw; }
+  .lripple { width: 18px; height: 10px; position: relative; }
+  .lripple::before { content: ""; position: absolute; left: 0; right: 0; top: 4px; height: 2px; background: currentColor; border-radius: 1px; opacity: 0.35; }
+  .lripple.go::before { animation: rippleflow 1.1s var(--ease-out) 1; opacity: 0.9; }
+  .lripple.r { color: var(--accent); } .lripple.w { color: var(--open-green); } .lripple.x { color: var(--amber); }
+  @keyframes rippleflow { 0% { transform: scaleX(0.15); transform-origin: left; } 45% { transform: scaleX(1); transform-origin: left; } 46% { transform-origin: right; } 100% { transform: scaleX(0.15); transform-origin: right; } }
+
+  /* ---- invert: één zwarte sectie als climax ---- */
+  .band.invert { background: #121111; color: #F7F6F5; border-color: rgba(255,255,255,0.12); }
+  .band.invert .sec-head h2 { color: #F7F6F5; }
+  .band.invert .sec-head .desc { color: rgba(247,246,245,0.72); }
+  .band.invert .sec-head .eyebrow, .band.invert .sec-head .coord { color: rgba(247,246,245,0.5); }
+  .band.invert .demo-frame { border-color: rgba(255,255,255,0.14); background: #0C0B0B; }
+  .band.invert .demo-frame .dh { border-color: rgba(255,255,255,0.1); color: rgba(247,246,245,0.7); }
+  .band.invert .demo-frame .dh .rhs { color: rgba(247,246,245,0.45); }
+  .band.invert .demo-cap { color: rgba(247,246,245,0.66); }
+
+  /* ---- spring overal waar het voelbaar moet zijn ---- */
+  .comp-card, .stat { transition: border-color var(--dur-fast), transform 480ms var(--spring); }
+
   /* ---- reveal ---- */
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out); }
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 320ms var(--ease-out), transform 480ms var(--spring); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   .hero-inner .reveal:nth-child(1) { transition-delay: 0ms; }
   .hero-inner .reveal:nth-child(2) { transition-delay: 90ms; }
@@ -791,16 +888,25 @@ HOME_HEAD = """<!DOCTYPE html>
     .skin-row { grid-template-columns: 1fr; }
     .topbar nav { display: none; }
     .sec { padding: 56px 0; }
+    .ruler-x { display: none; }
+    .titelblok { display: none; }
+    .cropmark { display: none; }
+    .modeline { padding-left: 12px; gap: 10px; }
+    .modeline .ml-opt { display: none; }
   }
   @media (max-width: 560px) {
     .stats { grid-template-columns: 1fr 1fr; }
     .hero .stroom { opacity: 0.7; }
+    .lrow .lstep { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .hero .stroom { display: none; }
     .stat:hover, .comp-card:hover, .comp-card:active { transform: none; }
+    .hero .caret, .modeline .ml-dot, .ledger-head .lh-live { animation: none; }
+    .lrow { transition: none; opacity: 1; transform: none; }
+    .lrow.live { animation: none; box-shadow: none; }
   }
 </style>
 </head>
@@ -819,12 +925,21 @@ HOME_BODY = """<div class="topbar">
   </div>
 </div>
 
-<div class="hero">
+<div class="ruler ruler-x" id="rulerX" aria-hidden="true"></div>
+<div class="ruler ruler-y" id="rulerY" aria-hidden="true"></div>
+<div class="cropmark tl" aria-hidden="true"></div><div class="cropmark tr" aria-hidden="true"></div>
+<div class="cropmark bl" aria-hidden="true"></div><div class="cropmark br" aria-hidden="true"></div>
+<div class="xhair xhair-h" id="xhairH" aria-hidden="true"></div>
+<div class="xhair xhair-v" id="xhairV" aria-hidden="true"></div>
+<div class="xhair-label" id="xhairL" aria-hidden="true"></div>
+<div class="titelblok" aria-hidden="true">SCALE <b>1:1</b> · UNITS <b>PX</b><br>SHEET <b>01/01</b> · REV <b>D</b><br>design-system <b>v2</b> · {today}</div>
+
+<div class="hero" id="sec-hero">
   <div class="grid-bg"></div>
   <div class="stroom" id="stroom" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="eyebrow reveal">design-system v2 · standalone</div>
-    <h1 class="reveal">De basislaag voor<br>agent-producten<span class="acc">.</span></h1>
+    <h1 class="reveal"><span class="scr">De basislaag voor</span><br><span class="scr">agent-producten</span><span class="acc">.</span><span class="caret" aria-hidden="true"></span></h1>
     <div class="sub reveal">Gemeten uit Devin-DNA, vastgelegd als tokens, componenten en smaakregels. Geen framework, geen build-stap: kopieer wat je nodig hebt.</div>
     <div class="hero-actions reveal">
       <a href="./components/index.html" class="btn primary">Componenten bekijken →</a>
@@ -836,7 +951,17 @@ HOME_BODY = """<div class="topbar">
   </div>
 </div>
 
-<div class="band">
+<div class="ledger" id="ledger">
+  <div class="wrap">
+    <div class="ledger-head">
+      <span class="lh-live"></span> sessie-replay — zo ziet agent-werk eruit
+      <span class="rhs"><span id="ledgerMeta">0 tool-calls</span><button class="replay" id="ledgerReplay">↻ opnieuw</button></span>
+    </div>
+    <div class="ledger-rows" id="ledgerRows"></div>
+  </div>
+</div>
+
+<div class="band invert" id="sec-band">
   <div class="wrap sec">
     <div class="sec-head reveal">
       <div class="eyebrow">Signatuur</div>
@@ -845,7 +970,7 @@ HOME_BODY = """<div class="topbar">
     </div>
     <div class="demo-frame reveal">
       <div class="dh"><span class="live"></span> worked-row <span class="rhs">live component</span></div>
-      <iframe src="{worked_src}?embed" data-demo data-base="{worked_src}" height="320" loading="lazy"></iframe>
+      <iframe src="{worked_src}?embed&theme=dark&v={worked_v}" data-demo data-fixed-theme="dark" data-base="{worked_src}" height="320" loading="lazy"></iframe>
     </div>
     <div class="demo-cap reveal">Dit is geen mockup — het is het live component. Elke actie wordt een rij met tool-ripples (1,1s, stopt). Geen spinners, geen eindeloze animaties.</div>
   </div>
@@ -948,6 +1073,18 @@ HOME_BODY = """<div class="topbar">
     <span>·</span>
     <span>tokens.css + catalog.json zijn de bron</span>
   </div>
+</div>
+
+<div class="modeline">
+  <span class="ml-dot"></span>
+  <span>live</span>
+  <span class="ml-opt">ds build {today}</span>
+  <span class="ml-sec" id="mlSec">§ hero</span>
+  <span class="ml-right">
+    <span class="ml-opt" id="mlY">y 0000/0000</span>
+    <span class="ml-opt">rev d</span>
+    <span id="mlClock">--:--:--</span>
+  </span>
 </div>"""
 
 HOME_FOOT = """<script>
@@ -964,9 +1101,11 @@ HOME_FOOT = """<script>
     if (persist) { try { localStorage.setItem("ds-theme", t); } catch(e) {} }
     if (seg) seg.querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b.dataset.t === t); });
     document.querySelectorAll("iframe[data-demo]").forEach(function(f){
-      var base = f.dataset.base || f.getAttribute("src").split("?")[0];
-      f.dataset.base = base;
-      f.src = base + "?embed" + (t ? "&theme=" + t : "");
+      var parts = f.getAttribute("src").split("?");
+      f.dataset.base = parts[0];
+      var v = (parts[1] || "").split("&").find(function(p){ return p.indexOf("v=") === 0; }) || "";
+      var ft = f.dataset.fixedTheme || t;
+      f.src = f.dataset.base + "?embed" + (ft ? "&theme=" + ft : "") + (v ? "&" + v : "");
     });
   }
   if (seg) seg.querySelectorAll("button").forEach(function(b){
@@ -1039,7 +1178,7 @@ HOME_FOOT = """<script>
       mainStream.appendChild(w);
     });
   }
-  var rsz; window.addEventListener("resize", function(){ clearTimeout(rsz); rsz = setTimeout(buildField, 220); });
+  var rsz; window.addEventListener("resize", function(){ clearTimeout(rsz); rsz = setTimeout(function(){ buildField(); buildRulerX(); buildRulerY(); }, 220); });
   if (!reduced && field && heroEl) {
     var fams = ["r", "w", "x"];
     setInterval(function() {
@@ -1082,6 +1221,204 @@ HOME_FOOT = """<script>
           .onfinish = function(){ r.remove(); };
       });
     }
+  }
+
+  /* ---- scramble: headline decodeert eenmalig bij load ---- */
+  var SCRCH = "!<>-_\\/[]{}=+*^?#";
+  function scramble(el) {
+    var fin = el.textContent, len = fin.length, i = 0;
+    var iv = setInterval(function(){
+      i++;
+      var out = "";
+      for (var c = 0; c < len; c++) {
+        out += c < i ? fin[c] : (fin[c] === " " ? " " : SCRCH[Math.floor(Math.random() * SCRCH.length)]);
+      }
+      el.textContent = out;
+      if (i >= len) clearInterval(iv);
+    }, 26);
+  }
+  if (!reduced) { document.querySelectorAll(".scr").forEach(scramble); }
+
+  /* ---- rulers: labels op de meetlatten ---- */
+  var rxEl = document.getElementById("rulerX"), ryEl = document.getElementById("rulerY");
+  var ryLabels = [];
+  function buildRulerX() {
+    if (!rxEl) return;
+    rxEl.innerHTML = "";
+    for (var x = 80; x < window.innerWidth - 20; x += 80) {
+      var l = document.createElement("span");
+      l.className = "rl"; l.textContent = x; l.style.left = x + "px";
+      rxEl.appendChild(l);
+    }
+  }
+  function updateRulerY() {
+    var sy = window.scrollY || 0;
+    ryLabels.forEach(function(o){ o.el.textContent = String(Math.round((sy + o.vy) / 10) * 10); });
+  }
+  function buildRulerY() {
+    if (!ryEl) return;
+    ryEl.innerHTML = ""; ryLabels = [];
+    for (var y = 80; y < window.innerHeight - 40; y += 80) {
+      var l = document.createElement("span");
+      l.className = "rl"; l.style.top = y + "px";
+      ryEl.appendChild(l); ryLabels.push({ el: l, vy: y });
+    }
+    updateRulerY();
+  }
+  buildRulerX(); buildRulerY();
+
+  /* ---- modeline: utc-klok + y-uitlezing + actieve sectie ---- */
+  var mlClock = document.getElementById("mlClock"), mlY = document.getElementById("mlY"), mlSec = document.getElementById("mlSec");
+  function tickClock() {
+    if (!mlClock) return;
+    var d = new Date();
+    mlClock.textContent = String(d.getUTCHours()).padStart(2,"0") + ":" + String(d.getUTCMinutes()).padStart(2,"0") + ":" + String(d.getUTCSeconds()).padStart(2,"0") + " utc";
+  }
+  tickClock(); setInterval(tickClock, 1000);
+  function updateMlY() {
+    if (!mlY) return;
+    mlY.textContent = "y " + String(Math.round(window.scrollY || 0)).padStart(4,"0") + "/" + String(document.documentElement.scrollHeight).padStart(4,"0");
+  }
+  updateMlY();
+  var scTick = false;
+  window.addEventListener("scroll", function(){
+    if (scTick) return; scTick = true;
+    requestAnimationFrame(function(){ scTick = false; updateRulerY(); updateMlY(); });
+  }, { passive: true });
+  if (mlSec && "IntersectionObserver" in window) {
+    var secObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          var id = en.target.id;
+          var label = en.target.dataset.ml || id.replace("sec-", "");
+          mlSec.textContent = "§ " + label;
+        }
+      });
+    }, { threshold: 0.25 });
+    ["sec-hero","ledger","sec-band","sec-inhoud","sec-catalogus","sec-richtingen","sec-proces","sec-start"].forEach(function(id){
+      var el = document.getElementById(id); if (el) secObs.observe(el);
+    });
+  }
+
+  /* ---- crosshair: meetlat die de muis volgt, gesnapt op 8px ---- */
+  var xhH = document.getElementById("xhairH"), xhV = document.getElementById("xhairV"), xhL = document.getElementById("xhairL");
+  if (xhH && !reduced && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    var xhOn = false;
+    document.addEventListener("pointermove", function(e){
+      if (!xhOn) { xhH.classList.add("on"); xhV.classList.add("on"); xhL.style.display = "block"; xhOn = true; }
+      var gx = Math.round(e.clientX / 8) * 8, gy = Math.round(e.clientY / 8) * 8;
+      xhH.style.top = gy + "px"; xhV.style.left = gx + "px";
+      var lx = gx + 12, ly = gy + 12;
+      if (lx > window.innerWidth - 130) lx = gx - 130;
+      xhL.style.left = lx + "px"; xhL.style.top = ly + "px";
+      xhL.textContent = "X " + String(gx).padStart(4,"0") + " · Y " + String(Math.round((window.scrollY || 0) + gy)).padStart(4,"0");
+    });
+    document.addEventListener("pointerleave", function(){
+      xhH.classList.remove("on"); xhV.classList.remove("on"); xhL.style.display = "none"; xhOn = false;
+    });
+  }
+
+  /* ---- ledger: sessie-replay, eenmalig + replay-knop ---- */
+  var ledgerRows = document.getElementById("ledgerRows");
+  var ledgerMeta = document.getElementById("ledgerMeta");
+  var ledgerBtn = document.getElementById("ledgerReplay");
+  var LEDGER = [
+    { name: "worked-row", tools: [["r","lees tokens.css"],["w","schrijf worked-row/self/default.html"],["x","./ds build"]], diff: [47,12], dur: 5600 },
+    { name: "badge", tools: [["r","lees catalog.json"],["w","schrijf badge/self/v2.html"]], diff: [25,131], dur: 4200 },
+    { name: "tokens", tools: [["r","lees DESIGN.md"],["w","schrijf tokens.css"]], diff: [18,6], dur: 3400 },
+    { name: "gallery", tools: [["x","./ds check"],["w","schrijf ds"]], diff: [31,9], dur: 4600 },
+    { name: "brain", tools: [["w","schrijf brain/Notes/wow-factor.md"]], diff: [13,0], dur: 3000 }
+  ];
+  var ledTO = [], ledIV = [];
+  function ledgerClear() {
+    ledTO.forEach(clearTimeout); ledTO = [];
+    ledIV.forEach(clearInterval); ledIV = [];
+  }
+  function ledgerBuildFinal() {
+    if (!ledgerRows) return;
+    ledgerRows.innerHTML = "";
+    var total = 0, adds = 0, dels = 0;
+    LEDGER.forEach(function(row){
+      total += row.tools.length; adds += row.diff[0]; dels += row.diff[1];
+      var el = document.createElement("div");
+      el.className = "lrow done in";
+      el.innerHTML = '<span class="lname">' + row.name + '</span>' +
+        '<span class="ltimer">' + (row.dur/1000).toFixed(0) + 's</span>' +
+        '<span class="lstep">' + row.tools[row.tools.length-1][1] + '</span>' +
+        '<span class="ltools"></span>' +
+        '<span class="ldiff"><span class="add">+' + row.diff[0] + '</span> <span class="del">−' + row.diff[1] + '</span></span>';
+      ledgerRows.appendChild(el);
+    });
+    if (ledgerMeta) ledgerMeta.textContent = "sessie vastgelegd · " + total + " tool-calls · +" + adds + " −" + dels;
+  }
+  function ledgerPlay() {
+    if (!ledgerRows) return;
+    if (reduced) { ledgerBuildFinal(); return; }
+    ledgerClear();
+    ledgerRows.innerHTML = "";
+    var toolCount = 0, doneCount = 0;
+    var totalTools = 0, adds = 0, dels = 0;
+    LEDGER.forEach(function(r){ totalTools += r.tools.length; adds += r.diff[0]; dels += r.diff[1]; });
+    if (ledgerMeta) ledgerMeta.textContent = "0 tool-calls";
+    LEDGER.forEach(function(row, ri) {
+      var startAt = ri * 1400;
+      ledTO.push(setTimeout(function(){
+        var el = document.createElement("div");
+        el.className = "lrow live";
+        el.innerHTML = '<span class="lname">' + row.name + '</span>' +
+          '<span class="ltimer">0.0s</span>' +
+          '<span class="lstep"></span>' +
+          '<span class="ltools"></span>' +
+          '<span class="ldiff"><span class="add">+' + row.diff[0] + '</span> <span class="del">−' + row.diff[1] + '</span></span>';
+        ledgerRows.appendChild(el);
+        requestAnimationFrame(function(){ el.classList.add("in"); });
+        var rt0 = performance.now();
+        var timerEl = el.querySelector(".ltimer");
+        var tiv = setInterval(function(){
+          timerEl.textContent = ((performance.now() - rt0) / 1000).toFixed(1) + "s";
+        }, 100);
+        ledIV.push(tiv);
+        row.tools.forEach(function(tool, ti) {
+          ledTO.push(setTimeout(function(){
+            var box = el.querySelector(".ltools");
+            var rp = document.createElement("span");
+            rp.className = "lripple " + tool[0];
+            box.appendChild(rp);
+            void rp.offsetWidth;
+            rp.classList.add("go");
+            rp.addEventListener("animationend", function(){ rp.remove(); }, { once: true });
+            setTimeout(function(){ if (rp.parentNode) rp.remove(); }, 1300);
+            el.querySelector(".lstep").textContent = tool[1];
+            toolCount++;
+            if (ledgerMeta) ledgerMeta.textContent = toolCount + " tool-calls";
+          }, startAt + 700 + ti * 1200));
+        });
+        ledTO.push(setTimeout(function(){
+          clearInterval(tiv);
+          el.classList.remove("live");
+          el.classList.add("done");
+          timerEl.textContent = (row.dur / 1000).toFixed(1) + "s";
+          doneCount++;
+          if (doneCount === LEDGER.length && ledgerMeta) {
+            ledgerMeta.textContent = "sessie vastgelegd · " + totalTools + " tool-calls · +" + adds + " −" + dels;
+          }
+        }, startAt + row.dur));
+      }, startAt));
+    });
+  }
+  if (ledgerRows) {
+    if (reduced || !("IntersectionObserver" in window)) {
+      ledgerBuildFinal();
+    } else {
+      var played = false;
+      var lio = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting && !played) { played = true; ledgerPlay(); lio.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      lio.observe(document.getElementById("ledger"));
+    }
+    if (ledgerBtn) ledgerBtn.addEventListener("click", function(){ ledgerPlay(); });
   }
 
   /* ---- tellende cijfers: pas tellen zodra in beeld, eenmalig ---- */
@@ -1127,15 +1464,18 @@ HOME_FOOT = """<script>
     document.querySelectorAll("section[id], .wrap.sec[id]").forEach(function(s){ wio.observe(s); });
   }
 
-  window.addEventListener("load", function(){
-    setTimeout(function(){
-      document.querySelectorAll("iframe[data-demo]").forEach(function(f){
-        try {
-          var h = f.contentDocument.documentElement.scrollHeight;
-          if (h > 0) f.style.height = Math.max(360, h + 2) + "px";
-        } catch(e) {}
-      });
-    }, 600);
+  /* demo-iframes: pas hoogte aan zodra DE IFRAME laadt (ook na theme-switch), niet op window.load */
+  document.querySelectorAll("iframe[data-demo]").forEach(function(f){
+    function fit() {
+      try {
+        var b = f.contentDocument.body;
+        if (!b) return;
+        var h = b.scrollHeight;
+        var min = b.classList.contains("embed") ? 120 : 360;
+        if (h > 0) f.style.height = Math.max(min, h + 2) + "px";
+      } catch(e) {}
+    }
+    f.addEventListener("load", function(){ setTimeout(fit, 250); });
   });
 })();
 </script>
@@ -1363,14 +1703,18 @@ def build_home():
     if os.path.exists(sprite_path):
         with open(sprite_path) as f:
             nicons = len(re.findall(r'id="i-', f.read()))
-    # active worked-row entry → live demo iframe src
+    # active worked-row entry → live demo iframe src (content-hash als cache-buster: browsers
+    # cachen heuristisch; zonder v= blijft een gewijzigde demo soms oud in de iframe)
     worked_src = ""
+    worked_v = ""
     wr = os.path.join(COMP, "worked-row", "catalog.json")
     if os.path.exists(wr):
         wm = load_manifest("worked-row")
         ae = next((e for e in wm["entries"] if e["status"] == "active"), None)
         if ae:
             worked_src = f"./components/worked-row/{ae['file']}"
+            with open(os.path.join(COMP, "worked-row", ae["file"]), "rb") as fh:
+                worked_v = hashlib.md5(fh.read()).hexdigest()[:8]
     # category groups
     cats_html = ""
     seen = set()
@@ -1433,7 +1777,7 @@ def build_home():
         )
     body = HOME_BODY.format(
         nc=nc, nv=nv, nskins=nskins, nself=nself_tot, next_ex=next_tot,
-        nicons=nicons, worked_src=worked_src,
+        nicons=nicons, worked_src=worked_src, worked_v=worked_v,
         cats_html=cats_html, skins_html=skins_html, today=str(date.today()),
     )
     page = HOME_HEAD + body + HOME_FOOT
