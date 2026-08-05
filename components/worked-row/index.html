@@ -266,7 +266,7 @@
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
 &lt;title&gt;component: worked-row (signatuur)&lt;/title&gt;
 &lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;
 &lt;style&gt;
   body { padding: 40px 32px; max-width: 780px; }
@@ -290,7 +290,15 @@
     background: var(--line-strong); transition: background 0.4s;
   }
   .worked.live::before { background: var(--accent); }
-  .worked .chev { transition: transform 0.22s var(--ease-out); display: inline-flex; color: var(--text-faint); }
+  /* live: ademende gloed op de hele rij + hartslag-dot — voelbaar anders dan klaar */
+  .worked.live { box-shadow: var(--glow-live); animation: breathe var(--dur-pulse-cycle) ease-in-out infinite; }
+  @keyframes breathe {
+    0%, 100% { box-shadow: var(--glow-live); }
+    50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--open-green) 55%, transparent),
+                      0 0 18px 5px color-mix(in srgb, var(--open-green) 45%, transparent); }
+  }
+  .worked.done { filter: saturate(0.85); }
+  .worked .chev { transition: transform var(--dur-expand) var(--ease-spring-soft); display: inline-flex; color: var(--text-faint); }
   .worked.open .chev { transform: rotate(90deg); }
   .worked .timer { font-family: var(--mono); font-size: 12.5px; color: var(--text); font-variant-numeric: tabular-nums; }
   .worked .diff { font-family: var(--mono); font-size: 11.5px; }
@@ -313,17 +321,22 @@
   .ripple.r { color: var(--accent); }
   .ripple.w { color: var(--open-green); }
   .ripple.x { color: var(--amber); }
+  .ripple.k { color: var(--amber); }
 
   .worked-detail {
     padding: 0 10px 0 25px;
     font-family: var(--mono); font-size: 12px; color: var(--text-muted);
     display: none;
   }
-  .worked-detail.open { display: block; animation: fadeSlide 0.28s var(--ease-out); }
+  .worked-detail.open { display: block; animation: fadeSlide var(--dur-expand) var(--ease-spring-soft); }
   .worked-detail .step { padding: 3px 0; display: flex; gap: 8px; align-items: center; }
   .worked-detail .step .st { color: var(--text-faint); width: 52px; flex-shrink: 0; }
   .worked-detail .step .ic { width: 12px; height: 12px; }
-  @keyframes fadeSlide { from { opacity: 0; transform: translateY(-4px); } }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(-6px); } }
+  /* embed in een frame (home): demo-chroom weg, alleen het component */
+  body.embed { padding: 16px 18px; max-width: none; }
+  body.embed .demo-head, body.embed .row, body.embed .group &gt; .lbl { display: none; }
+  body.embed .group { margin-bottom: 16px; }
   /* ==== /COMPONENT CSS ==== */
 &lt;/style&gt;
 &lt;/head&gt;
@@ -331,7 +344,7 @@
 &lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;← components&lt;/a&gt; / worked-row — de activiteitsindicator (geen spinners)&lt;/div&gt;
 
 &lt;div class=&quot;group&quot;&gt;
-  &lt;div class=&quot;lbl&quot;&gt;live (klik = uitklappen, knoppen = tool-ripples)&lt;/div&gt;
+  &lt;div class=&quot;lbl&quot;&gt;live — zo ziet agent-werk eruit: klik op de rij om uit te klappen · knoppen hieronder bootsen tool-calls na&lt;/div&gt;
   &lt;div class=&quot;worked live open&quot; id=&quot;w1&quot; onclick=&quot;this.classList.toggle(&#x27;open&#x27;);document.getElementById(&#x27;d1&#x27;).classList.toggle(&#x27;open&#x27;)&quot;&gt;
     &lt;span class=&quot;chev&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
     &lt;span&gt;Aan het werk&lt;/span&gt;
@@ -343,6 +356,7 @@
     &lt;button class=&quot;btn&quot; onclick=&quot;rip(&#x27;r&#x27;)&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;read&lt;/button&gt;
     &lt;button class=&quot;btn&quot; onclick=&quot;rip(&#x27;w&#x27;)&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-pencil&quot;/&gt;&lt;/svg&gt;write&lt;/button&gt;
     &lt;button class=&quot;btn&quot; onclick=&quot;rip(&#x27;x&#x27;)&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-terminal&quot;/&gt;&lt;/svg&gt;extern&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; onclick=&quot;rip(&#x27;k&#x27;)&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-chevron&quot;/&gt;&lt;/svg&gt;wait&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -362,6 +376,7 @@
 &lt;/div&gt;
 
 &lt;script&gt;
+if (new URLSearchParams(location.search).has(&quot;embed&quot;)) document.body.classList.add(&quot;embed&quot;);
 const start = performance.now();
 const steps = [];
 function fmt(ms){const s=Math.floor(ms/1000);return `${Math.floor(s/60)}m ${String(s%60).padStart(2,&quot;0&quot;)}s`}
@@ -373,8 +388,8 @@ setInterval(() =&gt; {
   lastSec = s;
   document.getElementById(&quot;t1&quot;).textContent = fmt(performance.now()-start);
 }, 250);
-const icons={r:&quot;#i-file&quot;,w:&quot;#i-pencil&quot;,x:&quot;#i-terminal&quot;};
-const labels={r:&quot;lees src/styles/*.scss&quot;,w:&quot;schrijf _text-gradient.scss&quot;,x:&quot;curl productie-domein&quot;};
+const icons={r:&quot;#i-file&quot;,w:&quot;#i-pencil&quot;,x:&quot;#i-terminal&quot;,k:&quot;#i-chevron&quot;};
+const labels={r:&quot;lees src/styles/*.scss&quot;,w:&quot;schrijf _text-gradient.scss&quot;,x:&quot;curl productie-domein&quot;,k:&quot;wacht op API-response&quot;};
 function rip(kind){
   const box=document.getElementById(&quot;tools1&quot;);
   const el=document.createElement(&quot;span&quot;);

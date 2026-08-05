@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05T06:30:16Z",
+  "ts": "2026-08-05T07:35:47Z",
   "pass": true,
   "plane": "design-brain",
   "metrics": {
@@ -8,14 +8,14 @@
     "ds_check_errors": 0,
     "open_critical_signals": 0,
     "open_signals": 0,
-    "days_since_score_refresh": 5.82,
-    "days_since_taste_log": 0.27,
-    "open_candidate_rules": 10,
+    "days_since_score_refresh": 5.87,
+    "days_since_taste_log": 0.32,
+    "open_candidate_rules": 11,
     "agent_taste_check": "skipped"
   },
   "failures": [],
   "warnings": [
-    "days_since_score_refresh=5.8 > warn 2.0",
+    "days_since_score_refresh=5.9 > warn 2.0",
     "agent_taste_check=skipped (kater-dev-tools not available)"
   ]
 }

@@ -95,3 +95,9 @@
 - **signal**: de accent-main (2px) overschreeuwde de rest; de font-stack was generiek; de pulses waren nog te dot-achtig. Identiteit = lettertype + beweging die het systeem LEVEN, niet decoratief.
 - **delta**: Sora als display-font (--font-display) + Space Grotesk fallback + IBM Plex Mono; main-streep terug naar 1px/.26; pulses kregen glow + head/tail + ademende scaleY; markers met halo; dichtere interval. Hero voelt nu als werkend systeem, niet als wireframe.
 - **candidate rule**: de signatuur-streep moet DIENEN (pulse draagt de kleur, niet de lijn zelf); display-font (Sora) ≠ body-font (General Sans) — 2e observatie dat Joep op font-niveau kijkt.
+
+## 2026-08-05 · Wow-factor: cijfers tellen, live gloeit, grid werkt
+Signaal (Joep): "rustig-tot-vlak" + wow-factor brief (~/.moshi/uploads/design-system-wow-factor-brief.md). Tegelijk: "live (klik = uitklappen, knoppen = tool-ripples) >> dit gaat denk ik om de input van een agent want een human gaat niet lopen klikken op read?" — noteren als semantiek.
+Correctie: worked-row copy verduidelijkt ("zo ziet agent-werk eruit"); embed-modus verbergt demo-knoppen; stat-nummers tellen op via data-count + IntersectionObserver; worked-row.live krijgt ademende glow (breathe 2.4s); expand krijgt --ease-spring-soft; proc-cards krijgen ghost-numbers 01/02/03; CTA wordt asymmetrisch (1.6fr/1fr + tekst-links); stroom-veld loopt fixed over de hele pagina met grid-waypoints die vullen tijdens scroll; footer krijgt coord-row.
+Richting: het systeem bewijst agent-activiteit door te tonen, niet door te zeggen. Live = gloei + ademhaling; klaar = vlak + gedesatureerd. Cijfers tellen omdat ze echt zijn.
+Regel-kandidaat (semantiek): worked-row is agent-OUTPUT, nooit input. De knoppen in de demo bootsen tool-calls na; in productie vult een agent de rijen. Een human klikt alleen om uit te klappen.
