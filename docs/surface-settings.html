@@ -170,6 +170,24 @@
                       repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
     background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
   .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  /* sectie-registers: klikbare marks op de meetlat (zoals home) */
+  .sruler .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .sruler .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .sruler .reg .reg-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 0 auto 5px; opacity: 0; transition: opacity var(--dur-fast); }
+  .sruler .reg:hover .rgl { color: var(--text-muted); }
+  .sruler .reg.on .rgl { color: var(--accent-ink); }
+  .sruler .reg.on .reg-dot { opacity: 1; }
+  @media (max-height: 700px) { .sruler .reg .rgl { display: none; } }
+  /* blad-plaat rechtsonder: elke pagina is een technische tekening */
+  .splate { position: fixed; right: 12px; bottom: 38px; z-index: 30; padding: 8px 12px;
+    border: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 9px; line-height: 1.7; color: var(--text-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+  .splate .b { color: var(--text-muted); }
+  /* frac-chip per sectie: gemeten, nooit hardcoded */
+  .scoord { position: absolute; top: 4px; right: 6px; font-family: var(--mono); font-size: 9px;
+    color: var(--text-faint); letter-spacing: 0.05em; pointer-events: none; }
+  @media (max-width: 860px) { .splate { display: none; } .scoord { display: none; } }
   .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
     display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
     border-top: 1px solid var(--line); background: var(--bg);
@@ -271,7 +289,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead">
+<div class="pagehead" data-reg="kop">
   <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
   <div class="ph-text">
     <div class="eyebrow">surface</div>
@@ -283,7 +301,7 @@
 <div class="md"><h1>Surface Brief — Settings</h1>
 <blockquote>Binds to <code>DESIGN.md</code>. Mode: Operate. Settings is where trust is built — every option honest, every state visible.</blockquote>
 <hr>
-<h2>1. Structure</h2>
+<h2 data-reg="1-structure">1. Structure</h2>
 <p>Settings replaces the work zone (same shell: rail + Current stay). Two-column inside work zone:</p>
 <pre><code>┌────────────┬─────────────────────────────────────┐
 │ sections   │  active section                      │
@@ -301,10 +319,10 @@
 <li>Content: max 640px measure. No full-width forms.</li>
 <li><code>⌘,</code> opens settings at last-used section. Deep links: <code>/settings/models</code>, <code>/settings/mcp/linear</code>.</li>
 </ul>
-<h2>2. Setting row anatomy</h2>
+<h2 data-reg="2-setting-row-anatomy">2. Setting row anatomy</h2>
 <table><thead><tr><th>Part</th><th>Spec</th></tr></thead><tbody><tr><td>Label</td><td>14px <code>text</code>, one line</td></tr><tr><td>Description</td><td>13px <code>text-muted</code>, max 2 lines, concrete consequence not marketing</td></tr><tr><td>Control</td><td>right-aligned: toggle, select, input, or action button</td></tr><tr><td>State</td><td>live value always visible — never hidden behind &quot;edit&quot;</td></tr></tbody></table>
 <p>Example: <code>Sandbox-uitvoering</code> / <code>Draait agent-code in een Docker-container. Vereist Docker daemon.</code> / <code>● Aan (docker)</code></p>
-<h2>3. Key sections &amp; their rules</h2>
+<h2 data-reg="3-key-sections-their">3. Key sections &amp; their rules</h2>
 <h3>Modellen (providers)</h3>
 <ul>
 <li>Provider rows: name, health dot (live), model count, <code>Ververs</code> per row (independent refresh, spinner on that row only).</li>
@@ -339,16 +357,16 @@
 <li>Engine diagnostics (PID, uptime mono), config inspector (read-only mono JSON), <code>[Herstart engine]</code>, update channel select, export diagnostics button.</li>
 <li>No playful styling — developer section follows the same contract exactly.</li>
 </ul>
-<h2>4. Change behavior</h2>
+<h2 data-reg="4-change-behavior">4. Change behavior</h2>
 <ul>
 <li>Toggles apply immediately, inline <code>✓</code> settles 800ms next to control, then fades.</li>
 <li>Invalid input: <code>danger</code> border + reason under the row. Never blocks other settings.</li>
 <li>Restart-required changes: badge <code>Herstart nodig</code> on the row + one <code>[Herstart nu]</code> button at section bottom. Never a forced dialog.</li>
 <li>Reset-to-default per section: <code>danger</code>-zone at bottom, hairline-separated, typed confirmation for destructive (<code>typ RESET</code>).</li>
 </ul>
-<h2>5. States</h2>
+<h2 data-reg="5-states">5. States</h2>
 <table><thead><tr><th>State</th><th>Behavior</th></tr></thead><tbody><tr><td>Loading section</td><td>Skeleton rows in exact geometry</td></tr><tr><td>Offline</td><td>Settings editable (local), sync-dependent rows show <code>Offline</code> chip</td></tr><tr><td>Partial failure</td><td>Failing row shows error; section stays usable</td></tr><tr><td>Search</td><td><code>⌘F</code> filters rows across all sections, jumps to match</td></tr></tbody></table>
-<h2>6. Acceptance criteria</h2>
+<h2 data-reg="6-acceptance-criteria">6. Acceptance criteria</h2>
 <ul>
 <li>[ ] Every setting shows its live value without clicking.</li>
 <li>[ ] Every error states cause + repair in the same row.</li>
@@ -356,10 +374,11 @@
 <li>[ ] MCP OAuth completable without leaving the surface.</li>
 <li>[ ] All sections keyboard navigable; <code>⌘F</code> finds any setting in ≤2s.</li>
 </ul></div>
-<div class="gen">gegenereerd uit surfaces/settings.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit surfaces/settings.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
@@ -459,7 +478,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  var pageTitle = document.title.split(" — ")[0] || "pagina";
+  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var sd = document.getElementById("splateDate");
+  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -470,10 +492,53 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
   function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
   var srl = [];
+  var sregs = [];
   function updateSY() {
     var st = scrollTopOf();
     if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
     srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+    if (!sregs.length) return;
+    var vh = window.innerHeight;
+    var line = vh * 0.4;
+    var H = heightOf();
+    var mainTop = mainScrolls() ? mainEl.getBoundingClientRect().top : 0;
+    var active = null;
+    sregs.forEach(function (o) {
+      var r = o.el.getBoundingClientRect();
+      o.rg.style.top = Math.max(34, Math.min(vh - 66, r.top)) + "px";
+      var docTop = r.top - mainTop + st;
+      o.chip.textContent = (H > 0 ? Math.max(0, Math.min(1, docTop / H)) : 0).toFixed(2);
+      if (r.top <= line) active = o;
+    });
+    sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
+    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+  }
+  function buildSRegister() {
+    if (!sr) return;
+    sr.querySelectorAll(".reg").forEach(function (g) { g.remove(); });
+    document.querySelectorAll(".scoord").forEach(function (c) { c.remove(); });
+    sregs = [];
+    document.querySelectorAll(".main [data-reg]").forEach(function (el) {
+      var label = el.getAttribute("data-reg");
+      var g = document.createElement("button");
+      g.type = "button"; g.className = "reg";
+      g.innerHTML = '<span class="reg-dot"></span><span class="rgl"></span>';
+      g.querySelector(".rgl").textContent = label;
+      g.addEventListener("click", function () {
+        if (mainScrolls()) {
+          mainEl.scrollTo({ top: el.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop - 24, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+        }
+      });
+      sr.appendChild(g);
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+      var chip = document.createElement("span");
+      chip.className = "scoord"; chip.textContent = "0.00";
+      el.appendChild(chip);
+      sregs.push({ el: el, rg: g, chip: chip, label: label });
+    });
+    updateSY();
   }
   function buildSRuler() {
     if (!sr) return;
@@ -487,6 +552,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     updateSY();
   }
   buildSRuler();
+  buildSRegister();
   var sTick = false;
   function onScroll() {
     if (sTick) return; sTick = true;
@@ -494,8 +560,8 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   }
   if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
-  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
-  window.addEventListener("load", buildSRuler);
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(function () { buildSRuler(); buildSRegister(); }, 200); });
+  window.addEventListener("load", function () { buildSRuler(); buildSRegister(); setTimeout(buildSRegister, 900); });
 })();
 </script>
 </body>

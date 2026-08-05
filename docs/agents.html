@@ -170,6 +170,24 @@
                       repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
     background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
   .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  /* sectie-registers: klikbare marks op de meetlat (zoals home) */
+  .sruler .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .sruler .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .sruler .reg .reg-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 0 auto 5px; opacity: 0; transition: opacity var(--dur-fast); }
+  .sruler .reg:hover .rgl { color: var(--text-muted); }
+  .sruler .reg.on .rgl { color: var(--accent-ink); }
+  .sruler .reg.on .reg-dot { opacity: 1; }
+  @media (max-height: 700px) { .sruler .reg .rgl { display: none; } }
+  /* blad-plaat rechtsonder: elke pagina is een technische tekening */
+  .splate { position: fixed; right: 12px; bottom: 38px; z-index: 30; padding: 8px 12px;
+    border: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 9px; line-height: 1.7; color: var(--text-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+  .splate .b { color: var(--text-muted); }
+  /* frac-chip per sectie: gemeten, nooit hardcoded */
+  .scoord { position: absolute; top: 4px; right: 6px; font-family: var(--mono); font-size: 9px;
+    color: var(--text-faint); letter-spacing: 0.05em; pointer-events: none; }
+  @media (max-width: 860px) { .splate { display: none; } .scoord { display: none; } }
   .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
     display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
     border-top: 1px solid var(--line); background: var(--bg);
@@ -271,7 +289,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead">
+<div class="pagehead" data-reg="kop">
   <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
   <div class="ph-text">
     <div class="eyebrow">voor ai</div>
@@ -284,12 +302,12 @@
 <blockquote>Machine-gericht. Menselijke uitleg: <code>README.md</code>, <code>WORKFLOW.md</code>, <code>hoe-wat.md</code>.</blockquote>
 <blockquote>Bindend: <code>DESIGN.md</code> (taal + bans), <code>taste/taste-rules.md</code> (taste),</blockquote>
 <blockquote><code>motion-spec.md</code> (gelockt). Kompas: <code>PLAN.md</code> (visie + routekaart).</blockquote>
-<h2>Wat dit is</h2>
+<h2 data-reg="wat-dit-is">Wat dit is</h2>
 <p>Design-system v2 (&quot;Devin-richting&quot;) voor agent-producten. Standalone, geen</p>
 <p>npm-package: kopieermodel (shadcn-achtig). Bron van waarheid per component:</p>
 <p><code>components/&lt;naam&gt;/catalog.json</code>. Tokens + primitives: <code>tokens.css</code>.</p>
 <p>Skins: <code>styles.json</code> (één <code>data-style</code>-attribuut wisselt de hele feel).</p>
-<h2>Invarianten (nooit breken)</h2>
+<h2 data-reg="invarianten">Invarianten (nooit breken)</h2>
 <ol>
 <li><strong>Lock-model.</strong> Catalogus-entries zijn onveranderlijk (<code>locked</code>) tot</li>
 <p>expliciete <code>ds select</code> (maakt ACTIEF) of <code>ds remove</code>. Nooit een entry-file</p>
@@ -305,7 +323,7 @@
 <li><strong>Single-active.</strong> Exact 1 entry per component heeft status <code>active</code>;</li>
 <p><code>ds select</code> handhaaft dit automatisch.</p>
 </ol>
-<h2>Commando&#x27;s</h2>
+<h2 data-reg="commando-s">Commando&#x27;s</h2>
 <pre><code>./ds list                                  # overzicht: entries, active, self/ext per component
 ./ds &lt;comp&gt; list                           # entries + docs (use/avoid) van één component
 ./ds &lt;comp&gt; select &lt;id&gt;                    # active wisselen + web rebuild
@@ -326,7 +344,7 @@
 ./ds brain gate                            # eval + hard fail bij drempels</code></pre>
 <p>Elke <code>add</code>/<code>select</code>/<code>remove</code>/<code>style add</code> mutatie herbouwt web automatisch.</p>
 <p>CLI en web lezen hetzelfde manifest; er bestaat geen tweede bron.</p>
-<h2>Componenten toevoegen of wijzigen</h2>
+<h2 data-reg="componenten-toevoegen">Componenten toevoegen of wijzigen</h2>
 <ol>
 <li>Werk in <code>playground/</code> (relatieve paden ok).</li>
 <li><code>./ds &lt;comp&gt; add playground/&lt;bestand&gt;.html --id &lt;id&gt; --origin self --note &quot;wat en waarom&quot;</code></li>
@@ -336,11 +354,11 @@
 <p>Nieuwe component-familie: map + <code>catalog.json</code> aanmaken (bestaand manifest als</p>
 <p>template), dan <code>./ds build</code>. Elke component krijgt verplicht een <code>cat</code>:</p>
 <p>primitieven · gesprek · bewijs · structuur (rail/gallery groeperen erop).</p>
-<h2>Taste-propagatie (verplicht, zelfde commit)</h2>
+<h2 data-reg="taste-propagatie">Taste-propagatie (verplicht, zelfde commit)</h2>
 <p>taste-log entry → (2+ observaties) → regel in <code>taste/taste-rules.md</code> →</p>
 <p>update: <code>DESIGN.md</code> + <code>tokens.css</code> + geraakte <code>components/</code> + <code>surfaces/</code>.</p>
 <p>Een regel die alleen in taste-rules staat, bestaat niet.</p>
-<h2>Design-regels (harde bans, uit DESIGN.md §10)</h2>
+<h2 data-reg="design-regels">Design-regels (harde bans, uit DESIGN.md §10)</h2>
 <ul>
 <li>Geen spinners/loaders -- activiteit = worked-row + tool-ripples (1.1s, stopt).</li>
 <p>worked-row is <strong>agent-output, nooit input</strong>: in productie vult een agent de</p>
@@ -360,7 +378,7 @@
 <li>Typografie/iconen: DESIGN.md §11-§13 (schaal-tokens verplicht; sprite-svg&#x27;s</li>
 <p>altijd <code>fill:none</code> + <code>stroke:currentColor</code>)</p>
 </ul>
-<h2>Brain (niet-bindende context)</h2>
+<h2 data-reg="brain">Brain (niet-bindende context)</h2>
 <p>Agents mogen <code>brain/*<em>/</em>.md</code> lezen en schrijven voor research/decisions.</p>
 <p>Product-waarheid blijft <code>DESIGN.md</code>, <code>tokens.css</code>, <code>taste/</code>,</p>
 <p><code>components/*/catalog.json</code>. Een <code>brain/Decisions/</code>-note overschrijft nooit</p>
@@ -374,7 +392,7 @@
 <p>Optioneel lokaal (Obsidian GUI moet open zijn, vault <strong>brain</strong>):</p>
 <p><code>XDG_RUNTIME_DIR=/run/user/$UID obsidian vault=brain files|search|read …</code>.</p>
 <p>Zie <code>brain/README.md</code>.</p>
-<h2>Agent-laag (<code>.agents/</code>)</h2>
+<h2 data-reg="agent-laag">Agent-laag (<code>.agents/</code>)</h2>
 <p>Canonieke, tool-onafhankelijke skills, subagents en hooks. <code>.cursor/</code> is een</p>
 <p>dunne overlay: symlinks naar <code>.agents/skills/*</code> plus <code>.cursor/hooks.json</code> als</p>
 <p>wiring. Subagents voeren fase-werk uit; de <code>non-design-pipeline</code> skill</p>
@@ -391,9 +409,9 @@
 <p>taste-sectie in <code>CLAUDE.md</code>. Regenereren/checken met</p>
 <p><code>kater-dev-tools/.agents/scripts/generate-taste.py --target &lt;repo&gt;</code>.</p>
 <p>Nooit de gegenereerde overlays handmatig bewerken.</p>
-<h2>Bestandskaart</h2>
+<h2 data-reg="bestandskaart">Bestandskaart</h2>
 <table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3 stdlib, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting)</td></tr><tr><td><code>styles.json</code></td><td>skins (devin, strak, ...) -- schakel via <code>data-style</code></td></tr><tr><td><code>components/</code></td><td>12 families, elk catalog.json + self/ + external/; plus icons.svg + lib.js</td></tr><tr><td><code>components/icons.svg</code></td><td>Lucide-sprite (<code>&lt;use href=&quot;...#i-*&quot;&gt;</code>)</td></tr><tr><td><code>components/lib.js</code></td><td><code>?theme=</code> deep-link + gallery-postMessage op standalone varianten</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td></tr><tr><td><code>motion-spec.md</code></td><td>motion-fysica (gelockt)</td></tr><tr><td><code>brain/</code></td><td>Obsidian Second Brain (niet-bindende context)</td></tr><tr><td><code>brain-site/</code></td><td>gegenereerde leeslaag uit <code>brain/</code> (<code>ds brain build</code>)</td></tr><tr><td><code>.agents/</code></td><td>canonieke agent-skills + subagents + hooks (<code>.cursor/</code> is overlay)</td></tr><tr><td><code>new-project.sh</code></td><td>scaffold nieuw product vanuit dit systeem</td></tr></tbody></table>
-<h2>Build, check, serve (elke agent/CI)</h2>
+<h2 data-reg="build-check-serve">Build, check, serve (elke agent/CI)</h2>
 <p>Geen package manager of third-party deps nodig voor de kern: <code>ds</code> is pure</p>
 <p>Python 3.12 stdlib. Een runtime-check is <code>python3 --version</code>. Er is geen</p>
 <p>setup-script en geen environment-config nodig.</p>
@@ -422,15 +440,16 @@
 <li><strong>Fonts</strong> komen van externe CDNs (Fontshare/Google); offline werkt de layout</li>
 <p>met fallback-fonts.</p>
 </ul>
-<h2>Remotes (push-lanes)</h2>
+<h2 data-reg="remotes">Remotes (push-lanes)</h2>
 <table><thead><tr><th>Remote</th><th>URL</th><th>Rol</th></tr></thead><tbody><tr><td><code>origin-ssh</code></td><td><code>git@github.com-groeponline:GroepOnline/design-system.git</code></td><td><strong>Default push-lane voor agents.</strong> SSH als chefadmin-netizen via <code>~/.ssh/config-groeponline</code>. Volledige scope, inclusief <code>.github/workflows</code>.</td></tr><tr><td><code>origin</code></td><td><code>https://github.com/GroepOnline/design-system.git</code></td><td>Fetch + simpele pushes. Het HTTPS-token heeft <strong>geen workflow-scope</strong>: een push die workflow-bestanden bevat wordt geweigerd.</td></tr><tr><td><code>ocg-mirror</code></td><td><code>chef-runner-01:/srv/chef/mirrors/...</code></td><td>Archief-mirror (OnlineChefGroep). Nooit rechtstreeks naar pushen.</td></tr></tbody></table>
 <p>Regel: raakt je commit <code>.github/workflows/</code> → push met <code>git push origin-ssh &lt;branch&gt;</code>.</p>
 <p>Kom je dat pas achter bij een geweigerde push → zelfde branch opnieuw pushen naar</p>
 <p><code>origin-ssh</code>, geen force-push nodig.</p></div>
-<div class="gen">gegenereerd uit AGENTS.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit AGENTS.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
@@ -530,7 +549,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  var pageTitle = document.title.split(" — ")[0] || "pagina";
+  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var sd = document.getElementById("splateDate");
+  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -541,10 +563,53 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
   function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
   var srl = [];
+  var sregs = [];
   function updateSY() {
     var st = scrollTopOf();
     if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
     srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+    if (!sregs.length) return;
+    var vh = window.innerHeight;
+    var line = vh * 0.4;
+    var H = heightOf();
+    var mainTop = mainScrolls() ? mainEl.getBoundingClientRect().top : 0;
+    var active = null;
+    sregs.forEach(function (o) {
+      var r = o.el.getBoundingClientRect();
+      o.rg.style.top = Math.max(34, Math.min(vh - 66, r.top)) + "px";
+      var docTop = r.top - mainTop + st;
+      o.chip.textContent = (H > 0 ? Math.max(0, Math.min(1, docTop / H)) : 0).toFixed(2);
+      if (r.top <= line) active = o;
+    });
+    sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
+    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+  }
+  function buildSRegister() {
+    if (!sr) return;
+    sr.querySelectorAll(".reg").forEach(function (g) { g.remove(); });
+    document.querySelectorAll(".scoord").forEach(function (c) { c.remove(); });
+    sregs = [];
+    document.querySelectorAll(".main [data-reg]").forEach(function (el) {
+      var label = el.getAttribute("data-reg");
+      var g = document.createElement("button");
+      g.type = "button"; g.className = "reg";
+      g.innerHTML = '<span class="reg-dot"></span><span class="rgl"></span>';
+      g.querySelector(".rgl").textContent = label;
+      g.addEventListener("click", function () {
+        if (mainScrolls()) {
+          mainEl.scrollTo({ top: el.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop - 24, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+        }
+      });
+      sr.appendChild(g);
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+      var chip = document.createElement("span");
+      chip.className = "scoord"; chip.textContent = "0.00";
+      el.appendChild(chip);
+      sregs.push({ el: el, rg: g, chip: chip, label: label });
+    });
+    updateSY();
   }
   function buildSRuler() {
     if (!sr) return;
@@ -558,6 +623,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     updateSY();
   }
   buildSRuler();
+  buildSRegister();
   var sTick = false;
   function onScroll() {
     if (sTick) return; sTick = true;
@@ -565,8 +631,8 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   }
   if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
-  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
-  window.addEventListener("load", buildSRuler);
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(function () { buildSRuler(); buildSRegister(); }, 200); });
+  window.addEventListener("load", function () { buildSRuler(); buildSRegister(); setTimeout(buildSRegister, 900); });
 })();
 </script>
 </body>

@@ -6,6 +6,13 @@
 ## [Unreleased]
 
 ### Added
+- **Sectie-register op elk blad**: klikbare marks op de Y-meetlat van elke
+  shell-pagina (12 catalogus-bladen, gallery, docs, taste, brain). Marks
+  clampen in de viewport en volgen hun sectie; de actieve sectie (40%-lijn)
+  stuurt de modeline. Frac-chips per sectie gemeten via JS; blad-plaat
+  rechtsonder met SHEET-id (blad NN/12, idx, doc, taste, brain); plaat-datum
+  via JS zodat `build --check` idempotent blijft. Secties gemarkeerd via
+  `data-reg`; md-h2's krijgen gesaneerde slugs (haakjes weg, woordgrens)
 - **Drie type-stemmen**: Instrument Serif als display-stem van het blad
   (hero, sectie-titels, pagina-headers), naast General Sans (interface) en
   IBM Plex Mono (data). Sora en Space Grotesk verwijderd uit stacks en

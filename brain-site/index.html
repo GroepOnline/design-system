@@ -170,6 +170,24 @@
                       repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
     background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
   .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  /* sectie-registers: klikbare marks op de meetlat (zoals home) */
+  .sruler .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .sruler .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .sruler .reg .reg-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 0 auto 5px; opacity: 0; transition: opacity var(--dur-fast); }
+  .sruler .reg:hover .rgl { color: var(--text-muted); }
+  .sruler .reg.on .rgl { color: var(--accent-ink); }
+  .sruler .reg.on .reg-dot { opacity: 1; }
+  @media (max-height: 700px) { .sruler .reg .rgl { display: none; } }
+  /* blad-plaat rechtsonder: elke pagina is een technische tekening */
+  .splate { position: fixed; right: 12px; bottom: 38px; z-index: 30; padding: 8px 12px;
+    border: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 9px; line-height: 1.7; color: var(--text-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+  .splate .b { color: var(--text-muted); }
+  /* frac-chip per sectie: gemeten, nooit hardcoded */
+  .scoord { position: absolute; top: 4px; right: 6px; font-family: var(--mono); font-size: 9px;
+    color: var(--text-faint); letter-spacing: 0.05em; pointer-events: none; }
+  @media (max-width: 860px) { .splate { display: none; } .scoord { display: none; } }
   .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
     display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
     border-top: 1px solid var(--line); background: var(--bg);
@@ -271,7 +289,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>Brain</h1><div class="cat caps">23 notes · niet-bindende context</div></div></div><div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div><div class="caps" style="margin:22px 2px 10px">Ingang</div><div class="cards">  <a class="card reveal" href="./home.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Home</span><span class="cd" style="font-family:var(--mono)">Home.md</span></a>  <a class="card reveal" href="./readme.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">README</span><span class="cd" style="font-family:var(--mono)">README.md</span></a></div>
+<div class="pagehead" data-reg="kop"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>Brain</h1><div class="cat caps">23 notes · niet-bindende context</div></div></div><div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div><div class="caps" style="margin:22px 2px 10px">Ingang</div><div class="cards">  <a class="card reveal" href="./home.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Home</span><span class="cd" style="font-family:var(--mono)">Home.md</span></a>  <a class="card reveal" href="./readme.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">README</span><span class="cd" style="font-family:var(--mono)">README.md</span></a></div>
 <div class="caps" style="margin:22px 2px 10px">Indexes</div><div class="cards">  <a class="card reveal" href="./indexes-components.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Components</span><span class="cd" style="font-family:var(--mono)">Indexes/Components.md</span></a>  <a class="card reveal" href="./indexes-concepts.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Concepts</span><span class="cd" style="font-family:var(--mono)">Indexes/Concepts.md</span></a>  <a class="card reveal" href="./indexes-decisions.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Decisions</span><span class="cd" style="font-family:var(--mono)">Indexes/Decisions.md</span></a>  <a class="card reveal" href="./indexes-design-language.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Design Language</span><span class="cd" style="font-family:var(--mono)">Indexes/Design Language.md</span></a>  <a class="card reveal" href="./indexes-research.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Research</span><span class="cd" style="font-family:var(--mono)">Indexes/Research.md</span></a>  <a class="card reveal" href="./indexes-surfaces.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Surfaces</span><span class="cd" style="font-family:var(--mono)">Indexes/Surfaces.md</span></a>  <a class="card reveal" href="./indexes-taste.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Taste</span><span class="cd" style="font-family:var(--mono)">Indexes/Taste.md</span></a></div>
 <div class="caps" style="margin:22px 2px 10px">Concepts</div><div class="cards">  <a class="card reveal" href="./concepts-gegenereerde-bestanden.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Gegenereerde bestanden</span><span class="cd" style="font-family:var(--mono)">Concepts/Gegenereerde bestanden.md</span></a>  <a class="card reveal" href="./concepts-lock-model.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Lock-model</span><span class="cd" style="font-family:var(--mono)">Concepts/Lock-model.md</span></a>  <a class="card reveal" href="./concepts-origin-split.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Origin-split</span><span class="cd" style="font-family:var(--mono)">Concepts/Origin-split.md</span></a>  <a class="card reveal" href="./concepts-playground.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Playground</span><span class="cd" style="font-family:var(--mono)">Concepts/Playground.md</span></a>  <a class="card reveal" href="./concepts-single-active.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Single-active</span><span class="cd" style="font-family:var(--mono)">Concepts/Single-active.md</span></a>  <a class="card reveal" href="./concepts-taste-propagatie.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Taste-propagatie</span><span class="cd" style="font-family:var(--mono)">Concepts/Taste-propagatie.md</span></a></div>
 <div class="caps" style="margin:22px 2px 10px">Decisions</div><div class="cards">  <a class="card reveal" href="./decisions-2026-07-30-agent-laag-in-punt-agents.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Agent-laag in punt-agents</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Agent-laag in punt-agents.md</span></a>  <a class="card reveal" href="./decisions-2026-07-30-agent-taste-buiten-dit-repo.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Agent-taste buiten dit repo</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Agent-taste buiten dit repo.md</span></a>  <a class="card reveal" href="./decisions-2026-07-30-brain-als-vijfde-tool.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Brain als vijfde tool</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Brain als vijfde tool.md</span></a>  <a class="card reveal" href="./decisions-2026-07-30-brain-signals-eval-dual-gate.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Brain signals eval dual gate</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Brain signals eval dual gate.md</span></a></div>
@@ -279,6 +297,7 @@
 <div class="caps" style="margin:22px 2px 10px">Templates</div><div class="cards">  <a class="card reveal" href="./templates-new-decision.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">New Decision</span><span class="cd" style="font-family:var(--mono)">Templates/New Decision.md</span></a>  <a class="card reveal" href="./templates-new-research.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">New Research</span><span class="cd" style="font-family:var(--mono)">Templates/New Research.md</span></a></div><div class="gen">gegenereerd door ds brain build op 2026-08-05 · bron: brain/**/*.md</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">brain</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
@@ -378,7 +397,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  var pageTitle = document.title.split(" — ")[0] || "pagina";
+  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var sd = document.getElementById("splateDate");
+  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -389,10 +411,53 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
   function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
   var srl = [];
+  var sregs = [];
   function updateSY() {
     var st = scrollTopOf();
     if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
     srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+    if (!sregs.length) return;
+    var vh = window.innerHeight;
+    var line = vh * 0.4;
+    var H = heightOf();
+    var mainTop = mainScrolls() ? mainEl.getBoundingClientRect().top : 0;
+    var active = null;
+    sregs.forEach(function (o) {
+      var r = o.el.getBoundingClientRect();
+      o.rg.style.top = Math.max(34, Math.min(vh - 66, r.top)) + "px";
+      var docTop = r.top - mainTop + st;
+      o.chip.textContent = (H > 0 ? Math.max(0, Math.min(1, docTop / H)) : 0).toFixed(2);
+      if (r.top <= line) active = o;
+    });
+    sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
+    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+  }
+  function buildSRegister() {
+    if (!sr) return;
+    sr.querySelectorAll(".reg").forEach(function (g) { g.remove(); });
+    document.querySelectorAll(".scoord").forEach(function (c) { c.remove(); });
+    sregs = [];
+    document.querySelectorAll(".main [data-reg]").forEach(function (el) {
+      var label = el.getAttribute("data-reg");
+      var g = document.createElement("button");
+      g.type = "button"; g.className = "reg";
+      g.innerHTML = '<span class="reg-dot"></span><span class="rgl"></span>';
+      g.querySelector(".rgl").textContent = label;
+      g.addEventListener("click", function () {
+        if (mainScrolls()) {
+          mainEl.scrollTo({ top: el.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop - 24, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+        }
+      });
+      sr.appendChild(g);
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+      var chip = document.createElement("span");
+      chip.className = "scoord"; chip.textContent = "0.00";
+      el.appendChild(chip);
+      sregs.push({ el: el, rg: g, chip: chip, label: label });
+    });
+    updateSY();
   }
   function buildSRuler() {
     if (!sr) return;
@@ -406,6 +471,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     updateSY();
   }
   buildSRuler();
+  buildSRegister();
   var sTick = false;
   function onScroll() {
     if (sTick) return; sTick = true;
@@ -413,8 +479,8 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   }
   if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
-  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
-  window.addEventListener("load", buildSRuler);
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(function () { buildSRuler(); buildSRegister(); }, 200); });
+  window.addEventListener("load", function () { buildSRuler(); buildSRegister(); setTimeout(buildSRegister, 900); });
 })();
 </script>
 </body>

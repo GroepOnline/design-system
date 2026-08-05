@@ -114,6 +114,7 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 - Sidebar: workspace-switcher, nav (Sessies/Ask/Wiki/Review), Recent met PR-badges, onderaan Thema + Instellingen.
 - Transcript: max 720px kolom, gecentreerd. Composer plakt onderaan, zelfde kolombreedte.
 - Artifact: rapport/diff/browser. Toggle via panel-icoon in topbar. <1100px: verborgen. <760px: sidebar weg.
+- **Elke pagina is een blad:** de Y-meetlat draagt klikbare sectie-registers (`data-reg`), de actieve sectie licht op (40%-lijn), frac-chips per sectie worden gemeten via JS, nooit hardcoded. Blad-plaat rechtsonder (SHEET-id · REV D). Mobiel: meetlat en plaat weg, modeline blijft.
 
 ## 9. Stem (copy)
 

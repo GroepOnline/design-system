@@ -170,6 +170,24 @@
                       repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
     background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
   .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  /* sectie-registers: klikbare marks op de meetlat (zoals home) */
+  .sruler .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .sruler .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .sruler .reg .reg-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 0 auto 5px; opacity: 0; transition: opacity var(--dur-fast); }
+  .sruler .reg:hover .rgl { color: var(--text-muted); }
+  .sruler .reg.on .rgl { color: var(--accent-ink); }
+  .sruler .reg.on .reg-dot { opacity: 1; }
+  @media (max-height: 700px) { .sruler .reg .rgl { display: none; } }
+  /* blad-plaat rechtsonder: elke pagina is een technische tekening */
+  .splate { position: fixed; right: 12px; bottom: 38px; z-index: 30; padding: 8px 12px;
+    border: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 9px; line-height: 1.7; color: var(--text-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+  .splate .b { color: var(--text-muted); }
+  /* frac-chip per sectie: gemeten, nooit hardcoded */
+  .scoord { position: absolute; top: 4px; right: 6px; font-family: var(--mono); font-size: 9px;
+    color: var(--text-faint); letter-spacing: 0.05em; pointer-events: none; }
+  @media (max-width: 860px) { .splate { display: none; } .scoord { display: none; } }
   .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
     display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
     border-top: 1px solid var(--line); background: var(--bg);
@@ -271,7 +289,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead">
+<div class="pagehead" data-reg="kop">
   <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
   <div class="ph-text">
     <div class="eyebrow">taal</div>
@@ -286,7 +304,7 @@
 <blockquote>Devin-producttaal, gemeten aan hun live site, met eigen motion-discipline</blockquote>
 <blockquote>en Nederlandse copy-stem. Beslissing: 2026-07-27 (taste-log).</blockquote>
 <hr>
-<h2>1. Kern</h2>
+<h2 data-reg="1-kern">1. Kern</h2>
 <p><strong>Een stil, warm, mat instrument dat toont wat de agent doet terwijl het gebeurt.</strong></p>
 <p>Drie pijlers:</p>
 <ol>
@@ -294,9 +312,9 @@
 <li><strong>Levende activiteit.</strong> Werk zie je als tijd + golfjes, nooit als spinner.</li>
 <li><strong>Bewijs in beeld.</strong> Diffs, PR-cards, before/after. De agent toont, niet vertelt.</li>
 </ol>
-<h2>2. Gemeten Devin-DNA (bron: devin.ai computed styles, 2026-07-27)</h2>
+<h2 data-reg="2-gemeten-devin-dna">2. Gemeten Devin-DNA (bron: devin.ai computed styles, 2026-07-27)</h2>
 <table><thead><tr><th>Element</th><th>Waarde</th><th>Overname</th></tr></thead><tbody><tr><td>body bg</td><td><code>rgb(247,246,245)</code></td><td>exact</td></tr><tr><td>tekst</td><td><code>rgb(25,25,25)</code></td><td>exact</td></tr><tr><td>link-blauw</td><td><code>rgb(68,109,205)</code></td><td>als <code>--accent-ink</code> familie</td></tr><tr><td>merk-blauw</td><td><code>#317CFF</code> (uit product-UI)</td><td>als <code>--accent</code></td></tr><tr><td>badge-blauw</td><td><code>#2200FF</code> (NEW-pill)</td><td>niet -- te hard</td></tr><tr><td>marketing-cards</td><td>radius 16px</td><td>product: 12px (<code>--r-lg</code>)</td></tr><tr><td>knoppen (marketing)</td><td>radius 0px</td><td>product: 8px (<code>--r-md</code>)</td></tr><tr><td>headings</td><td>weight 500, tracking −4%</td><td>weight 500, tracking −2% (product)</td></tr><tr><td>font</td><td>NB International Pro</td><td>General Sans (interface) + Instrument Serif (display, eigen blad-stem)</td></tr></tbody></table>
-<h2>3. Kleur</h2>
+<h2 data-reg="3-kleur">3. Kleur</h2>
 <p>Zie <code>tokens.css</code>. Regels:</p>
 <ul>
 <li><strong>Eén accent</strong>: blauw <code>#317CFF</code> (licht) / <code>#5C97FF</code> (donker). Niets anders mag schreeuwen.</li>
@@ -304,7 +322,7 @@
 <li><strong>Amber is gereserveerd</strong> voor hold/wacht-op-jou. Rood alleen voor diff-deletes en destructive.</li>
 <li>Neutraal is warm, nooit koudgrijs. Dark mode is basalt-warm, geen zuiver zwart.</li>
 </ul>
-<h2>4. Typografie</h2>
+<h2 data-reg="4-typografie">4. Typografie</h2>
 <p>Drie stemmen, elk één taak:</p>
 <ul>
 <li><strong>Instrument Serif</strong> (400 + italic) is de display-stem van het blad: hero,</li>
@@ -319,19 +337,19 @@
 <p>en afgewezen: te minimalistisch, te .com-bubbel. Nooit mono voor prose of</p>
 <p>labels; nooit serif in product-UI.</p>
 </ul>
-<h2>5. Iconen</h2>
+<h2 data-reg="5-iconen">5. Iconen</h2>
 <ul>
 <li><strong>Lucide SVG, nergens emoji.</strong> 24-viewBox, stroke 1.75, ronde caps/joins.</li>
 <li>Maten: <code>.ic</code> 15px, <code>.ic.sm</code> 12px, <code>.ic.lg</code> 17px.</li>
 <li>Emoji in copy eveneens verboden. Toetsenbord-hints als <code>&lt;kbd&gt;</code>, niet als symbool.</li>
 </ul>
-<h2>6. Componenten (shadcn-conventies)</h2>
+<h2 data-reg="6-componenten">6. Componenten (shadcn-conventies)</h2>
 <p>Baseline is shadcn/ui-denken: simpele variants, hairline borders, rustige hovers.</p>
 <table><thead><tr><th>Component</th><th>Contract</th></tr></thead><tbody><tr><td><code>.btn</code></td><td>h-32px, px-13px, r-6px, border hairline-strong. <code>.primary</code> = text↔bg omgekeerd. <code>:active</code> scale 0.97, <code>:focus-visible</code> outline 2px accent</td></tr><tr><td><code>.gbtn</code></td><td>28px ghost icon-button, hover = <code>--hover</code> wash. <code>:focus-visible</code> outline 2px accent. <code>.solid</code> voor send-acties</td></tr><tr><td><code>.badge</code></td><td>pill, 12px, <code>.green</code> voor Open/merged, <code>.outline</code> voor meta</td></tr><tr><td>card</td><td>r-12px, border <code>--line</code>, hover → <code>--line-strong</code>. Geen shadow in product</td></tr><tr><td>composer</td><td>r-12px, focus = accent border + 3px <code>--accent-soft</code> ring</td></tr><tr><td>user-pill</td><td><code>--surface-sunk</code>, r-12px, avatar rechts</td></tr><tr><td>agent prose</td><td>kaal, geen achtergrond, 14.5px/1.6</td></tr><tr><td><code>.sgroup</code></td><td>grouped-card: border, <code>--r-lg</code> (12px), <code>0 16px</code>, hairlines tussen rows</td></tr><tr><td><code>.switch</code></td><td>36×20px, full-radius (200px). <code>[aria-checked=true]</code> = accent fill. <code>:focus-visible</code> outline 2px accent</td></tr><tr><td><code>.nav-item</code></td><td>h-28px, px <code>0 10px 0 6</code>, r-6px, 13px/500. <code>:focus-visible</code> outline 2px accent</td></tr><tr><td><code>.input, .select</code></td><td>h-28px, px-10px, 13px, r-6px. Focus = accent border + 3px accent-soft ring. <code>:focus-visible</code> implicit via <code>:focus</code></td></tr><tr><td><code>.tbl</code></td><td>wide layout. border 1px <code>--line</code>, r-lg. th 11.5px/500 caps, td 13px. zebra <code>nth-child(even)</code> bg <code>--bg</code>. hover → <code>--hover</code>. <code>td.mono</code> font-family var(--mono) tabular-nums. inline <code>.badge</code> (green/amber/red) voor status</td></tr></tbody></table>
-<h2>6.3 Dashboard compositie</h2>
+<h2 data-reg="6-3-dashboard-compositie">6.3 Dashboard compositie</h2>
 <p>Dashboard views componeren uit bestaande primitives (Sidebar + Card + Table + Chart),</p>
 <p>nooit hand-gerolled. Shadcn conventie: gebruik variants en semantic colors, nooit raw waarden.</p>
-<h2>7. De activiteitsindicator (signatuur)</h2>
+<h2 data-reg="7-de">7. De activiteitsindicator (signatuur)</h2>
 <p><strong>Geen spinners.</strong> Activiteit toont als:</p>
 <ol>
 <li><strong>Worked-row</strong>: <code>Aan het werk 2m 14s</code> -- live timer in tabular mono, links een 2px streep.</li>
@@ -343,7 +361,7 @@
 </ol>
 <p>Motion-fysica: zie <code>motion-spec.md</code> (spring 180/26, ease-out cubic-bezier(0.22,1,0.36,1),</p>
 <p>140/280/420ms). Alles settle-t vroeg; niets bounct; niets ambients.</p>
-<h2>8. Layout</h2>
+<h2 data-reg="8-layout">8. Layout</h2>
 <p><strong>3-pane</strong> (devin-model):</p>
 <pre><code>┌──────────┬─────────────────────┬──────────────┐
 │ sidebar  │ sessie (transcript) │ artifact     │
@@ -353,15 +371,16 @@
 <li>Sidebar: workspace-switcher, nav (Sessies/Ask/Wiki/Review), Recent met PR-badges, onderaan Thema + Instellingen.</li>
 <li>Transcript: max 720px kolom, gecentreerd. Composer plakt onderaan, zelfde kolombreedte.</li>
 <li>Artifact: rapport/diff/browser. Toggle via panel-icoon in topbar. &lt;1100px: verborgen. &lt;760px: sidebar weg.</li>
+<li><strong>Elke pagina is een blad:</strong> de Y-meetlat draagt klikbare sectie-registers (<code>data-reg</code>), de actieve sectie licht op (40%-lijn), frac-chips per sectie worden gemeten via JS, nooit hardcoded. Blad-plaat rechtsonder (SHEET-id · REV D). Mobiel: meetlat en plaat weg, modeline blijft.</li>
 </ul>
-<h2>9. Stem (copy)</h2>
+<h2 data-reg="9-stem">9. Stem (copy)</h2>
 <ul>
 <li>Warm, direct, menselijk Nederlands op gebruikersvlakken.</li>
 <li>&quot;Wacht op jou: test draaien op productie-domein&quot; -- niet &quot;Approval required for external execution&quot;.</li>
 <li><strong>Verboden</strong>: em-dashes, buzzwords, verzonnen metrics, emoji, &quot;AI&quot;-gebezigheid in labels.</li>
 <li>Statuslijn: &quot;Klaar voor instructies&quot;. Eén sparkle-icoon, geen animatie.</li>
 </ul>
-<h2>10. Bans (hard)</h2>
+<h2 data-reg="10-bans">10. Bans (hard)</h2>
 <ul>
 <li>Geen spinners/loaders (ripple-systeem vervangt ze)</li>
 <li>Geen emoji als icoon of in copy</li>
@@ -371,13 +390,13 @@
 <li>Geen infinite ambient motion</li>
 <li>Geen marketing-witruimte in product (density 5–7)</li>
 </ul>
-<h2>11. Bestanden</h2>
+<h2 data-reg="11-bestanden">11. Bestanden</h2>
 <table><thead><tr><th>Bestand</th><th>Wat</th></tr></thead><tbody><tr><td><code>tokens.css</code></td><td>alle custom properties + btn/gbtn/badge primitives</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica, timing, ripple-contract</td></tr><tr><td><code>prototype-v2.html</code></td><td>levende referentie-implementatie (deze taal, speelbaar)</td></tr><tr><td><code>prototype-v1-stroom.html</code></td><td>gearchiveerd: v1 teal/Stroom-richting</td></tr><tr><td><code>surfaces/*.md</code></td><td>per-surface briefs (session, composer, palette, settings, approvals, states)</td></tr><tr><td><code>references/</code></td><td>Devin-screenshots + eigen states, als meetlat</td></tr><tr><td><code>taste/</code></td><td>het zelflerende taste-systeem dat dit document voedt</td></tr></tbody></table>
-<h2>12. Status</h2>
+<h2 data-reg="12-status">12. Status</h2>
 <p><strong>v2 actief</strong> -- prototype-v2.html is de bron van waarheid voor feel.</p>
 <p>Open: naam voor de taal (werktitel &quot;Devin-richting&quot; is geen naam, is een richting).</p>
 <hr>
-<h2>§11 Typografie (v2.1, web-typography skill)</h2>
+<h2 data-reg="11-typografie">§11 Typografie (v2.1, web-typography skill)</h2>
 <p>Schaal via tokens, nooit losse px-waarden in componenten:</p>
 <table><thead><tr><th>Token</th><th>px</th><th>Gebruik</th></tr></thead><tbody><tr><td><code>--text-2xs</code></td><td>10.5</td><td>meta, counts, badge</td></tr><tr><td><code>--text-xs</code></td><td>11.5</td><td>labels, kbd, captions</td></tr><tr><td><code>--text-sm</code></td><td>12.5</td><td>beschrijvingen, secondair</td></tr><tr><td><code>--text-md</code></td><td>13.5</td><td><strong>UI-standaard</strong></td></tr><tr><td><code>--text-lg</code></td><td>15</td><td>prose, kleine titels</td></tr><tr><td><code>--text-xl</code></td><td>18</td><td>sectie-headers</td></tr><tr><td><code>--text-2xl</code></td><td>24</td><td>pagina-titels</td></tr></tbody></table>
 <p>Regels:</p>
@@ -391,7 +410,7 @@
 <li>Display (site/blad): <code>--font-display</code> = Instrument Serif, gewicht 400,</li>
 <p>tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers</p>
 </ul>
-<h2>§12 Iconen (v2.1, icon-system skill)</h2>
+<h2 data-reg="12-iconen">§12 Iconen (v2.1, icon-system skill)</h2>
 <ul>
 <li>Grid 24×24, stroke 2, round caps/joins -- Lucide-conventie, sprite <code>components/icons.svg</code></li>
 <li>Maten: <code>.ic</code> (15, standaard) · <code>.ic-13</code> (compact) · <code>.ic-18</code> (knoppen) · <code>.ic-24</code> (hero)</li>
@@ -399,12 +418,12 @@
 <li>Icon-tiles in navigatie: 28px tile / 14px icon; pagina-headers 44px / 20px</li>
 <li>Nieuwe symbols: Lucide-path kopiëren, id <code>i-&lt;naam&gt;</code>, toevoegen vóór <code>&lt;/svg&gt;</code></li>
 </ul>
-<h2>§13 Categorieën (v2.1)</h2>
+<h2 data-reg="13-categorie-n">§13 Categorieën (v2.1)</h2>
 <p>Elke component-catalogus hoort bij één categorie (<code>cat</code> in catalog.json):</p>
 <table><thead><tr><th>Categorie</th><th>Componenten</th></tr></thead><tbody><tr><td>primitieven</td><td>button, badge</td></tr><tr><td>gesprek</td><td>composer, transcript, worked-row, approval</td></tr><tr><td>bewijs</td><td>pr-card, artifact</td></tr><tr><td>structuur</td><td>nav, settings</td></tr></tbody></table>
 <p>Rail en gallery groeperen op categorie. Nieuwe categorie: toevoegen aan <code>CATS</code> in <code>ds</code>.</p>
 <hr>
-<h2>§14 Stijl-laag (v2.2)</h2>
+<h2 data-reg="14-stijl-laag">§14 Stijl-laag (v2.2)</h2>
 <p>Het systeem draagt meerdere <strong>complete skins</strong> via <code>data-style</code> op <code>&lt;html&gt;</code>.</p>
 <p>Dit is geen accent-wissel maar een volledige tweede stijl over dezelfde taal.</p>
 <table><thead><tr><th>Skin</th><th>Karakter</th><th>Tokens</th></tr></thead><tbody><tr><td><code>devin</code> (default)</td><td>warm, zacht, r8/12, #317CFF</td><td>warm off-white, hairlines</td></tr><tr><td><code>strak</code></td><td>koel, scherp, r4/6, #2563EB</td><td>koel grijs-blauw, sterkere lines</td></tr></tbody></table>
@@ -417,10 +436,11 @@
 <li>Variant-frames erven de skin via propagatie in de shell</li>
 <li>Een derde skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen</li>
 </ul></div>
-<div class="gen">gegenereerd uit DESIGN.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit DESIGN.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
@@ -520,7 +540,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  var pageTitle = document.title.split(" — ")[0] || "pagina";
+  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var sd = document.getElementById("splateDate");
+  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -531,10 +554,53 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
   function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
   var srl = [];
+  var sregs = [];
   function updateSY() {
     var st = scrollTopOf();
     if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
     srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+    if (!sregs.length) return;
+    var vh = window.innerHeight;
+    var line = vh * 0.4;
+    var H = heightOf();
+    var mainTop = mainScrolls() ? mainEl.getBoundingClientRect().top : 0;
+    var active = null;
+    sregs.forEach(function (o) {
+      var r = o.el.getBoundingClientRect();
+      o.rg.style.top = Math.max(34, Math.min(vh - 66, r.top)) + "px";
+      var docTop = r.top - mainTop + st;
+      o.chip.textContent = (H > 0 ? Math.max(0, Math.min(1, docTop / H)) : 0).toFixed(2);
+      if (r.top <= line) active = o;
+    });
+    sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
+    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+  }
+  function buildSRegister() {
+    if (!sr) return;
+    sr.querySelectorAll(".reg").forEach(function (g) { g.remove(); });
+    document.querySelectorAll(".scoord").forEach(function (c) { c.remove(); });
+    sregs = [];
+    document.querySelectorAll(".main [data-reg]").forEach(function (el) {
+      var label = el.getAttribute("data-reg");
+      var g = document.createElement("button");
+      g.type = "button"; g.className = "reg";
+      g.innerHTML = '<span class="reg-dot"></span><span class="rgl"></span>';
+      g.querySelector(".rgl").textContent = label;
+      g.addEventListener("click", function () {
+        if (mainScrolls()) {
+          mainEl.scrollTo({ top: el.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop - 24, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+        }
+      });
+      sr.appendChild(g);
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+      var chip = document.createElement("span");
+      chip.className = "scoord"; chip.textContent = "0.00";
+      el.appendChild(chip);
+      sregs.push({ el: el, rg: g, chip: chip, label: label });
+    });
+    updateSY();
   }
   function buildSRuler() {
     if (!sr) return;
@@ -548,6 +614,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     updateSY();
   }
   buildSRuler();
+  buildSRegister();
   var sTick = false;
   function onScroll() {
     if (sTick) return; sTick = true;
@@ -555,8 +622,8 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   }
   if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
-  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
-  window.addEventListener("load", buildSRuler);
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(function () { buildSRuler(); buildSRegister(); }, 200); });
+  window.addEventListener("load", function () { buildSRuler(); buildSRegister(); setTimeout(buildSRegister, 900); });
 })();
 </script>
 </body>

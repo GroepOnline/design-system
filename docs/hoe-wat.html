@@ -170,6 +170,24 @@
                       repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
     background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
   .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  /* sectie-registers: klikbare marks op de meetlat (zoals home) */
+  .sruler .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .sruler .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .sruler .reg .reg-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 0 auto 5px; opacity: 0; transition: opacity var(--dur-fast); }
+  .sruler .reg:hover .rgl { color: var(--text-muted); }
+  .sruler .reg.on .rgl { color: var(--accent-ink); }
+  .sruler .reg.on .reg-dot { opacity: 1; }
+  @media (max-height: 700px) { .sruler .reg .rgl { display: none; } }
+  /* blad-plaat rechtsonder: elke pagina is een technische tekening */
+  .splate { position: fixed; right: 12px; bottom: 38px; z-index: 30; padding: 8px 12px;
+    border: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 9px; line-height: 1.7; color: var(--text-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+  .splate .b { color: var(--text-muted); }
+  /* frac-chip per sectie: gemeten, nooit hardcoded */
+  .scoord { position: absolute; top: 4px; right: 6px; font-family: var(--mono); font-size: 9px;
+    color: var(--text-faint); letter-spacing: 0.05em; pointer-events: none; }
+  @media (max-width: 860px) { .splate { display: none; } .scoord { display: none; } }
   .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
     display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
     border-top: 1px solid var(--line); background: var(--bg);
@@ -271,7 +289,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead">
+<div class="pagehead" data-reg="kop">
   <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
   <div class="ph-text">
     <div class="eyebrow">overzicht</div>
@@ -285,7 +303,7 @@
 <p>Niks staat hier dat niet klopt met de bronbestanden. Gebruik dit als vertrekpunt,</p>
 <p>raadpleeg de bronnen voor details.</p>
 <hr>
-<h2>1. Wat is dit</h2>
+<h2 data-reg="1-wat-is-dit">1. Wat is dit</h2>
 <p>Dit is <strong>design-system v2</strong> (ook wel &quot;Devin-richting&quot; genoemd). Het is geen product,</p>
 <p>maar een <strong>standalone design-taal + component-catalogus + toolset</strong> waarmee je</p>
 <p>nieuwe producten bouwt. Elk product dat hieruit ontstaat, erft dezelfde look &amp;</p>
@@ -302,7 +320,7 @@
 <p>product-UI (2026-07-27), met eigen motion-discipline en een zelflerend</p>
 <p>taste-systeem.</p>
 <hr>
-<h2>2. De vijf tools</h2>
+<h2 data-reg="2-de-vijf-tools">2. De vijf tools</h2>
 <p>Dit systeem heeft vijf samenhangende gereedschappen. Catalogus, studio, docs en</p>
 <p>taste delen dezelfde product-SSOT. Brain is de niet-bindende context-laag</p>
 <p>(research, decisions, concept-graph).</p>
@@ -354,7 +372,7 @@
 ./ds brain new research &quot;titel&quot;</code></pre>
 <p>Open in Obsidian: folder as vault → <code>brain/</code>. Leeslaag: <code>/brain-site/</code>.</p>
 <hr>
-<h2>3. Hoe start je iets nieuws</h2>
+<h2 data-reg="3-hoe-start-je-iets">3. Hoe start je iets nieuws</h2>
 <p>Een nieuw product (hier X genoemd) scaffold je met het meegeleverde script:</p>
 <pre><code>cd /home/joep/design-system
 ./new-project.sh mijn-product ~/Documents/mijn-product</code></pre>
@@ -383,7 +401,7 @@
 <p>(gebruik een bestaand manifest als template), voeg je HTML-bestanden toe in</p>
 <p><code>self/</code> of <code>external/</code>, en draai <code>./ds build</code>.</p>
 <hr>
-<h2>4. Hoe werk je als agent ermee</h2>
+<h2 data-reg="4-hoe-werk-je-als-agent">4. Hoe werk je als agent ermee</h2>
 <h3>Invarianten (nooit breken)</h3>
 <table><thead><tr><th>#</th><th>Regel</th><th>Waarom</th></tr></thead><tbody><tr><td>1</td><td><strong>Lock-model.</strong> Catalogus-entries zijn onveranderlijk (<code>locked</code>) tot expliciet <code>ds select</code> of <code>ds remove</code>. Nieuwe versie = nieuwe id</td><td>Anders verlies je historie en is niet te zien wat ooit gold</td></tr><tr><td>2</td><td><strong>Origin-split.</strong> <code>self/</code> = eigen ontwerpen, <code>external/</code> = ongewijzigde referenties met <code>source</code>-veld</td><td>Zuiverheid van herkomst, zoals shadcn onderscheidt wat je zelf deed</td></tr><tr><td>3</td><td><strong>Gegenereerde bestanden.</strong> <code>components/*/index.html</code> en <code>components/index.html</code> zijn output van <code>ds build</code>. Nooit handmatig bewerken</td><td>Anders werkt de volgende <code>ds build</code> je wijzigingen overschrijven</td></tr><tr><td>4</td><td><strong>Playground.</strong> Experimenten alleen in <code>playground/</code>. Promotie via <code>ds &lt;comp&gt; add</code></td><td>De catalogus blijft schoon; afval ontstaat niet</td></tr><tr><td>5</td><td><strong>Single-active.</strong> Exact 1 entry per component heeft status <code>active</code>. <code>ds select</code> handhaaft dit</td><td>Anders weet niemand wat de standaard is</td></tr></tbody></table>
 <h3>Commando&#x27;s die je als agent gebruikt</h3>
@@ -423,7 +441,7 @@
   → update surfaces/&lt;x&gt;.md (als een surface-brief verandert)</code></pre>
 <p>Commit-prefix: <code>taste: &lt;wat&gt;</code> of <code>component: &lt;wat&gt;</code>.</p>
 <hr>
-<h2>5. Hoe werk je als mens ermee</h2>
+<h2 data-reg="5-hoe-werk-je-als-mens">5. Hoe werk je als mens ermee</h2>
 <h3>Studio gebruiken</h3>
 <ol>
 <li><strong>Start de server:</strong> <code>./ds serve</code> in de design-system-root (default poort 8085)</li>
@@ -446,10 +464,10 @@ cp components/lib.js /pad/naar/mijn-product/components/</code></pre>
 <p>Elk product dat uit dit systeem is gescaffold heeft een thema-toggle.</p>
 <p>Daarnaast werkt <code>?theme=dark</code> in de URL op elke component-pagina en gallery.</p>
 <hr>
-<h2>6. Veelgemaakte fouten</h2>
+<h2 data-reg="6-veelgemaakte-fouten">6. Veelgemaakte fouten</h2>
 <table><thead><tr><th>Fout</th><th>Waarom het fout is</th><th>Wat wel</th></tr></thead><tbody><tr><td>Handmatig <code>components/button/index.html</code> bewerken</td><td>Dat bestand is gegenereerd door <code>ds build</code>. Je wijziging wordt overschreven</td><td>Wijzig het manifest of voeg een nieuwe entry toe via <code>ds add</code></td></tr><tr><td>Een nieuwe variant in <code>self/</code> zetten terwijl het een shadcn-kopie is</td><td><code>self/</code> is voor eigen ontwerpen en aanpassingen. <code>external/</code> is voor ongewijzigde referenties</td><td>Zet shadcn-kopieën in <code>external/</code> met <code>source</code>-veld</td></tr><tr><td>Twee componenten tegelijk <code>active</code> maken</td><td>Het systeem verwacht exact 1 actieve variant per component. De gallery toont alleen de actieve</td><td>Gebruik <code>ds select</code>, dat handhaaft single-active</td></tr><tr><td>Emoji gebruiken als icoon in een knop</td><td>Emoji zijn geen iconen; ze hebben geen vaste stijl, schalen anders en breken de visuele taal</td><td>Gebruik een Lucide SVG uit <code>icons.svg</code> via <code>&lt;use href=&quot;#i-...&quot;&gt;</code></td></tr><tr><td>Een taste-regel toevoegen zonder propagatie</td><td>Een regel die alleen in taste-rules.md staat, bestaat niet. Anderen (mens of agent) zien de consequentie niet</td><td>Werk in dezelfde commit ook DESIGN.md, tokens.css, componenten en surfaces bij</td></tr><tr><td>Een product direct via npm/CDN koppelen</td><td>Dit systeem gebruikt copy-paste (shadcn-model). Geen package.json dependency</td><td>Kopieer tokens.css, icons.svg en lib.js naar het product</td></tr><tr><td>Inter/Geist gebruiken als font</td><td>Die zijn verboden. General Sans is het interface-font, JetBrains Mono alleen voor data</td><td>Gebruik General Sans 400/500/600 voor alles behalve data</td></tr><tr><td><code>ds build</code> overslaan na een wijziging</td><td>De web-gallery is dan niet in sync met de catalogus</td><td>Elke mutatie via de CLI herbouwt automatisch. Bij twijfel: <code>./ds build</code></td></tr></tbody></table>
 <hr>
-<h2>7. FAQ</h2>
+<h2 data-reg="7-faq">7. FAQ</h2>
 <p><strong>Waarom zitten er geen spinners in het systeem?</strong></p>
 <p>Spinners zeggen &quot;ik weet niet hoe lang het duurt&quot; en zijn passief. Dit systeem</p>
 <p>toont activiteit met een live timer (tabular mono) en tool-ripples (18px golfje,</p>
@@ -503,7 +521,7 @@ cp components/lib.js /pad/naar/mijn-product/components/</code></pre>
 <p>Zorg dat het SVG-element <code>fill:none;stroke:currentColor</code> heeft (<code>.ic</code>-klasse</p>
 <p>doet dit al). Er zitten nu 29 symbols in de sprite.</p>
 <hr>
-<h2>Bijlagen</h2>
+<h2 data-reg="bijlagen">Bijlagen</h2>
 <ul>
 <li><code>DESIGN.md</code>, de volledige design language</li>
 <li><code>WORKFLOW.md</code>, de pipeline van nieuw product tot taste-terugkoppeling</li>
@@ -511,10 +529,11 @@ cp components/lib.js /pad/naar/mijn-product/components/</code></pre>
 <li><code>taste/taste-rules.md</code>, alle geleerde regels met bron</li>
 <li><code>motion-spec.md</code>, de gelockte motion-fysica</li>
 </ul></div>
-<div class="gen">gegenereerd uit hoe-wat.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit hoe-wat.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
@@ -614,7 +633,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  var pageTitle = document.title.split(" — ")[0] || "pagina";
+  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var sd = document.getElementById("splateDate");
+  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -625,10 +647,53 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
   function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
   var srl = [];
+  var sregs = [];
   function updateSY() {
     var st = scrollTopOf();
     if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
     srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+    if (!sregs.length) return;
+    var vh = window.innerHeight;
+    var line = vh * 0.4;
+    var H = heightOf();
+    var mainTop = mainScrolls() ? mainEl.getBoundingClientRect().top : 0;
+    var active = null;
+    sregs.forEach(function (o) {
+      var r = o.el.getBoundingClientRect();
+      o.rg.style.top = Math.max(34, Math.min(vh - 66, r.top)) + "px";
+      var docTop = r.top - mainTop + st;
+      o.chip.textContent = (H > 0 ? Math.max(0, Math.min(1, docTop / H)) : 0).toFixed(2);
+      if (r.top <= line) active = o;
+    });
+    sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
+    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+  }
+  function buildSRegister() {
+    if (!sr) return;
+    sr.querySelectorAll(".reg").forEach(function (g) { g.remove(); });
+    document.querySelectorAll(".scoord").forEach(function (c) { c.remove(); });
+    sregs = [];
+    document.querySelectorAll(".main [data-reg]").forEach(function (el) {
+      var label = el.getAttribute("data-reg");
+      var g = document.createElement("button");
+      g.type = "button"; g.className = "reg";
+      g.innerHTML = '<span class="reg-dot"></span><span class="rgl"></span>';
+      g.querySelector(".rgl").textContent = label;
+      g.addEventListener("click", function () {
+        if (mainScrolls()) {
+          mainEl.scrollTo({ top: el.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop - 24, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+        }
+      });
+      sr.appendChild(g);
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+      var chip = document.createElement("span");
+      chip.className = "scoord"; chip.textContent = "0.00";
+      el.appendChild(chip);
+      sregs.push({ el: el, rg: g, chip: chip, label: label });
+    });
+    updateSY();
   }
   function buildSRuler() {
     if (!sr) return;
@@ -642,6 +707,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     updateSY();
   }
   buildSRuler();
+  buildSRegister();
   var sTick = false;
   function onScroll() {
     if (sTick) return; sTick = true;
@@ -649,8 +715,8 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   }
   if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
-  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
-  window.addEventListener("load", buildSRuler);
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(function () { buildSRuler(); buildSRegister(); }, 200); });
+  window.addEventListener("load", function () { buildSRuler(); buildSRegister(); setTimeout(buildSRegister, 900); });
 })();
 </script>
 </body>

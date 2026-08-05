@@ -170,6 +170,24 @@
                       repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
     background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
   .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  /* sectie-registers: klikbare marks op de meetlat (zoals home) */
+  .sruler .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .sruler .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .sruler .reg .reg-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 0 auto 5px; opacity: 0; transition: opacity var(--dur-fast); }
+  .sruler .reg:hover .rgl { color: var(--text-muted); }
+  .sruler .reg.on .rgl { color: var(--accent-ink); }
+  .sruler .reg.on .reg-dot { opacity: 1; }
+  @media (max-height: 700px) { .sruler .reg .rgl { display: none; } }
+  /* blad-plaat rechtsonder: elke pagina is een technische tekening */
+  .splate { position: fixed; right: 12px; bottom: 38px; z-index: 30; padding: 8px 12px;
+    border: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 9px; line-height: 1.7; color: var(--text-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+  .splate .b { color: var(--text-muted); }
+  /* frac-chip per sectie: gemeten, nooit hardcoded */
+  .scoord { position: absolute; top: 4px; right: 6px; font-family: var(--mono); font-size: 9px;
+    color: var(--text-faint); letter-spacing: 0.05em; pointer-events: none; }
+  @media (max-width: 860px) { .splate { display: none; } .scoord { display: none; } }
   .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
     display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
     border-top: 1px solid var(--line); background: var(--bg);
@@ -271,10 +289,10 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class='pagehead'><span class='tile'><svg><use href='../components/icons.svg#i-check'/></svg></span><div><h1>Taste</h1><div class='cat caps'>onderhoudssysteem · apart van studio · gekoppeld</div></div></div><div class='sub'>Het lerende smaak-systeem: regels zijn binding voor elke surface, de log is het bewijs. Studio stelt visueel af; taste beslist wat mag.</div><div class='use-now' style='margin-bottom:26px'><span class='lbl2'>Koppeling</span><span>taste-log → (2+ observaties) → regel hier → propagatie naar <code>DESIGN.md</code> + <code>tokens.css</code> + <code>components/</code> in dezelfde commit. Onderhoud via de <code>joep-design-taste</code> skill, niet handmatig op deze pagina.</span></div><div class='md'><h2>Regels (binding)</h2><h1>Taste Rules — learned from Joep&#x27;s reactions</h1>
+<div class='pagehead' data-reg='kop'><span class='tile'><svg><use href='../components/icons.svg#i-check'/></svg></span><div><h1>Taste</h1><div class='cat caps'>onderhoudssysteem · apart van studio · gekoppeld</div></div></div><div class='sub'>Het lerende smaak-systeem: regels zijn binding voor elke surface, de log is het bewijs. Studio stelt visueel af; taste beslist wat mag.</div><div class='use-now' style='margin-bottom:26px'><span class='lbl2'>Koppeling</span><span>taste-log → (2+ observaties) → regel hier → propagatie naar <code>DESIGN.md</code> + <code>tokens.css</code> + <code>components/</code> in dezelfde commit. Onderhoud via de <code>joep-design-taste</code> skill, niet handmatig op deze pagina.</span></div><div class='md'><h2 data-reg='regels'>Regels (binding)</h2><h1>Taste Rules — learned from Joep&#x27;s reactions</h1>
 <blockquote>Distilled from <code>taste-log.md</code>. Binding for new work. Two observations minimum per rule.</blockquote>
 <blockquote>Last distilled: 2026-07-26 (seed rules from established preferences)</blockquote>
-<h2>Seed rules (from AGENTS.md + Signaal DESIGN.md + this session&#x27;s briefs)</h2>
+<h2 data-reg="seed-rules">Seed rules (from AGENTS.md + Signaal DESIGN.md + this session&#x27;s briefs)</h2>
 <h3>color</h3>
 <ul>
 <li><strong>DO</strong> tint neutrals warm; one accent max. <strong>DON&#x27;T</strong> purple gradients, AI-glow, acid-on-black. <em>(seed: workspace AGENTS.md, Signaal bans)</em></li>
@@ -308,7 +326,7 @@
 <li><strong>DO</strong> water/flow metaphors for system state (Stroom approved 2026-07-26). <strong>DON&#x27;T</strong> kitchen, receipt, brigade metaphors. <em>(seed: Signaal bans + this session)</em></li>
 <li><strong>DO</strong> instrument/tool framing (&quot;sandblasted instrument&quot; approved). <strong>DON&#x27;T</strong> corporate dashboard framing. <em>(seed: 2026-07-26)</em></li>
 </ul>
-<h2>Learned rules (from taste-log — none yet)</h2>
+<h2 data-reg="learned-rules">Learned rules (from taste-log — none yet)</h2>
 <p>&lt;!-- Rules land here after 2+ independent observations --&gt;</p>
 <h3>type</h3>
 <ul>
@@ -330,11 +348,11 @@
 <ul>
 <li><strong>DO</strong> default to <code>h28</code> and <code>r6</code> (via <code>--r-md</code>) for secondary controls (select, input, ghost-buttons, nav-items) in the primary skin to match Devin-DNA density. <strong>DON&#x27;T</strong> arbitrarily mix <code>h32</code> or hardcode radii where global tokens apply. <em>(2026-07-28: Devin-DNA Phase A finalized, strict alignment enforced)</em></li>
 <li><strong>DO</strong> use <code>r10</code> (via <code>--r-lg</code>) for primary cards and sub-grouped sections.</li>
-</ul><h2>Log (observaties)</h2><h1>Taste Log — raw record of Joep&#x27;s design reactions</h1>
+</ul><h2 data-reg='log'>Log (observaties)</h2><h1>Taste Log — raw record of Joep&#x27;s design reactions</h1>
 <blockquote>Append-only. Format defined in <code>SKILL.md</code>. Distill into <code>taste-rules.md</code> every ~10 entries</blockquote>
 <blockquote>or when a hypothesis repeats.</blockquote>
 <hr>
-<h2>2026-07-26 · DESIGN.md &quot;Stroom&quot; (rebuild identity)</h2>
+<h2 data-reg="2026-07-26-design-md">2026-07-26 · DESIGN.md &quot;Stroom&quot; (rebuild identity)</h2>
 <ul>
 <li><strong>shown</strong>: full design language — teal accent, General Sans, De Stroom signature, sandblasted radius scale, 5-motion budget</li>
 <li><strong>reaction</strong>: approved</li>
@@ -342,7 +360,7 @@
 <li><strong>delta</strong>: DESIGN.md locked as written</li>
 <li><strong>candidate rule</strong>: water/flow metaphor for system state lands well; instrument framing (&quot;sandblasted&quot;) approved → <em>promoted to seed rules (metaphor)</em></li>
 </ul>
-<h2>2026-07-26 · Spinner ban in DESIGN.md</h2>
+<h2 data-reg="2026-07-26-spinner-ban">2026-07-26 · Spinner ban in DESIGN.md</h2>
 <ul>
 <li><strong>shown</strong>: hard ban &quot;no spinners anywhere&quot;</li>
 <li><strong>reaction</strong>: adjusted</li>
@@ -350,7 +368,7 @@
 <li><strong>delta</strong>: rule refined — global spinners banned (Current replaces), bounded local busy-states on the initiating control allowed</li>
 <li><strong>candidate rule</strong>: Joep challenges absolute bans that cost usability; prefers precise scoping over blanket prohibition. <em>Watch for recurrence → structure category</em></li>
 </ul>
-<h2>2026-07-27 · geen emoticons, shadcn-componenten</h2>
+<h2 data-reg="2026-07-27-geen">2026-07-27 · geen emoticons, shadcn-componenten</h2>
 <ul>
 <li><strong>shown</strong>: prototype v2 (Devin-richting, met custom iconen)</li>
 <li><strong>reaction</strong>: gecorrigeerd</li>
@@ -362,7 +380,7 @@
 <li><strong>delta</strong>:— Devin&#x27;s UI ís shadcn-achtig</li>
 <li><strong>candidate rule</strong>: emoji-ban uitbreiden van copy naar UI-iconen. shadcn/Radix als component-baseline. <em>→ direct naar taste-rules (structure)</em></li>
 </ul>
-<h2>2026-07-27 · WEG VAN STROOM, richting Devin</h2>
+<h2 data-reg="2026-07-27-weg-van">2026-07-27 · WEG VAN STROOM, richting Devin</h2>
 <ul>
 <li><strong>shown</strong>: Devin&#x27;s live product-UI (sessie/composer/artifact-pane/pricing) naast ons Stroom prototype (teal accent, De Stroom lijn)</li>
 <li><strong>reaction</strong>: redirect</li>
@@ -370,7 +388,7 @@
 <li><strong>delta</strong>: richtingsbeslissing — Devin&#x27;s warme stille matte esthetiek (off-white, blauw #317CFF, grijze pills, bordered cards, 3-pane layout) wint van de teal Stroom-richting. OPEN: welke Stroom-elementen overleven (De Stroom lijn als subtiel element? motion-spec behouden?)</li>
 <li><strong>candidate rule</strong>: Joep verkiest bewezen product-esthetiek (Devin) boven eigen nieuwe signatuur — <em>evidence over invention. Watch → metaphor category</em></li>
 </ul>
-<h2>2026-07-26 · Devin direction for rebuild design</h2>
+<h2 data-reg="2026-07-26-devin">2026-07-26 · Devin direction for rebuild design</h2>
 <ul>
 <li><strong>shown</strong>: gap analysis + proposal to design toward Devin smoothness</li>
 <li><strong>reaction</strong>: approved with emphasis</li>
@@ -378,14 +396,14 @@
 <li><strong>delta</strong>: motion quality became a first-class identity pillar (motion-spec.md exists because of this)</li>
 <li><strong>candidate rule</strong>: motion polish is not optional garnish for Joep — it is core product value. <em>Watch for recurrence → motion category</em></li>
 </ul>
-<h2>2026-07-27 · tweede stijl-skin (Strak)</h2>
+<h2 data-reg="2026-07-27-tweede-stijl">2026-07-27 · tweede stijl-skin (Strak)</h2>
 <ul>
 <li><strong>shown</strong>: design-system met één stijl (Devin-richting) + studio-presets</li>
 <li><strong>reaction</strong>: &quot;dit is 1 gehele stijl met paar opties maar je moet ook nog 1 hier overheen doen&quot;</li>
 <li><strong>hypothesis</strong>: het systeem moet meerdere COMPLETE skins dragen via een stijl-laag (data-style), niet alleen accent/radius-opties. Strak (koel, scherp, r4/6) is de tweede skin naast Devin (warm, zacht, r8/12)</li>
 <li><strong>status</strong>: geïmplementeerd als data-style=&quot;strak&quot; in tokens.css + switch in rail, propagateert naar alle variant-frames. Regel kandidaat bij herhaling</li>
 </ul>
-<h2>2026-07-28 · Devin-DNA propagatie volledig (Fase A)</h2>
+<h2 data-reg="2026-07-28-devin-dna">2026-07-28 · Devin-DNA propagatie volledig (Fase A)</h2>
 <ul>
 <li><strong>shown</strong>: afronding van de gemeten control-sizes: nav-items (13px/500, h28, pad 0 10 0 6), selects (h28), ghost-buttons (h28) en grouped cards (r10).</li>
 <li><strong>reaction</strong>: gemodelleerd naar de Devin baseline via global tokens.</li>
@@ -393,7 +411,7 @@
 <li><strong>delta</strong>: .select en .input expliciet 28px. .nav-item exacte afmetingen. Global tokens <code>--r-md</code> (werd 6px) en <code>--r-lg</code> (werd 10px) bijgewerkt om radii systemisch uit te rollen voor controls en cards in de default skin.</li>
 <li><strong>candidate rule</strong>: h28/r6 is de harde norm voor secundaire controls en densiteit-lijsten in de Devin-taal. Cards en sub-grouping opereren op r10. -&gt; <em>Direct gepropageerd naar taste-rules.</em></li>
 </ul>
-<h2>2026-07-31 · Dashboard table (compositie)</h2>
+<h2 data-reg="2026-07-31-dashboard">2026-07-31 · Dashboard table (compositie)</h2>
 <ul>
 <li><strong>shown</strong>: table component in playground, gepromoveerd via <code>ds add</code>, gecataloguseerd onder &quot;bewijs&quot;</li>
 <li><strong>reaction</strong>: zebra striping <code>tr:nth-child(even)</code> en inline .badge (green/amber/red) voor status — scannen zonder klikken</li>
@@ -401,7 +419,7 @@
 <li><strong>delta</strong>: nieuw table component met hairline borders, r-lg, zebra, hover states, monospace data</li>
 <li><strong>candidate rule</strong>: Data-tabellen gebruiken zebra striping voor scanbaarheid en inline gekleurde badges voor status. Dashboard views componeren uit Sidebar + Card + Table primitives. <em>Watch for recurrence.</em></li>
 </ul>
-<h2>2026-07-31 · Shadcn skill geinstalleerd</h2>
+<h2 data-reg="2026-07-31-shadcn-skill">2026-07-31 · Shadcn skill geinstalleerd</h2>
 <ul>
 <li><strong>shown</strong>: <code>npx skills find shadcn</code> → shadcn/ui@shadcn (260K installs, officieel)</li>
 <li><strong>reaction</strong>: geïnstalleerd — principles toepasbaar op pure-HTML design system</li>
@@ -409,7 +427,7 @@
 <li><strong>delta</strong>: geen nieuwe code — bestaande patterns (badge, card, focus-visible) matcht shadcn conventies</li>
 <li><strong>candidate rule</strong>: shadcn/ui compositie-pattern (Sidebar + Card + Table + Chart) is een vast handvat voor dashboard builds. Watch: zijn alle shadcn rules (gap-*, semantic colors, Skeleton) overal van toepassing?</li>
 </ul>
-<h2>2026-08-05 · Home v2: stil + mat, Current als signatuur</h2>
+<h2 data-reg="2026-08-05-home-v2-stil">2026-08-05 · Home v2: stil + mat, Current als signatuur</h2>
 <ul>
 <li><strong>shown</strong>: Fase C home met parallax-blobs/glow vs. nieuwe richting (gemaskeerd grid + verticale Current met pulse, solid topbar, live worked-row demo-band)</li>
 <li><strong>reaction</strong>: redirect (2026-08-04, vastgelegd op branch <code>feat/ui-ux-polish-devin-signaal</code> + research-note &quot;Web motion refs&quot; met Joep-override)</li>
@@ -417,7 +435,7 @@
 <li><strong>delta</strong>: (1) parallax/glow definitief uit home — de Current (motion-spec Motion 1) is het enige hero-signatuur; (2) glassmorphism-ban ook op marketing/catalogus gehandhaafd (topbar backdrop-blur → solid <code>var(--bg)</code>); (3) motion-spec §7 gehandhaafd: pulse animeert transform-only, geen <code>top</code></li>
 <li><strong>candidate rule</strong>: gegenereerde web-oppervlakken (home, gallery, docs) volgen dezelfde bans als het product (geen glow, glass, gradients, em-dashes). <em>Versterkt bestaande ban — geen nieuwe regel nodig.</em></li>
 </ul>
-<h2>2026-08-05 · Mobiel: comp-card botsing + rail-zooi</h2>
+<h2 data-reg="2026-08-05-mobiel-comp">2026-08-05 · Mobiel: comp-card botsing + rail-zooi</h2>
 <ul>
 <li><strong>shown</strong>: home v2 + gallery op mobiel (390px, iPhone Safari via tailscale)</li>
 <li><strong>reaction</strong>: gecorrigeerd — &quot;dik gedrukte zit tegen dunne tekst zonder spatie of tab&quot; en &quot;bovenin ook 1 zooi&quot;; expliciete kwaliteitslat-vraag: &quot;zo ga je beginnen aan opencodex / chefgroep-os / vault?&quot;</li>
@@ -425,7 +443,7 @@
 <li><strong>delta</strong>: <code>.cn</code>/<code>.cd</code> → <code>display: block</code> (tekstparen scheiden via layout, nooit via whitespace); mobiele rail → brand-rij met seg&#x27;s rechts + horizontale scroll-chipstrip (<code>.rail-links</code>, nowrap, overflow-x, verborgen scrollbar); geverifieerd op 390px light+dark en desktop</li>
 <li><strong>candidate rule</strong>: mobiel (390px) is first-class viewport — testen naast light/dark bij elke web-wijziging. <em>2e observatie (Fase C responsive-eis + deze correctie) → GEEPROMOVEERD naar taste-rules + AGENTS.md.</em> Tekstpaar-scheiding via layout: 1e observatie, watch.</li>
 </ul>
-<h2>2026-08-05 · Hero: van statisch naar Stroom-veld</h2>
+<h2 data-reg="2026-08-05-hero-van">2026-08-05 · Hero: van statisch naar Stroom-veld</h2>
 <ul>
 <li><strong>shown</strong>: home hero met faint grid + één dunne accent-lijn (1 lopende dot)</li>
 <li><strong>reaction</strong>: gecorrigeerd — &quot;ik wil echt iets indrukwekkends&quot;, daarna &quot;kom op!&quot;</li>
@@ -433,7 +451,7 @@
 <li><strong>delta</strong>: <code>.current</code> → <code>.stroom</code>-veld: streams op gridkolommen (main = accent-Current), seg-pulses als voelende werk-bursts, markers gekoppeld aan live sessie-teller (tool-calls), pointer-near highlight, klik-ripple langs dichtstbijzijnde stream. h1 78→92. Hero is nu wezenlijk aanwezig — geen wallpaper meer.</li>
 <li><strong>candidate rule</strong>: zichtbare aanwezigheid &gt; verstopte subtiliteit als het om identiteit gaat — een eerste-observatie die al gemarkeerd staat bij &#x27;structure&#x27;; dit is de 2e, promoveer als: <strong>DO</strong> de signatuur-magnaam (Stroom/Current) LEVEN met meerdere kanalen en voelbare activiteit (pulses = werk, markers = events, near = aandacht). <strong>DON&#x27;T</strong> verzwakken tot een décoratief achtergrond-detail dat niemand ziet.</li>
 </ul>
-<h2>2026-08-05 · Typografie + verfijning Stroom-veld</h2>
+<h2 data-reg="2026-08-05-typografie">2026-08-05 · Typografie + verfijning Stroom-veld</h2>
 <ul>
 <li><strong>shown</strong>: Stroom-veld v1 (streams + pulses) met Inter/General Sans</li>
 <li><strong>reaction</strong>: gecorrigeerd — &quot;streep in het midden te heftig en geen mooi lettertypen, effecten mogen mooier&quot;</li>
@@ -441,30 +459,39 @@
 <li><strong>delta</strong>: Sora als display-font (--font-display) + Space Grotesk fallback + IBM Plex Mono; main-streep terug naar 1px/.26; pulses kregen glow + head/tail + ademende scaleY; markers met halo; dichtere interval. Hero voelt nu als werkend systeem, niet als wireframe.</li>
 <li><strong>candidate rule</strong>: de signatuur-streep moet DIENEN (pulse draagt de kleur, niet de lijn zelf); display-font (Sora) ≠ body-font (General Sans) — 2e observatie dat Joep op font-niveau kijkt.</li>
 </ul>
-<h2>2026-08-05 · Wow-factor: cijfers tellen, live gloeit, grid werkt</h2>
+<h2 data-reg="2026-08-05-wow-factor">2026-08-05 · Wow-factor: cijfers tellen, live gloeit, grid werkt</h2>
 <p>Signaal (Joep): &quot;rustig-tot-vlak&quot; + wow-factor brief (~/.moshi/uploads/design-system-wow-factor-brief.md). Tegelijk: &quot;live (klik = uitklappen, knoppen = tool-ripples) &gt;&gt; dit gaat denk ik om de input van een agent want een human gaat niet lopen klikken op read?&quot; — noteren als semantiek.</p>
 <p>Correctie: worked-row copy verduidelijkt (&quot;zo ziet agent-werk eruit&quot;); embed-modus verbergt demo-knoppen; stat-nummers tellen op via data-count + IntersectionObserver; worked-row.live krijgt ademende glow (breathe 2.4s); expand krijgt --ease-spring-soft; proc-cards krijgen ghost-numbers 01/02/03; CTA wordt asymmetrisch (1.6fr/1fr + tekst-links); stroom-veld loopt fixed over de hele pagina met grid-waypoints die vullen tijdens scroll; footer krijgt coord-row.</p>
 <p>Richting: het systeem bewijst agent-activiteit door te tonen, niet door te zeggen. Live = gloei + ademhaling; klaar = vlak + gedesatureerd. Cijfers tellen omdat ze echt zijn.</p>
 <p>Regel-kandidaat (semantiek): worked-row is agent-OUTPUT, nooit input. De knoppen in de demo bootsen tool-calls na; in productie vult een agent de rijen. Een human klikt alleen om uit te klappen.</p>
-<h2>2026-08-05 · Home v3: het blad — pagina als technische tekening</h2>
+<h2 data-reg="2026-08-05-home-v3-het">2026-08-05 · Home v3: het blad — pagina als technische tekening</h2>
 <p>Signaal (Joep): &quot;goor onderzoek naar wat nadere hebben&quot; + &quot;je erg weinig verandert zie ik&quot;. Onderzoek via 4 parallelle research-agents (agent-product sites, awwwards-patronen, motion 2025-26, terminal/blueprint-esthetiek) — alle vier convergeerden op hetzelfde.</p>
 <p>Correctie: volledige rewrite van de home naar &quot;het blad&quot;: randmeetlatten met meelopende coördinaten, cropmarks, ISO-titelblok, modeline (utc-klok + y-uitlezing + actieve sectie), crosshair gesnapt op 8px-grid, Sora 800 op 120px met scramble-decode + blokcaret, ledger (5 rijen sessie-replay) als eerste bewijs boven de fold, één geïnverteerde zwarte sectie als climax, linear()-spring als token (--spring in tokens.css).</p>
 <p>Richting: decoratie wordt meetinstrument. Elke lijn meet iets; de pagina is één artefact. Bewijs boven belofte: de ledger replayt agent-werk in plaats van het te beschrijven. Waarde-drama (één zwarte sectie) in plaats van tint-drama.</p>
 <p>Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, cropmarks, titelblok, modeline) hoort bij de identiteit; (2) bewijs boven belofte: live replay van het signatuur-component als hero; (3) accent in drie banen: focus/staat, primaire actie, live-pulse — verder alleen inkt-trappen.</p>
-<h2>2026-08-05 · Catalogus-kaarten: uitlijning + chips</h2>
+<h2 data-reg="2026-08-05-catalogus">2026-08-05 · Catalogus-kaarten: uitlijning + chips</h2>
 <p><strong>Signaal (Joep):</strong> &quot;dubbel onder select elementen, geen goeie uitlijning jezus&quot; — op de component-detailpagina&#x27;s (GEBRUIK/VERMIJD/CONTRACT-kaarten).</p>
 <p><strong>Regel:</strong> doc-kaarten staan op gelijke hoogte (align-items: stretch + flex-column), contract-chips zijn bulleted-loze blokken die niet mid-woord breken (inline-block + word-break), kaart-titels krijgen gewicht 600 + caps. Losse code-chips in een &lt;ul&gt;-bullet-lijst = altijd lelijke wrap.</p>
 <p><strong>Doorgifte:</strong> gallery + 12 catalogus-pagina&#x27;s. Kandidaat-regel: kaartgrids gebruiken stretch, nooit auto-height.</p>
-<h2>2026-08-05 · Font-karakter: serif display-stem + blad-cadans overal</h2>
+<h2 data-reg="2026-08-05-font">2026-08-05 · Font-karakter: serif display-stem + blad-cadans overal</h2>
 <ul>
 <li><strong>shown</strong>: home v3 (het blad) met Sora 800 / Space Grotesk body</li>
 <li><strong>reaction</strong>: &quot;lettertype heeft te weinig karakter — minimalistisch, saai, .com-bubbel&quot; + &quot;home voelt als losse blokken op een A4&quot; + &quot;alleen de home heeft de blad-cadans&quot;</li>
 <li><strong>signal</strong>: derde font-signaal op rij (na &quot;geen mooi lettertypen&quot; 2026-08-05 en het wow-brief). Het probleem is niet welke schreefloos, maar dat schreefloos-op-schreefloos geen contrast heeft.</li>
 <li><strong>delta</strong>: (1) drie-stemmen-model: Instrument Serif (400/italic) als display-stem van het blad, General Sans als instrument-stem, IBM Plex Mono als data-stem; Sora + Space Grotesk uit alle stacks en font-links; (2) hero-regel 2 is nu italic serif (het accent zit in de italic, niet in vetgraad); (3) sectie-register op de Y-meetlat: de inhoudsopgave staat OP de rand van het blad, actieve sectie licht op, marks zijn klikbaar; (4) coörd-chips + footer-rij worden door JS gemeten in plaats van hardcoded; (5) blad-cadans (meetlat, modeline, blad-plaat) nu ook op alle 12 catalogus-pagina&#x27;s + gallery + docs + taste + brain via de shell.</li>
 <li><strong>candidate rule</strong>: (1) display = serif op showcase/blad, product-UI blijft grotesk; (2) coördinaten op het blad zijn altijd gemeten, nooit getypt; (3) cadans-chrome geldt voor elke gegenereerde pagina, niet alleen de home.</li>
-</ul></div><div class='gen'>gegenereerd uit taste/*.md op 2026-08-05</div>
+</ul>
+<h2 data-reg="2026-08-05-sectie">2026-08-05 · Sectie-register op elk blad (shell)</h2>
+<ul>
+<li><strong>shown</strong>: blad-cadans op shell-pagina&#x27;s (v4) — meetlat + modeline, maar de catalogus-pagina&#x27;s hadden geen registers en de home had ze wel</li>
+<li><strong>reaction</strong>: goedgekeurd (signaal uit v4: &quot;alleen de home heeft het&quot; — dit is de afronding)</li>
+<li><strong>signal</strong>: &quot;4 volledig verbeteren&quot; — registratie hoort op elk blad, niet alleen de home</li>
+<li><strong>delta</strong>: sectie-registers (<code>data-reg</code>) nu op alle shell-pagina&#x27;s: catalogus (kop/gebruik/contract/varianten/colofon), gallery (per categorie), docs (h2-slugs met haakjes-strip + woordgrens-afkapping), taste, brain. Marks clampen in de viewport en volgen hun sectie; actieve sectie onder de 40%-lijn stuurt modeline + accent. Frac-chips per sectie gemeten via JS. Blad-plaat rechtsonder met SHEET-id per pagina; plaat-datum via JS zodat <code>build --check</code> idempotent blijft.</li>
+<li><strong>candidate rule</strong>: een blad zonder register is geen blad — elke gegenereerde pagina draagt zijn inhoudsopgave OP de meetlat. Slugs voor registers worden gesaneerd (haakjes weg, woordgrens), nooit afgekapt midden in een woord.</li>
+</ul></div><div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op 2026-08-05</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">taste</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
@@ -564,7 +591,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  var pageTitle = document.title.split(" — ")[0] || "pagina";
+  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var sd = document.getElementById("splateDate");
+  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -575,10 +605,53 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
   function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
   var srl = [];
+  var sregs = [];
   function updateSY() {
     var st = scrollTopOf();
     if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
     srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+    if (!sregs.length) return;
+    var vh = window.innerHeight;
+    var line = vh * 0.4;
+    var H = heightOf();
+    var mainTop = mainScrolls() ? mainEl.getBoundingClientRect().top : 0;
+    var active = null;
+    sregs.forEach(function (o) {
+      var r = o.el.getBoundingClientRect();
+      o.rg.style.top = Math.max(34, Math.min(vh - 66, r.top)) + "px";
+      var docTop = r.top - mainTop + st;
+      o.chip.textContent = (H > 0 ? Math.max(0, Math.min(1, docTop / H)) : 0).toFixed(2);
+      if (r.top <= line) active = o;
+    });
+    sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
+    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+  }
+  function buildSRegister() {
+    if (!sr) return;
+    sr.querySelectorAll(".reg").forEach(function (g) { g.remove(); });
+    document.querySelectorAll(".scoord").forEach(function (c) { c.remove(); });
+    sregs = [];
+    document.querySelectorAll(".main [data-reg]").forEach(function (el) {
+      var label = el.getAttribute("data-reg");
+      var g = document.createElement("button");
+      g.type = "button"; g.className = "reg";
+      g.innerHTML = '<span class="reg-dot"></span><span class="rgl"></span>';
+      g.querySelector(".rgl").textContent = label;
+      g.addEventListener("click", function () {
+        if (mainScrolls()) {
+          mainEl.scrollTo({ top: el.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop - 24, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+        }
+      });
+      sr.appendChild(g);
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+      var chip = document.createElement("span");
+      chip.className = "scoord"; chip.textContent = "0.00";
+      el.appendChild(chip);
+      sregs.push({ el: el, rg: g, chip: chip, label: label });
+    });
+    updateSY();
   }
   function buildSRuler() {
     if (!sr) return;
@@ -592,6 +665,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     updateSY();
   }
   buildSRuler();
+  buildSRegister();
   var sTick = false;
   function onScroll() {
     if (sTick) return; sTick = true;
@@ -599,8 +673,8 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   }
   if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
-  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
-  window.addEventListener("load", buildSRuler);
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(function () { buildSRuler(); buildSRegister(); }, 200); });
+  window.addEventListener("load", function () { buildSRuler(); buildSRegister(); setTimeout(buildSRegister, 900); });
 })();
 </script>
 </body>

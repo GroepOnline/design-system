@@ -122,6 +122,14 @@ ruggengraat (klikbaar, actieve sectie licht op); coördinaten worden gemeten,
 niet hardcoded. Blad-cadans (meetlat + modeline + blad-plaat) nu ook op alle
 12 catalogus-pagina's via de shell.
 
+**Herziening 2026-08-05 (v5, "elk blad een ruggengraat"):** het sectie-register
+van de home (klikbare marks op de Y-meetlat, clampend in de viewport, actieve
+sectie onder de 40%-lijn) geldt nu voor ELKE shell-pagina: 12 catalogus-bladen
+(kop/gebruik/contract/varianten/colofon), gallery (per categorie), docs
+(h2-slugs, haakjes gestript, woordgrens-afkapping), taste en brain. Frac-chips
+per sectie gemeten via JS; blad-plaat rechtsonder met SHEET-id per pagina
+(blad NN/12, idx, doc, taste, brain); plaat-datum via JS (geen build-drift).
+
 ### Fase D -- Perfection pass
 
 - elke pagina nalopen op verhoudingen/alignment (icoon-maten, rij-hoogtes) ✅

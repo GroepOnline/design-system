@@ -170,6 +170,24 @@
                       repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
     background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
   .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  /* sectie-registers: klikbare marks op de meetlat (zoals home) */
+  .sruler .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .sruler .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .sruler .reg .reg-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 0 auto 5px; opacity: 0; transition: opacity var(--dur-fast); }
+  .sruler .reg:hover .rgl { color: var(--text-muted); }
+  .sruler .reg.on .rgl { color: var(--accent-ink); }
+  .sruler .reg.on .reg-dot { opacity: 1; }
+  @media (max-height: 700px) { .sruler .reg .rgl { display: none; } }
+  /* blad-plaat rechtsonder: elke pagina is een technische tekening */
+  .splate { position: fixed; right: 12px; bottom: 38px; z-index: 30; padding: 8px 12px;
+    border: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 9px; line-height: 1.7; color: var(--text-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+  .splate .b { color: var(--text-muted); }
+  /* frac-chip per sectie: gemeten, nooit hardcoded */
+  .scoord { position: absolute; top: 4px; right: 6px; font-family: var(--mono); font-size: 9px;
+    color: var(--text-faint); letter-spacing: 0.05em; pointer-events: none; }
+  @media (max-width: 860px) { .splate { display: none; } .scoord { display: none; } }
   .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
     display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
     border-top: 1px solid var(--line); background: var(--bg);
@@ -271,7 +289,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead">
+<div class="pagehead" data-reg="kop">
   <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
   <div class="ph-text">
     <div class="eyebrow">overzicht</div>
@@ -286,15 +304,15 @@
 <p>Devin-producttaal (gemeten aan hun live site), met eigen motion-discipline en</p>
 <p>Nederlandse copy-stem.</p>
 <p><strong>Live (tailnet):</strong> <code>https://joep.tail86a8f2.ts.net:8443/</code></p>
-<h2>De vijf tools</h2>
+<h2 data-reg="de-vijf-tools">De vijf tools</h2>
 <table><thead><tr><th>Tool</th><th>Waar</th><th>Wat</th></tr></thead><tbody><tr><td><strong>catalogus</strong></td><td><code>components/</code> + <code>./ds</code></td><td>alle varianten ooit: self + external. Lock-model: vast tot expliciete select/remove</td></tr><tr><td><strong>studio</strong></td><td><code>/components/studio/</code></td><td>visueel afstellen zonder code: presets (incl. <strong>Vanaf nul</strong>), accent, warmte, radius, tekstgrootte. Tabs: Afstellen + <strong>Docs</strong> (de taal lezen terwijl je stelt). Export: Kopieer tokens</td></tr><tr><td><strong>docs</strong></td><td><code>/docs/</code></td><td>alle .md-documenten gerenderd als lees-laag. De .md blijft de bron</td></tr><tr><td><strong>taste</strong></td><td><code>/taste-site/</code></td><td>het lerende smaak-systeem: bindende regels + observatie-log. Onderhoud via de <code>joep-design-taste</code> skill, gekoppeld aan alles via het propagatie-contract</td></tr><tr><td><strong>brain</strong></td><td><code>/brain-site/</code> + <code>brain/</code></td><td>niet-bindende context: research, decisions, concept-graph (Obsidian vault). Productregels lopen nog steeds via taste</td></tr></tbody></table>
-<h2>Snelstart</h2>
+<h2 data-reg="snelstart">Snelstart</h2>
 <pre><code>./ds list                    # overzicht van alles
 ./ds button list             # één component in detail
 ./ds build                   # web herbouwen (catalogus + docs + taste + brain)
 ./ds brain new decision &quot;…&quot;  # decision-note in de vault
 ./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem</code></pre>
-<h2>Linters en formattering</h2>
+<h2 data-reg="linters-en-formattering">Linters en formattering</h2>
 <pre><code>npm install --global markdownlint-cli prettier  # eenmalig voor Zed + CLI
 python3 -m pip install --user ruff              # eenmalig voor Python
 ./scripts/lint.sh                               # Ruff + markdownlint per bestandstype
@@ -310,9 +328,9 @@ make lint                                       # alias</code></pre>
 ./ds button add playground/mijn-knop.html --id mijn-knop --origin self --note &quot;wat en waarom&quot;
 # 3. selecteer als dé knop
 ./ds button select mijn-knop</code></pre>
-<h2>Mappen</h2>
+<h2 data-reg="mappen">Mappen</h2>
 <table><thead><tr><th>Pad</th><th>Rol</th></tr></thead><tbody><tr><td><code>ds</code></td><td>CLI + web-generator (python3, geen deps)</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives + typografie-schaal + icon-maten</td></tr><tr><td><code>components/&lt;naam&gt;/</code></td><td>catalog.json (bron) + self/ + external/ + index.html (gegenereerd)</td></tr><tr><td><code>components/icons.svg</code></td><td>31 Lucide symbols</td></tr><tr><td><code>playground/</code></td><td>experimentzone -- kan de catalogus nooit corrupt maken</td></tr><tr><td><code>docs/</code></td><td>gerenderde .md-pagina&#x27;s (gegenereerd)</td></tr><tr><td><code>taste-site/</code></td><td>taste-regels + log als site (gegenereerd uit taste/*.md)</td></tr><tr><td><code>brain/</code></td><td>Obsidian Second Brain (bron)</td></tr><tr><td><code>brain-site/</code></td><td>brain-notes als site (gegenereerd)</td></tr><tr><td><code>.agents/</code></td><td>agent-skills + hooks (canoniek; <code>.cursor/</code> wijst hierheen)</td></tr><tr><td><code>.commandcode/taste/taste.md</code></td><td>gegenereerde agent-taste uit <code>kater-dev-tools</code></td></tr><tr><td><code>.cursor/rules/taste.mdc</code></td><td>gegenereerde Cursor agent-taste uit <code>kater-dev-tools</code></td></tr><tr><td><code>CLAUDE.md</code></td><td>gegenereerde Claude taste-sectie uit <code>kater-dev-tools</code></td></tr><tr><td><code>templates/</code> + <code>new-project.sh</code></td><td>scaffold voor nieuwe producten</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots (Devin-product, eigen states)</td></tr><tr><td><code>surfaces/</code></td><td>per-surface ontwerpbriefs</td></tr><tr><td><code>prototype-v2.html</code></td><td>volledige referentie-app (3-pane sessie)</td></tr></tbody></table>
-<h2>Regels in het kort</h2>
+<h2 data-reg="regels-in-het-kort">Regels in het kort</h2>
 <ul>
 <li>Geen spinners (activiteit = worked-row + ripples), geen emoji-iconen (Lucide),</li>
 <p>geen em-dashes, één accent, groen/amber/rood gereserveerd, light én dark</p>
@@ -326,10 +344,11 @@ make lint                                       # alias</code></pre>
 </ul>
 <p>Meer: <code>hoe-wat.md</code> (grote gids) · <code>AGENTS.md</code> (agent-contract) ·</p>
 <p><code>WORKFLOW.md</code> (processen) · <code>DESIGN.md</code> (de taal)</p></div>
-<div class="gen">gegenereerd uit README.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit README.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
@@ -429,7 +448,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  var pageTitle = document.title.split(" — ")[0] || "pagina";
+  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var sd = document.getElementById("splateDate");
+  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -440,10 +462,53 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
   function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
   var srl = [];
+  var sregs = [];
   function updateSY() {
     var st = scrollTopOf();
     if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
     srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+    if (!sregs.length) return;
+    var vh = window.innerHeight;
+    var line = vh * 0.4;
+    var H = heightOf();
+    var mainTop = mainScrolls() ? mainEl.getBoundingClientRect().top : 0;
+    var active = null;
+    sregs.forEach(function (o) {
+      var r = o.el.getBoundingClientRect();
+      o.rg.style.top = Math.max(34, Math.min(vh - 66, r.top)) + "px";
+      var docTop = r.top - mainTop + st;
+      o.chip.textContent = (H > 0 ? Math.max(0, Math.min(1, docTop / H)) : 0).toFixed(2);
+      if (r.top <= line) active = o;
+    });
+    sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
+    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+  }
+  function buildSRegister() {
+    if (!sr) return;
+    sr.querySelectorAll(".reg").forEach(function (g) { g.remove(); });
+    document.querySelectorAll(".scoord").forEach(function (c) { c.remove(); });
+    sregs = [];
+    document.querySelectorAll(".main [data-reg]").forEach(function (el) {
+      var label = el.getAttribute("data-reg");
+      var g = document.createElement("button");
+      g.type = "button"; g.className = "reg";
+      g.innerHTML = '<span class="reg-dot"></span><span class="rgl"></span>';
+      g.querySelector(".rgl").textContent = label;
+      g.addEventListener("click", function () {
+        if (mainScrolls()) {
+          mainEl.scrollTo({ top: el.getBoundingClientRect().top - mainEl.getBoundingClientRect().top + mainEl.scrollTop - 24, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+        }
+      });
+      sr.appendChild(g);
+      if (getComputedStyle(el).position === "static") el.style.position = "relative";
+      var chip = document.createElement("span");
+      chip.className = "scoord"; chip.textContent = "0.00";
+      el.appendChild(chip);
+      sregs.push({ el: el, rg: g, chip: chip, label: label });
+    });
+    updateSY();
   }
   function buildSRuler() {
     if (!sr) return;
@@ -457,6 +522,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     updateSY();
   }
   buildSRuler();
+  buildSRegister();
   var sTick = false;
   function onScroll() {
     if (sTick) return; sTick = true;
@@ -464,8 +530,8 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   }
   if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
-  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
-  window.addEventListener("load", buildSRuler);
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(function () { buildSRuler(); buildSRegister(); }, 200); });
+  window.addEventListener("load", function () { buildSRuler(); buildSRegister(); setTimeout(buildSRegister, 900); });
 })();
 </script>
 </body>
