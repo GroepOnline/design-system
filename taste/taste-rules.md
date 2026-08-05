@@ -35,6 +35,10 @@
 
 <!-- Rules land here after 2+ independent observations -->
 
+### type
+- **DO** drie type-stemmen met elk één taak: Instrument Serif (display, alleen blad/showcase, min 18px), General Sans (interface/body), IBM Plex Mono (data). **DON'T** geometric sans als display-font (Sora, Space Grotesk — beproefd en afgewezen als saai / .com-bubbel); serif nooit in product-UI of voor labels. *(2026-08-05: "geen mooi lettertypen" + "minimalistisch, saai, .com-bubbel" — verfijnt de seed-rule "no decorative serifs": die gold product-UI, de blad-stem is nieuw)*
+- **DO** de blad-cadans (meetlat, modeline, registratie-plaat) op élke gegenereerde pagina, niet alleen de home. **DON'T** hardcoded coördinaat-getallen in templates — het blad meet zichzelf via JS. *(2026-08-05: "alleen de home heeft het" + "losse blokken op een A4")*
+
 ### structure
 - **DO** real SVG icons (Lucide/shadcn style, 1.5px stroke, 15-16px grid). **DON'T** emoji/emoticons as UI icons — not in buttons, badges, attachments, status, nowhere. *(2026-07-27: "geen emoticons"; consistent with workspace anti-slop stance)*
 - **DO** shadcn/ui component conventions as baseline (button variants, badge pill, card border + hairline, ghost icon buttons). Devin's product UI is shadcn-shaped; Joep recognizes and prefers it. *(2026-07-27: "shadcn of soortgelijk gebruiken voor components van hun")*

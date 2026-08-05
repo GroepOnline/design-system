@@ -83,6 +83,8 @@ Nieuw component of variant:
   verwijderen zijn de enige mutaties, altijd via `ds`.
 - Gegenereerde bestanden (`components/*/index.html`, `docs/`, `taste-site/`,
   `brain-site/`) nooit handmatig bewerken.
+- Pushen gaat via `origin-ssh` (SSH, volledige scope); `origin` (HTTPS) heeft
+  geen workflow-scope. Zie `AGENTS.md` → Remotes.
 
 Meer: `hoe-wat.md` (grote gids) · `AGENTS.md` (agent-contract) ·
 `WORKFLOW.md` (processen) · `DESIGN.md` (de taal)

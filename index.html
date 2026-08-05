@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>design-system · basislaag voor agent-producten</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./tokens.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -94,7 +94,7 @@
   .sec-head { margin-bottom: 36px; position: relative; }
   .sec-head .coord { position: absolute; top: -22px; right: 0; font-family: var(--mono); font-size: 10px; color: var(--text-faint); letter-spacing: 0.05em; opacity: 0.65; }
   .sec-head .eyebrow { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 8px; }
-  .sec-head h2 { margin: 0; font-size: clamp(26px, 3.6vw, 34px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
+  .sec-head h2 { margin: 0; font-size: clamp(26px, 3.6vw, 34px); font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 1.15; }
   .sec-head .desc { color: var(--text-muted); font-size: 15px; max-width: 580px; margin-top: 10px; line-height: 1.55; }
 
   /* ---- signature band ---- */
@@ -161,7 +161,7 @@
   /* ---- cta: asymmetrisch — één primair pad, drie ondergeschikt ---- */
   .cta { padding: 88px 0 72px; position: relative; z-index: 1; }
   .cta .cta-inner { max-width: 860px; margin: 0 auto; text-align: left; }
-  .cta h2 { margin: 0 0 12px; font-size: clamp(28px, 4vw, 38px); font-weight: 500; letter-spacing: -0.02em; }
+  .cta h2 { margin: 0 0 12px; font-size: clamp(28px, 4vw, 38px); font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; }
   .cta p { color: var(--text-muted); font-size: 15px; margin: 0 0 28px; max-width: 520px; }
   .cta-grid { display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: auto auto; gap: 12px; }
   .cta-primary { grid-column: 1; grid-row: 1; }
@@ -191,6 +191,16 @@
   .ruler .rl { position: absolute; opacity: 0.7; letter-spacing: 0.02em; }
   .ruler-x .rl { top: 2px; transform: translateX(3px); }
   .ruler-y .rl { left: 1px; transform: translateY(-4px); }
+  /* ---- sectie-register: de inhoudsopgave staat OP de meetlat (de ruggengraat) ---- */
+  .ruler-y .reg { position: absolute; left: 0; width: 20px; display: block; background: none; border: none; padding: 2px 0 2px 3px; cursor: pointer; pointer-events: auto; }
+  .ruler-y .reg .rgl { writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.05em; color: var(--text-faint); white-space: nowrap; transition: color var(--dur-fast); }
+  .ruler-y .reg::after { content: ""; position: absolute; right: 0; top: 3px; bottom: 3px; width: 2px; background: var(--line-strong); transition: background var(--dur-fast), width var(--dur-fast); }
+  .ruler-y .reg:hover .rgl, .ruler-y .reg:focus-visible .rgl { color: var(--text); }
+  .ruler-y .reg:focus-visible { outline: none; }
+  .ruler-y .reg:focus-visible::after { background: var(--accent-ink); }
+  .ruler-y .reg.on .rgl { color: var(--accent-ink); }
+  .ruler-y .reg.on::after { background: var(--accent); width: 3px; }
+  @media (max-height: 700px) { .ruler-y .reg .rgl { display: none; } }
   .cropmark { position: fixed; width: 14px; height: 14px; z-index: 60; pointer-events: none; }
   .cropmark::before, .cropmark::after { content: ""; position: absolute; background: var(--line-strong); }
   .cropmark::before { width: 14px; height: 1px; }
@@ -213,8 +223,11 @@
   .modeline .ml-sec { color: var(--text-muted); }
   .modeline .ml-right { margin-left: auto; display: flex; gap: 14px; }
 
-  /* ---- hero v3: schaalcontrast + caret ---- */
-  .hero h1 { font-weight: 800; font-size: clamp(44px, 9.2vw, 120px); letter-spacing: -0.045em; }
+  /* ---- hero v3: schaalcontrast + caret ----
+     v4: serif display-stem (Instrument Serif) — gewicht 400 is het enige dat
+     bestaat; het contrast zit in de italic, niet in de vetgraad */
+  .hero h1 { font-weight: 400; font-size: clamp(44px, 9.2vw, 120px); letter-spacing: -0.02em; }
+  .hero h1 em { font-style: italic; letter-spacing: -0.015em; }
   .hero .caret { display: inline-block; width: 0.52em; height: 0.82em; margin-left: 0.06em;
     background: var(--accent); transform: translateY(0.08em); animation: caretBlink 1.06s steps(1) infinite; }
   @keyframes caretBlink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
@@ -275,6 +288,7 @@
     .topbar nav { display: none; }
     .sec { padding: 56px 0; }
     .ruler-x { display: none; }
+    .ruler-y .reg .rgl { display: none; }
     .titelblok { display: none; }
     .cropmark { display: none; }
     .modeline { padding-left: 12px; gap: 10px; }
@@ -321,7 +335,7 @@
   <div class="stroom" id="stroom" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="eyebrow reveal">design-system v2 · standalone</div>
-    <h1 class="reveal"><span class="scr">De basislaag voor</span><br><span class="scr">agent-producten</span><span class="acc">.</span><span class="caret" aria-hidden="true"></span></h1>
+    <h1 class="reveal"><span class="scr">De basislaag voor</span><br><em>agent-producten</em><span class="acc">.</span><span class="caret" aria-hidden="true"></span></h1>
     <div class="sub reveal">Gemeten uit Devin-DNA, vastgelegd als tokens, componenten en smaakregels. Geen framework, geen build-stap: kopieer wat je nodig hebt.</div>
     <div class="hero-actions reveal">
       <a href="./components/index.html" class="btn primary">Componenten bekijken →</a>
@@ -558,7 +572,7 @@
       mainStream.appendChild(w);
     });
   }
-  var rsz; window.addEventListener("resize", function(){ clearTimeout(rsz); rsz = setTimeout(function(){ buildField(); buildRulerX(); buildRulerY(); }, 220); });
+  var rsz; window.addEventListener("resize", function(){ clearTimeout(rsz); rsz = setTimeout(function(){ buildField(); buildRulerX(); buildRulerY(); buildRegister(); }, 220); });
   if (!reduced && field && heroEl) {
     var fams = ["r", "w", "x"];
     setInterval(function() {
@@ -647,6 +661,43 @@
   }
   buildRulerX(); buildRulerY();
 
+  /* ---- sectie-register: marks op ruler-y, coördinaten gemeten (nooit hardcoded) ---- */
+  var REGSECS = [["sec-hero","hero"],["ledger","replay"],["sec-band","signatuur"],["sec-inhoud","inhoud"],["sec-catalogus","catalogus"],["sec-richtingen","richtingen"],["sec-proces","proces"],["sec-start","start"]];
+  var regMarks = [];
+  function buildRegister() {
+    if (!ryEl) return;
+    ryEl.querySelectorAll(".reg").forEach(function(m){ m.remove(); });
+    regMarks = [];
+    var docH = document.documentElement.scrollHeight || 1;
+    var track = ryEl.clientHeight || 1;
+    REGSECS.forEach(function(pair) {
+      var sec = document.getElementById(pair[0]); if (!sec) return;
+      var frac = Math.min(Math.max(sec.offsetTop / docH, 0), 1);
+      var m = document.createElement("button");
+      m.className = "reg"; m.type = "button";
+      m.style.top = Math.round(frac * track) + "px";
+      m.title = pair[1] + " · " + frac.toFixed(2);
+      m.setAttribute("aria-label", "ga naar sectie " + pair[1]);
+      var lbl = document.createElement("span");
+      lbl.className = "rgl"; lbl.textContent = pair[1];
+      m.appendChild(lbl);
+      m.addEventListener("click", function(){ sec.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); });
+      ryEl.appendChild(m);
+      regMarks.push({ el: m, id: pair[0], frac: frac });
+      var chip = sec.querySelector(".sec-head .coord");
+      if (chip) chip.textContent = frac.toFixed(2);
+    });
+    var row = document.querySelector(".footer .coord-row");
+    if (row) {
+      var rh = "<span>0.00</span>";
+      regMarks.forEach(function(r){ if (r.frac >= 0.02 && r.frac <= 0.98) rh += "<span>· " + r.frac.toFixed(2) + "</span>"; });
+      rh += "<span>· 1.00</span>";
+      row.innerHTML = rh;
+    }
+  }
+  buildRegister();
+  window.addEventListener("load", function(){ buildRegister(); setTimeout(buildRegister, 900); });
+
   /* ---- modeline: utc-klok + y-uitlezing + actieve sectie ---- */
   var mlClock = document.getElementById("mlClock"), mlY = document.getElementById("mlY"), mlSec = document.getElementById("mlSec");
   function tickClock() {
@@ -667,16 +718,18 @@
   }, { passive: true });
   if (mlSec && "IntersectionObserver" in window) {
     var secObs = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (en.isIntersecting) {
-          var id = en.target.id;
-          var label = en.target.dataset.ml || id.replace("sec-", "");
-          mlSec.textContent = "§ " + label;
-        }
-      });
-    }, { threshold: 0.25 });
-    ["sec-hero","ledger","sec-band","sec-inhoud","sec-catalogus","sec-richtingen","sec-proces","sec-start"].forEach(function(id){
-      var el = document.getElementById(id); if (el) secObs.observe(el);
+      var hit = entries.filter(function(en){ return en.isIntersecting; })
+        .sort(function(a, b){ return a.target.offsetTop - b.target.offsetTop; })[0];
+      if (hit) {
+        var id = hit.target.id;
+        var pair = REGSECS.filter(function(p){ return p[0] === id; })[0];
+        var label = hit.target.dataset.ml || (pair ? pair[1] : id.replace("sec-", ""));
+        mlSec.textContent = "§ " + label;
+        regMarks.forEach(function(r){ r.el.classList.toggle("on", r.id === id); });
+      }
+    }, { rootMargin: "-40% 0px -55% 0px", threshold: 0 });
+    REGSECS.forEach(function(pair){
+      var el = document.getElementById(pair[0]); if (el) secObs.observe(el);
     });
   }
 

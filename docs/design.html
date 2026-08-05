@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DESIGN — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
 <style>
   html, body { height: 100%; }
@@ -78,7 +78,7 @@
   .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .pagehead .ph-text { min-width: 0; flex: 1; }
   .pagehead .eyebrow { font-family: var(--mono); font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 4px; }
-  .pagehead h1 { margin: 0; font-size: var(--text-2xl); letter-spacing: -0.02em; font-weight: 500; line-height: 1.15; }
+  .pagehead h1 { margin: 0; font-size: var(--text-2xl); font-family: var(--font-display); letter-spacing: -0.015em; font-weight: 400; line-height: 1.15; }
   .pagehead .ph-sub { color: var(--text-muted); font-size: var(--text-sm); margin-top: 3px; line-height: 1.5; }
   .pagehead .cat { margin-left: 2px; }
   .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; flex-shrink: 0; }
@@ -162,6 +162,30 @@
   .cell summary .copy { margin-left: auto; }
   .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
   .gen { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
+  /* ---- blad-cadans in de shell: meetlat + modeline zoals de home ---- */
+  .sruler { position: fixed; left: 280px; top: 0; bottom: 26px; width: 20px; z-index: 30; pointer-events: none;
+    background: var(--bg); border-right: 1px solid var(--line);
+    font-family: var(--mono); font-size: 9px; color: var(--text-faint);
+    background-image: repeating-linear-gradient(0deg, var(--line-strong) 0 1px, transparent 1px 40px),
+                      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
+    background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
+  .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
+    display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
+    border-top: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.02em;
+    white-space: nowrap; overflow: hidden; }
+  .smodeline .ml-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; animation: smlBreathe 2.4s ease-in-out infinite; }
+  @keyframes smlBreathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+  .smodeline .ml-sec { color: var(--text-muted); }
+  .smodeline .ml-right { margin-left: auto; display: flex; gap: 14px; }
+  @media (max-width: 860px) {
+    .sruler { display: none; }
+    .smodeline { left: 0; padding-left: 12px; gap: 10px; }
+    .smodeline .ml-opt { display: none; }
+    body { padding-bottom: 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .smodeline .ml-dot { animation: none; } }
   /* ---- reveal (subtiel, reduced-motion-safe) ---- */
   .reveal { opacity: 0; transform: translateY(8px); transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -271,7 +295,7 @@
 <li><strong>Bewijs in beeld.</strong> Diffs, PR-cards, before/after. De agent toont, niet vertelt.</li>
 </ol>
 <h2>2. Gemeten Devin-DNA (bron: devin.ai computed styles, 2026-07-27)</h2>
-<table><thead><tr><th>Element</th><th>Waarde</th><th>Overname</th></tr></thead><tbody><tr><td>body bg</td><td><code>rgb(247,246,245)</code></td><td>exact</td></tr><tr><td>tekst</td><td><code>rgb(25,25,25)</code></td><td>exact</td></tr><tr><td>link-blauw</td><td><code>rgb(68,109,205)</code></td><td>als <code>--accent-ink</code> familie</td></tr><tr><td>merk-blauw</td><td><code>#317CFF</code> (uit product-UI)</td><td>als <code>--accent</code></td></tr><tr><td>badge-blauw</td><td><code>#2200FF</code> (NEW-pill)</td><td>niet -- te hard</td></tr><tr><td>marketing-cards</td><td>radius 16px</td><td>product: 12px (<code>--r-lg</code>)</td></tr><tr><td>knoppen (marketing)</td><td>radius 0px</td><td>product: 8px (<code>--r-md</code>)</td></tr><tr><td>headings</td><td>weight 500, tracking −4%</td><td>weight 500, tracking −2% (product)</td></tr><tr><td>font</td><td>NB International Pro</td><td>General Sans (gratis equivalent)</td></tr></tbody></table>
+<table><thead><tr><th>Element</th><th>Waarde</th><th>Overname</th></tr></thead><tbody><tr><td>body bg</td><td><code>rgb(247,246,245)</code></td><td>exact</td></tr><tr><td>tekst</td><td><code>rgb(25,25,25)</code></td><td>exact</td></tr><tr><td>link-blauw</td><td><code>rgb(68,109,205)</code></td><td>als <code>--accent-ink</code> familie</td></tr><tr><td>merk-blauw</td><td><code>#317CFF</code> (uit product-UI)</td><td>als <code>--accent</code></td></tr><tr><td>badge-blauw</td><td><code>#2200FF</code> (NEW-pill)</td><td>niet -- te hard</td></tr><tr><td>marketing-cards</td><td>radius 16px</td><td>product: 12px (<code>--r-lg</code>)</td></tr><tr><td>knoppen (marketing)</td><td>radius 0px</td><td>product: 8px (<code>--r-md</code>)</td></tr><tr><td>headings</td><td>weight 500, tracking −4%</td><td>weight 500, tracking −2% (product)</td></tr><tr><td>font</td><td>NB International Pro</td><td>General Sans (interface) + Instrument Serif (display, eigen blad-stem)</td></tr></tbody></table>
 <h2>3. Kleur</h2>
 <p>Zie <code>tokens.css</code>. Regels:</p>
 <ul>
@@ -281,11 +305,19 @@
 <li>Neutraal is warm, nooit koudgrijs. Dark mode is basalt-warm, geen zuiver zwart.</li>
 </ul>
 <h2>4. Typografie</h2>
+<p>Drie stemmen, elk één taak:</p>
 <ul>
-<li><strong>General Sans</strong> 400/500/600 voor alles. Koppen <strong>500</strong> met tracking −0.02em.</li>
-<li><strong>JetBrains Mono</strong> uitsluitend voor data: timers, diffs, branch-namen, commands, paden.</li>
+<li><strong>Instrument Serif</strong> (400 + italic) is de display-stem van het blad: hero,</li>
+<p>sectie-titels en pagina-headers van de site. Nooit onder 18px, nooit voor</p>
+<p>UI-labels; italic voor maximaal één accent-regel per pagina.</p>
+<li><strong>General Sans</strong> 400/500/600 voor alle interface- en body-tekst. Koppen in</li>
+<p>product-UI <strong>500</strong> met tracking −0.02em.</p>
+<li><strong>IBM Plex Mono</strong> uitsluitend voor data: timers, diffs, branch-namen,</li>
+<p>commands, paden, coördinaten.</p>
 <li>Timers en tellers altijd <code>font-variant-numeric: tabular-nums</code>.</li>
-<li>Nooit Inter/Geist/Space Grotesk. Nooit mono voor prose of labels.</li>
+<li>Nooit Inter/Geist/Space Grotesk/Sora. Space Grotesk is beproefd (2026-08-05)</li>
+<p>en afgewezen: te minimalistisch, te .com-bubbel. Nooit mono voor prose of</p>
+<p>labels; nooit serif in product-UI.</p>
 </ul>
 <h2>5. Iconen</h2>
 <ul>
@@ -356,6 +388,8 @@
 <li>Data (timer, diff, counts): <code>.num</code> = tabular-nums</li>
 <li>Sectie-labels: <code>.caps</code> = 10.5px / 600 / +0.07em / faint</li>
 <li><code>text-wrap: pretty</code> op paragrafen</li>
+<li>Display (site/blad): <code>--font-display</code> = Instrument Serif, gewicht 400,</li>
+<p>tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers</p>
 </ul>
 <h2>§12 Iconen (v2.1, icon-system skill)</h2>
 <ul>
@@ -386,6 +420,17 @@
 <div class="gen">gegenereerd uit DESIGN.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
+<div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="smodeline">
+  <span class="ml-dot"></span>
+  <span>live</span>
+  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-right">
+    <span class="ml-opt" id="smlY">y 0000/0000</span>
+    <span class="ml-opt">rev d</span>
+    <span id="smlClock">--:--:--</span>
+  </span>
+</div>
 <script>
 const seg = document.getElementById("themeSeg");
 const sseg = document.getElementById("styleSeg");
@@ -468,6 +513,51 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     try { await navigator.clipboard.writeText(txt); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
   });
 });
+/* ---- blad-cadans: utc-klok + y-uitlezing + meetlat op de shell ---- */
+(function () {
+  var mainEl = document.querySelector(".main");
+  var sClock = document.getElementById("smlClock");
+  var sY = document.getElementById("smlY");
+  var sPage = document.getElementById("smlPage");
+  var sr = document.getElementById("srulerY");
+  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  function tickSClock() {
+    if (!sClock) return;
+    var d = new Date();
+    sClock.textContent = String(d.getUTCHours()).padStart(2, "0") + ":" + String(d.getUTCMinutes()).padStart(2, "0") + ":" + String(d.getUTCSeconds()).padStart(2, "0") + " utc";
+  }
+  tickSClock(); setInterval(tickSClock, 1000);
+  function mainScrolls() { return mainEl && getComputedStyle(mainEl).overflowY === "auto"; }
+  function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
+  function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
+  var srl = [];
+  function updateSY() {
+    var st = scrollTopOf();
+    if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
+    srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+  }
+  function buildSRuler() {
+    if (!sr) return;
+    sr.innerHTML = ""; srl = [];
+    var h = sr.clientHeight;
+    for (var y = 80; y < h - 40; y += 80) {
+      var l = document.createElement("span");
+      l.className = "rl"; l.style.top = y + "px";
+      sr.appendChild(l); srl.push({ el: l, vy: y });
+    }
+    updateSY();
+  }
+  buildSRuler();
+  var sTick = false;
+  function onScroll() {
+    if (sTick) return; sTick = true;
+    requestAnimationFrame(function () { sTick = false; updateSY(); });
+  }
+  if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
+  window.addEventListener("load", buildSRuler);
+})();
 </script>
 </body>
 </html>

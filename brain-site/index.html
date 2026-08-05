@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>brain — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
 <style>
   html, body { height: 100%; }
@@ -78,7 +78,7 @@
   .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .pagehead .ph-text { min-width: 0; flex: 1; }
   .pagehead .eyebrow { font-family: var(--mono); font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 4px; }
-  .pagehead h1 { margin: 0; font-size: var(--text-2xl); letter-spacing: -0.02em; font-weight: 500; line-height: 1.15; }
+  .pagehead h1 { margin: 0; font-size: var(--text-2xl); font-family: var(--font-display); letter-spacing: -0.015em; font-weight: 400; line-height: 1.15; }
   .pagehead .ph-sub { color: var(--text-muted); font-size: var(--text-sm); margin-top: 3px; line-height: 1.5; }
   .pagehead .cat { margin-left: 2px; }
   .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; flex-shrink: 0; }
@@ -162,6 +162,30 @@
   .cell summary .copy { margin-left: auto; }
   .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
   .gen { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
+  /* ---- blad-cadans in de shell: meetlat + modeline zoals de home ---- */
+  .sruler { position: fixed; left: 280px; top: 0; bottom: 26px; width: 20px; z-index: 30; pointer-events: none;
+    background: var(--bg); border-right: 1px solid var(--line);
+    font-family: var(--mono); font-size: 9px; color: var(--text-faint);
+    background-image: repeating-linear-gradient(0deg, var(--line-strong) 0 1px, transparent 1px 40px),
+                      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
+    background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
+  .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
+    display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
+    border-top: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.02em;
+    white-space: nowrap; overflow: hidden; }
+  .smodeline .ml-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; animation: smlBreathe 2.4s ease-in-out infinite; }
+  @keyframes smlBreathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+  .smodeline .ml-sec { color: var(--text-muted); }
+  .smodeline .ml-right { margin-left: auto; display: flex; gap: 14px; }
+  @media (max-width: 860px) {
+    .sruler { display: none; }
+    .smodeline { left: 0; padding-left: 12px; gap: 10px; }
+    .smodeline .ml-opt { display: none; }
+    body { padding-bottom: 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .smodeline .ml-dot { animation: none; } }
   /* ---- reveal (subtiel, reduced-motion-safe) ---- */
   .reveal { opacity: 0; transform: translateY(8px); transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -247,12 +271,24 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>Brain</h1><div class="cat caps">21 notes · niet-bindende context</div></div></div><div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div><div class="caps" style="margin:22px 2px 10px">Ingang</div><div class="cards">  <a class="card reveal" href="./home.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Home</span><span class="cd" style="font-family:var(--mono)">Home.md</span></a>  <a class="card reveal" href="./readme.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">README</span><span class="cd" style="font-family:var(--mono)">README.md</span></a></div>
+<div class="pagehead"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>Brain</h1><div class="cat caps">23 notes · niet-bindende context</div></div></div><div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div><div class="caps" style="margin:22px 2px 10px">Ingang</div><div class="cards">  <a class="card reveal" href="./home.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Home</span><span class="cd" style="font-family:var(--mono)">Home.md</span></a>  <a class="card reveal" href="./readme.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">README</span><span class="cd" style="font-family:var(--mono)">README.md</span></a></div>
 <div class="caps" style="margin:22px 2px 10px">Indexes</div><div class="cards">  <a class="card reveal" href="./indexes-components.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Components</span><span class="cd" style="font-family:var(--mono)">Indexes/Components.md</span></a>  <a class="card reveal" href="./indexes-concepts.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Concepts</span><span class="cd" style="font-family:var(--mono)">Indexes/Concepts.md</span></a>  <a class="card reveal" href="./indexes-decisions.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Decisions</span><span class="cd" style="font-family:var(--mono)">Indexes/Decisions.md</span></a>  <a class="card reveal" href="./indexes-design-language.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Design Language</span><span class="cd" style="font-family:var(--mono)">Indexes/Design Language.md</span></a>  <a class="card reveal" href="./indexes-research.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Research</span><span class="cd" style="font-family:var(--mono)">Indexes/Research.md</span></a>  <a class="card reveal" href="./indexes-surfaces.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Surfaces</span><span class="cd" style="font-family:var(--mono)">Indexes/Surfaces.md</span></a>  <a class="card reveal" href="./indexes-taste.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Taste</span><span class="cd" style="font-family:var(--mono)">Indexes/Taste.md</span></a></div>
 <div class="caps" style="margin:22px 2px 10px">Concepts</div><div class="cards">  <a class="card reveal" href="./concepts-gegenereerde-bestanden.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Gegenereerde bestanden</span><span class="cd" style="font-family:var(--mono)">Concepts/Gegenereerde bestanden.md</span></a>  <a class="card reveal" href="./concepts-lock-model.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Lock-model</span><span class="cd" style="font-family:var(--mono)">Concepts/Lock-model.md</span></a>  <a class="card reveal" href="./concepts-origin-split.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Origin-split</span><span class="cd" style="font-family:var(--mono)">Concepts/Origin-split.md</span></a>  <a class="card reveal" href="./concepts-playground.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Playground</span><span class="cd" style="font-family:var(--mono)">Concepts/Playground.md</span></a>  <a class="card reveal" href="./concepts-single-active.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Single-active</span><span class="cd" style="font-family:var(--mono)">Concepts/Single-active.md</span></a>  <a class="card reveal" href="./concepts-taste-propagatie.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">Taste-propagatie</span><span class="cd" style="font-family:var(--mono)">Concepts/Taste-propagatie.md</span></a></div>
 <div class="caps" style="margin:22px 2px 10px">Decisions</div><div class="cards">  <a class="card reveal" href="./decisions-2026-07-30-agent-laag-in-punt-agents.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Agent-laag in punt-agents</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Agent-laag in punt-agents.md</span></a>  <a class="card reveal" href="./decisions-2026-07-30-agent-taste-buiten-dit-repo.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Agent-taste buiten dit repo</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Agent-taste buiten dit repo.md</span></a>  <a class="card reveal" href="./decisions-2026-07-30-brain-als-vijfde-tool.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Brain als vijfde tool</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Brain als vijfde tool.md</span></a>  <a class="card reveal" href="./decisions-2026-07-30-brain-signals-eval-dual-gate.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Brain signals eval dual gate</span><span class="cd" style="font-family:var(--mono)">Decisions/2026-07-30 Brain signals eval dual gate.md</span></a></div>
-<div class="caps" style="margin:22px 2px 10px">Research</div><div class="cards">  <a class="card reveal" href="./research-2026-07-30-devin-meetlat-pointers.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Devin meetlat pointers</span><span class="cd" style="font-family:var(--mono)">Research/2026-07-30 Devin meetlat pointers.md</span></a>  <a class="card reveal" href="./research-2026-08-04-web-motion-refs.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-08-04 Web motion refs</span><span class="cd" style="font-family:var(--mono)">Research/2026-08-04 Web motion refs.md</span></a></div><div class="gen">gegenereerd door ds brain build op 2026-08-05 · bron: brain/**/*.md</div>
+<div class="caps" style="margin:22px 2px 10px">Research</div><div class="cards">  <a class="card reveal" href="./research-2026-07-30-devin-meetlat-pointers.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-07-30 Devin meetlat pointers</span><span class="cd" style="font-family:var(--mono)">Research/2026-07-30 Devin meetlat pointers.md</span></a>  <a class="card reveal" href="./research-2026-08-04-web-motion-refs.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">2026-08-04 Web motion refs</span><span class="cd" style="font-family:var(--mono)">Research/2026-08-04 Web motion refs.md</span></a></div>
+<div class="caps" style="margin:22px 2px 10px">Templates</div><div class="cards">  <a class="card reveal" href="./templates-new-decision.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">New Decision</span><span class="cd" style="font-family:var(--mono)">Templates/New Decision.md</span></a>  <a class="card reveal" href="./templates-new-research.html"><span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="cn">New Research</span><span class="cd" style="font-family:var(--mono)">Templates/New Research.md</span></a></div><div class="gen">gegenereerd door ds brain build op 2026-08-05 · bron: brain/**/*.md</div>
 </div></main>
+<div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="smodeline">
+  <span class="ml-dot"></span>
+  <span>live</span>
+  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-right">
+    <span class="ml-opt" id="smlY">y 0000/0000</span>
+    <span class="ml-opt">rev d</span>
+    <span id="smlClock">--:--:--</span>
+  </span>
+</div>
 <script>
 const seg = document.getElementById("themeSeg");
 const sseg = document.getElementById("styleSeg");
@@ -335,6 +371,51 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     try { await navigator.clipboard.writeText(txt); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
   });
 });
+/* ---- blad-cadans: utc-klok + y-uitlezing + meetlat op de shell ---- */
+(function () {
+  var mainEl = document.querySelector(".main");
+  var sClock = document.getElementById("smlClock");
+  var sY = document.getElementById("smlY");
+  var sPage = document.getElementById("smlPage");
+  var sr = document.getElementById("srulerY");
+  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  function tickSClock() {
+    if (!sClock) return;
+    var d = new Date();
+    sClock.textContent = String(d.getUTCHours()).padStart(2, "0") + ":" + String(d.getUTCMinutes()).padStart(2, "0") + ":" + String(d.getUTCSeconds()).padStart(2, "0") + " utc";
+  }
+  tickSClock(); setInterval(tickSClock, 1000);
+  function mainScrolls() { return mainEl && getComputedStyle(mainEl).overflowY === "auto"; }
+  function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
+  function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
+  var srl = [];
+  function updateSY() {
+    var st = scrollTopOf();
+    if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
+    srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+  }
+  function buildSRuler() {
+    if (!sr) return;
+    sr.innerHTML = ""; srl = [];
+    var h = sr.clientHeight;
+    for (var y = 80; y < h - 40; y += 80) {
+      var l = document.createElement("span");
+      l.className = "rl"; l.style.top = y + "px";
+      sr.appendChild(l); srl.push({ el: l, vy: y });
+    }
+    updateSY();
+  }
+  buildSRuler();
+  var sTick = false;
+  function onScroll() {
+    if (sTick) return; sTick = true;
+    requestAnimationFrame(function () { sTick = false; updateSY(); });
+  }
+  if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
+  window.addEventListener("load", buildSRuler);
+})();
 </script>
 </body>
 </html>

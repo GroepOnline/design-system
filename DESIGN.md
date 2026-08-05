@@ -29,7 +29,7 @@ Drie pijlers:
 | marketing-cards | radius 16px | product: 12px (`--r-lg`) |
 | knoppen (marketing) | radius 0px | product: 8px (`--r-md`) |
 | headings | weight 500, tracking −4% | weight 500, tracking −2% (product) |
-| font | NB International Pro | General Sans (gratis equivalent) |
+| font | NB International Pro | General Sans (interface) + Instrument Serif (display, eigen blad-stem) |
 
 ## 3. Kleur
 
@@ -42,10 +42,19 @@ Zie `tokens.css`. Regels:
 
 ## 4. Typografie
 
-- **General Sans** 400/500/600 voor alles. Koppen **500** met tracking −0.02em.
-- **JetBrains Mono** uitsluitend voor data: timers, diffs, branch-namen, commands, paden.
+Drie stemmen, elk één taak:
+
+- **Instrument Serif** (400 + italic) is de display-stem van het blad: hero,
+  sectie-titels en pagina-headers van de site. Nooit onder 18px, nooit voor
+  UI-labels; italic voor maximaal één accent-regel per pagina.
+- **General Sans** 400/500/600 voor alle interface- en body-tekst. Koppen in
+  product-UI **500** met tracking −0.02em.
+- **IBM Plex Mono** uitsluitend voor data: timers, diffs, branch-namen,
+  commands, paden, coördinaten.
 - Timers en tellers altijd `font-variant-numeric: tabular-nums`.
-- Nooit Inter/Geist/Space Grotesk. Nooit mono voor prose of labels.
+- Nooit Inter/Geist/Space Grotesk/Sora. Space Grotesk is beproefd (2026-08-05)
+  en afgewezen: te minimalistisch, te .com-bubbel. Nooit mono voor prose of
+  labels; nooit serif in product-UI.
 
 ## 5. Iconen
 
@@ -163,6 +172,8 @@ Regels:
 - Data (timer, diff, counts): `.num` = tabular-nums
 - Sectie-labels: `.caps` = 10.5px / 600 / +0.07em / faint
 - `text-wrap: pretty` op paragrafen
+- Display (site/blad): `--font-display` = Instrument Serif, gewicht 400,
+  tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers
 
 ## §12 Iconen (v2.1, icon-system skill)
 

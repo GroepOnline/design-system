@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>taste — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
 <style>
   html, body { height: 100%; }
@@ -78,7 +78,7 @@
   .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .pagehead .ph-text { min-width: 0; flex: 1; }
   .pagehead .eyebrow { font-family: var(--mono); font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 4px; }
-  .pagehead h1 { margin: 0; font-size: var(--text-2xl); letter-spacing: -0.02em; font-weight: 500; line-height: 1.15; }
+  .pagehead h1 { margin: 0; font-size: var(--text-2xl); font-family: var(--font-display); letter-spacing: -0.015em; font-weight: 400; line-height: 1.15; }
   .pagehead .ph-sub { color: var(--text-muted); font-size: var(--text-sm); margin-top: 3px; line-height: 1.5; }
   .pagehead .cat { margin-left: 2px; }
   .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; flex-shrink: 0; }
@@ -162,6 +162,30 @@
   .cell summary .copy { margin-left: auto; }
   .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
   .gen { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
+  /* ---- blad-cadans in de shell: meetlat + modeline zoals de home ---- */
+  .sruler { position: fixed; left: 280px; top: 0; bottom: 26px; width: 20px; z-index: 30; pointer-events: none;
+    background: var(--bg); border-right: 1px solid var(--line);
+    font-family: var(--mono); font-size: 9px; color: var(--text-faint);
+    background-image: repeating-linear-gradient(0deg, var(--line-strong) 0 1px, transparent 1px 40px),
+                      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 8px);
+    background-position: 100% 0, 100% 0; background-size: 10px 100%, 5px 100%; background-repeat: no-repeat; }
+  .sruler .rl { position: absolute; left: 1px; transform: translateY(-4px); opacity: 0.7; letter-spacing: 0.02em; }
+  .smodeline { position: fixed; left: 281px; right: 0; bottom: 0; height: 26px; z-index: 40;
+    display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
+    border-top: 1px solid var(--line); background: var(--bg);
+    font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.02em;
+    white-space: nowrap; overflow: hidden; }
+  .smodeline .ml-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--open-green); flex-shrink: 0; animation: smlBreathe 2.4s ease-in-out infinite; }
+  @keyframes smlBreathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+  .smodeline .ml-sec { color: var(--text-muted); }
+  .smodeline .ml-right { margin-left: auto; display: flex; gap: 14px; }
+  @media (max-width: 860px) {
+    .sruler { display: none; }
+    .smodeline { left: 0; padding-left: 12px; gap: 10px; }
+    .smodeline .ml-opt { display: none; }
+    body { padding-bottom: 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .smodeline .ml-dot { animation: none; } }
   /* ---- reveal (subtiel, reduced-motion-safe) ---- */
   .reveal { opacity: 0; transform: translateY(8px); transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -286,6 +310,11 @@
 </ul>
 <h2>Learned rules (from taste-log — none yet)</h2>
 <p>&lt;!-- Rules land here after 2+ independent observations --&gt;</p>
+<h3>type</h3>
+<ul>
+<li><strong>DO</strong> drie type-stemmen met elk één taak: Instrument Serif (display, alleen blad/showcase, min 18px), General Sans (interface/body), IBM Plex Mono (data). <strong>DON&#x27;T</strong> geometric sans als display-font (Sora, Space Grotesk — beproefd en afgewezen als saai / .com-bubbel); serif nooit in product-UI of voor labels. <em>(2026-08-05: &quot;geen mooi lettertypen&quot; + &quot;minimalistisch, saai, .com-bubbel&quot; — verfijnt de seed-rule &quot;no decorative serifs&quot;: die gold product-UI, de blad-stem is nieuw)</em></li>
+<li><strong>DO</strong> de blad-cadans (meetlat, modeline, registratie-plaat) op élke gegenereerde pagina, niet alleen de home. <strong>DON&#x27;T</strong> hardcoded coördinaat-getallen in templates — het blad meet zichzelf via JS. <em>(2026-08-05: &quot;alleen de home heeft het&quot; + &quot;losse blokken op een A4&quot;)</em></li>
+</ul>
 <h3>structure</h3>
 <ul>
 <li><strong>DO</strong> real SVG icons (Lucide/shadcn style, 1.5px stroke, 15-16px grid). <strong>DON&#x27;T</strong> emoji/emoticons as UI icons — not in buttons, badges, attachments, status, nowhere. <em>(2026-07-27: &quot;geen emoticons&quot;; consistent with workspace anti-slop stance)</em></li>
@@ -425,8 +454,27 @@
 <h2>2026-08-05 · Catalogus-kaarten: uitlijning + chips</h2>
 <p><strong>Signaal (Joep):</strong> &quot;dubbel onder select elementen, geen goeie uitlijning jezus&quot; — op de component-detailpagina&#x27;s (GEBRUIK/VERMIJD/CONTRACT-kaarten).</p>
 <p><strong>Regel:</strong> doc-kaarten staan op gelijke hoogte (align-items: stretch + flex-column), contract-chips zijn bulleted-loze blokken die niet mid-woord breken (inline-block + word-break), kaart-titels krijgen gewicht 600 + caps. Losse code-chips in een &lt;ul&gt;-bullet-lijst = altijd lelijke wrap.</p>
-<p><strong>Doorgifte:</strong> gallery + 12 catalogus-pagina&#x27;s. Kandidaat-regel: kaartgrids gebruiken stretch, nooit auto-height.</p></div><div class='gen'>gegenereerd uit taste/*.md op 2026-08-05</div>
+<p><strong>Doorgifte:</strong> gallery + 12 catalogus-pagina&#x27;s. Kandidaat-regel: kaartgrids gebruiken stretch, nooit auto-height.</p>
+<h2>2026-08-05 · Font-karakter: serif display-stem + blad-cadans overal</h2>
+<ul>
+<li><strong>shown</strong>: home v3 (het blad) met Sora 800 / Space Grotesk body</li>
+<li><strong>reaction</strong>: &quot;lettertype heeft te weinig karakter — minimalistisch, saai, .com-bubbel&quot; + &quot;home voelt als losse blokken op een A4&quot; + &quot;alleen de home heeft de blad-cadans&quot;</li>
+<li><strong>signal</strong>: derde font-signaal op rij (na &quot;geen mooi lettertypen&quot; 2026-08-05 en het wow-brief). Het probleem is niet welke schreefloos, maar dat schreefloos-op-schreefloos geen contrast heeft.</li>
+<li><strong>delta</strong>: (1) drie-stemmen-model: Instrument Serif (400/italic) als display-stem van het blad, General Sans als instrument-stem, IBM Plex Mono als data-stem; Sora + Space Grotesk uit alle stacks en font-links; (2) hero-regel 2 is nu italic serif (het accent zit in de italic, niet in vetgraad); (3) sectie-register op de Y-meetlat: de inhoudsopgave staat OP de rand van het blad, actieve sectie licht op, marks zijn klikbaar; (4) coörd-chips + footer-rij worden door JS gemeten in plaats van hardcoded; (5) blad-cadans (meetlat, modeline, blad-plaat) nu ook op alle 12 catalogus-pagina&#x27;s + gallery + docs + taste + brain via de shell.</li>
+<li><strong>candidate rule</strong>: (1) display = serif op showcase/blad, product-UI blijft grotesk; (2) coördinaten op het blad zijn altijd gemeten, nooit getypt; (3) cadans-chrome geldt voor elke gegenereerde pagina, niet alleen de home.</li>
+</ul></div><div class='gen'>gegenereerd uit taste/*.md op 2026-08-05</div>
 </div></main>
+<div class="sruler" id="srulerY" aria-hidden="true"></div>
+<div class="smodeline">
+  <span class="ml-dot"></span>
+  <span>live</span>
+  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-right">
+    <span class="ml-opt" id="smlY">y 0000/0000</span>
+    <span class="ml-opt">rev d</span>
+    <span id="smlClock">--:--:--</span>
+  </span>
+</div>
 <script>
 const seg = document.getElementById("themeSeg");
 const sseg = document.getElementById("styleSeg");
@@ -509,6 +557,51 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
     try { await navigator.clipboard.writeText(txt); btn.textContent = "gekopieerd"; setTimeout(() => btn.textContent = "kopieer", 1400); } catch(err) {}
   });
 });
+/* ---- blad-cadans: utc-klok + y-uitlezing + meetlat op de shell ---- */
+(function () {
+  var mainEl = document.querySelector(".main");
+  var sClock = document.getElementById("smlClock");
+  var sY = document.getElementById("smlY");
+  var sPage = document.getElementById("smlPage");
+  var sr = document.getElementById("srulerY");
+  if (sPage) sPage.textContent = "§ " + (document.title.split(" — ")[0] || "pagina");
+  function tickSClock() {
+    if (!sClock) return;
+    var d = new Date();
+    sClock.textContent = String(d.getUTCHours()).padStart(2, "0") + ":" + String(d.getUTCMinutes()).padStart(2, "0") + ":" + String(d.getUTCSeconds()).padStart(2, "0") + " utc";
+  }
+  tickSClock(); setInterval(tickSClock, 1000);
+  function mainScrolls() { return mainEl && getComputedStyle(mainEl).overflowY === "auto"; }
+  function scrollTopOf() { return mainScrolls() ? mainEl.scrollTop : (window.scrollY || 0); }
+  function heightOf() { return mainScrolls() ? mainEl.scrollHeight : document.documentElement.scrollHeight; }
+  var srl = [];
+  function updateSY() {
+    var st = scrollTopOf();
+    if (sY) sY.textContent = "y " + String(Math.round(st)).padStart(4, "0") + "/" + String(heightOf()).padStart(4, "0");
+    srl.forEach(function (o) { o.el.textContent = String(Math.round((st + o.vy) / 10) * 10); });
+  }
+  function buildSRuler() {
+    if (!sr) return;
+    sr.innerHTML = ""; srl = [];
+    var h = sr.clientHeight;
+    for (var y = 80; y < h - 40; y += 80) {
+      var l = document.createElement("span");
+      l.className = "rl"; l.style.top = y + "px";
+      sr.appendChild(l); srl.push({ el: l, vy: y });
+    }
+    updateSY();
+  }
+  buildSRuler();
+  var sTick = false;
+  function onScroll() {
+    if (sTick) return; sTick = true;
+    requestAnimationFrame(function () { sTick = false; updateSY(); });
+  }
+  if (mainEl) mainEl.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  var srz; window.addEventListener("resize", function () { clearTimeout(srz); srz = setTimeout(buildSRuler, 200); });
+  window.addEventListener("load", buildSRuler);
+})();
 </script>
 </body>
 </html>

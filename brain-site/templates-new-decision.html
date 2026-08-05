@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026-07-30 Agent-laag in punt-agents — design-system</title>
+<title>New Decision — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -271,25 +271,20 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>2026-07-30 Agent-laag in punt-agents</h1><div class="cat caps">brain · bron: brain/Decisions/2026-07-30 Agent-laag in punt-agents.md</div></div><div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div><div class="md"><h1>Decision - Agent-laag in .agents</h1>
+<div class="pagehead"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>New Decision</h1><div class="cat caps">brain · bron: brain/Templates/New Decision.md</div></div><div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div><div class="md"><h1>Decision - {{title}}</h1>
 <ul>
-<li><strong>Datum</strong>: 2026-07-30</li>
-<li><strong>Context</strong>: Brain-kennis en de invariant &quot;raak gegenereerde bestanden niet aan&quot; zaten alleen in prozadocs. Elke agent moest dat opnieuw uit <code>AGENTS.md</code> opdiepen, en niets hield het tegen.</li>
-<li><strong>Keuze</strong>: <code>.agents/</code> als canonieke, tool-onafhankelijke laag met drie brain-skills en twee hooks. <code>.cursor/</code> blijft een dunne overlay: symlinks naar de skills plus <code>hooks.json</code> als wiring, omdat Cursor hooks alleen daar leest.</li>
+<li><strong>Datum</strong>: {{date}}</li>
+<li><strong>Context</strong>:</li>
+<li><strong>Keuze</strong>:</li>
 <li><strong>Gevolgen</strong>:</li>
-<li>Skills: <code>design-system-brain</code>, <code>brain-note-hygiene</code>, <code>brain-decision-capture</code></li>
-<li>Hook <code>guard-generated.sh</code> weigert Write-edits in <code>brain-site/</code>, <code>taste-site/</code>, <code>docs/<em>.html</code> en <code>components/</em>*/index.html</code>, zie <a href="./concepts-gegenereerde-bestanden.html">Gegenereerde bestanden</a></li>
-<li>Hook <code>brain-build.sh</code> herbouwt de leeslaag na een edit in <code>brain/*<em>/</em>.md</code></li>
-<li>Agent-gedrag-taste (canonieke <code>taste.yaml</code> met generators) blijft buiten dit repo tot de keuze tussen hier en <code>kater-dev-tools</code> valt</li>
-<li><strong>Productregel?</strong> nee</li>
+<li><strong>Productregel?</strong> nee / ja → dan via <a href="./concepts-taste-propagatie.html">Taste-propagatie</a></li>
 </ul>
 <h2>Links</h2>
 <ul>
 <li><a href="./indexes-decisions.html">Decisions</a></li>
+<li><a href="./readme.html">README</a></li>
 <li><a href="./home.html">Home</a></li>
-<li><a href="./concepts-gegenereerde-bestanden.html">Gegenereerde bestanden</a></li>
-<li><a href="./decisions-2026-07-30-brain-als-vijfde-tool.html">2026-07-30 Brain als vijfde tool</a></li>
-</ul></div><div class="gen">gegenereerd uit brain/Decisions/2026-07-30 Agent-laag in punt-agents.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
+</ul></div><div class="gen">gegenereerd uit brain/Templates/New Decision.md op 2026-08-05 · bewerk de .md, niet deze pagina</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
 <div class="smodeline">

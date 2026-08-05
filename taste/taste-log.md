@@ -131,3 +131,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 **Signaal (Joep):** "dubbel onder select elementen, geen goeie uitlijning jezus" — op de component-detailpagina's (GEBRUIK/VERMIJD/CONTRACT-kaarten).
 **Regel:** doc-kaarten staan op gelijke hoogte (align-items: stretch + flex-column), contract-chips zijn bulleted-loze blokken die niet mid-woord breken (inline-block + word-break), kaart-titels krijgen gewicht 600 + caps. Losse code-chips in een <ul>-bullet-lijst = altijd lelijke wrap.
 **Doorgifte:** gallery + 12 catalogus-pagina's. Kandidaat-regel: kaartgrids gebruiken stretch, nooit auto-height.
+
+## 2026-08-05 · Font-karakter: serif display-stem + blad-cadans overal
+
+- **shown**: home v3 (het blad) met Sora 800 / Space Grotesk body
+- **reaction**: "lettertype heeft te weinig karakter — minimalistisch, saai, .com-bubbel" + "home voelt als losse blokken op een A4" + "alleen de home heeft de blad-cadans"
+- **signal**: derde font-signaal op rij (na "geen mooi lettertypen" 2026-08-05 en het wow-brief). Het probleem is niet welke schreefloos, maar dat schreefloos-op-schreefloos geen contrast heeft.
+- **delta**: (1) drie-stemmen-model: Instrument Serif (400/italic) als display-stem van het blad, General Sans als instrument-stem, IBM Plex Mono als data-stem; Sora + Space Grotesk uit alle stacks en font-links; (2) hero-regel 2 is nu italic serif (het accent zit in de italic, niet in vetgraad); (3) sectie-register op de Y-meetlat: de inhoudsopgave staat OP de rand van het blad, actieve sectie licht op, marks zijn klikbaar; (4) coörd-chips + footer-rij worden door JS gemeten in plaats van hardcoded; (5) blad-cadans (meetlat, modeline, blad-plaat) nu ook op alle 12 catalogus-pagina's + gallery + docs + taste + brain via de shell.
+- **candidate rule**: (1) display = serif op showcase/blad, product-UI blijft grotesk; (2) coördinaten op het blad zijn altijd gemeten, nooit getypt; (3) cadans-chrome geldt voor elke gegenereerde pagina, niet alleen de home.

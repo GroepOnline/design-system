@@ -6,6 +6,19 @@
 ## [Unreleased]
 
 ### Added
+- **Drie type-stemmen**: Instrument Serif als display-stem van het blad
+  (hero, sectie-titels, pagina-headers), naast General Sans (interface) en
+  IBM Plex Mono (data). Sora en Space Grotesk verwijderd uit stacks en
+  font-links (beproefd, afgewezen als saai / .com-bubbel)
+- **Sectie-register op de home**: de inhoudsopgave staat op de Y-meetlat
+  (klikbare marks, actieve sectie licht op via scroll-spy); coörd-chips en
+  footer-rij worden door JS gemeten in plaats van hardcoded
+- **Blad-cadans in de shell**: meetlat + modeline (utc, y, § pagina) op alle
+  12 catalogus-pagina's, gallery, docs, taste en brain; blad-plaat
+  (`blad NN/12`) in de catalogus-paginaheader
+- Remotes / push-lanes gedocumenteerd in `AGENTS.md` (origin-ssh = default
+  agent-lane, origin HTTPS heeft geen workflow-scope)
+
 - **Brain signals + eval gate**: `brain/signals/`, `brain/eval/`,
   `./ds brain signal|eval|gate`; CI `ds brain gate` + nightly `brain-eval.yml`
   (artefact, geen auto-commit)
@@ -21,6 +34,11 @@
 - `docs/pi-sessions-design-system.md` -- overzicht Pi-agent sessies over
   design system
 - `CHANGELOG.md` -- dit bestand
+
+### Fixed
+- Brain-templates verplaatst `brain/signals/Templates/` → `brain/Templates/`
+  (waar `ds brain new` en `.obsidian/templates.json` ze verwachten): de 6
+  wikilink-warnings in `ds check` zijn weg en `ds brain new` werkt weer
 
 ## [v2] -- 2026-07-28
 

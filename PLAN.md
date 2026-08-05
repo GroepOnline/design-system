@@ -113,6 +113,15 @@ blokcaret, ledger (sessie-replay) als hero-bewijs, één geïnverteerde zwarte
 sectie als climax, `--spring: linear()` als veer-token. Decoratie wordt
 meetinstrument; bewijs boven belofte.
 
+**Herziening 2026-08-05 (v4, "de stem + de ruggengraat"):** Joep-signaal
+"lettertype te weinig karakter (.com-bubbel)" + "losse blokken op een A4" +
+"alleen de home heeft de cadans". Drie-stemmen-model: Instrument Serif
+(display/blad) naast General Sans (instrument) en IBM Plex Mono (data); Sora
+en Space Grotesk definitief weg. Sectie-register OP de Y-meetlat als
+ruggengraat (klikbaar, actieve sectie licht op); coördinaten worden gemeten,
+niet hardcoded. Blad-cadans (meetlat + modeline + blad-plaat) nu ook op alle
+12 catalogus-pagina's via de shell.
+
 ### Fase D -- Perfection pass
 
 - elke pagina nalopen op verhoudingen/alignment (icoon-maten, rij-hoogtes) ✅
