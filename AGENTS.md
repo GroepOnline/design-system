@@ -58,7 +58,7 @@ CLI en web lezen hetzelfde manifest; er bestaat geen tweede bron.
 1. Werk in `playground/` (relatieve paden ok).
 2. `./ds <comp> add playground/<bestand>.html --id <id> --origin self --note "wat en waarom"`
 3. Selecteer indien gewenst: `./ds <comp> select <id>`
-4. Commit met prefix `component:` of `taste:`.
+> 4. Commit met prefix `component:` of `taste:`.
 
 Nieuwe component-familie: map + `catalog.json` aanmaken (bestaand manifest als
 template), dan `./ds build`. Elke component krijgt verplicht een `cat`:
@@ -116,21 +116,21 @@ wiring. Subagents voeren fase-werk uit; de `non-design-pipeline` skill
 orkestreert Fase 1-3 in volgorde met gates. Nooit een tweede bron aanmaken.
 
 | Skill | Waarvoor |
-|---|---|
+| --- | --- |
 | `design-system-brain` | vault gebruiken, `ds brain`, grenzen, Obsidian CLI |
 | `brain-note-hygiene` | frontmatter, wikilinks, naamgeving, 0 warnings |
 | `brain-decision-capture` | decision, research of taste-log kiezen |
 | `non-design-pipeline` | chained orchestratie Fase 1-3 met gates |
 
 | Subagent | Fase |
-|---|---|
+| --- | --- |
 | `foundation-repair` | 1: relatief-pad reparatie, regressies, build/check idempotentie |
 | `dna-propagation` | 2: Devin-DNA meting → references/, PLAN.md blokkades |
 | `ci-agent-sync` | 3: CI + org-sync, taste-overlays, docs, .gitignore |
 | `design-polish` | 4: visueel design (gated op Joep-goedkeuring) |
 
 | Hook | Event | Gedrag |
-|---|---|---|
+| --- | --- | --- |
 | `.agents/hooks/guard-generated.sh` | `preToolUse` (Write) | weigert edits in gegenereerde output (invariant 3) |
 | `.agents/hooks/brain-build.sh` | `afterFileEdit` | herbouwt `brain-site/` na een vault-note edit |
 
@@ -148,7 +148,7 @@ Nooit de gegenereerde overlays handmatig bewerken.
 ## Bestandskaart
 
 | Pad | Rol |
-|---|---|
+| --- | --- |
 | `ds` | CLI + web-generator (python3 stdlib, geen deps) |
 | `tokens.css` | tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting) |
 | `styles.json` | skins (devin, strak, ...) -- schakel via `data-style` |

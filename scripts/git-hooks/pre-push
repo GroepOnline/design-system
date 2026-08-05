@@ -1,0 +1,44 @@
+#!/bin/sh
+# Pre-push hook voor design-system
+# Draait: ruff → ds check → ds brain gate → ds build --check
+# Gebruik: chmod +x .git/hooks/pre-push
+# Of: make hook / scripts/git-hooks-install.sh
+
+set -e
+
+echo "🔍 pre-push checks..."
+
+# 1. Linter (ruff)
+echo "  → ruff check ds..."
+if ! ruff check ds >/dev/null 2>&1; then
+    echo "✗ ruff heeft errors — run 'ruff check ds' voor details"
+    exit 1
+fi
+echo "    ✓ ruff: 0 errors"
+
+# 2. Component catalogus check
+echo "  → ds check..."
+if ! ./ds check >/dev/null 2>&1; then
+    echo "✗ ds check gefaald — run './ds check' voor details"
+    exit 1
+fi
+echo "    ✓ ds check: 0 errors"
+
+# 3. Brain gate
+echo "  → ds brain gate..."
+if ! ./ds brain gate >/dev/null 2>&1; then
+    echo "✗ brain gate gefaald — run './ds brain gate' voor details"
+    exit 1
+fi
+echo "    ✓ brain gate: pass"
+
+# 4. Build idempotentie
+echo "  → ds build --check..."
+if ! ./ds build --check >/dev/null 2>&1; then
+    echo "✗ build --check gefaald — run './ds build --check' voor details"
+    exit 1
+fi
+echo "    ✓ build --check: idempotent"
+
+echo "✅ Alle checks passed — push gaat door"
+exit 0
