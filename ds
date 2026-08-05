@@ -104,7 +104,6 @@ def errp(m):  print(f"  {_c('31;1','✗')} {m}")
 def dim(s):   return _c("2", s)
 def bold(s):  return _c("1", s)
 def green(s): return _c("32", s)
-def green(s): return _c("32", s)
 def blue(s):  return _c("34", s)
 def amber(s): return _c("33", s)
 
@@ -159,8 +158,10 @@ def cmd_clist(c):
     m = load_manifest(c)
     print(f"{bold(m.get('title', c))} {dim('· ' + m.get('cat','?'))} — {m.get('desc','')}")
     d = m.get("docs", {})
-    if d.get("use"):   print(f"  {green('✓ gebruik')}  " + dim("; ".join(d["use"])))
-    if d.get("avoid"): print(f"  {_c('31','✕ vermijd')}  " + dim("; ".join(d["avoid"])))
+    if d.get("use"):
+        print(f"  {green('✓ gebruik')}  " + dim("; ".join(d["use"])))
+    if d.get("avoid"):
+        print(f"  {_c('31','✕ vermijd')}  " + dim("; ".join(d["avoid"])))
     print()
     print(dim(f"{'status':<9} {'origin':<15} {'id':<22} {'source':<15} note"))
     for e in m["entries"]:
@@ -230,53 +231,77 @@ def _inline(t):
 
 def md_to_html(md):
     lines, out, i = md.split("\n"), [], 0
-    in_code, lang, buf, lst = False, "", [], None
+    in_code, buf, lst = False, [], None
     while i < len(lines):
         line = lines[i]
         s = line.strip()
         if s.startswith("```"):
             if not in_code:
-                in_code, lang, buf = True, s[3:], []
+                in_code, buf = True, []
             else:
                 in_code = False
                 out.append(f'<pre><code>{htmlmod.escape(chr(10).join(buf))}</code></pre>')
-            i += 1; continue
+            i += 1
+            continue
         if in_code:
-            buf.append(line); i += 1; continue
+            buf.append(line)
+            i += 1
+            continue
         if not s:
-            if lst: out.append(f"</{lst}>"); lst = None
-            i += 1; continue
+            if lst:
+                out.append(f"</{lst}>")
+                lst = None
+            i += 1
+            continue
         if s.startswith("|") and i + 1 < len(lines) and re.match(r"^\|[\s:|\-]+\|?$", lines[i+1].strip()):
             header = [c.strip() for c in s.strip("|").split("|")]
-            i += 2; rows = []
+            i += 2
+            rows = []
             while i < len(lines) and lines[i].strip().startswith("|"):
-                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")]); i += 1
+                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
+                i += 1
             h = "<table><thead><tr>" + "".join(f"<th>{_inline(c)}</th>" for c in header) + "</tr></thead><tbody>"
             for r in rows:
                 h += "<tr>" + "".join(f"<td>{_inline(c)}</td>" for c in r) + "</tr>"
-            out.append(h + "</tbody></table>"); continue
+            out.append(h + "</tbody></table>")
+            continue
         m = re.match(r"^(#{1,4})\s+(.*)", s)
         if m:
             out.append(f"<h{len(m.group(1))}>{_inline(m.group(2))}</h{len(m.group(1))}>")
-            i += 1; continue
+            i += 1
+            continue
         if re.match(r"^(-{3,}|\*{3,})$", s):
-            out.append("<hr>"); i += 1; continue
+            out.append("<hr>")
+            i += 1
+            continue
         if s.startswith(">"):
-            out.append(f"<blockquote>{_inline(s.lstrip('> ').strip())}</blockquote>"); i += 1; continue
+            out.append(f"<blockquote>{_inline(s.lstrip('> ').strip())}</blockquote>")
+            i += 1
+            continue
         m = re.match(r"^[-*]\s+(.*)", s)
         if m:
             if lst != "ul":
-                if lst: out.append(f"</{lst}>")
-                out.append("<ul>"); lst = "ul"
-            out.append(f"<li>{_inline(m.group(1))}</li>"); i += 1; continue
+                if lst:
+                    out.append(f"</{lst}>")
+                out.append("<ul>")
+                lst = "ul"
+            out.append(f"<li>{_inline(m.group(1))}</li>")
+            i += 1
+            continue
         m = re.match(r"^\d+[.)]\s+(.*)", s)
         if m:
             if lst != "ol":
-                if lst: out.append(f"</{lst}>")
-                out.append("<ol>"); lst = "ol"
-            out.append(f"<li>{_inline(m.group(1))}</li>"); i += 1; continue
-        out.append(f"<p>{_inline(s)}</p>"); i += 1
-    if lst: out.append(f"</{lst}>")
+                if lst:
+                    out.append(f"</{lst}>")
+                out.append("<ol>")
+                lst = "ol"
+            out.append(f"<li>{_inline(m.group(1))}</li>")
+            i += 1
+            continue
+        out.append(f"<p>{_inline(s)}</p>")
+        i += 1
+    if lst:
+        out.append(f"</{lst}>")
     return "\n".join(out)
 
 MD_CSS = """
@@ -2080,7 +2105,7 @@ def dump_signals_yaml(data):
         lines.append(f"- id: {_yaml_scalar(e.get('id'))}")
         for k in ("ts", "plane", "kind", "source", "signal", "score_hint", "status"):
             if k == "score_hint" and "score_hint" not in e:
-                lines.append(f"  score_hint: null")
+                lines.append("  score_hint: null")
             else:
                 lines.append(f"  {k}: {_yaml_scalar(e.get(k))}")
         refs = e.get("refs") or []
@@ -2446,20 +2471,33 @@ def cmd_brain_signal(args):
     while i < len(args):
         a = args[i]
         if a == "--kind":
-            kind = args[i + 1]; i += 2; continue
+            kind = args[i + 1]
+            i += 2
+            continue
         if a == "--plane":
-            plane = args[i + 1]; i += 2; continue
+            plane = args[i + 1]
+            i += 2
+            continue
         if a == "--source":
-            source = args[i + 1]; i += 2; continue
+            source = args[i + 1]
+            i += 2
+            continue
         if a == "--status":
-            status = args[i + 1]; i += 2; continue
+            status = args[i + 1]
+            i += 2
+            continue
         if a == "--ref":
-            refs.append(args[i + 1]); i += 2; continue
+            refs.append(args[i + 1])
+            i += 2
+            continue
         if a == "--score-hint":
-            score_hint = float(args[i + 1]); i += 2; continue
+            score_hint = float(args[i + 1])
+            i += 2
+            continue
         if a.startswith("--"):
             err(f"onbekende flag: {a}")
-        text_parts.append(a); i += 1
+        text_parts.append(a)
+        i += 1
     signal = " ".join(text_parts).strip()
     if not signal:
         err("lege signal-tekst")
@@ -2615,7 +2653,7 @@ def cmd_check():
     errors = []
     warnings = []
     with open(os.path.join(COMP, "icons.svg")) as f:
-        sprite_ids = set(re.findall(r'id="([^"]+)"', f.read()))
+        _sprite_ids = set(re.findall(r'id="([^"]+)"', f.read()))
     for c in sorted(components()):
         m = load_manifest(c)
         entries = m["entries"]
@@ -2700,8 +2738,10 @@ def main():
             kw = {}
             it = iter(args[3:])
             for a in it:
-                if a in ("--css-file", "--from"): kw["css"] = next(it)
-                elif a == "--desc": kw["desc"] = next(it)
+                if a in ("--css-file", "--from"):
+                    kw["css"] = next(it)
+                elif a == "--desc":
+                    kw["desc"] = next(it)
             if "css" not in kw:
                 err("ds style add <naam> --css-file <file> [--desc \"...\"]")
             cmd_style_add(name, kw["css"], desc=kw.get("desc"))
@@ -2721,10 +2761,14 @@ def main():
             kw = {}
             it = iter(args[3:])
             for a in it:
-                if a == "--id": kw["eid"] = next(it)
-                elif a == "--origin": kw["origin"] = next(it)
-                elif a == "--source": kw["source"] = next(it)
-                elif a == "--note": kw["note"] = next(it)
+                if a == "--id":
+                    kw["eid"] = next(it)
+                elif a == "--origin":
+                    kw["origin"] = next(it)
+                elif a == "--source":
+                    kw["source"] = next(it)
+                elif a == "--note":
+                    kw["note"] = next(it)
             cmd_add(c, path, **kw)
         elif sub == "remove":
             cmd_remove(c, args[2], yes="--yes" in args)
