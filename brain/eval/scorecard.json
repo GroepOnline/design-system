@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05T14:18:44Z",
+  "ts": "2026-08-05T14:22:19Z",
   "pass": true,
   "plane": "design-brain",
   "metrics": {
@@ -15,7 +15,7 @@
   },
   "failures": [],
   "warnings": [
-    "days_since_score_refresh=6.1 > warn 2.0",
+    "days_since_score_refresh=6.2 > warn 2.0",
     "agent_taste_check=skipped (kater-dev-tools not available)"
   ]
 }

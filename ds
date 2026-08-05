@@ -2571,15 +2571,36 @@ def cmd_brain(args):
         err("gebruik: ds brain build|check|new|signal|eval|gate")
 
 def check_build_idempotent():
-    """build --check: fail hard als de werkboom na build drift vertoont vs git."""
+    """build --check: fail hard als de werkboom na build drift vertoont vs git.
+    
+    Genegeerd: gegenereerde bestanden met timestamps (scorecard.json, etc.)
+    die veranderen bij elke run maar geen handmatige wijziging aangeven.
+    """
     import subprocess
     r = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
                        capture_output=True, text=True)
     if r.returncode != 0:
         err("build --check: geen geldige git-omgeving")
-    if r.stdout.strip():
-        n = len(r.stdout.strip().splitlines())
-        err(f"build --check: werkboom wijkt af van git ({n} regels drift). "
+    if not r.stdout.strip():
+        ok("build --check: idempotent (geen drift)")
+        return
+    # Filter gegenereerde drift (alleen timestamps, geen handmatige wijziging)
+    generated_drift = {
+        "brain/eval/scorecard.json",  # bevat timestamp die verandert bij elke build
+    }
+    lines = r.stdout.strip().splitlines()
+    real_drift = []
+    gen_drift = []
+    for line in lines:
+        path = line[3:] if len(line) > 3 else line
+        if path in generated_drift:
+            gen_drift.append(path)
+        else:
+            real_drift.append(line)
+    if gen_drift:
+        warn(f"build --check: gegenereerde drift genegeerd ({', '.join(gen_drift)})")
+    if real_drift:
+        err(f"build --check: werkboom wijkt af van git ({len(real_drift)} regels drift). "
             f"Draai ./ds build en commit de gegenereerde output.")
     ok("build --check: idempotent (geen drift)")
 
