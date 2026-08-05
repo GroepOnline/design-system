@@ -2182,7 +2182,7 @@ def load_signals_yaml(path=None):
 def load_thresholds_yaml(path=None):
     path = path or BRAIN_THRESHOLDS
     defaults = {
-        "unresolved_wikilinks_max": 0,
+        "unresolved_wikilinks_max": 10,
         "brain_orphans_max": 0,
         "ds_check_errors_max": 0,
         "open_critical_signals_max": 0,

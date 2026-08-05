@@ -1,16 +1,16 @@
 {
-  "ts": "2026-08-05T13:06:35Z",
+  "ts": "2026-08-05T14:18:44Z",
   "pass": true,
   "plane": "design-brain",
   "metrics": {
-    "unresolved_wikilinks": 0,
+    "unresolved_wikilinks": 6,
     "brain_orphans": 0,
     "ds_check_errors": 0,
     "open_critical_signals": 0,
     "open_signals": 0,
-    "days_since_score_refresh": 6.1,
-    "days_since_taste_log": 0.55,
-    "open_candidate_rules": 11,
+    "days_since_score_refresh": 6.15,
+    "days_since_taste_log": 0.6,
+    "open_candidate_rules": 12,
     "agent_taste_check": "skipped"
   },
   "failures": [],
