@@ -14,7 +14,7 @@ tags: [decision, agents, taste]
   - Regenereren en drift-checken gebeurt vanuit `kater-dev-tools` met `generate-taste.py --target /home/joep/design-system`
   - Precedence later: canonieke yaml is inhoud; overlays voegen alleen tool-syntax toe, nooit regels overschrijven
   - Pi/Agy-formaat en globale vs repo-lokale Command Code-layers worden in dat gedeelde traject uitgezocht, niet hier
-- **Follow-up**: scaffold + PR in kater-dev-tools: https://github.com/OnlineChefGroep/kater-dev-tools/pull/174
+- **Follow-up**: scaffold + PR in kater-dev-tools: https://github.com/GroepOnline/kater-dev-tools/pull/174
 - **Productregel?** nee (agent-gedrag, geen UI)
 
 ## Links

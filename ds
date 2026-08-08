@@ -2538,8 +2538,8 @@ def agent_taste_check_status():
     candidates = [
         os.environ.get("KATER_DEV_TOOLS"),
         os.path.join(os.path.dirname(ROOT), "kater-dev-tools"),
-        os.path.join(os.path.expanduser("~"), "Documents", "Github", "OnlineChefGroep", "kater-dev-tools-agent-taste"),
-        os.path.join(os.path.expanduser("~"), "Documents", "Github", "OnlineChefGroep", "kater-dev-tools"),
+        os.path.join(os.path.expanduser("~"), "Documents", "Github", "GroepOnline", "kater-dev-tools-agent-taste"),
+        os.path.join(os.path.expanduser("~"), "Documents", "Github", "GroepOnline", "kater-dev-tools"),
     ]
     for base in candidates:
         if not base:

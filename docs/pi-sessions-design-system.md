@@ -7,8 +7,8 @@
 
 | Map | Repo/context | Aantal sessies |
 |---|---|---|
-| `~/design-system/` | `OnlineChefGroep/design-system` | 2 directe sessies |
-| `chefgroep.nl` | `OnlineChefGroep/chefgroep.nl` (Signaal design system) | 2 sessies |
+| `~/design-system/` | `GroepOnline/design-system` | 2 directe sessies |
+| `chefgroep.nl` | `GroepOnline/chefgroep.nl` (Signaal design system) | 2 sessies |
 | `~/.pi/agent/sessions/--home-joep--/` | Algemene chats met design system mentions | ~12 relevante |
 
 ---
@@ -122,7 +122,7 @@ Alle sessie-logs staan onder `~/.pi/agent/sessions/` per werkdirectory:
 │   ├── 2026-07-22T20-20-49-530Z_*.jsonl       # share + copyq
 │   ├── 2026-07-23T07-59-12-947Z_*.jsonl       # fleet audit
 │   └── ... (totaal ~38 sessies)
-├── --home-joep-Documents-Github-OnlineChefGroep-chefgroep.nl--/
+├── --home-joep-Documents-Github-GroepOnline-chefgroep.nl--/
 │   ├── 2026-07-23T07-48-01-516Z_*.jsonl       # draft PR preview
 │   └── 2026-07-24T03-06-08-092Z_*.jsonl       # fleet status
 ├── --home-joep-openwork--/

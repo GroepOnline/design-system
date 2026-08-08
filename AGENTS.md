@@ -200,7 +200,7 @@ CI: `.github/workflows/validate.yml` (build + check + brain gate) en
 | --- | --- | --- |
 | `origin-ssh` | `git@github.com-groeponline:GroepOnline/design-system.git` | **Default push-lane voor agents.** SSH als chefadmin-netizen via `~/.ssh/config-groeponline`. Volledige scope, inclusief `.github/workflows`. |
 | `origin` | `https://github.com/GroepOnline/design-system.git` | Fetch + simpele pushes. Het HTTPS-token heeft **geen workflow-scope**: een push die workflow-bestanden bevat wordt geweigerd. |
-| `ocg-mirror` | `chef-runner-01:/srv/chef/mirrors/...` | Archief-mirror (OnlineChefGroep). Nooit rechtstreeks naar pushen. |
+| `ocg-mirror` | `chef-runner-01:/srv/chef/mirrors/...` | Archief-mirror (GroepOnline). Nooit rechtstreeks naar pushen. |
 
 Regel: raakt je commit `.github/workflows/` → push met `git push origin-ssh <branch>`.
 Kom je dat pas achter bij een geweigerde push → zelfde branch opnieuw pushen naar
