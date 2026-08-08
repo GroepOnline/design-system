@@ -31,7 +31,13 @@ import json
 import os
 import re
 import sys
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+def _today() -> str:
+    """Local date for generated-page colophons."""
+    return datetime.now().date().isoformat()  # noqa: DTZ005
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 COMP = os.path.join(ROOT, "components")
@@ -166,7 +172,7 @@ def cmd_clist(c):
     print(dim(f"{'status':<9} {'origin':<15} {'id':<22} {'source':<15} note"))
     for e in m["entries"]:
         st = green("ACTIEF") if e["status"] == "active" else dim("vast")
-        print(f"{st:<18} {e['origin']:<15} {bold(e['id']):<31} {dim((e.get('source') or '-')):<24} {e.get('note','')}")
+        print(f"{st:<18} {e['origin']:<15} {bold(e['id']):<31} {dim(e.get('source') or '-'):<24} {e.get('note','')}")
 
 def cmd_select(c, eid):
     m = load_manifest(c)
@@ -198,7 +204,7 @@ def cmd_add(c, path, eid=None, origin="self", source=None, note=""):
     m["entries"].append({
         "id": eid, "file": os.path.relpath(dest, os.path.join(COMP, c)),
         "origin": origin, "source": source, "status": "locked",
-        "added": str(date.today()), "note": note,
+        "added": _today(), "note": note,
     })
     save_manifest(c, m)
     cmd_build(only=c)
@@ -1861,7 +1867,7 @@ def build_catalog(c):
         title=m.get("title", c), name=c, desc=m.get("desc", ""),
         icon=ICONS.get(c, "i-file"), cat=m.get("cat", "?"),
         n=len(m["entries"]), nself=ns, next=nx, blad=blad,
-        usenow=usenow, docs=docs_html(m), cells="\n".join(cells), today=str(date.today()),
+        usenow=usenow, docs=docs_html(m), cells="\n".join(cells), today=_today(),
     )
     page = (SHELL_HEAD.replace("{title}", m.get("title", c))
             .replace("{rel_root}", "../..")
@@ -1894,7 +1900,7 @@ def build_gallery():
                 active="actief: " + ",".join(acts) if acts else "",
             ))
         groups.append(GALLERY_GROUP.format(cat=label, reg=label.lower(), items="\n".join(items)))
-    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), today=str(date.today()))
+    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), today=_today())
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{rel_root}", "..")
             .replace("{nav}", nav_html(rel_root=".."))
@@ -1996,7 +2002,7 @@ def build_home():
     body = HOME_BODY.format(
         nc=nc, nv=nv, nskins=nskins, nself=nself_tot, next_ex=next_tot,
         nicons=nicons, worked_src=worked_src, worked_v=worked_v,
-        cats_html=cats_html, skins_html=skins_html, today=str(date.today()),
+        cats_html=cats_html, skins_html=skins_html, today=_today(),
     )
     page = HOME_HEAD + body + HOME_FOOT
     page = page.replace("{rel_root}", ".")
@@ -2057,7 +2063,7 @@ def build_docs():
             md = f.read()
         title = re.sub(r"\.md$", "", os.path.basename(src))
         content = md_to_html(md)
-        body = DOC_PAGE_BODY.format(title=title, cat=cat, src=src, content=content, today=str(date.today()))
+        body = DOC_PAGE_BODY.format(title=title, cat=cat, src=src, content=content, today=_today())
         with open(os.path.join(ROOT, "docs", slug + ".html"), "w") as f:
             f.write(_shell(title, body, MD_CSS))
         cats.setdefault(cat, []).append((slug, title, desc))
@@ -2074,7 +2080,7 @@ def build_docs():
             for slug, title, desc in cats[cat])
         groups.append(f'<div class="caps" data-reg="{cat}" style="margin:22px 2px 10px">{cat}</div><div class="cards">{items}</div>')
     nd = sum(len(v) for v in cats.values())
-    body = DOCS_INDEX_BODY.format(nd=nd, groups="\n".join(groups), today=str(date.today()))
+    body = DOCS_INDEX_BODY.format(nd=nd, groups="\n".join(groups), today=_today())
     with open(os.path.join(ROOT, "docs", "index.html"), "w") as f:
         f.write(_shell("docs", body, plate="idx"))
     print(f"  {_c('32','✓')} {bold('docs'):<14} {nd} documenten {dim('(gerenderd uit .md)')}")
@@ -2085,9 +2091,9 @@ def build_taste():
     rp = os.path.join(ROOT, "taste", "taste-rules.md")
     lp = os.path.join(ROOT, "taste", "taste-log.md")
     if os.path.exists(rp):
-        rules = md_to_html(open(rp).read())
+        rules = md_to_html(Path(rp).read_text())
     if os.path.exists(lp):
-        log = md_to_html(open(lp).read())
+        log = md_to_html(Path(lp).read_text())
     coupling = ("<div class='use-now' style='margin-bottom:26px'><span class='lbl2'>Koppeling</span>"
                 "<span>taste-log → (2+ observaties) → regel hier → propagatie naar "
                 "<code>DESIGN.md</code> + <code>tokens.css</code> + <code>components/</code> in dezelfde commit. "
@@ -2099,7 +2105,7 @@ def build_taste():
             + coupling
             + "<div class='md'><h2 data-reg='regels'>Regels (binding)</h2>" + rules
             + "<h2 data-reg='log'>Log (observaties)</h2>" + log + "</div>"
-            + f"<div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op {date.today()}</div>")
+            + f"<div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op {_today()}</div>")
     with open(os.path.join(ROOT, "taste-site", "index.html"), "w") as f:
         f.write(_shell("taste", body, MD_CSS, plate="taste"))
     # /taste/ is bezet door de .md-map; serveer via taste-site en link daarheen
@@ -2178,7 +2184,7 @@ def build_brain():
     for rel in notes:
         slug = brain_slug(rel)
         title = brain_title(rel)
-        raw = open(os.path.join(BRAIN, rel), encoding="utf-8").read()
+        raw = Path(BRAIN, rel).read_text(encoding="utf-8")
         body_md = brain_rewrite_wikilinks(brain_strip_frontmatter(raw), title_idx)
         content = md_to_html(body_md)
         page = (
@@ -2187,7 +2193,7 @@ def build_brain():
             f'<div class="cat caps">brain · bron: brain/{htmlmod.escape(rel)}</div></div>'
             f'<div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div>'
             f'<div class="md">{content}</div>'
-            f'<div class="gen">gegenereerd uit brain/{htmlmod.escape(rel)} op {date.today()} · bewerk de .md, niet deze pagina</div>'
+            f'<div class="gen">gegenereerd uit brain/{htmlmod.escape(rel)} op {_today()} · bewerk de .md, niet deze pagina</div>'
         )
         with open(os.path.join(BRAIN_SITE, slug + ".html"), "w", encoding="utf-8") as f:
             f.write(_shell(title, page, MD_CSS, plate="brain"))
@@ -2219,7 +2225,7 @@ def build_brain():
         f'<div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. '
         f'Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div>'
         + "\n".join(sections)
-        + f'<div class="gen">gegenereerd door ds brain build op {date.today()} · bron: brain/**/*.md</div>'
+        + f'<div class="gen">gegenereerd door ds brain build op {_today()} · bron: brain/**/*.md</div>'
     )
     with open(os.path.join(BRAIN_SITE, "index.html"), "w", encoding="utf-8") as f:
         f.write(_shell("brain", index_body, MD_CSS, plate="brain"))
@@ -2238,7 +2244,7 @@ def check_brain_wikilinks():
         if len(rels) > 1:
             warnings.append(f"brain: duplicate note title '{bn}' → {', '.join(rels)}")
     for rel in brain_note_paths():
-        raw = open(os.path.join(BRAIN, rel), encoding="utf-8").read()
+        raw = Path(BRAIN, rel).read_text(encoding="utf-8")
         if "—" in raw:
             warnings.append(f"brain/{rel}: em-dash in copy")
         if not raw.startswith("---\n"):
@@ -2261,16 +2267,16 @@ def cmd_brain_new(kind, title):
     tpl_path = os.path.join(BRAIN, "Templates", tpl_name)
     if not os.path.exists(tpl_path):
         err(f"template ontbreekt: brain/Templates/{tpl_name}")
-    tpl = open(tpl_path, encoding="utf-8").read()
+    tpl = Path(tpl_path).read_text(encoding="utf-8")
     safe = re.sub(r"[^\w\s\-]+", "", title, flags=re.UNICODE).strip()
     safe = re.sub(r"\s+", " ", safe)
     if not safe:
         err("lege titel")
-    fname = f"{date.today().isoformat()} {safe}.md"
+    fname = f"{_today()} {safe}.md"
     dest = os.path.join(BRAIN, folder, fname)
     if os.path.exists(dest):
         err(f"bestaat al: brain/{folder}/{fname}")
-    body = tpl.replace("{{title}}", safe).replace("{{date}}", str(date.today()))
+    body = tpl.replace("{{title}}", safe).replace("{{date}}", _today())
     body = body.replace("type: template", f"type: {kind}")
     with open(dest, "w", encoding="utf-8") as f:
         f.write(body)
@@ -2344,7 +2350,7 @@ def load_signals_yaml(path=None):
     path = path or BRAIN_SIGNALS
     if not os.path.exists(path):
         return {"version": 1, "entries": []}
-    text = open(path, encoding="utf-8").read()
+    text = Path(path).read_text(encoding="utf-8")
     # Prefer PyYAML when present (kater sibling / local uv)
     try:
         import yaml  # type: ignore
@@ -2353,7 +2359,7 @@ def load_signals_yaml(path=None):
             data.setdefault("version", 1)
             data.setdefault("entries", [])
             return data
-    except Exception:
+    except Exception:  # noqa: BLE001,S110 — yaml optional; manual parse below
         pass
     entries = []
     cur = None
@@ -2417,14 +2423,14 @@ def load_thresholds_yaml(path=None):
     }
     if not os.path.exists(path):
         return defaults
-    text = open(path, encoding="utf-8").read()
+    text = Path(path).read_text(encoding="utf-8")
     try:
         import yaml  # type: ignore
         data = yaml.safe_load(text) or {}
         if isinstance(data, dict):
             defaults.update({k: v for k, v in data.items() if k in defaults or k == "version"})
             return {**defaults, **{k: data[k] for k in defaults if k in data}}
-    except Exception:
+    except Exception:  # noqa: BLE001,S110 — yaml optional; manual parse below
         pass
     for raw in text.splitlines():
         line = raw.split("#", 1)[0].rstrip()
@@ -2444,7 +2450,7 @@ def brain_orphan_notes():
         title_to_rel[os.path.splitext(rel)[0]] = rel
     linked = set()
     for rel in brain_note_paths():
-        raw = open(os.path.join(BRAIN, rel), encoding="utf-8").read()
+        raw = Path(BRAIN, rel).read_text(encoding="utf-8")
         for m in WIKILINK_RE.finditer(raw):
             target = m.group(1).strip()
             if target in title_to_rel:
@@ -2508,8 +2514,8 @@ def taste_log_stats():
     path = os.path.join(ROOT, "taste", "taste-log.md")
     if not os.path.exists(path):
         return None, 0
-    raw = open(path, encoding="utf-8").read()
-    dates = re.findall(r"^##\s+(\d{4}-\d{2}-\d{2})\b", raw, re.M)
+    raw = Path(path).read_text(encoding="utf-8")
+    dates = re.findall(r"^##\s+(\d{4}-\d{2}-\d{2})\b", raw, re.MULTILINE)
     days = None
     if dates:
         try:
@@ -2518,16 +2524,17 @@ def taste_log_stats():
         except ValueError:
             days = None
     open_cand = 0
-    for block in re.split(r"^##\s+", raw, flags=re.M)[1:]:
+    for block in re.split(r"^##\s+", raw, flags=re.MULTILINE)[1:]:
         low = block.lower()
         if "candidate rule" not in low and "kandidaat" not in low:
             continue
         if "promoted" in low or "gepropageerd" in low or "→ *direct" in low or "-> *direct" in low:
             continue
-        if "*→ direct" in low or "*watch" in low:
+        if ("*→ direct" in low or "*watch" in low) and (
+            "promoted" in low or "gepropageerd" in low
+        ):
             # still counting watches as open unless promoted
-            if "promoted" in low or "gepropageerd" in low:
-                continue
+            continue
         if "promoted to" in low or "direct naar taste-rules" in low or "direct gepropageerd" in low:
             continue
         open_cand += 1
@@ -2550,7 +2557,7 @@ def agent_taste_check_status():
         import subprocess
         r = subprocess.run(
             [sys.executable, script, "--target", ROOT, "--check"],
-            capture_output=True, text=True,
+            capture_output=True, text=True, check=False,
         )
         if r.returncode == 0:
             return "ok"
@@ -2801,7 +2808,7 @@ def check_build_idempotent():
     """
     import subprocess
     r = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, check=False)
     if r.returncode != 0:
         err("build --check: geen geldige git-omgeving")
     if not r.stdout.strip():
@@ -2870,7 +2877,7 @@ def cmd_style_add(name, css_file, desc=None):
     """
     if not re.fullmatch(r"[a-z][a-z0-9-]*", name):
         err(f"ongeldige skin-naam '{name}' (alleen lowercase, cijfers, streepjes)")
-    raw = open(css_file).read()
+    raw = Path(css_file).read_text()
     m = re.search(r':root\s*\{([^}]*)\}', raw, re.DOTALL)
     if not m:
         err(f"geen :root blok gevonden in {css_file}")
@@ -2878,9 +2885,7 @@ def cmd_style_add(name, css_file, desc=None):
     lines = []
     for ln in m.group(1).strip().splitlines():
         ln = ln.strip()
-        if ln and not ln.startswith("/*"):
-            lines.append("  " + ln)
-        elif ln:
+        if ln and not ln.startswith("/*") or ln:
             lines.append("  " + ln)
     body = "\n".join(lines)
     st = load_styles()
@@ -2923,7 +2928,7 @@ def cmd_check():
     # em-dash in .md files (copy)
     for fn in os.listdir(ROOT):
         if fn.endswith(".md"):
-            raw = open(os.path.join(ROOT, fn)).read()
+            raw = Path(ROOT, fn).read_text()
             if "—" in raw:
                 warnings.append(f"em-dash in {fn}")
     # brain wikilinks (warning-only, same level as em-dash)
