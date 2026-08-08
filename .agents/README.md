@@ -48,7 +48,7 @@ echo '{"file_path":"brain/Home.md"}' | .agents/hooks/brain-build.sh
 ## Gedeelde agent-taste (consumer)
 
 Agent-gedrag-taste heeft zijn canonieke bron in `kater-dev-tools`
-(PR https://github.com/OnlineChefGroep/kater-dev-tools/pull/174):
+(PR https://github.com/GroepOnline/kater-dev-tools/pull/174):
 `.agents/registry/taste.yaml`.
 
 Dit repo consumeert de gegenereerde overlays:
