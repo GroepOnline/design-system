@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
+# CodeRabbit for design-system — Signaal tokens/copy authority.
+
+language: en-US
+
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: false
+  collapse_walkthrough: true
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/*.lock"
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "**/*.{css,md}"
+      instructions: >-
+        DESIGN.md wins. Flag token drift, second design systems, and banned
+        metaphors. Do not invent hex/px outside tokens.
+  instructions: |
+    This is the OpenCodex Signaal design-system. Focus on contract breaks, not
+    naming nits. Surfaces bind here; do not mix Huly Vault dialect into this tree.
+
+chat:
+  auto_reply: false
