@@ -24,7 +24,43 @@
   <div class="row">
     <button class="btn">Standaard</button>
     <button class="btn primary">Primaire actie</button>
-    <button class="btn" disabled style="opacity:.45;cursor:default">Uitgeschakeld</button>
+    <button class="btn" disabled>Uitgeschakeld</button>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">groottes</div>
+  <div class="row">
+    <button class="btn sm">Klein (h28)</button>
+    <button class="btn">Standaard (h32)</button>
+    <button class="btn lg">Groot (h38)</button>
+    <button class="btn primary lg">Groot primair</button>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">laden</div>
+  <div class="row">
+    <button class="btn loading">Opslaan</button>
+    <button class="btn primary loading">Verwerken</button>
+    <button class="btn sm loading">Even geduld</button>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">knopgroep</div>
+  <div class="row">
+    <div class="btn-group">
+      <button class="btn">Links</button>
+      <button class="btn">Midden</button>
+      <button class="btn">Rechts</button>
+    </div>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div class="btn-group">
+      <button class="btn primary">Actief</button>
+      <button class="btn">Inactief</button>
+    </div>
   </div>
 </div>
 
@@ -38,7 +74,7 @@
 </div>
 
 <div class="group">
-  <div class="lbl">ghost icon buttons (.gbtn)</div>
+  <div class="lbl">icoon-knoppen (.gbtn)</div>
   <div class="row">
     <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-plus"/></svg></button>
     <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-mic"/></svg></button>
@@ -57,11 +93,15 @@
 </div>
 
 <!-- CONTRACT
-  .btn          h32 px13 r8 border--line-strong, hover bg--surface-sunk, active scale .97
-  .btn.primary  text<->bg omgekeerd, hover opacity .87
-  .gbtn         28px ghost, hover --hover wash, active scale .92
-  .gbtn.solid   send-acties
-  kbd           mono 10px, border currentColor 55%
+  .btn            h32 px13 r-md border--line-strong, hover bg--surface-sunk, active scale .97
+  .btn.primary    text<->bg omgekeerd, hover opacity .87
+  .btn.sm         h28 font-12
+  .btn.lg         h38 font-14
+  .btn.loading    spinner::after, color transparent
+  .btn-group      connected buttons, shared border-collapse
+  .gbtn           28px ghost, hover --hover wash, active scale .92
+  .gbtn.solid     send-acties
+  kbd             mono 10px, border currentColor 30%, r3, p1px 5px
 -->
 </body>
 </html>

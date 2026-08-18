@@ -309,79 +309,238 @@
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-&lt;title&gt;component: artifact (before/after + rapport)&lt;/title&gt;
+&lt;title&gt;component: artifact&lt;/title&gt;
 &lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;
 &lt;style&gt;
-  body { padding: 40px 32px; max-width: 480px; }
+  body { padding: 40px 32px; max-width: 560px; }
   .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
   .demo-head a { color: var(--accent-ink); text-decoration: none; }
   .group { margin-bottom: 34px; }
-  .group &gt; .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+  .group &gt; .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
 
-  /* ==== COMPONENT CSS ==== */
+  .artifact {
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    overflow: hidden; background: var(--surface);
+    transition: box-shadow var(--dur-fast), border-color var(--dur-fast);
+  }
+  .artifact:hover { border-color: var(--line-strong); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .artifact + .artifact { margin-top: 12px; }
+
   .artifact-head {
     display: flex; align-items: center; gap: 8px;
     padding: 9px 13px; border-bottom: 1px solid var(--line);
     font-family: var(--mono); font-size: 12.5px; color: var(--text-muted);
+    background: var(--bg); cursor: default;
   }
+  .artifact-head .ic { width: 14px; height: 14px; }
+  .artifact-head .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .artifact-head .acts { margin-left: auto; display: flex; gap: 2px; }
   .artifact-head .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
-  .artifact-body h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin: 14px 0 9px; }
-  .artifact-body p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 11px; }
-  .artifact-body p code {
-    font-family: var(--mono); font-size: 12px;
-    background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px;
-  }
-  .artifact-body h3 { font-size: 14px; font-weight: 600; margin: 17px 0 8px; }
+
+  .artifact-body { padding: 17px; }
+  .artifact-body h2 { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; margin: 0 0 9px; }
+  .artifact-body h3 { font-size: 14px; font-weight: 500; margin: 17px 0 8px; }
+  .artifact-body p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 11px; line-height: 1.55; }
+  .artifact-body p code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+
+  .artifact-code { font-family: var(--mono); font-size: 12.5px; line-height: 1.6; }
+  .artifact-code .line { display: flex; padding: 0 13px; }
+  .artifact-code .line:hover { background: var(--hover); }
+  .artifact-code .ln { width: 36px; text-align: right; color: var(--text-faint); padding-right: 12px; flex-shrink: 0; user-select: none; }
+  .artifact-code .lc { flex: 1; white-space: pre; }
+  .artifact-code .lc .kw { color: #8B5CF6; }
+  .artifact-code .lc .str { color: #16A34A; }
+  .artifact-code .lc .cm { color: var(--text-faint); font-style: italic; }
+  .artifact-code .lc .fn { color: #D97706; }
+
+  .artifact-diff { font-family: var(--mono); font-size: 12.5px; line-height: 1.6; }
+  .artifact-diff .line { display: flex; padding: 0 13px; }
+  .artifact-diff .line.add { background: rgba(31,136,61,0.08); }
+  .artifact-diff .line.del { background: rgba(207,34,46,0.08); }
+  .artifact-diff .line .marker { width: 20px; text-align: center; flex-shrink: 0; user-select: none; }
+  .artifact-diff .line.add .marker { color: var(--open-green); }
+  .artifact-diff .line.del .marker { color: var(--red); }
+  .artifact-diff .line .lc { flex: 1; white-space: pre; }
+
+  .artifact-log { font-family: var(--mono); font-size: 12px; line-height: 1.65; max-height: 200px; overflow-y: auto; padding: 10px 13px; }
+  .artifact-log .log-line { display: flex; gap: 10px; }
+  .artifact-log .log-ts { color: var(--text-faint); flex-shrink: 0; }
+  .artifact-log .log-level { font-weight: 500; flex-shrink: 0; width: 40px; }
+  .artifact-log .log-level.info { color: var(--accent-ink); }
+  .artifact-log .log-level.warn { color: var(--amber); }
+  .artifact-log .log-level.err { color: var(--red); }
+  .artifact-log .log-msg { flex: 1; color: var(--text-muted); }
+
+  .artifact-status { display: flex; align-items: center; gap: 10px; padding: 13px 17px; }
+  .artifact-status .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .artifact-status .dot.ok { background: var(--open-green); box-shadow: 0 0 6px rgba(31,136,61,0.4); }
+  .artifact-status .dot.pending { background: var(--amber); animation: pulse-dot 1.5s ease-in-out infinite; }
+  .artifact-status .dot.fail { background: var(--red); }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .artifact-status .st-label { font-weight: 500; font-size: 13.5px; }
+  .artifact-status .st-meta { font-family: var(--mono); font-size: 11.5px; color: var(--text-faint); margin-left: auto; }
+
+  .artifact.collapsed .artifact-body,
+  .artifact.collapsed .artifact-code,
+  .artifact.collapsed .artifact-diff,
+  .artifact.collapsed .artifact-log { display: none; }
+  .artifact-head .toggle { cursor: pointer; transition: transform var(--dur-fast); display: inline-flex; }
+  .artifact.collapsed .artifact-head .toggle { transform: rotate(-90deg); }
+
   .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
-  .ba-cell { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .ba-cell { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
   .ba-cell .lbl { font-size: 11px; color: var(--text-faint); padding: 5px 9px; border-bottom: 1px solid var(--line); background: var(--bg); }
   .ba-cell .body { padding: 13px 10px; font-size: 18px; font-weight: 600; letter-spacing: -0.02em; text-align: center; }
   .ba-cell .foot { font-size: 10.5px; color: var(--text-faint); padding: 5px 9px; border-top: 1px solid var(--line); background: var(--bg); }
-  /* ==== /COMPONENT CSS ==== */
   .grad-text { background: linear-gradient(90deg, #5B8DEF, #7A5CFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .solid-text { color: #317CFF; }
+  .solid-text { color: var(--accent); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--bg); font-size: 13px; font-weight: 500;
+    padding: 8px 18px; border-radius: var(--r-pill); opacity: 0;
+    transition: opacity var(--dur-fast), transform var(--dur-fast);
+    pointer-events: none; z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;← components&lt;/a&gt; / artifact-pane&lt;/div&gt;
+&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;&amp;larr; components&lt;/a&gt; / artifact&lt;/div&gt;
 
-&lt;div class=&quot;group&quot; style=&quot;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden&quot;&gt;
-  &lt;div class=&quot;artifact-head&quot;&gt;
-    &lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;
-    test_gradient_migration.md
-    &lt;div class=&quot;acts&quot;&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-copy&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-download&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-x&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;artifact-body&quot; style=&quot;padding:0 17px 17px&quot;&gt;
-    &lt;h2&gt;Testrapport: gradient-tekst migreren&lt;/h2&gt;
-    &lt;p&gt;PR&#x27;s: &lt;code&gt;devin-website #357&lt;/code&gt; | &lt;code&gt;cognition-website #167&lt;/code&gt;&lt;/p&gt;
-    &lt;h3&gt;Homepage&lt;/h3&gt;
-    &lt;div class=&quot;ba-grid&quot;&gt;
-      &lt;div class=&quot;ba-cell&quot;&gt;
-        &lt;div class=&quot;lbl&quot;&gt;Voor · productie&lt;/div&gt;
-        &lt;div class=&quot;body grad-text&quot;&gt;Secure,&lt;br&gt;Private&lt;/div&gt;
-        &lt;div class=&quot;foot&quot;&gt;Gradient op tekst&lt;/div&gt;
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;Report artifact &amp;mdash; before/after&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot;&gt;
+    &lt;div class=&quot;artifact-head&quot;&gt;
+      &lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;
+      &lt;span class=&quot;name&quot;&gt;test_gradient_migration.md&lt;/span&gt;
+      &lt;div class=&quot;acts&quot;&gt;
+        &lt;button class=&quot;gbtn&quot; onclick=&quot;copyText(this)&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-copy&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+        &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-download&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;ba-cell&quot;&gt;
-        &lt;div class=&quot;lbl&quot;&gt;Na · localhost&lt;/div&gt;
-        &lt;div class=&quot;body solid-text&quot;&gt;Secure,&lt;br&gt;Private&lt;/div&gt;
-        &lt;div class=&quot;foot&quot;&gt;Effen blauw&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;artifact-body&quot;&gt;
+      &lt;h2&gt;Testrapport: gradient-tekst migreren&lt;/h2&gt;
+      &lt;p&gt;PR&#x27;s: &lt;code&gt;devin-website #357&lt;/code&gt; | &lt;code&gt;cognition-website #167&lt;/code&gt;&lt;/p&gt;
+      &lt;h3&gt;Homepage&lt;/h3&gt;
+      &lt;div class=&quot;ba-grid&quot;&gt;
+        &lt;div class=&quot;ba-cell&quot;&gt;&lt;div class=&quot;lbl&quot;&gt;Voor &amp;middot; productie&lt;/div&gt;&lt;div class=&quot;body grad-text&quot;&gt;Secure,&lt;br&gt;Private&lt;/div&gt;&lt;div class=&quot;foot&quot;&gt;Gradient op tekst&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;ba-cell&quot;&gt;&lt;div class=&quot;lbl&quot;&gt;Na &amp;middot; localhost&lt;/div&gt;&lt;div class=&quot;body solid-text&quot;&gt;Secure,&lt;br&gt;Private&lt;/div&gt;&lt;div class=&quot;foot&quot;&gt;Effen blauw&lt;/div&gt;&lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- CONTRACT
-  bewijs boven verhaal: before/after als identieke cellen naast elkaar.
-  lbl boven, body midden, foot onder. hairlines, geen shadows.
-  NB: grad-text hier is DEMO-content (het oude ontwerp dat gemigreerd wordt) — gradient is geen UI-element.
---&gt;
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;Code artifact &amp;mdash; bestand met syntax&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot;&gt;
+    &lt;div class=&quot;artifact-head&quot;&gt;
+      &lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;
+      &lt;span class=&quot;name&quot;&gt;tokens.css&lt;/span&gt;
+      &lt;div class=&quot;acts&quot;&gt;&lt;button class=&quot;gbtn&quot; onclick=&quot;copyText(this)&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-copy&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;artifact-code&quot;&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* surfaces */&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;--bg&lt;/span&gt;: &lt;span class=&quot;str&quot;&gt;#F7F6F5&lt;/span&gt;;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;--surface&lt;/span&gt;: &lt;span class=&quot;str&quot;&gt;#FFFFFF&lt;/span&gt;;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;--accent&lt;/span&gt;: &lt;span class=&quot;str&quot;&gt;#317CFF&lt;/span&gt;;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* motion */&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;--ease-out&lt;/span&gt;: &lt;span class=&quot;fn&quot;&gt;cubic-bezier&lt;/span&gt;(&lt;span class=&quot;str&quot;&gt;0.22, 1, 0.36, 1&lt;/span&gt;);&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;--dur-fast&lt;/span&gt;: &lt;span class=&quot;str&quot;&gt;140ms&lt;/span&gt;;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;Diff artifact &amp;mdash; voor/na vergelijking&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot;&gt;
+    &lt;div class=&quot;artifact-head&quot;&gt;
+      &lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;
+      &lt;span class=&quot;name&quot;&gt;button.css&lt;/span&gt;
+      &lt;span style=&quot;font-size:11px;color:var(--open-green)&quot;&gt;+3&lt;/span&gt;
+      &lt;span style=&quot;font-size:11px;color:var(--red)&quot;&gt;&amp;minus;1&lt;/span&gt;
+      &lt;div class=&quot;acts&quot;&gt;&lt;button class=&quot;gbtn&quot; onclick=&quot;copyText(this)&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-copy&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;artifact-diff&quot;&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;marker&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt; .btn {&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line del&quot;&gt;&lt;span class=&quot;marker&quot;&gt;&amp;minus;&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;   height: 32px;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line add&quot;&gt;&lt;span class=&quot;marker&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;   height: 34px;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line add&quot;&gt;&lt;span class=&quot;marker&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;   border-radius: var(--r-md);&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line add&quot;&gt;&lt;span class=&quot;marker&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;   transition: all var(--dur-fast);&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;marker&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt; }&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;Log artifact &amp;mdash; scrollable output&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot;&gt;
+    &lt;div class=&quot;artifact-head&quot;&gt;
+      &lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;
+      &lt;span class=&quot;name&quot;&gt;build.log&lt;/span&gt;
+      &lt;span style=&quot;font-family:var(--mono);font-size:11px;color:var(--text-faint);margin-left:auto&quot;&gt;12 regels&lt;/span&gt;
+      &lt;div class=&quot;acts&quot;&gt;&lt;button class=&quot;gbtn&quot; onclick=&quot;copyText(this)&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-copy&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;artifact-log&quot;&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;14:23:01&lt;/span&gt;&lt;span class=&quot;log-level info&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Build gestart...&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;14:23:02&lt;/span&gt;&lt;span class=&quot;log-level info&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;tokens.css geladen (24 regels)&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;14:23:03&lt;/span&gt;&lt;span class=&quot;log-level warn&quot;&gt;warn&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Deprecated: --font-size-sm, gebruik --text-sm&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;14:23:04&lt;/span&gt;&lt;span class=&quot;log-level info&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Componenten gecompileerd: 14&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;14:23:05&lt;/span&gt;&lt;span class=&quot;log-level err&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Artifact: missende alt-tekst op afbeelding&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;14:23:05&lt;/span&gt;&lt;span class=&quot;log-level info&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Build voltooid in 4.2s (1 warning, 1 error)&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;Status artifact &amp;mdash; live build status&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot;&gt;&lt;div class=&quot;artifact-status&quot;&gt;&lt;span class=&quot;dot ok&quot;&gt;&lt;/span&gt;&lt;span class=&quot;st-label&quot;&gt;Alle checks geslaagd&lt;/span&gt;&lt;span class=&quot;st-meta&quot;&gt;3m geleden&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot; style=&quot;margin-top:8px&quot;&gt;&lt;div class=&quot;artifact-status&quot;&gt;&lt;span class=&quot;dot pending&quot;&gt;&lt;/span&gt;&lt;span class=&quot;st-label&quot;&gt;Deploy loopt...&lt;/span&gt;&lt;span class=&quot;st-meta&quot;&gt;nu bezig&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot; style=&quot;margin-top:8px&quot;&gt;&lt;div class=&quot;artifact-status&quot;&gt;&lt;span class=&quot;dot fail&quot;&gt;&lt;/span&gt;&lt;span class=&quot;st-label&quot;&gt;Build gefaald&lt;/span&gt;&lt;span class=&quot;st-meta&quot;&gt;12m geleden&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;Stacking &amp;mdash; collapsible artifacts&lt;/div&gt;
+  &lt;div class=&quot;artifact&quot; id=&quot;coll1&quot;&gt;
+    &lt;div class=&quot;artifact-head&quot; onclick=&quot;document.getElementById(&#x27;coll1&#x27;).classList.toggle(&#x27;collapsed&#x27;)&quot; style=&quot;cursor:pointer&quot;&gt;
+      &lt;svg class=&quot;ic toggle&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;path d=&quot;M6 9l6 6 6-6&quot;/&gt;&lt;/svg&gt;
+      &lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;
+      &lt;span class=&quot;name&quot;&gt;config.yaml&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;artifact-code&quot;&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;name&lt;/span&gt;: design-system&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;version&lt;/span&gt;: &lt;span class=&quot;str&quot;&gt;2.0.0&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;ln&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;lc&quot;&gt;&lt;span class=&quot;kw&quot;&gt;theme&lt;/span&gt;: &lt;span class=&quot;str&quot;&gt;devin&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;artifact&quot; id=&quot;coll2&quot;&gt;
+    &lt;div class=&quot;artifact-head&quot; onclick=&quot;document.getElementById(&#x27;coll2&#x27;).classList.toggle(&#x27;collapsed&#x27;)&quot; style=&quot;cursor:pointer&quot;&gt;
+      &lt;svg class=&quot;ic toggle&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;path d=&quot;M6 9l6 6 6-6&quot;/&gt;&lt;/svg&gt;
+      &lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-file&quot;/&gt;&lt;/svg&gt;
+      &lt;span class=&quot;name&quot;&gt;deploy.log&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;artifact-log&quot;&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;15:01:00&lt;/span&gt;&lt;span class=&quot;log-level info&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Deploy gestart naar productie&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;15:01:12&lt;/span&gt;&lt;span class=&quot;log-level info&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Container gestart op poort 8080&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;log-line&quot;&gt;&lt;span class=&quot;log-ts&quot;&gt;15:01:15&lt;/span&gt;&lt;span class=&quot;log-level info&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;log-msg&quot;&gt;Health check OK&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;toast&quot; id=&quot;toast&quot;&gt;Gekopieerd!&lt;/div&gt;
+&lt;script&gt;
+function copyText(btn) {
+  var art = btn.closest(&#x27;.artifact&#x27;);
+  var el = art.querySelector(&#x27;.artifact-code,.artifact-diff,.artifact-log,.artifact-body&#x27;);
+  navigator.clipboard.writeText(el ? el.textContent.trim() : &#x27;&#x27;).then(function() {
+    var t = document.getElementById(&#x27;toast&#x27;); t.classList.add(&#x27;show&#x27;);
+    setTimeout(function() { t.classList.remove(&#x27;show&#x27;); }, 1500);
+  });
+}
+&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre></details>

@@ -330,7 +330,43 @@
   &lt;div class=&quot;row&quot;&gt;
     &lt;button class=&quot;btn&quot;&gt;Standaard&lt;/button&gt;
     &lt;button class=&quot;btn primary&quot;&gt;Primaire actie&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; disabled style=&quot;opacity:.45;cursor:default&quot;&gt;Uitgeschakeld&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; disabled&gt;Uitgeschakeld&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;groottes&lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;button class=&quot;btn sm&quot;&gt;Klein (h28)&lt;/button&gt;
+    &lt;button class=&quot;btn&quot;&gt;Standaard (h32)&lt;/button&gt;
+    &lt;button class=&quot;btn lg&quot;&gt;Groot (h38)&lt;/button&gt;
+    &lt;button class=&quot;btn primary lg&quot;&gt;Groot primair&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;laden&lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;button class=&quot;btn loading&quot;&gt;Opslaan&lt;/button&gt;
+    &lt;button class=&quot;btn primary loading&quot;&gt;Verwerken&lt;/button&gt;
+    &lt;button class=&quot;btn sm loading&quot;&gt;Even geduld&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;knopgroep&lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;btn-group&quot;&gt;
+      &lt;button class=&quot;btn&quot;&gt;Links&lt;/button&gt;
+      &lt;button class=&quot;btn&quot;&gt;Midden&lt;/button&gt;
+      &lt;button class=&quot;btn&quot;&gt;Rechts&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row&quot; style=&quot;margin-top:10px&quot;&gt;
+    &lt;div class=&quot;btn-group&quot;&gt;
+      &lt;button class=&quot;btn primary&quot;&gt;Actief&lt;/button&gt;
+      &lt;button class=&quot;btn&quot;&gt;Inactief&lt;/button&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -344,7 +380,7 @@
 &lt;/div&gt;
 
 &lt;div class=&quot;group&quot;&gt;
-  &lt;div class=&quot;lbl&quot;&gt;ghost icon buttons (.gbtn)&lt;/div&gt;
+  &lt;div class=&quot;lbl&quot;&gt;icoon-knoppen (.gbtn)&lt;/div&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-plus&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
     &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-mic&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
@@ -363,11 +399,15 @@
 &lt;/div&gt;
 
 &lt;!-- CONTRACT
-  .btn          h32 px13 r8 border--line-strong, hover bg--surface-sunk, active scale .97
-  .btn.primary  text&lt;-&gt;bg omgekeerd, hover opacity .87
-  .gbtn         28px ghost, hover --hover wash, active scale .92
-  .gbtn.solid   send-acties
-  kbd           mono 10px, border currentColor 55%
+  .btn            h32 px13 r-md border--line-strong, hover bg--surface-sunk, active scale .97
+  .btn.primary    text&lt;-&gt;bg omgekeerd, hover opacity .87
+  .btn.sm         h28 font-12
+  .btn.lg         h38 font-14
+  .btn.loading    spinner::after, color transparent
+  .btn-group      connected buttons, shared border-collapse
+  .gbtn           28px ghost, hover --hover wash, active scale .92
+  .gbtn.solid     send-acties
+  kbd             mono 10px, border currentColor 30%, r3, p1px 5px
 --&gt;
 &lt;/body&gt;
 &lt;/html&gt;

@@ -32,4 +32,11 @@ find . -type f -name '*.md' \
     -not -path './node_modules/*' \
     -print0 | xargs -0 -r markdownlint
 
+# Frontend anti-regressie check (24u-learnings): lib.js-paden, debug-overlays,
+# hero-hoogte + sectie-padding. Snel (~ms), puur Python stdlib.
+if ! python3 scripts/check-frontend.py >/dev/null 2>&1; then
+    echo "lint: frontend-regressie gevonden — run 'python3 scripts/check-frontend.py' voor details" >&2
+    exit 1
+fi
+
 printf '%s\n' 'lint: applicable linters passed'

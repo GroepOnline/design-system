@@ -14,7 +14,7 @@ for a in "$@"; do [ "$a" = "--notify" ] && NOTIFY=1; done
 [ -n "$RUN_ID" ] || { echo "geen actieve run"; exit 1; }
 RES_DIR="$STATE_DIR/$RUN_ID"
 
-NLANES=4
+NLANES=5
 echo "👀 watch run $RUN_ID — wacht op $NLANES lanes (geen timeout)…"
 while [ "$(ls "$RES_DIR"/results/*.rc 2>/dev/null | wc -l | tr -d ' ')" -lt "$NLANES" ]; do
     sleep 2

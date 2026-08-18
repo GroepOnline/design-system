@@ -21,7 +21,7 @@ done
 if [ -f "$RES_DIR/results/aggregate.status" ] 2>/dev/null; then :; fi
 # tellen afgerond?
 total="$(ls "$RES_DIR"/results/*.rc 2>/dev/null | wc -l | tr -d ' ')"
-nlanes=4
+nlanes=5
 if [ "$total" -ge "$nlanes" ]; then
     fails="$(grep -h '^rc=' "$RES_DIR"/results/*.rc | grep -v 'rc=0' | wc -l | tr -d ' ')"
     if [ "$fails" = "0" ]; then echo "ball: ✅ ALLE LANES GROEN"; else echo "ball: ✗ $fails lane(s) rood"; fi

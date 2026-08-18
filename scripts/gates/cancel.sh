@@ -27,7 +27,7 @@ fi
 # Markeer elke lane die nog niet afgerond is als gecanceld, zodat een
 # wachtende watch.sh / push.sh niet tot een vals groen komt.
 mkdir -p "$RES_DIR/results"
-for lane in ruff ds-check brain-gate build-check; do
+for lane in ruff ds-check frontend brain-gate build-check; do
     if [ ! -e "$RES_DIR/results/$lane.rc" ]; then
         echo "rc=9" > "$RES_DIR/results/$lane.rc"          # 9 = gecanceld
         echo "exit=9" > "$RES_DIR/results/$lane.status"

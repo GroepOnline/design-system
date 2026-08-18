@@ -17,6 +17,7 @@ mkdir -p "$STATE_DIR"
 LANES=(
   "ruff|ruff check ds"
   "ds-check|./ds check"
+  "frontend|python3 scripts/check-frontend.py"
   "brain-gate|./ds brain gate"
   "build-check|./ds build --check"
 )

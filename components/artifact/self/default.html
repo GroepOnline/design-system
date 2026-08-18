@@ -3,78 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>component: artifact (before/after + rapport)</title>
+<title>component: artifact</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../tokens.css">
 <style>
-  body { padding: 40px 32px; max-width: 480px; }
+  body { padding: 40px 32px; max-width: 560px; }
   .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 24px; }
   .demo-head a { color: var(--accent-ink); text-decoration: none; }
   .group { margin-bottom: 34px; }
-  .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+  .group > .lbl { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
 
-  /* ==== COMPONENT CSS ==== */
+  .artifact {
+    border: 1px solid var(--line); border-radius: var(--r-lg);
+    overflow: hidden; background: var(--surface);
+    transition: box-shadow var(--dur-fast), border-color var(--dur-fast);
+  }
+  .artifact:hover { border-color: var(--line-strong); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .artifact + .artifact { margin-top: 12px; }
+
   .artifact-head {
     display: flex; align-items: center; gap: 8px;
     padding: 9px 13px; border-bottom: 1px solid var(--line);
     font-family: var(--mono); font-size: 12.5px; color: var(--text-muted);
+    background: var(--bg); cursor: default;
   }
+  .artifact-head .ic { width: 14px; height: 14px; }
+  .artifact-head .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .artifact-head .acts { margin-left: auto; display: flex; gap: 2px; }
   .artifact-head .gbtn { width: 24px; height: 24px; color: var(--text-faint); }
-  .artifact-body h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin: 14px 0 9px; }
-  .artifact-body p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 11px; }
-  .artifact-body p code {
-    font-family: var(--mono); font-size: 12px;
-    background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px;
-  }
-  .artifact-body h3 { font-size: 14px; font-weight: 600; margin: 17px 0 8px; }
+
+  .artifact-body { padding: 17px; }
+  .artifact-body h2 { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; margin: 0 0 9px; }
+  .artifact-body h3 { font-size: 14px; font-weight: 500; margin: 17px 0 8px; }
+  .artifact-body p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 11px; line-height: 1.55; }
+  .artifact-body p code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 5px; border-radius: 4px; }
+
+  .artifact-code { font-family: var(--mono); font-size: 12.5px; line-height: 1.6; }
+  .artifact-code .line { display: flex; padding: 0 13px; }
+  .artifact-code .line:hover { background: var(--hover); }
+  .artifact-code .ln { width: 36px; text-align: right; color: var(--text-faint); padding-right: 12px; flex-shrink: 0; user-select: none; }
+  .artifact-code .lc { flex: 1; white-space: pre; }
+  .artifact-code .lc .kw { color: #8B5CF6; }
+  .artifact-code .lc .str { color: #16A34A; }
+  .artifact-code .lc .cm { color: var(--text-faint); font-style: italic; }
+  .artifact-code .lc .fn { color: #D97706; }
+
+  .artifact-diff { font-family: var(--mono); font-size: 12.5px; line-height: 1.6; }
+  .artifact-diff .line { display: flex; padding: 0 13px; }
+  .artifact-diff .line.add { background: rgba(31,136,61,0.08); }
+  .artifact-diff .line.del { background: rgba(207,34,46,0.08); }
+  .artifact-diff .line .marker { width: 20px; text-align: center; flex-shrink: 0; user-select: none; }
+  .artifact-diff .line.add .marker { color: var(--open-green); }
+  .artifact-diff .line.del .marker { color: var(--red); }
+  .artifact-diff .line .lc { flex: 1; white-space: pre; }
+
+  .artifact-log { font-family: var(--mono); font-size: 12px; line-height: 1.65; max-height: 200px; overflow-y: auto; padding: 10px 13px; }
+  .artifact-log .log-line { display: flex; gap: 10px; }
+  .artifact-log .log-ts { color: var(--text-faint); flex-shrink: 0; }
+  .artifact-log .log-level { font-weight: 500; flex-shrink: 0; width: 40px; }
+  .artifact-log .log-level.info { color: var(--accent-ink); }
+  .artifact-log .log-level.warn { color: var(--amber); }
+  .artifact-log .log-level.err { color: var(--red); }
+  .artifact-log .log-msg { flex: 1; color: var(--text-muted); }
+
+  .artifact-status { display: flex; align-items: center; gap: 10px; padding: 13px 17px; }
+  .artifact-status .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .artifact-status .dot.ok { background: var(--open-green); box-shadow: 0 0 6px rgba(31,136,61,0.4); }
+  .artifact-status .dot.pending { background: var(--amber); animation: pulse-dot 1.5s ease-in-out infinite; }
+  .artifact-status .dot.fail { background: var(--red); }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .artifact-status .st-label { font-weight: 500; font-size: 13.5px; }
+  .artifact-status .st-meta { font-family: var(--mono); font-size: 11.5px; color: var(--text-faint); margin-left: auto; }
+
+  .artifact.collapsed .artifact-body,
+  .artifact.collapsed .artifact-code,
+  .artifact.collapsed .artifact-diff,
+  .artifact.collapsed .artifact-log { display: none; }
+  .artifact-head .toggle { cursor: pointer; transition: transform var(--dur-fast); display: inline-flex; }
+  .artifact.collapsed .artifact-head .toggle { transform: rotate(-90deg); }
+
   .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
-  .ba-cell { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .ba-cell { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
   .ba-cell .lbl { font-size: 11px; color: var(--text-faint); padding: 5px 9px; border-bottom: 1px solid var(--line); background: var(--bg); }
   .ba-cell .body { padding: 13px 10px; font-size: 18px; font-weight: 600; letter-spacing: -0.02em; text-align: center; }
   .ba-cell .foot { font-size: 10.5px; color: var(--text-faint); padding: 5px 9px; border-top: 1px solid var(--line); background: var(--bg); }
-  /* ==== /COMPONENT CSS ==== */
   .grad-text { background: linear-gradient(90deg, #5B8DEF, #7A5CFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .solid-text { color: #317CFF; }
+  .solid-text { color: var(--accent); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--bg); font-size: 13px; font-weight: 500;
+    padding: 8px 18px; border-radius: var(--r-pill); opacity: 0;
+    transition: opacity var(--dur-fast), transform var(--dur-fast);
+    pointer-events: none; z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
-<div class="demo-head"><a href="index.html">← components</a> / artifact-pane</div>
+<div class="demo-head"><a href="index.html">&larr; components</a> / artifact</div>
 
-<div class="group" style="border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden">
-  <div class="artifact-head">
-    <svg class="ic sm"><use href="../../../components/icons.svg#i-file"/></svg>
-    test_gradient_migration.md
-    <div class="acts">
-      <button class="gbtn"><svg class="ic sm"><use href="../../../components/icons.svg#i-copy"/></svg></button>
-      <button class="gbtn"><svg class="ic sm"><use href="../../../components/icons.svg#i-download"/></svg></button>
-      <button class="gbtn"><svg class="ic sm"><use href="../../../components/icons.svg#i-x"/></svg></button>
-    </div>
-  </div>
-  <div class="artifact-body" style="padding:0 17px 17px">
-    <h2>Testrapport: gradient-tekst migreren</h2>
-    <p>PR's: <code>devin-website #357</code> | <code>cognition-website #167</code></p>
-    <h3>Homepage</h3>
-    <div class="ba-grid">
-      <div class="ba-cell">
-        <div class="lbl">Voor · productie</div>
-        <div class="body grad-text">Secure,<br>Private</div>
-        <div class="foot">Gradient op tekst</div>
+<div class="group">
+  <div class="lbl">Report artifact &mdash; before/after</div>
+  <div class="artifact">
+    <div class="artifact-head">
+      <svg class="ic"><use href="../../../components/icons.svg#i-file"/></svg>
+      <span class="name">test_gradient_migration.md</span>
+      <div class="acts">
+        <button class="gbtn" onclick="copyText(this)"><svg class="ic"><use href="../../../components/icons.svg#i-copy"/></svg></button>
+        <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-download"/></svg></button>
       </div>
-      <div class="ba-cell">
-        <div class="lbl">Na · localhost</div>
-        <div class="body solid-text">Secure,<br>Private</div>
-        <div class="foot">Effen blauw</div>
+    </div>
+    <div class="artifact-body">
+      <h2>Testrapport: gradient-tekst migreren</h2>
+      <p>PR's: <code>devin-website #357</code> | <code>cognition-website #167</code></p>
+      <h3>Homepage</h3>
+      <div class="ba-grid">
+        <div class="ba-cell"><div class="lbl">Voor &middot; productie</div><div class="body grad-text">Secure,<br>Private</div><div class="foot">Gradient op tekst</div></div>
+        <div class="ba-cell"><div class="lbl">Na &middot; localhost</div><div class="body solid-text">Secure,<br>Private</div><div class="foot">Effen blauw</div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- CONTRACT
-  bewijs boven verhaal: before/after als identieke cellen naast elkaar.
-  lbl boven, body midden, foot onder. hairlines, geen shadows.
-  NB: grad-text hier is DEMO-content (het oude ontwerp dat gemigreerd wordt) — gradient is geen UI-element.
--->
+<div class="group">
+  <div class="lbl">Code artifact &mdash; bestand met syntax</div>
+  <div class="artifact">
+    <div class="artifact-head">
+      <svg class="ic"><use href="../../../components/icons.svg#i-file"/></svg>
+      <span class="name">tokens.css</span>
+      <div class="acts"><button class="gbtn" onclick="copyText(this)"><svg class="ic"><use href="../../../components/icons.svg#i-copy"/></svg></button></div>
+    </div>
+    <div class="artifact-code">
+      <div class="line"><span class="ln">1</span><span class="lc"><span class="cm">/* surfaces */</span></span></div>
+      <div class="line"><span class="ln">2</span><span class="lc"><span class="kw">--bg</span>: <span class="str">#F7F6F5</span>;</span></div>
+      <div class="line"><span class="ln">3</span><span class="lc"><span class="kw">--surface</span>: <span class="str">#FFFFFF</span>;</span></div>
+      <div class="line"><span class="ln">4</span><span class="lc"><span class="kw">--accent</span>: <span class="str">#317CFF</span>;</span></div>
+      <div class="line"><span class="ln">5</span><span class="lc"></span></div>
+      <div class="line"><span class="ln">6</span><span class="lc"><span class="cm">/* motion */</span></span></div>
+      <div class="line"><span class="ln">7</span><span class="lc"><span class="kw">--ease-out</span>: <span class="fn">cubic-bezier</span>(<span class="str">0.22, 1, 0.36, 1</span>);</span></div>
+      <div class="line"><span class="ln">8</span><span class="lc"><span class="kw">--dur-fast</span>: <span class="str">140ms</span>;</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">Diff artifact &mdash; voor/na vergelijking</div>
+  <div class="artifact">
+    <div class="artifact-head">
+      <svg class="ic"><use href="../../../components/icons.svg#i-file"/></svg>
+      <span class="name">button.css</span>
+      <span style="font-size:11px;color:var(--open-green)">+3</span>
+      <span style="font-size:11px;color:var(--red)">&minus;1</span>
+      <div class="acts"><button class="gbtn" onclick="copyText(this)"><svg class="ic"><use href="../../../components/icons.svg#i-copy"/></svg></button></div>
+    </div>
+    <div class="artifact-diff">
+      <div class="line"><span class="marker"></span><span class="lc"> .btn {</span></div>
+      <div class="line del"><span class="marker">&minus;</span><span class="lc">   height: 32px;</span></div>
+      <div class="line add"><span class="marker">+</span><span class="lc">   height: 34px;</span></div>
+      <div class="line add"><span class="marker">+</span><span class="lc">   border-radius: var(--r-md);</span></div>
+      <div class="line add"><span class="marker">+</span><span class="lc">   transition: all var(--dur-fast);</span></div>
+      <div class="line"><span class="marker"></span><span class="lc"> }</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">Log artifact &mdash; scrollable output</div>
+  <div class="artifact">
+    <div class="artifact-head">
+      <svg class="ic"><use href="../../../components/icons.svg#i-file"/></svg>
+      <span class="name">build.log</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--text-faint);margin-left:auto">12 regels</span>
+      <div class="acts"><button class="gbtn" onclick="copyText(this)"><svg class="ic"><use href="../../../components/icons.svg#i-copy"/></svg></button></div>
+    </div>
+    <div class="artifact-log">
+      <div class="log-line"><span class="log-ts">14:23:01</span><span class="log-level info">info</span><span class="log-msg">Build gestart...</span></div>
+      <div class="log-line"><span class="log-ts">14:23:02</span><span class="log-level info">info</span><span class="log-msg">tokens.css geladen (24 regels)</span></div>
+      <div class="log-line"><span class="log-ts">14:23:03</span><span class="log-level warn">warn</span><span class="log-msg">Deprecated: --font-size-sm, gebruik --text-sm</span></div>
+      <div class="log-line"><span class="log-ts">14:23:04</span><span class="log-level info">info</span><span class="log-msg">Componenten gecompileerd: 14</span></div>
+      <div class="log-line"><span class="log-ts">14:23:05</span><span class="log-level err">err</span><span class="log-msg">Artifact: missende alt-tekst op afbeelding</span></div>
+      <div class="log-line"><span class="log-ts">14:23:05</span><span class="log-level info">info</span><span class="log-msg">Build voltooid in 4.2s (1 warning, 1 error)</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">Status artifact &mdash; live build status</div>
+  <div class="artifact"><div class="artifact-status"><span class="dot ok"></span><span class="st-label">Alle checks geslaagd</span><span class="st-meta">3m geleden</span></div></div>
+  <div class="artifact" style="margin-top:8px"><div class="artifact-status"><span class="dot pending"></span><span class="st-label">Deploy loopt...</span><span class="st-meta">nu bezig</span></div></div>
+  <div class="artifact" style="margin-top:8px"><div class="artifact-status"><span class="dot fail"></span><span class="st-label">Build gefaald</span><span class="st-meta">12m geleden</span></div></div>
+</div>
+
+<div class="group">
+  <div class="lbl">Stacking &mdash; collapsible artifacts</div>
+  <div class="artifact" id="coll1">
+    <div class="artifact-head" onclick="document.getElementById('coll1').classList.toggle('collapsed')" style="cursor:pointer">
+      <svg class="ic toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      <svg class="ic"><use href="../../../components/icons.svg#i-file"/></svg>
+      <span class="name">config.yaml</span>
+    </div>
+    <div class="artifact-code">
+      <div class="line"><span class="ln">1</span><span class="lc"><span class="kw">name</span>: design-system</span></div>
+      <div class="line"><span class="ln">2</span><span class="lc"><span class="kw">version</span>: <span class="str">2.0.0</span></span></div>
+      <div class="line"><span class="ln">3</span><span class="lc"><span class="kw">theme</span>: <span class="str">devin</span></span></div>
+    </div>
+  </div>
+  <div class="artifact" id="coll2">
+    <div class="artifact-head" onclick="document.getElementById('coll2').classList.toggle('collapsed')" style="cursor:pointer">
+      <svg class="ic toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      <svg class="ic"><use href="../../../components/icons.svg#i-file"/></svg>
+      <span class="name">deploy.log</span>
+    </div>
+    <div class="artifact-log">
+      <div class="log-line"><span class="log-ts">15:01:00</span><span class="log-level info">info</span><span class="log-msg">Deploy gestart naar productie</span></div>
+      <div class="log-line"><span class="log-ts">15:01:12</span><span class="log-level info">info</span><span class="log-msg">Container gestart op poort 8080</span></div>
+      <div class="log-line"><span class="log-ts">15:01:15</span><span class="log-level info">info</span><span class="log-msg">Health check OK</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Gekopieerd!</div>
+<script>
+function copyText(btn) {
+  var art = btn.closest('.artifact');
+  var el = art.querySelector('.artifact-code,.artifact-diff,.artifact-log,.artifact-body');
+  navigator.clipboard.writeText(el ? el.textContent.trim() : '').then(function() {
+    var t = document.getElementById('toast'); t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 1500);
+  });
+}
+</script>
 </body>
 </html>
