@@ -6,7 +6,7 @@
 
 ## Wat dit is
 
-Design-system v2 ("Devin-richting") voor agent-producten. Standalone, geen
+Design-system v3 ("Signaal") voor agent-producten. Standalone, geen
 npm-package: kopieermodel (shadcn-achtig). Bron van waarheid per component:
 `components/<naam>/catalog.json`. Tokens + primitives: `tokens.css`.
 Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
