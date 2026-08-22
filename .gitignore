@@ -18,3 +18,4 @@ postcss.config.js
 # Node/Playwright tooling (niet dit repo zijn dependencies)
 node_modules/
 .scratchshots/
+.codex/
