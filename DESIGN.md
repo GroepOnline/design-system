@@ -1,9 +1,13 @@
-# DESIGN.md -- v2
+# DESIGN.md -- v3 "Signaal"
 
 > De design language. Standalone systeem, niet gekoppeld aan één product.
-> v1 was "Stroom" (teal, eigen signatuurlijn). v2 richt zich volledig op de
-> Devin-producttaal, gemeten aan hun live site, met eigen motion-discipline
-> en Nederlandse copy-stem. Beslissing: 2026-07-27 (taste-log).
+> v1 was "Stroom" (teal). v2 mat de Devin-producttaal als kalibratie.
+> **v3 (2026-08-22): de taal heet Signaal en staat op eigen benen.** De
+> Devin-meting (§2) blijft staan als historische kalibratie, niet als doel:
+> we klonen geen stijl, we meten er onze eigen beslissingen aan. Alles wat
+> Signaal herkenbaar maakt is van ons: de meetlat/doorsnede-layout (§8), de
+> worked-row + ripples (§7), de dot-matrix motion-signatuur (§15), de
+> serif-bladstem, en de Nederlandse copy-stem (§9).
 
 ---
 
@@ -148,8 +152,9 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 
 ## 12. Status
 
-**v2 actief** -- prototype-v2.html is de bron van waarheid voor feel.
-Open: naam voor de taal (werktitel "Devin-richting" is geen naam, is een richting).
+**v3 actief** -- de taal heet **Signaal**. prototype-v2.html blijft de levende
+referentie voor product-feel; §15-§17 zijn de v3-lagen (motion-canon, wow-tier,
+brain-koppeling). Naamvraag uit v2 is gesloten.
 
 ---
 
@@ -217,3 +222,80 @@ Regels:
 - Wisselen: seg in de rail (persist via localStorage) of `?style=strak`
 - Variant-frames erven de skin via propagatie in de shell
 - Een derde skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen
+
+---
+
+## §15 Motion-canon (v3)
+
+Vervangt losse waardes; `motion-spec.md` volgt deze canon. Twee tiers:
+
+### Product-tier (dagelijkse UI)
+
+```css
+--ease-out: cubic-bezier(0.22, 1, 0.36, 1);      /* enter/exit, house-waarde */
+--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* on-screen verplaatsing, morphs */
+--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* sheets/drawers */
+--dur-press: 140ms; --dur-pop: 200ms; --dur-panel: 280ms; --dur-sheet: 420ms;
+```
+
+- **De poort geldt altijd**: 100+/dag of keyboard-gestart → geen animatie
+  (command palette opent instant). Tientallen/dag → vrijwel onzichtbaar.
+  Af en toe (modal, toast, drawer) → standaard. Zeldzaam → §16.
+- Springs alleen bij gebaren met momentum: `stiffness 180 / damping 26`,
+  bounce 0 (critically damped) als default. Nooit bounce op iets dat net
+  verschijnt.
+- Enter vanaf `scale(0.95-0.97)` + `opacity: 0`, nooit `scale(0)`. Popovers
+  groeien vanuit hun trigger (`transform-origin`), modals zijn exempt.
+- Exit langs hetzelfde pad als enter. Transform/opacity only (clip-path als
+  derde; height alleen voor accordions). Nooit `transition: all`, nooit
+  `ease-in` op UI.
+- Stagger 30-80ms, max ~6 items, nooit blokkerend. Toggles/toasts via CSS
+  **transitions** (retargetbaar), niet keyframes.
+- `prefers-reduced-motion`: zachter, niet nul -- opacity/kleur blijft,
+  beweging/parallax/overshoot vervalt. Hover-effects gaten met
+  `@media (hover: hover) and (pointer: fine)`.
+
+### Verboden blijft verboden
+
+Geen spinners (ripple-systeem), geen infinite ambient motion in product,
+geen keyframes op hoogfrequente elementen, geen animatie op data die de
+gebruiker leest.
+
+## §16 Wow-tier (v3) -- het delight-budget
+
+Zeldzame, eerste-indruk oppervlakken (auth-landing, app-library, onboarding,
+lege staten, succes) mogen groots -- **alleen daar**. Dit is de enige plek
+voor:
+
+- **Dot-matrix signatuur**: sv-matrix loaders (`~/.agents/skills/sv-matrix`)
+  als merk-motief -- een 5×5 dot-bloom als identiteits-moment (hero, login-
+  succes). Zelfde motief als de CLI-statusline: één taal van terminal tot web.
+- **Split-text reveal** op de hero (word-level, 60-100ms/regel, translateY
+  110%→0, ease-out), Instrument Serif.
+- **Line-drawing SVG** voor het merk/logo (stroke-dashoffset, 1.2-1.5s,
+  ease-in-out), eenmalig bij binnenkomst.
+- **Scramble/decode** voor maximaal één stat- of statuslabel.
+- **Spotlight/glow-cards** (radial-gradient volgt pointer, opacity 0.06-0.08)
+  voor de app-library tiles -- de enige gesanctioneerde "glow" in het systeem.
+- **View Transitions** tussen auth-stappen (login → library): morph, geen
+  harde swap. `@view-transition { navigation: auto; }` op MPA-flows.
+- Scroll-driven reveals (`animation-timeline: view()`) op landing-secties,
+  eenmalig, met `@supports`-gate.
+- Budget: één hero-motion per beat; ondersteunende motion korter en subtieler.
+  Ook hier: reduced-motion variant verplicht, geen paarse gradients, geen
+  glassmorphism -- wow komt uit precisie en motief, niet uit effectstapeling.
+
+## §17 Brain- en taste-koppeling (v3)
+
+Signaal is een lerend systeem; de lus is expliciet:
+
+1. **taste/** blijft het lokale taste-log (beslissing + reden + datum).
+2. Elke geaccepteerde taste-beslissing gaat als learning naar **Joep Brain**
+   (bc-scan-arm, `brain_query`-plane) via de continual-learning lus -- geen
+   tweede geheugen naast Brain.
+3. Agents die UI bouwen laden dit bestand als SSOT (rule `signaal-ssot.mdc`);
+   het primaire model auteurt visueel werk, workers implementeren specs.
+4. Drift-detectie hoort bij self-evolve: een surface dat tokens forkt is een
+   mesh-drift-fix, geen designkeuze.
+5. Design-evolutie (nieuwe skin, motief, kleurshift) = taste-log eerst, dan
+   Brain-ingest, dan pas tokens.

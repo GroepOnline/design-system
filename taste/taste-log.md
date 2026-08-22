@@ -155,3 +155,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: blokken voelen los zolang elke sectie zijn eigen metriek draagt in plaats van aan één systeem te hangen
 - **delta**: (1) doorsnede-regel per sectie (`sec-rule`): sectie-index (04/08, uit REGSECS-volgorde gevuld, nooit handmatig) — hairline — gemeten frac; (2) verticale maatlijn op de wrap-rand loopt van sec-inhoud tot in de footer door, dwars over sectie-grenzen heen; de doorsnede-regels kruisen hem; (3) ledger (02) en band (03) dragen hun index in eigen kop — climax-vlakken breken het ritme maar blijven genummerd; (4) mobiel: meetlatten volledig weg (waren half verborgen, y-labels overlapten content), maatlijn weg, doorsnede-regel blijft (index + frac zijn informatie, geen versiering).
 - **candidate rule**: secties op een blad zijn doorsneden — genummerd, gemeten, en gekruist door een gedeelde maatlijn. Een hairline zonder metriek is decoratie; een hairline met index en frac is maatvoering.
+
+## 2026-08-22 · v3 "Signaal" — weg van Devin-kloon, eigen identiteit
+
+- **shown**: n.v.t. (directief)
+- **reaction**: redirect
+- **signal**: "signaal dik verbeteren moet niet devin 1 op 1 qua stijl worden, moderniseren upgraden + brain aan alles koppelen + auth landing redesign + library van apps, wow effect pagina next level"
+- **delta**: DESIGN.md → v3. Naam vastgelegd: **Signaal**. Devin-meting (§2) gedegradeerd tot historische kalibratie. Nieuw: §15 motion-canon (poort + tokens uit motion-designer), §16 wow-tier (delight-budget: dot-matrix signatuur, split-text, spotlight, view transitions — alleen zeldzame surfaces), §17 brain/taste-koppeling. Surface-brief `surfaces/auth-landing.md` voor auth.chefgroep.online + Authentik app-library.
+- **candidate rule**: Joep wil kalibreren aan klasse-leiders maar nooit klonen; eigen motieven (meetlat, dot-matrix, serif-bladstem, NL-stem) zijn de identiteit. Wow mag, maar alleen in het delight-budget. *→ taste-rules (identity)*
