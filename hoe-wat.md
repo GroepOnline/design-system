@@ -8,7 +8,7 @@ raadpleeg de bronnen voor details.
 
 ## 1. Wat is dit
 
-Dit is **design-system v2** (ook wel "Devin-richting" genoemd). Het is geen product,
+Dit is **design-system v3** ("Signaal"). Het is geen product,
 maar een **standalone design-taal + component-catalogus + toolset** waarmee je
 nieuwe producten bouwt. Elk product dat hieruit ontstaat, erft dezelfde look &
 feel zonder afhankelijk te worden van een runtime-package.
@@ -21,9 +21,9 @@ De kern in een paar zinnen:
 - Nederlandse copy op gebruikersvlakken
 - Light- en dark-mode (Basalt) zijn first-class
 
-De v1 was "Stroom" (teal, eigen signatuurlijn). v2 is gemeten aan Devins
-product-UI (2026-07-27), met eigen motion-discipline en een zelflerend
-taste-systeem.
+De v1 was "Stroom" (teal, eigen signatuurlijn). v2 mat Devins product-UI als
+historische kalibratie (2026-07-27). **v3 heet Signaal** — eigen identiteit,
+eigen motion-canon (§15) en wow-tier surfaces (§16); zie `DESIGN.md`.
 
 ---
 
