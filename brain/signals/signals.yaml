@@ -19,3 +19,12 @@ entries:
   score_hint: 1.0
   status: acked
   refs: []
+- id: 2026-08-22T18-55-00Z-score-refresh
+  ts: "2026-08-22T18:55:00Z"
+  plane: design-brain
+  kind: score_refresh
+  source: schedule
+  signal: ds brain eval pass
+  score_hint: 1.0
+  status: acked
+  refs: []
