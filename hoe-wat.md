@@ -22,7 +22,7 @@ De kern in een paar zinnen:
 - Light- en dark-mode (Basalt) zijn first-class
 
 De v1 was "Stroom" (teal, eigen signatuurlijn). v2 mat Devins product-UI als
-historische kalibratie (2026-07-27). **v3 heet Signaal** — eigen identiteit,
+historische kalibratie (2026-07-27). **v3 heet Signaal**: eigen identiteit,
 eigen motion-canon (§15) en wow-tier surfaces (§16); zie `DESIGN.md`.
 
 ---
