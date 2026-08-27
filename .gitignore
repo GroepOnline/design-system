@@ -19,3 +19,6 @@ postcss.config.js
 node_modules/
 .scratchshots/
 .codex/
+
+# Compound Engineering checkout-local settings (tracked: config.yaml + example)
+.compound-engineering/*.local.yaml
