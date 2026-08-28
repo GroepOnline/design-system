@@ -175,12 +175,17 @@ Schaal via tokens, nooit losse px-waarden in componenten:
 Regels:
 - Rendering: `antialiased` + `optimizeLegibility` op html (staat in tokens.css)
 - Headings: `--leading-head` 1.2, tracking `−0.02em`, `text-wrap: balance`
-- Prose: `.prose` = 15px / 1.62 / max 65ch (measure-cap)
+- Prose: `.prose` = 16px / 1.62 / max 65ch (measure-cap; 15px was onder de 16px-vloer voor doorlezen — web-typography skill ri 1)
 - Data (timer, diff, counts): `.num` = tabular-nums
 - Sectie-labels: `.caps` = 10.5px / 600 / +0.07em / faint
 - `text-wrap: pretty` op paragrafen
 - Display (site/blad): `--font-display` = Instrument Serif, gewicht 400,
   tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers
+- Fallbacks: `--font-display` → `Georgia, 'Times New Roman', serif`; body blijft op het
+  systeem-stack (`ui-sans-serif`), dus geen webfont-payload voor body. Display-face
+  subsetten (Latijn) + `font-display: swap`; payload-budget <200KB totaal.
+- Zoom: schaal overleeft 200% (scrollcontainers nooit height-fixed zonder overflow)
+  — controleren bij elke render-check; hiërarchie moet bij squint blijven bestaan
 
 ## §12 Iconen (v2.1, icon-system skill)
 
