@@ -2800,11 +2800,45 @@ def cmd_brain(args):
     else:
         err("gebruik: ds brain build|check|new|signal|eval|gate")
 
+_ISO_DATE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
+
+
+def _normalize_generated_wall_clock(text: str) -> str:
+    """Normalize wall-clock dates only in generated chrome, never document content."""
+    chrome_markers = ("gegenereerd", "titelblok", "ml-opt")
+    lines = []
+    for line in text.splitlines(keepends=True):
+        if any(marker in line for marker in chrome_markers):
+            line = _ISO_DATE_RE.sub("<DATE>", line)
+        lines.append(line)
+    return "".join(lines)
+
+
+def _date_only_generated_drift(path: str) -> bool:
+    """True when a tracked file differs from HEAD only by generated chrome dates."""
+    import subprocess
+
+    current = Path(ROOT, path)
+    if not current.is_file():
+        return False
+    baseline = subprocess.run(
+        ["git", "show", f"HEAD:{path}"], cwd=ROOT, capture_output=True, text=True, check=False
+    )
+    if baseline.returncode != 0:
+        return False
+    try:
+        current_text = current.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return False
+    return _normalize_generated_wall_clock(baseline.stdout) == _normalize_generated_wall_clock(current_text)
+
+
 def check_build_idempotent():
-    """build --check: fail hard als de werkboom na build drift vertoont vs git.
-    
-    Genegeerd: gegenereerde bestanden met timestamps (scorecard.json, etc.)
-    die veranderen bij elke run maar geen handmatige wijziging aangeven.
+    """build --check: fail hard on semantic generated drift vs git.
+
+    Wall-clock-only dates in generated chrome are ignored. Real generated
+    content drift remains blocking, even when the same file also has a date
+    change. scorecard.json remains an explicitly volatile generated artifact.
     """
     import subprocess
     r = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
@@ -2824,7 +2858,7 @@ def check_build_idempotent():
     for line in lines:
         # git status --porcelain: "XY pad" — split op eerste whitespace voor het pad
         path = line.split(None, 1)[-1]
-        if path in generated_drift:
+        if path in generated_drift or _date_only_generated_drift(path):
             gen_drift.append(path)
         else:
             real_drift.append(line)
