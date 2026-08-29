@@ -10,7 +10,7 @@
 set -uo pipefail
 
 cd "$(dirname "$0")/../.." || exit 1
-STATE_DIR="${GATE_STATE_DIR:-.git/push-state}"
+STATE_DIR="${GATE_STATE_DIR:-$(git rev-parse --git-path push-state 2>/dev/null || echo .git/push-state)}"
 mkdir -p "$STATE_DIR"
 
 # Lanes: naam + commando. Elke lane draait onafhankelijk (async).
@@ -57,6 +57,7 @@ if [ "${GATE_WAIT:-0}" = "1" ]; then
     for name in "${NAMES[@]}"; do
         if [ -f "$RES_DIR/results/$name.rc" ]; then
             rc="$(cat "$RES_DIR/results/$name.rc")"
+            rc="${rc#rc=}"
         else
             rc=1
         fi

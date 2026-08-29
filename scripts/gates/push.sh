@@ -19,7 +19,7 @@
 # pre-push hook: die roept deze wrapper aan zodat je nooit dubbel verifieert.
 set -uo pipefail
 cd "$(dirname "$0")/../.." || exit 1
-STATE_DIR="${GATE_STATE_DIR:-.git/push-state}"
+STATE_DIR="${GATE_STATE_DIR:-$(git rev-parse --git-path push-state 2>/dev/null || echo .git/push-state)}"
 mkdir -p "$STATE_DIR"
 
 RUN_SCRIPT="scripts/gates/run-verify.sh"

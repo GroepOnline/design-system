@@ -5,7 +5,7 @@
 #
 # Gebruik: cancel.sh [run-id]   (zonder id: de actieve run)
 set -uo pipefail
-STATE_DIR="${GATE_STATE_DIR:-.git/push-state}"
+STATE_DIR="${GATE_STATE_DIR:-$(git rev-parse --git-path push-state 2>/dev/null || echo .git/push-state)}"
 
 if [ -n "${1:-}" ]; then RUN_ID="$1"; elif [ -f "$STATE_DIR/current" ]; then RUN_ID="$(cat "$STATE_DIR/current")"; else echo "geen actieve run om te annuleren"; exit 0; fi
 RES_DIR="$STATE_DIR/$RUN_ID"
