@@ -295,7 +295,8 @@ body {
   --text-xs:  11.5px;   /* labels, kbd, captions */
   --text-sm:  12.5px;   /* beschrijvingen, secondair */
   --text-md:  13.5px;   /* UI-standaard */
-  --text-lg:  15px;     /* prose / kleine titels */
+  --text-lg:  15px;     /* kleine titels */
+  --text-prose: 16px;    /* doorlees-prose */
   --text-xl:  18px;     /* sectie-headers */
   --text-2xl: 24px;     /* pagina-titels */
   --leading-head: 1.2;
@@ -311,7 +312,7 @@ h1 { font-size: var(--text-2xl); font-weight: 500; }
 h2 { font-size: var(--text-xl); font-weight: 500; }
 h3 { font-size: var(--text-lg); font-weight: 500; }
 p { text-wrap: pretty; }
-.prose { font-size: var(--text-lg); line-height: var(--leading-prose); max-width: 65ch; color: var(--text); }
+.prose { font-size: var(--text-prose); line-height: var(--leading-prose); max-width: 65ch; color: var(--text); }
 .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
 .caps { font-size: var(--text-2xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--text-faint); }
 
