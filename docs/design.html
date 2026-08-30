@@ -409,12 +409,17 @@
 <ul>
 <li>Rendering: <code>antialiased</code> + <code>optimizeLegibility</code> op html (staat in tokens.css)</li>
 <li>Headings: <code>--leading-head</code> 1.2, tracking <code>−0.02em</code>, <code>text-wrap: balance</code></li>
-<li>Prose: <code>.prose</code> = 15px / 1.62 / max 65ch (measure-cap)</li>
+<li>Prose: <code>.prose</code> = 16px / 1.62 / max 65ch (measure-cap; 15px was onder de 16px-vloer voor doorlezen — web-typography skill ri 1)</li>
 <li>Data (timer, diff, counts): <code>.num</code> = tabular-nums</li>
 <li>Sectie-labels: <code>.caps</code> = 10.5px / 600 / +0.07em / faint</li>
 <li><code>text-wrap: pretty</code> op paragrafen</li>
 <li>Display (site/blad): <code>--font-display</code> = Instrument Serif, gewicht 400,</li>
 <p>tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers</p>
+<li>Fallbacks: <code>--font-display</code> → <code>Georgia, &#x27;Times New Roman&#x27;, serif</code>; body blijft op het</li>
+<p>systeem-stack (<code>ui-sans-serif</code>), dus geen webfont-payload voor body. Display-face</p>
+<p>subsetten (Latijn) + <code>font-display: swap</code>; payload-budget &lt;200KB totaal.</p>
+<li>Zoom: schaal overleeft 200% (scrollcontainers nooit height-fixed zonder overflow)</li>
+<p>— controleren bij elke render-check; hiërarchie moet bij squint blijven bestaan</p>
 </ul>
 <h2 data-reg="12-iconen">§12 Iconen (v2.1, icon-system skill)</h2>
 <ul>
@@ -509,7 +514,7 @@
 <li>Design-evolutie (nieuwe skin, motief, kleurshift) = taste-log eerst, dan</li>
 <p>Brain-ingest, dan pas tokens.</p>
 </ol></div>
-<div class="gen" data-reg="colofon">gegenereerd uit DESIGN.md op 2026-08-25 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit DESIGN.md op 2026-08-30 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
