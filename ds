@@ -2803,8 +2803,21 @@ def cmd_brain(args):
 _ISO_DATE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
 
 
-def _normalize_generated_wall_clock(text: str) -> str:
-    """Normalize wall-clock dates only in generated chrome, never document content."""
+def _is_generated_html_output(path: str) -> bool:
+    """Return whether path is an HTML artifact owned by ``ds build``."""
+    p = Path(path)
+    parts = p.parts
+    if p in {Path("index.html"), Path("components/index.html"), Path("taste-site/index.html")}:
+        return True
+    if len(parts) == 3 and parts[0] == "components" and parts[2] == "index.html":
+        return True
+    return len(parts) == 2 and parts[0] in {"docs", "brain-site"} and p.suffix == ".html"
+
+
+def _normalize_generated_wall_clock(path: str, text: str) -> str:
+    """Normalize wall-clock dates only for HTML artifacts owned by ``ds build``."""
+    if not _is_generated_html_output(path):
+        return text
     chrome_markers = ("gegenereerd", "titelblok", "ml-opt")
     lines = []
     for line in text.splitlines(keepends=True):
@@ -2830,7 +2843,7 @@ def _date_only_generated_drift(path: str) -> bool:
         current_text = current.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
         return False
-    return _normalize_generated_wall_clock(baseline.stdout) == _normalize_generated_wall_clock(current_text)
+    return _normalize_generated_wall_clock(path, baseline.stdout) == _normalize_generated_wall_clock(path, current_text)
 
 
 def check_build_idempotent():
