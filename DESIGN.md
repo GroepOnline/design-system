@@ -218,8 +218,7 @@ Dit is geen accent-wissel maar een volledige tweede stijl over dezelfde taal.
 
 Regels:
 - Nieuwe skins zijn complete token-overrides in `tokens.css`, light én dark
-- De taal (§1-§10) blijft gelden onder elke skin: geen spinners, één accent,
-  zelfde typografie-schaal, zelfde icon-grid
+- De taal (§1-§10) blijft gelden onder elke skin: geen spinners, één accent, zelfde typografie-schaal, zelfde icon-grid
 - Wisselen: seg in de rail (persist via localStorage) of `?style=strak` / `?style=grok`
 - Variant-frames erven de skin via propagatie in de shell
 - Een extra skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen
