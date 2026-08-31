@@ -433,15 +433,16 @@
 <h2 data-reg="14-stijl-laag">§14 Stijl-laag (v2.2)</h2>
 <p>Het systeem draagt meerdere <strong>complete skins</strong> via <code>data-style</code> op <code>&lt;html&gt;</code>.</p>
 <p>Dit is geen accent-wissel maar een volledige tweede stijl over dezelfde taal.</p>
-<table><thead><tr><th>Skin</th><th>Karakter</th><th>Tokens</th></tr></thead><tbody><tr><td><code>devin</code> (default)</td><td>warm, zacht, r8/12, #317CFF</td><td>warm off-white, hairlines</td></tr><tr><td><code>strak</code></td><td>koel, scherp, r4/6, #2563EB</td><td>koel grijs-blauw, sterkere lines</td></tr></tbody></table>
+<table><thead><tr><th>Skin</th><th>Karakter</th><th>Tokens</th></tr></thead><tbody><tr><td><code>devin</code> (default)</td><td>warm, zacht, r8/12, #317CFF</td><td>warm off-white, hairlines</td></tr><tr><td><code>strak</code></td><td>koel, scherp, r4/6, #2563EB</td><td>koel grijs-blauw, sterkere lines</td></tr><tr><td><code>grok</code></td><td>Joep’s codex dracula, Inter, r8/16</td><td>canvas <code>#282A37</code>, ink <code>#F8F8F2</code>, accent <code>#FF79C6</code> (taste-log 2026-08-31)</td></tr></tbody></table>
 <p>Regels:</p>
 <ul>
 <li>Nieuwe skins zijn complete token-overrides in <code>tokens.css</code>, light én dark</li>
 <li>De taal (§1-§10) blijft gelden onder elke skin: geen spinners, één accent,</li>
 <p>zelfde typografie-schaal, zelfde icon-grid</p>
-<li>Wisselen: seg in de rail (persist via localStorage) of <code>?style=strak</code></li>
+<li>Wisselen: seg in de rail (persist via localStorage) of <code>?style=strak</code> / <code>?style=grok</code></li>
 <li>Variant-frames erven de skin via propagatie in de shell</li>
-<li>Een derde skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen</li>
+<li>Een extra skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen</li>
+<li>Agent-home surface: <code>components/home-shell</code> (gallery <code>default</code> + full-viewport <code>live</code>)</li>
 </ul>
 <hr>
 <h2 data-reg="15-motion-canon">§15 Motion-canon (v3)</h2>
