@@ -187,3 +187,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: de skin volgt Joeps eigen codex-theme, niet de grok.com meting; monochroom near-black is verworpen
 - **delta**: skin `grok` in tokens.css volledig om naar dracula-waarden (dark = primaire kant; light is een afgeleide met accent #D6408F voor contrast); --font override naar Inter; open-green/error-red naar #50FA7B/#FF5555 (dark); voice-cirkel van monochroom naar accent
 - **candidate rule**: als Joep een eigen theme-spec plakt, wint die van elke externe meting. *→ taste-rules (proces)*
+
+## 2026-08-31 · Devin-menus als meting + dracula-render akkoord
+
+- **shown**: (1) render home-shell met dracula-skin (roze voice-cirkel, "// Grok" wordmark); (2) tien Devin-screenshots: mode-picker popover (Auto/Q&A/Plan + Deep mode), plus-menu (Upload attachment, Repositories, Files, Skills, Sessions, Playbooks, Plugins, Secrets), environment-menu, split send-knop (achtergrond-sessie/Slack), credits-banner, sessies-sidebar met Working-status
+- **reaction**: richting akkoord (geen nieuwe afkeur op de render); Devin-menus aangeleverd als volgende meetlaag
+- **signal**: "gebruik grok voor explore en simpel werk als worker en vergeet niet m'n plugins (cordis oid) voor deepseekharn" — home-shell moet ook als DSH-frontend-plugin kunnen landen
+- **delta**: home-shell krijgt een tweede variant `menus` met de gemeten popover-patronen (mode-picker, plus-menu, split-send, credits-banner, sessie-rij met werkstatus); DSH-plugin-pad wordt verkend (dsh-ui-frontend)
+- **candidate rule**: composer-menu's zijn onderdeel van de shell-structuur, niet losse componenten — één popover-idioom (surface, r-md, hairline, icoon 16 + label) voor alle drie (plus, mode, env). *1e observatie, watch.*

@@ -11,6 +11,15 @@
       "status": "active",
       "added": "2026-08-31",
       "note": "grok.com hoofdscherm-meting als eigen component; referentie-skin grok dark"
+    },
+    {
+      "id": "menus",
+      "file": "self/menus.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-08-31",
+      "note": "popover-idioom, split-send, banner, sessie-status; Devin-meting 2026-08-31"
     }
   ],
   "docs": {
