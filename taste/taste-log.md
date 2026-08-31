@@ -163,3 +163,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: "signaal dik verbeteren moet niet devin 1 op 1 qua stijl worden, moderniseren upgraden + brain aan alles koppelen + auth landing redesign + library van apps, wow effect pagina next level"
 - **delta**: DESIGN.md → v3. Naam vastgelegd: **Signaal**. Devin-meting (§2) gedegradeerd tot historische kalibratie. Nieuw: §15 motion-canon (poort + tokens uit motion-designer), §16 wow-tier (delight-budget: dot-matrix signatuur, split-text, spotlight, view transitions — alleen zeldzame surfaces), §17 brain/taste-koppeling. Surface-brief `surfaces/auth-landing.md` voor auth.chefgroep.online + Authentik app-library.
 - **candidate rule**: Joep wil kalibreren aan klasse-leiders maar nooit klonen; eigen motieven (meetlat, dot-matrix, serif-bladstem, NL-stem) zijn de identiteit. Wow mag, maar alleen in het delight-budget. *→ taste-rules (identity)*
+
+## 2026-08-31 · Grok-hoofdscherm: derde skin + home-shell component
+
+- **shown**: grok.com hoofdscherm-meting (door Joep geplakte spec): near-black #0d0d0d canvas, nul decoratie; sidebar ~310px (brand, nav 36px, Projects, platte History zonder iconen/meta, account onderaan); main gecentreerd met logo + composer-pil als held; witte cirkelknop (voice) als enige luide element; muted chips rechtsboven; "Meet Grok Bot" card onder composer
+- **reaction**: approved (directief)
+- **signal**: "start met dit ontwikkelen en maak er een volledige taste, design etc. van voor hergebruik, onthoud alles, component moet zijn" + "maak eerst dus een volledige basis en gebruik evt. opensource libraries"
+- **delta**: (1) derde skin `grok` in tokens.css + styles.json (light én dark; dark is primaire kant: #0D0D0D, monochroom, wit = primaire actie, r8/16); (2) nieuw component `components/home-shell` (cat structuur): volledige home-shell met sidebar-zones, composer-hero, chrome-chips, meet-card; (3) elf nieuwe Lucide-symbols in icons.svg (chevrons-left, chevron-down, square-pen, image, library, zap, blocks, audio-lines, lock, bot, menu); (4) surface-brief `surfaces/home-shell.md`
+- **candidate rule**: monochrome skins zijn een legitieme derde weg naast devin/strak: de "één accent"-regel wordt dan "één luid element" (omgekeerde monochrome knop). *1e observatie, watch.*

@@ -357,6 +357,43 @@ p { text-wrap: pretty; }
   --hover: rgba(236, 237, 240, 0.06);
 }
 
+/* skin: grok — grok.com hoofdscherm-meting (2026-08-31, taste-log)
+   Monochroom: geen kleur-accent; het luide element is de omgekeerde
+   monochrome knop (wit op zwart). Dark is de primaire kant.
+   Radius r8 (nav-pill) / r16 (composer-pil, cards). */
+[data-style="grok"] {
+  --bg: #FFFFFF;
+  --surface: #FAFAFA;
+  --surface-sunk: #F0F0F0;
+  --text: #0D0D0D;
+  --text-muted: rgba(13, 13, 13, 0.58);
+  --text-faint: rgba(13, 13, 13, 0.38);
+  --line: rgba(13, 13, 13, 0.08);
+  --line-strong: rgba(13, 13, 13, 0.15);
+  --accent: #0D0D0D;
+  --accent-ink: #262626;
+  --accent-soft: rgba(13, 13, 13, 0.07);
+  --hover: rgba(13, 13, 13, 0.05);
+  --r-md: 8px;
+  --r-lg: 16px;
+}
+[data-theme="dark"][data-style="grok"] {
+  --bg: #0D0D0D;
+  --surface: #161616;
+  --surface-sunk: #1D1D1D;
+  --text: #F4F4F3;
+  --text-muted: rgba(244, 244, 243, 0.56);
+  --text-faint: rgba(244, 244, 243, 0.36);
+  --line: rgba(244, 244, 243, 0.08);
+  --line-strong: rgba(244, 244, 243, 0.15);
+  --accent: #F4F4F3;
+  --accent-ink: #E8E8E6;
+  --accent-soft: rgba(244, 244, 243, 0.09);
+  --hover: rgba(244, 244, 243, 0.06);
+  --r-md: 8px;
+  --r-lg: 16px;
+}
+
 /* ============================================================
    GRO-1036: Debug overlays — hidden by default, toggle with `
    ============================================================ */
