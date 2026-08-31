@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="dark" data-style="grok">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>component: home-shell / menus</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../tokens.css">
+<style>
+  body { padding: 28px 24px; background: var(--bg); }
+  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 18px; }
+  .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .demo-grid { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+  .demo-col { display: flex; flex-direction: column; gap: 10px; }
+  .demo-label { font-family: var(--mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ==== COMPONENT CSS: popover-idioom van de home-shell ==== */
+  .gh-pop {
+    min-width: 230px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    font-family: var(--font); font-size: var(--text-md); color: var(--text);
+  }
+  .gh-pop-item {
+    display: flex; align-items: center; gap: 11px;
+    padding: 8px 10px; border-radius: var(--r-md);
+    color: var(--text); text-decoration: none; cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .gh-pop-item:hover { background: var(--hover); }
+  .gh-pop-item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .gh-pop-item[aria-checked="true"] { background: var(--accent-soft); }
+  .gh-pop-item .ic { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; }
+  .gh-pop-item .lbl { font-weight: 500; }
+  .gh-pop-item .sub { display: block; font-size: var(--text-sm); color: var(--text-muted); font-weight: 400; margin-top: 1px; }
+  .gh-pop-item .kbd, .gh-pop-item .val {
+    margin-left: auto; font-size: var(--text-sm); color: var(--text-faint);
+  }
+  .gh-pop-item .chev { margin-left: auto; width: 13px; height: 13px; color: var(--text-faint); transform: rotate(-90deg); }
+  .gh-pop-sep { height: 1px; background: var(--line); margin: 5px 4px; }
+  /* uitgeschakelde/afgeschermde optie (Devin: Deep mode) */
+  .gh-pop-item.off { cursor: default; }
+  .gh-pop-item.off .lbl, .gh-pop-item.off .sub { color: var(--text-faint); }
+  .gh-pop-item.off:hover { background: transparent; }
+  .gh-pop-item .dot-off { margin-left: auto; width: 8px; height: 8px; border-radius: 50%; background: var(--surface-sunk); border: 1px solid var(--line-strong); }
+
+  /* split send-knop */
+  .gh-send-split { display: inline-flex; align-items: center; }
+  .gh-send-split .send {
+    width: 34px; height: 34px; border: none; cursor: pointer;
+    border-radius: 17px 0 0 17px;
+    background: var(--accent); color: var(--bg);
+    display: inline-grid; place-items: center;
+  }
+  .gh-send-split .more {
+    width: 24px; height: 34px; border: none; cursor: pointer;
+    border-radius: 0 17px 17px 0;
+    background: var(--accent); color: var(--bg);
+    display: inline-grid; place-items: center;
+    border-left: 1px solid color-mix(in srgb, var(--bg) 25%, transparent);
+  }
+  .gh-send-split .send:hover, .gh-send-split .more:hover { opacity: 0.88; }
+  .gh-send-split .ic { width: 15px; height: 15px; }
+  .gh-send-split .ic.sm { width: 12px; height: 12px; }
+
+  /* credits/notice-banner onder de composer */
+  .gh-banner {
+    width: min(680px, 100%);
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 9px 12px;
+    font-family: var(--font); font-size: var(--text-sm); color: var(--text-muted);
+  }
+  .gh-banner .ic { width: 15px; height: 15px; flex-shrink: 0; color: var(--text-faint); }
+  .gh-banner .txt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gh-banner a { margin-left: auto; color: var(--accent-ink); text-decoration: none; font-weight: 500; flex-shrink: 0; }
+  .gh-banner a:hover { text-decoration: underline; }
+
+  /* sessie-rij met werkstatus (sidebar) */
+  .gh-sess {
+    width: 250px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: var(--r-md);
+    background: var(--hover);
+    font-family: var(--font); text-decoration: none; cursor: pointer;
+  }
+  .gh-sess .who { min-width: 0; line-height: 1.35; }
+  .gh-sess .nm { font-size: var(--text-md); font-weight: 500; color: var(--text); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gh-sess .st { font-size: var(--text-sm); color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+  /* werkindicator: ripple-ring, geen spinner */
+  .gh-working { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+  .gh-working::before, .gh-working::after {
+    content: ""; position: absolute; inset: 0;
+    border: 1.5px solid var(--accent); border-radius: 50%;
+    animation: gh-ripple 1.1s var(--ease-out) 1 forwards;
+  }
+  .gh-working::after { animation-delay: 0.35s; }
+  @keyframes gh-ripple {
+    0% { transform: scale(0.4); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gh-working::before { animation: none; transform: scale(0.6); opacity: 0.9; }
+    .gh-working::after { animation: none; display: none; }
+  }
+  /* ==== /COMPONENT CSS ==== */
+</style>
+</head>
+<body>
+<div class="demo-head"><a href="index.html">&larr; components</a> / home-shell / menus: popover-idioom, split-send, banner, sessie-status (Devin-meting 2026-08-31)</div>
+
+<div class="demo-grid">
+
+  <div class="demo-col">
+    <span class="demo-label">mode-picker</span>
+    <div class="gh-pop" role="listbox" aria-label="Modus">
+      <div class="gh-pop-item" role="option" aria-checked="true">
+        <svg class="ic"><use href="../../../components/icons.svg#i-globe"/></svg>
+        <span><span class="lbl">Auto</span><span class="sub">Kiest zelf de beste modus</span></span>
+      </div>
+      <div class="gh-pop-item" role="option" aria-checked="false">
+        <svg class="ic"><use href="../../../components/icons.svg#i-message"/></svg>
+        <span><span class="lbl">Q&amp;A</span><span class="sub">Vragen over de codebase</span></span>
+      </div>
+      <div class="gh-pop-item" role="option" aria-checked="false">
+        <svg class="ic"><use href="../../../components/icons.svg#i-list"/></svg>
+        <span><span class="lbl">Plan</span><span class="sub">Uitvoerbare plannen voor taken</span></span>
+      </div>
+      <div class="gh-pop-sep"></div>
+      <div class="gh-pop-item off" aria-disabled="true">
+        <svg class="ic"><use href="../../../components/icons.svg#i-info"/></svg>
+        <span><span class="lbl">Deep mode</span><span class="sub">Grondiger antwoorden, diepere redenatie</span></span>
+        <span class="dot-off" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-col">
+    <span class="demo-label">plus-menu</span>
+    <div class="gh-pop" role="menu" aria-label="Toevoegen">
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-paperclip"/></svg><span class="lbl">Bijlage uploaden</span></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-folder"/></svg><span class="lbl">Repositories</span></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-file-code"/></svg><span class="lbl">Bestanden</span></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-zap"/></svg><span class="lbl">Skills</span></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-message"/></svg><span class="lbl">Sessies</span></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-book"/></svg><span class="lbl">Playbooks</span></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-blocks"/></svg><span class="lbl">Plugins</span></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-key"/></svg><span class="lbl">Secrets</span></div>
+    </div>
+  </div>
+
+  <div class="demo-col">
+    <span class="demo-label">environment-menu</span>
+    <div class="gh-pop" role="menu" aria-label="Omgeving">
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-terminal"/></svg><span class="lbl">Virtuele omgeving</span><span class="val">Ubuntu</span><svg class="chev"><use href="../../../components/icons.svg#i-chevron-down"/></svg></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-lock"/></svg><span class="lbl">Security-profiel</span><span class="val">Default</span><svg class="chev"><use href="../../../components/icons.svg#i-chevron-down"/></svg></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-folder"/></svg><span class="lbl">Repositories</span><span class="val">99+</span><svg class="chev"><use href="../../../components/icons.svg#i-chevron-down"/></svg></div>
+      <div class="gh-pop-sep"></div>
+      <div class="gh-pop-item" role="menuitem"><svg class="ic"><use href="../../../components/icons.svg#i-sliders"/></svg><span class="lbl">MCP-connectors beheren</span></div>
+    </div>
+
+    <span class="demo-label" style="margin-top:14px">split-send + achtergrond-menu</span>
+    <div style="display:flex; align-items:flex-start; gap:12px">
+      <span class="gh-send-split">
+        <button class="send" title="Versturen" aria-label="Versturen"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
+        <button class="more" title="Meer verstuuropties" aria-label="Meer verstuuropties" aria-haspopup="menu"><svg class="ic sm"><use href="../../../components/icons.svg#i-chevron-down"/></svg></button>
+      </span>
+      <div class="gh-pop" role="menu" aria-label="Verstuuropties" style="min-width:250px">
+        <div class="gh-pop-item" role="menuitem"><span class="lbl">Start sessie op achtergrond</span><span class="kbd">Ctrl &#8629;</span></div>
+        <div class="gh-pop-item" role="menuitem"><span class="lbl">Start &amp; stuur in Slack</span><svg class="chev"><use href="../../../components/icons.svg#i-chevron-down"/></svg></div>
+      </div>
+    </div>
+
+    <span class="demo-label" style="margin-top:14px">notice-banner</span>
+    <div class="gh-banner" role="status">
+      <svg class="ic"><use href="../../../components/icons.svg#i-info"/></svg>
+      <span class="txt">Je gratis credits zijn op. Abonneer om verder te gaan.</span>
+      <a href="#">Bekijk plannen</a>
+    </div>
+
+    <span class="demo-label" style="margin-top:14px">sessie-rij (werkend)</span>
+    <div class="gh-sess">
+      <span class="gh-working" aria-hidden="true"></span>
+      <span class="who">
+        <span class="nm">ddssd</span>
+        <span class="st">Working &middot; verkent repo</span>
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTRACT
+  één popover-idioom voor alle composer/sidebar-menu's: surface, hairline,
+  r-lg buiten / r-md items, padding 6px, schaduw 0 8px 24px @ 28%.
+  item = icoon 16 (text-muted) + label 500; sub-regel text-sm text-muted;
+  geselecteerd = accent-soft; disabled = .off (faint, geen hover).
+  split-send: accent-pil in twee segmenten (34 + 24), scheiding = bg-mix 25%.
+  banner: r-md, surface, info-icoon, één regel + rechts een accent-link.
+  sessie-status: ripple-ring (geen spinner), reduced-motion = statische ring.
+-->
+</body>
+</html>

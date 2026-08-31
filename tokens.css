@@ -358,6 +358,53 @@ p { text-wrap: pretty; }
   --hover: rgba(236, 237, 240, 0.06);
 }
 
+/* skin: grok — Joeps codex-theme-v1 "dracula" (2026-08-31, taste-log)
+   Meetlat: geplakte theme-spec — surface #282A37, ink #F8F8F2,
+   accent #FF79C6, UI-font Inter, contrast 65 (gedempte muted-laag).
+   Dark is de primaire kant. Radius r8 / r16. */
+[data-style="grok"] {
+  --font: "Inter", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
+  --bg: #FBFBFD;
+  --surface: #F2F2F7;
+  --surface-sunk: #E9E9F0;
+  --text: #282A37;
+  --text-muted: rgba(40, 42, 55, 0.62);
+  --text-faint: rgba(40, 42, 55, 0.40);
+  --line: rgba(40, 42, 55, 0.10);
+  --line-strong: rgba(40, 42, 55, 0.18);
+  --accent: #D6408F;
+  --accent-ink: #B82F78;
+  --accent-soft: rgba(214, 64, 143, 0.10);
+  --hover: rgba(40, 42, 55, 0.05);
+  --open-green: #2E9E4F;
+  --error-red: #D64545;
+  --red: #D64545;
+  --r-md: 8px;
+  --r-lg: 16px;
+}
+[data-theme="dark"][data-style="grok"] {
+  --font: "Inter", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
+  --bg: #282A37;
+  --surface: #30323F;
+  --surface-sunk: #383A48;
+  --text: #F8F8F2;
+  --text-muted: rgba(248, 248, 242, 0.60);
+  --text-faint: rgba(248, 248, 242, 0.40);
+  --line: rgba(248, 248, 242, 0.09);
+  --line-strong: rgba(248, 248, 242, 0.16);
+  --accent: #FF79C6;
+  --accent-ink: #FF9AD5;
+  --accent-soft: rgba(255, 121, 198, 0.13);
+  --hover: rgba(248, 248, 242, 0.06);
+  --open-green: #50FA7B;
+  --error-red: #FF5555;
+  --red: #FF5555;
+  --r-md: 8px;
+  --r-lg: 16px;
+}
+
 /* ============================================================
    GRO-1036: Debug overlays — hidden by default, toggle with `
    ============================================================ */

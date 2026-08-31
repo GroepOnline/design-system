@@ -220,14 +220,15 @@ Dit is geen accent-wissel maar een volledige tweede stijl over dezelfde taal.
 |---|---|---|
 | `devin` (default) | warm, zacht, r8/12, #317CFF | warm off-white, hairlines |
 | `strak` | koel, scherp, r4/6, #2563EB | koel grijs-blauw, sterkere lines |
+| `grok` | Joep’s codex dracula, Inter (UI + display), r8/16 | canvas `#282A37`, ink `#F8F8F2`, accent `#FF79C6`, `--red` `#FF5555` (taste-log 2026-08-31) |
 
 Regels:
 - Nieuwe skins zijn complete token-overrides in `tokens.css`, light én dark
-- De taal (§1-§10) blijft gelden onder elke skin: geen spinners, één accent,
-  zelfde typografie-schaal, zelfde icon-grid
-- Wisselen: seg in de rail (persist via localStorage) of `?style=strak`
+- De taal (§1-§10) blijft gelden onder elke skin: geen spinners, één accent, zelfde typografie-schaal, zelfde icon-grid
+- Wisselen: seg in de rail (persist via localStorage) of `?style=strak` / `?style=grok`
 - Variant-frames erven de skin via propagatie in de shell
-- Een derde skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen
+- Een extra skin ontwerpen = taste-beslissing; eerst loggen, dan bouwen
+- Agent-home surface: `components/home-shell` (gallery `default` + full-viewport `live`)
 
 ---
 

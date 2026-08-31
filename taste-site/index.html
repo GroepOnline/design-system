@@ -271,6 +271,7 @@
   <a class="it" href="../components/pr-card/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
   <a class="it" href="../components/table/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="act"></span></a>
   <div class="lbl caps">Structuur</div>
+  <a class="it" href="../components/home-shell/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
@@ -284,7 +285,7 @@
   <a class="it sys" href="../references/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="nm">references</span><span class="n">shots</span></a>
   </div>
   <div class="foot">
-    <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button></div>
+    <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button><button data-s="grok">Grok</button></div>
     <div class="seg" id="themeSeg"><button class="on" data-t="">Licht</button><button data-t="dark">Donker</button></div>
   </div>
 </aside>
@@ -504,7 +505,39 @@
 <li><strong>signal</strong>: &quot;signaal dik verbeteren moet niet devin 1 op 1 qua stijl worden, moderniseren upgraden + brain aan alles koppelen + auth landing redesign + library van apps, wow effect pagina next level&quot;</li>
 <li><strong>delta</strong>: DESIGN.md → v3. Naam vastgelegd: <strong>Signaal</strong>. Devin-meting (§2) gedegradeerd tot historische kalibratie. Nieuw: §15 motion-canon (poort + tokens uit motion-designer), §16 wow-tier (delight-budget: dot-matrix signatuur, split-text, spotlight, view transitions — alleen zeldzame surfaces), §17 brain/taste-koppeling. Surface-brief <code>surfaces/auth-landing.md</code> voor auth.chefgroep.online + Authentik app-library.</li>
 <li><strong>candidate rule</strong>: Joep wil kalibreren aan klasse-leiders maar nooit klonen; eigen motieven (meetlat, dot-matrix, serif-bladstem, NL-stem) zijn de identiteit. Wow mag, maar alleen in het delight-budget. <em>→ taste-rules (identity)</em></li>
-</ul></div><div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op 2026-08-30</div>
+</ul>
+<h2 data-reg="2026-08-31-grok">2026-08-31 · Grok-hoofdscherm: derde skin + home-shell component</h2>
+<ul>
+<li><strong>shown</strong>: grok.com hoofdscherm-meting (door Joep geplakte spec): near-black #0d0d0d canvas, nul decoratie; sidebar ~310px (brand, nav 36px, Projects, platte History zonder iconen/meta, account onderaan); main gecentreerd met logo + composer-pil als held; witte cirkelknop (voice) als enige luide element; muted chips rechtsboven; &quot;Meet Grok Bot&quot; card onder composer</li>
+<li><strong>reaction</strong>: approved (directief)</li>
+<li><strong>signal</strong>: &quot;start met dit ontwikkelen en maak er een volledige taste, design etc. van voor hergebruik, onthoud alles, component moet zijn&quot; + &quot;maak eerst dus een volledige basis en gebruik evt. opensource libraries&quot;</li>
+<li><strong>delta</strong>: (1) derde skin <code>grok</code> in tokens.css + styles.json (light én dark; dark is primaire kant: #0D0D0D, monochroom, wit = primaire actie, r8/16); (2) nieuw component <code>components/home-shell</code> (cat structuur): volledige home-shell met sidebar-zones, composer-hero, chrome-chips, meet-card; (3) elf nieuwe Lucide-symbols in icons.svg (chevrons-left, chevron-down, square-pen, image, library, zap, blocks, audio-lines, lock, bot, menu); (4) surface-brief <code>surfaces/home-shell.md</code></li>
+<li><strong>candidate rule</strong>: monochrome skins zijn een legitieme derde weg naast devin/strak: de &quot;één accent&quot;-regel wordt dan &quot;één luid element&quot; (omgekeerde monochrome knop). <em>1e observatie, watch.</em></li>
+</ul>
+<h2 data-reg="2026-08-31-grok-meting">2026-08-31 · Grok-meting scherp: echte grok.com als meetlat</h2>
+<ul>
+<li><strong>shown</strong>: eerste home-shell render (eigen interpretatie van de geplakte spec)</li>
+<li><strong>reaction</strong>: rejected: &quot;lettertypen, afmetingen .... en zeker niet deze kleuren kanker lelijk nu&quot;; daarna screenshot echte grok.com (logged-in): &quot;is beter&quot;</li>
+<li><strong>signal</strong>: niet interpreteren, meten. De echte grok.com is de meetlat, niet mijn vertaling van de spec</li>
+<li><strong>delta</strong>: (1) font = Universal Sans (xAI, commercieel) → open-source match Geist Sans (OFL) als skin-font, niet General Sans; (2) sidebar smaller: ~15vw (240-300px), geen hairline-border; (3) brand = &quot;GROK&quot; letterspaced caps, geen slash-icoon; hero = alleen het swirl-mark, geen wordmark; (4) composer lichter dan canvas (#212121 op #0D0D0D), radius ~18px, max ~680px; (5) chip-dot is wit, niet groen; (6) history dimmer en kleiner</li>
+<li><strong>candidate rule</strong>: bij &quot;maak X na&quot; altijd eerst het origineel meten (screenshot + CSS), nooit vanuit een beschrijving interpreteren. <em>→ taste-rules (proces)</em></li>
+</ul>
+<h2 data-reg="2026-08-31-skin-grok">2026-08-31 · Skin grok herijkt op Joeps codex-theme (dracula)</h2>
+<ul>
+<li><strong>shown</strong>: codex-theme-v1 spec (geplakt) + settings-screenshot: dark surface #282A37, ink #F8F8F2, accent #FF79C6, UI-font Inter, code SFMono, diff-groen #50FA7B / rood #FF5555, contrast 65</li>
+<li><strong>reaction</strong>: approved (&quot;is beter&quot; + &quot;dat theme&quot;)</li>
+<li><strong>signal</strong>: de skin volgt Joeps eigen codex-theme, niet de grok.com meting; monochroom near-black is verworpen</li>
+<li><strong>delta</strong>: skin <code>grok</code> in tokens.css volledig om naar dracula-waarden (dark = primaire kant; light is een afgeleide met accent #D6408F voor contrast); --font override naar Inter; open-green/error-red naar #50FA7B/#FF5555 (dark); voice-cirkel van monochroom naar accent</li>
+<li><strong>candidate rule</strong>: als Joep een eigen theme-spec plakt, wint die van elke externe meting. <em>→ taste-rules (proces)</em></li>
+</ul>
+<h2 data-reg="2026-08-31-devin-menus">2026-08-31 · Devin-menus als meting + dracula-render akkoord</h2>
+<ul>
+<li><strong>shown</strong>: (1) render home-shell met dracula-skin (roze voice-cirkel, &quot;// Grok&quot; wordmark); (2) tien Devin-screenshots: mode-picker popover (Auto/Q&amp;A/Plan + Deep mode), plus-menu (Upload attachment, Repositories, Files, Skills, Sessions, Playbooks, Plugins, Secrets), environment-menu, split send-knop (achtergrond-sessie/Slack), credits-banner, sessies-sidebar met Working-status</li>
+<li><strong>reaction</strong>: richting akkoord (geen nieuwe afkeur op de render); Devin-menus aangeleverd als volgende meetlaag</li>
+<li><strong>signal</strong>: &quot;gebruik grok voor explore en simpel werk als worker en vergeet niet m&#x27;n plugins (cordis oid) voor deepseekharn&quot; — home-shell moet ook als DSH-frontend-plugin kunnen landen</li>
+<li><strong>delta</strong>: home-shell krijgt een tweede variant <code>menus</code> met de gemeten popover-patronen (mode-picker, plus-menu, split-send, credits-banner, sessie-rij met werkstatus); DSH-plugin-pad wordt verkend (dsh-ui-frontend)</li>
+<li><strong>candidate rule</strong>: composer-menu&#x27;s zijn onderdeel van de shell-structuur, niet losse componenten — één popover-idioom (surface, r-md, hairline, icoon 16 + label) voor alle drie (plus, mode, env). <em>1e observatie, watch.</em></li>
+</ul></div><div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op 2026-08-31</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
 <div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">taste</span> · REV D<br><span id="splateDate"></span></div>
