@@ -1,6 +1,6 @@
 {
-  "ts": "2026-08-22T21:47:49Z",
-  "pass": true,
+  "ts": "2026-08-31T00:41:00Z",
+  "pass": false,
   "plane": "design-brain",
   "metrics": {
     "unresolved_wikilinks": 0,
@@ -8,13 +8,15 @@
     "ds_check_errors": 0,
     "open_critical_signals": 0,
     "open_signals": 0,
-    "days_since_score_refresh": 0.0,
-    "days_since_taste_log": 0.91,
-    "open_candidate_rules": 16,
-    "agent_taste_check": "skipped"
+    "days_since_score_refresh": 8.12,
+    "days_since_taste_log": 0.03,
+    "open_candidate_rules": 19,
+    "agent_taste_check": "drift"
   },
-  "failures": [],
+  "failures": [
+    "agent_taste_check=drift (kater generate-taste --check --target)"
+  ],
   "warnings": [
-    "agent_taste_check=skipped (kater-dev-tools not available)"
+    "days_since_score_refresh=8.1 > warn 2.0"
   ]
 }
