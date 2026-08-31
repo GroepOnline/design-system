@@ -357,39 +357,45 @@ p { text-wrap: pretty; }
   --hover: rgba(236, 237, 240, 0.06);
 }
 
-/* skin: grok — grok.com hoofdscherm-meting (2026-08-31, taste-log)
-   Monochroom: geen kleur-accent; het luide element is de omgekeerde
-   monochrome knop (wit op zwart). Dark is de primaire kant.
-   Radius r8 (nav-pill) / r16 (composer-pil, cards). */
+/* skin: grok — Joeps codex-theme-v1 "dracula" (2026-08-31, taste-log)
+   Meetlat: geplakte theme-spec — surface #282A37, ink #F8F8F2,
+   accent #FF79C6, UI-font Inter, contrast 65 (gedempte muted-laag).
+   Dark is de primaire kant. Radius r8 / r16. */
 [data-style="grok"] {
-  --bg: #FFFFFF;
-  --surface: #FAFAFA;
-  --surface-sunk: #F0F0F0;
-  --text: #0D0D0D;
-  --text-muted: rgba(13, 13, 13, 0.58);
-  --text-faint: rgba(13, 13, 13, 0.38);
-  --line: rgba(13, 13, 13, 0.08);
-  --line-strong: rgba(13, 13, 13, 0.15);
-  --accent: #0D0D0D;
-  --accent-ink: #262626;
-  --accent-soft: rgba(13, 13, 13, 0.07);
-  --hover: rgba(13, 13, 13, 0.05);
+  --font: "Inter", system-ui, sans-serif;
+  --bg: #FBFBFD;
+  --surface: #F2F2F7;
+  --surface-sunk: #E9E9F0;
+  --text: #282A37;
+  --text-muted: rgba(40, 42, 55, 0.62);
+  --text-faint: rgba(40, 42, 55, 0.40);
+  --line: rgba(40, 42, 55, 0.10);
+  --line-strong: rgba(40, 42, 55, 0.18);
+  --accent: #D6408F;
+  --accent-ink: #B82F78;
+  --accent-soft: rgba(214, 64, 143, 0.10);
+  --hover: rgba(40, 42, 55, 0.05);
+  --open-green: #2E9E4F;
+  --error-red: #D64545;
   --r-md: 8px;
   --r-lg: 16px;
 }
 [data-theme="dark"][data-style="grok"] {
-  --bg: #0D0D0D;
-  --surface: #161616;
-  --surface-sunk: #1D1D1D;
-  --text: #F4F4F3;
-  --text-muted: rgba(244, 244, 243, 0.56);
-  --text-faint: rgba(244, 244, 243, 0.36);
-  --line: rgba(244, 244, 243, 0.08);
-  --line-strong: rgba(244, 244, 243, 0.15);
-  --accent: #F4F4F3;
-  --accent-ink: #E8E8E6;
-  --accent-soft: rgba(244, 244, 243, 0.09);
-  --hover: rgba(244, 244, 243, 0.06);
+  --font: "Inter", system-ui, sans-serif;
+  --bg: #282A37;
+  --surface: #30323F;
+  --surface-sunk: #383A48;
+  --text: #F8F8F2;
+  --text-muted: rgba(248, 248, 242, 0.60);
+  --text-faint: rgba(248, 248, 242, 0.40);
+  --line: rgba(248, 248, 242, 0.09);
+  --line-strong: rgba(248, 248, 242, 0.16);
+  --accent: #FF79C6;
+  --accent-ink: #FF9AD5;
+  --accent-soft: rgba(255, 121, 198, 0.13);
+  --hover: rgba(248, 248, 242, 0.06);
+  --open-green: #50FA7B;
+  --error-red: #FF5555;
   --r-md: 8px;
   --r-lg: 16px;
 }

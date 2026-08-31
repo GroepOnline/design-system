@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>component: home-shell</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../../tokens.css">
 <style>
@@ -182,12 +183,12 @@
   .gh-mode:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .gh-mode .ic { width: 13px; height: 13px; }
   .gh-mode .ic.down { width: 12px; height: 12px; }
-  /* primaire actie: monochrome cirkel, het luidste element op het scherm */
+  /* primaire actie: accent-cirkel, het luidste element op het scherm */
   .gh-voice {
     width: 36px; height: 36px; flex-shrink: 0;
     display: inline-grid; place-items: center;
     border: none; border-radius: 50%;
-    background: var(--text); color: var(--bg);
+    background: var(--accent); color: var(--bg);
     cursor: pointer;
     transition: opacity var(--dur-fast) var(--ease-out), transform 100ms var(--ease-out);
   }
@@ -369,7 +370,7 @@
   history = platte tekstrij, 1 regel, CSS-ellipsis, geen iconen/metadata.
   composer-pil: r-lg (16px), surface-sunk fill, geen zware border;
   focus-within = line-strong border + 3px accent-soft ring.
-  primaire actie = .gh-voice monochrome cirkel (text op bg), nooit een kleur.
+  primaire actie = .gh-voice accent-cirkel (accent op bg), enige luide element.
   chrome-chips rechtsboven zijn muted (surface, line, pill).
   brand/hero zijn content-slots: mark + wordmark zijn inwisselbaar.
   referentie-skin: data-style="grok" + data-theme="dark"; rendert via tokens
