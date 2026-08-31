@@ -1,4 +1,5 @@
 [
   {"id": "", "label": "Devin", "desc": "warm, zacht, r8/12, #317CFF"},
-  {"id": "strak", "label": "Strak", "desc": "koel, scherp, r4/6, #2563EB"}
+  {"id": "strak", "label": "Strak", "desc": "koel, scherp, r4/6, #2563EB"},
+  {"id": "grok", "label": "Grok", "desc": "codex dracula: #282A37, ink #F8F8F2, accent #FF79C6, Inter, r8/16"}
 ]

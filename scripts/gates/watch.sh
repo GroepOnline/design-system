@@ -6,7 +6,7 @@
 #
 # Gebruik: watch.sh [run-id] [--notify]
 set -uo pipefail
-STATE_DIR="${GATE_STATE_DIR:-.git/push-state}"
+STATE_DIR="${GATE_STATE_DIR:-$(git rev-parse --git-path push-state 2>/dev/null || echo .git/push-state)}"
 
 if [ -n "${1:-}" ] && [ "${1#--}" = "$1" ]; then RUN_ID="$1"; else RUN_ID="$(cat "$STATE_DIR/current" 2>/dev/null)"; fi
 NOTIFY=0
