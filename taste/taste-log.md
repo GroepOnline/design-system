@@ -175,7 +175,7 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 ## 2026-08-31 · Grok-meting scherp: echte grok.com als meetlat
 
 - **shown**: eerste home-shell render (eigen interpretatie van de geplakte spec)
-- **reaction**: rejected — "lettertypen, afmetingen .... en zeker niet deze kleuren kanker lelijk nu"; daarna screenshot echte grok.com (logged-in): "is beter"
+- **reaction**: rejected: "lettertypen, afmetingen .... en zeker niet deze kleuren kanker lelijk nu"; daarna screenshot echte grok.com (logged-in): "is beter"
 - **signal**: niet interpreteren, meten. De echte grok.com is de meetlat, niet mijn vertaling van de spec
 - **delta**: (1) font = Universal Sans (xAI, commercieel) → open-source match Geist Sans (OFL) als skin-font, niet General Sans; (2) sidebar smaller: ~15vw (240-300px), geen hairline-border; (3) brand = "GROK" letterspaced caps, geen slash-icoon; hero = alleen het swirl-mark, geen wordmark; (4) composer lichter dan canvas (#212121 op #0D0D0D), radius ~18px, max ~680px; (5) chip-dot is wit, niet groen; (6) history dimmer en kleiner
 - **candidate rule**: bij "maak X na" altijd eerst het origineel meten (screenshot + CSS), nooit vanuit een beschrijving interpreteren. *→ taste-rules (proces)*

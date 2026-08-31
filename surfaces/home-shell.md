@@ -1,4 +1,4 @@
-# Surface Brief — Home Shell (agent-home)
+# Surface Brief: Home Shell (agent-home)
 
 > Bindt aan `DESIGN.md` v3 + skin `grok` in `tokens.css`.
 > Kalibratie: grok.com hoofdscherm (gemeten 2026-08-31, zie taste-log).

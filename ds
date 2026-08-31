@@ -427,7 +427,7 @@ SHELL_HEAD = """<!DOCTYPE html>
   .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .pagehead .ph-text { min-width: 0; flex: 1; }
   .pagehead .eyebrow { font-family: var(--mono); font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 4px; }
-  .pagehead h1 { margin: 0; font-size: var(--text-2xl); font-family: var(--font-display); letter-spacing: -0.015em; font-weight: 400; line-height: 1.15; }
+  .pagehead h1 { margin: 0; font-size: var(--text-2xl); font-family: var(--font-display); letter-spacing: -0.02em; font-weight: 500; line-height: 1.15; }
   .pagehead .ph-sub { color: var(--text-muted); font-size: var(--text-sm); margin-top: 3px; line-height: 1.5; }
   .pagehead .cat { margin-left: 2px; }
   .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; flex-shrink: 0; }
@@ -1986,9 +1986,10 @@ def build_home():
     for s in load_styles():
         sid = s["id"]
         is_default = sid == ""
-        preview_bg = "#F7F6F5" if is_default else "#F8FAFC"
-        preview_accent = "#317CFF" if is_default else "#2563EB"
-        preview_text = "#191919" if is_default else "#0F172A"
+        preview = s.get("preview", {})
+        preview_bg = preview.get("bg", "#F7F6F5" if is_default else "#F8FAFC")
+        preview_accent = preview.get("accent", "#317CFF" if is_default else "#2563EB")
+        preview_text = preview.get("text", "#191919" if is_default else "#0F172A")
         skins_html += (
             f'<div class="skin-card">'
             f'<h3>{s["label"]}</h3><p>{s.get("desc", "")}</p>'
@@ -2073,7 +2074,7 @@ def build_docs():
             continue
         items = "".join(
             f'  <a class="card reveal" href="./{slug}.html">'
-            f'<span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span>'
+            f'<span class="ct"><svg fill="none" stroke="currentColor"><use href="../components/icons.svg#i-book"/></svg></span>'
             f'<span class="cn">{title}</span>'
             f'<span class="cd">{desc}</span>'
             f'<span class="cm">.md</span></a>'
@@ -2214,7 +2215,7 @@ def build_brain():
             continue
         cells = "".join(
             f'  <a class="card reveal" href="./{slug}.html">'
-            f'<span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>'
+            f'<span class="ct"><svg fill="none" stroke="currentColor"><use href="../components/icons.svg#i-panel"/></svg></span>'
             f'<span class="cn">{htmlmod.escape(title)}</span>'
             f'<span class="cd" style="font-family:var(--mono)">{htmlmod.escape(rel)}</span></a>'
             for slug, title, rel in items)

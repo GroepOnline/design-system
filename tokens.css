@@ -363,6 +363,7 @@ p { text-wrap: pretty; }
    Dark is de primaire kant. Radius r8 / r16. */
 [data-style="grok"] {
   --font: "Inter", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
   --bg: #FBFBFD;
   --surface: #F2F2F7;
   --surface-sunk: #E9E9F0;
@@ -376,12 +377,14 @@ p { text-wrap: pretty; }
   --accent-soft: rgba(214, 64, 143, 0.10);
   --hover: rgba(40, 42, 55, 0.05);
   --open-green: #2E9E4F;
+  --red: #D64545;
   --error-red: #D64545;
   --r-md: 8px;
   --r-lg: 16px;
 }
 [data-theme="dark"][data-style="grok"] {
   --font: "Inter", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
   --bg: #282A37;
   --surface: #30323F;
   --surface-sunk: #383A48;
@@ -395,6 +398,7 @@ p { text-wrap: pretty; }
   --accent-soft: rgba(255, 121, 198, 0.13);
   --hover: rgba(248, 248, 242, 0.06);
   --open-green: #50FA7B;
+  --red: #FF5555;
   --error-red: #FF5555;
   --r-md: 8px;
   --r-lg: 16px;

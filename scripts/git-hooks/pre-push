@@ -14,7 +14,7 @@
 # Gebruik: chmod +x .git/hooks/pre-push  ·  of: make hook / scripts/git-hooks-install.sh
 
 set -e
-STATE_DIR="${GATE_STATE_DIR:-.git/push-state}"
+STATE_DIR="${GATE_STATE_DIR:-$(git rev-parse --git-path push-state 2>/dev/null || echo .git/push-state)}"
 
 echo "🔍 pre-push (lean lanes)…"
 

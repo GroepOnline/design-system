@@ -78,7 +78,7 @@
   .pagehead .tile svg { width: 20px; height: 20px; color: var(--text-muted); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .pagehead .ph-text { min-width: 0; flex: 1; }
   .pagehead .eyebrow { font-family: var(--mono); font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 4px; }
-  .pagehead h1 { margin: 0; font-size: var(--text-2xl); font-family: var(--font-display); letter-spacing: -0.015em; font-weight: 400; line-height: 1.15; }
+  .pagehead h1 { margin: 0; font-size: var(--text-2xl); font-family: var(--font-display); letter-spacing: -0.02em; font-weight: 500; line-height: 1.15; }
   .pagehead .ph-sub { color: var(--text-muted); font-size: var(--text-sm); margin-top: 3px; line-height: 1.5; }
   .pagehead .cat { margin-left: 2px; }
   .pagehead .meta { margin-left: auto; text-align: right; font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); line-height: 1.7; font-variant-numeric: tabular-nums; flex-shrink: 0; }
@@ -317,8 +317,9 @@
 &lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;
 &lt;style&gt;
   body { padding: 28px 24px; }
-  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 18px; }
+  .demo-head { font-family: var(--font); font-size: 11px; color: var(--text-faint); margin-bottom: 18px; }
   .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .demo-head code { font-family: var(--mono); }
   /* demo-stage: in productie staat .gh direct op de viewport (100dvh) */
   .gh-stage { height: 660px; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
 
@@ -549,7 +550,7 @@
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;&amp;larr; components&lt;/a&gt; / home-shell &amp;mdash; referentie: &lt;code&gt;data-style=&quot;grok&quot;&lt;/code&gt; + dark &amp;middot; sidebar klapt in via &amp;laquo;&lt;/div&gt;
+&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;&amp;larr; components&lt;/a&gt; / home-shell &amp;middot; referentie: &lt;code&gt;data-style=&quot;grok&quot;&lt;/code&gt; + dark &amp;middot; sidebar klapt in via &amp;laquo;&lt;/div&gt;
 
 &lt;div class=&quot;gh-stage&quot;&gt;
 &lt;div class=&quot;gh&quot; id=&quot;gh&quot;&gt;
@@ -603,7 +604,7 @@
       &lt;span class=&quot;gh-ava&quot; aria-hidden=&quot;true&quot;&gt;J&lt;/span&gt;
       &lt;span class=&quot;who&quot;&gt;
         &lt;span class=&quot;nm&quot;&gt;Joep&lt;/span&gt;&lt;br&gt;
-        &lt;span class=&quot;em&quot;&gt;joepsy01@gmail.com&lt;/span&gt;
+        &lt;span class=&quot;em&quot;&gt;demo.user@example.invalid&lt;/span&gt;
       &lt;/span&gt;
     &lt;/a&gt;
   &lt;/aside&gt;
@@ -710,8 +711,9 @@
 &lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;
 &lt;style&gt;
   body { padding: 28px 24px; background: var(--bg); }
-  .demo-head { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-bottom: 18px; }
+  .demo-head { font-family: var(--font); font-size: 11px; color: var(--text-faint); margin-bottom: 18px; }
   .demo-head a { color: var(--accent-ink); text-decoration: none; }
+  .demo-head code { font-family: var(--mono); }
   .demo-grid { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
   .demo-col { display: flex; flex-direction: column; gap: 10px; }
   .demo-label { font-family: var(--mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -813,7 +815,7 @@
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;&amp;larr; components&lt;/a&gt; / home-shell / menus &amp;mdash; popover-idioom, split-send, banner, sessie-status (Devin-meting 2026-08-31)&lt;/div&gt;
+&lt;div class=&quot;demo-head&quot;&gt;&lt;a href=&quot;index.html&quot;&gt;&amp;larr; components&lt;/a&gt; / home-shell / menus &amp;middot; popover-idioom, split-send, banner, sessie-status (Devin-meting 2026-08-31)&lt;/div&gt;
 
 &lt;div class=&quot;demo-grid&quot;&gt;
 
@@ -1217,7 +1219,7 @@
       &lt;span class=&quot;gh-ava&quot; aria-hidden=&quot;true&quot;&gt;J&lt;/span&gt;
       &lt;span class=&quot;who&quot;&gt;
         &lt;span class=&quot;nm&quot;&gt;Joep&lt;/span&gt;&lt;br&gt;
-        &lt;span class=&quot;em&quot;&gt;joepsy01@gmail.com&lt;/span&gt;
+        &lt;span class=&quot;em&quot;&gt;demo.user@example.invalid&lt;/span&gt;
       &lt;/span&gt;
     &lt;/a&gt;
   &lt;/aside&gt;
