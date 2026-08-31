@@ -1205,8 +1205,8 @@ HOME_BODY = """<div class="topbar">
   <div class="sec-rule reveal"><span class="si"></span><span class="sr-line"></span><span class="coord">0.00</span></div>
   <div class="sec-head reveal">
     <div class="eyebrow">Richtingen</div>
-    <h2>Twee richtingen.</h2>
-    <div class="desc">Wissel de hele feel met één data-attribuut. Beide zijn first-class.</div>
+    <h2>Drie richtingen.</h2>
+    <div class="desc">Wissel de hele feel met één data-attribuut. Alle drie zijn first-class.</div>
   </div>
   <div class="skin-row reveal">
 {skins_html}
@@ -1986,9 +1986,12 @@ def build_home():
     for s in load_styles():
         sid = s["id"]
         is_default = sid == ""
-        preview_bg = "#F7F6F5" if is_default else "#F8FAFC"
-        preview_accent = "#317CFF" if is_default else "#2563EB"
-        preview_text = "#191919" if is_default else "#0F172A"
+        if is_default:
+            preview_bg, preview_accent, preview_text = "#F7F6F5", "#317CFF", "#191919"
+        elif sid == "grok":
+            preview_bg, preview_accent, preview_text = "#282A37", "#FF79C6", "#F8F8F2"
+        else:
+            preview_bg, preview_accent, preview_text = "#F8FAFC", "#2563EB", "#0F172A"
         skins_html += (
             f'<div class="skin-card">'
             f'<h3>{s["label"]}</h3><p>{s.get("desc", "")}</p>'

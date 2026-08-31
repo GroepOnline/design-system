@@ -163,3 +163,35 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: "signaal dik verbeteren moet niet devin 1 op 1 qua stijl worden, moderniseren upgraden + brain aan alles koppelen + auth landing redesign + library van apps, wow effect pagina next level"
 - **delta**: DESIGN.md → v3. Naam vastgelegd: **Signaal**. Devin-meting (§2) gedegradeerd tot historische kalibratie. Nieuw: §15 motion-canon (poort + tokens uit motion-designer), §16 wow-tier (delight-budget: dot-matrix signatuur, split-text, spotlight, view transitions — alleen zeldzame surfaces), §17 brain/taste-koppeling. Surface-brief `surfaces/auth-landing.md` voor auth.chefgroep.online + Authentik app-library.
 - **candidate rule**: Joep wil kalibreren aan klasse-leiders maar nooit klonen; eigen motieven (meetlat, dot-matrix, serif-bladstem, NL-stem) zijn de identiteit. Wow mag, maar alleen in het delight-budget. *→ taste-rules (identity)*
+
+## 2026-08-31 · Grok-hoofdscherm: derde skin + home-shell component
+
+- **shown**: grok.com hoofdscherm-meting (door Joep geplakte spec): near-black #0d0d0d canvas, nul decoratie; sidebar ~310px (brand, nav 36px, Projects, platte History zonder iconen/meta, account onderaan); main gecentreerd met logo + composer-pil als held; witte cirkelknop (voice) als enige luide element; muted chips rechtsboven; "Meet Grok Bot" card onder composer
+- **reaction**: approved (directief)
+- **signal**: "start met dit ontwikkelen en maak er een volledige taste, design etc. van voor hergebruik, onthoud alles, component moet zijn" + "maak eerst dus een volledige basis en gebruik evt. opensource libraries"
+- **delta**: (1) derde skin `grok` in tokens.css + styles.json (light én dark; dark is primaire kant: #0D0D0D, monochroom, wit = primaire actie, r8/16); (2) nieuw component `components/home-shell` (cat structuur): volledige home-shell met sidebar-zones, composer-hero, chrome-chips, meet-card; (3) elf nieuwe Lucide-symbols in icons.svg (chevrons-left, chevron-down, square-pen, image, library, zap, blocks, audio-lines, lock, bot, menu); (4) surface-brief `surfaces/home-shell.md`
+- **candidate rule**: monochrome skins zijn een legitieme derde weg naast devin/strak: de "één accent"-regel wordt dan "één luid element" (omgekeerde monochrome knop). *1e observatie, watch.*
+
+## 2026-08-31 · Grok-meting scherp: echte grok.com als meetlat
+
+- **shown**: eerste home-shell render (eigen interpretatie van de geplakte spec)
+- **reaction**: rejected: "lettertypen, afmetingen .... en zeker niet deze kleuren kanker lelijk nu"; daarna screenshot echte grok.com (logged-in): "is beter"
+- **signal**: niet interpreteren, meten. De echte grok.com is de meetlat, niet mijn vertaling van de spec
+- **delta**: (1) font = Universal Sans (xAI, commercieel) → open-source match Geist Sans (OFL) als skin-font, niet General Sans; (2) sidebar smaller: ~15vw (240-300px), geen hairline-border; (3) brand = "GROK" letterspaced caps, geen slash-icoon; hero = alleen het swirl-mark, geen wordmark; (4) composer lichter dan canvas (#212121 op #0D0D0D), radius ~18px, max ~680px; (5) chip-dot is wit, niet groen; (6) history dimmer en kleiner
+- **candidate rule**: bij "maak X na" altijd eerst het origineel meten (screenshot + CSS), nooit vanuit een beschrijving interpreteren. *→ taste-rules (proces)*
+
+## 2026-08-31 · Skin grok herijkt op Joeps codex-theme (dracula)
+
+- **shown**: codex-theme-v1 spec (geplakt) + settings-screenshot: dark surface #282A37, ink #F8F8F2, accent #FF79C6, UI-font Inter, code SFMono, diff-groen #50FA7B / rood #FF5555, contrast 65
+- **reaction**: approved ("is beter" + "dat theme")
+- **signal**: de skin volgt Joeps eigen codex-theme, niet de grok.com meting; monochroom near-black is verworpen
+- **delta**: skin `grok` in tokens.css volledig om naar dracula-waarden (dark = primaire kant; light is een afgeleide met accent #D6408F voor contrast); --font override naar Inter; open-green/error-red naar #50FA7B/#FF5555 (dark); voice-cirkel van monochroom naar accent
+- **candidate rule**: als Joep een eigen theme-spec plakt, wint die van elke externe meting. *→ taste-rules (proces)*
+
+## 2026-08-31 · Devin-menus als meting + dracula-render akkoord
+
+- **shown**: (1) render home-shell met dracula-skin (roze voice-cirkel, "// Grok" wordmark); (2) tien Devin-screenshots: mode-picker popover (Auto/Q&A/Plan + Deep mode), plus-menu (Upload attachment, Repositories, Files, Skills, Sessions, Playbooks, Plugins, Secrets), environment-menu, split send-knop (achtergrond-sessie/Slack), credits-banner, sessies-sidebar met Working-status
+- **reaction**: richting akkoord (geen nieuwe afkeur op de render); Devin-menus aangeleverd als volgende meetlaag
+- **signal**: "gebruik grok voor explore en simpel werk als worker en vergeet niet m'n plugins (cordis oid) voor deepseekharn" — home-shell moet ook als DSH-frontend-plugin kunnen landen
+- **delta**: home-shell krijgt een tweede variant `menus` met de gemeten popover-patronen (mode-picker, plus-menu, split-send, credits-banner, sessie-rij met werkstatus); DSH-plugin-pad wordt verkend (dsh-ui-frontend)
+- **candidate rule**: composer-menu's zijn onderdeel van de shell-structuur, niet losse componenten — één popover-idioom (surface, r-md, hairline, icoon 16 + label) voor alle drie (plus, mode, env). *1e observatie, watch.*
