@@ -31,14 +31,14 @@
     "avoid": [
       "marketing-hero, gradients of decoratie op het canvas",
       "metadata, timestamps of iconen in history-rijen",
-      "een tweede luide actie naast de monochrome voice-cirkel"
+      "een tweede luide actie naast de accent-voice-cirkel"
     ],
     "contract": [
       "twee zones: sidebar 310px (clamp 260-320) + main gecentreerd, kolom max 720px",
       "sidebar-volgorde vast: brand, nav (36px rijen), Projects, History, account onderaan",
       "history = platte tekstrij, 1 regel, CSS-ellipsis, geen iconen",
       "composer-pil r16, sunk fill, geen zware border; focus = accent ring",
-      "primaire actie = monochrome cirkel (text/bg-omkering), nooit een kleur"
+      "primaire actie = accent-cirkel (var(--accent) op bg), enige luide element"
     ]
   },
   "cat": "structuur"

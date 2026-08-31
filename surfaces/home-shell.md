@@ -66,10 +66,11 @@
 
 ## 5. Skin-afhankelijkheid
 
-De shell kent geen eigen kleuren; alles loopt via tokens. Onder `grok` dark is
-het canvas `#0D0D0D` en de voice-cirkel wit. Onder `devin`/`strak` verschuift
-de hiërarchie mee (daar is het accent blauw en de cirkel inkt-zwart op licht).
-De skin kiest de sfeer; de shell kiest de structuur.
+De shell kent geen eigen kleuren; alles loopt via tokens. Onder `grok` dark
+(codex dracula-herijking, taste-log 2026-08-31) is het canvas `#282A37` en de
+voice-cirkel accent-roze `#FF79C6`. Onder `devin`/`strak` verschuift de
+hiërarchie mee (daar is het accent blauw). De skin kiest de sfeer; de shell
+kiest de structuur.
 
 ## 6. Acceptatie
 

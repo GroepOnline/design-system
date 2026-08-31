@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-31T00:42:58Z",
+  "ts": "2026-08-31T00:56:48Z",
   "pass": true,
   "plane": "design-brain",
   "metrics": {
@@ -8,9 +8,9 @@
     "ds_check_errors": 0,
     "open_critical_signals": 0,
     "open_signals": 0,
-    "days_since_score_refresh": 8.12,
-    "days_since_taste_log": 0.03,
-    "open_candidate_rules": 19,
+    "days_since_score_refresh": 8.13,
+    "days_since_taste_log": 0.04,
+    "open_candidate_rules": 20,
     "agent_taste_check": "ok"
   },
   "failures": [],
