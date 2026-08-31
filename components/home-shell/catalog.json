@@ -20,6 +20,15 @@
       "status": "locked",
       "added": "2026-08-31",
       "note": "popover-idioom, split-send, banner, sessie-status; Devin-meting 2026-08-31"
+    },
+    {
+      "id": "live",
+      "file": "self/live.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-08-31",
+      "note": "full-viewport product surface, geen gallery-chrome"
     }
   ],
   "docs": {
