@@ -8,7 +8,7 @@ RUN_ID="${1:?run-id}"
 LANE="${2:?lane-naam}"
 shift 2
 
-STATE_DIR="${GATE_STATE_DIR:-.git/push-state}"
+STATE_DIR="${GATE_STATE_DIR:-$(git rev-parse --git-path push-state 2>/dev/null || echo .git/push-state)}"
 RES_DIR="$STATE_DIR/$RUN_ID/results"
 LOG="$RES_DIR/$LANE.log"
 
