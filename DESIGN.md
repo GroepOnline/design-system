@@ -214,7 +214,7 @@ Dit is geen accent-wissel maar een volledige tweede stijl over dezelfde taal.
 |---|---|---|
 | `devin` (default) | warm, zacht, r8/12, #317CFF | warm off-white, hairlines |
 | `strak` | koel, scherp, r4/6, #2563EB | koel grijs-blauw, sterkere lines |
-| `grok` | Joep’s codex dracula, Inter, r8/16 | canvas `#282A37`, ink `#F8F8F2`, accent `#FF79C6` (taste-log 2026-08-31) |
+| `grok` | Joep’s codex dracula, Inter (UI + display), r8/16 | canvas `#282A37`, ink `#F8F8F2`, accent `#FF79C6`, `--red` `#FF5555` (taste-log 2026-08-31) |
 
 Regels:
 - Nieuwe skins zijn complete token-overrides in `tokens.css`, light én dark
