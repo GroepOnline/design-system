@@ -168,19 +168,25 @@ Schaal via tokens, nooit losse px-waarden in componenten:
 | `--text-xs` | 11.5 | labels, kbd, captions |
 | `--text-sm` | 12.5 | beschrijvingen, secondair |
 | `--text-md` | 13.5 | **UI-standaard** |
-| `--text-lg` | 15 | prose, kleine titels |
+| `--text-lg` | 15 | kleine titels |
+| `--text-prose` | 16 | doorlees-prose |
 | `--text-xl` | 18 | sectie-headers |
 | `--text-2xl` | 24 | pagina-titels |
 
 Regels:
 - Rendering: `antialiased` + `optimizeLegibility` op html (staat in tokens.css)
 - Headings: `--leading-head` 1.2, tracking `−0.02em`, `text-wrap: balance`
-- Prose: `.prose` = 15px / 1.62 / max 65ch (measure-cap)
+- Prose: `.prose` = `--text-prose` (16px) / 1.62 / max 65ch (measure-cap; 15px was onder de 16px-vloer voor doorlezen; web-typography skill ri 1)
 - Data (timer, diff, counts): `.num` = tabular-nums
 - Sectie-labels: `.caps` = 10.5px / 600 / +0.07em / faint
 - `text-wrap: pretty` op paragrafen
 - Display (site/blad): `--font-display` = Instrument Serif, gewicht 400,
   tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers
+- Font stacks: `--font-display` = `Instrument Serif, General Sans, Georgia, serif`; body gebruikt
+  `--font` = `General Sans, system-ui, -apple-system, Segoe UI, sans-serif`. Display-face
+  subsetten (Latijn) + `font-display: swap`; payload-budget <200KB totaal.
+- Zoom: schaal overleeft 200% (scrollcontainers nooit height-fixed zonder overflow)
+  Controleer dit bij elke render-check; hiërarchie moet bij squint blijven bestaan
 
 ## §12 Iconen (v2.1, icon-system skill)
 
