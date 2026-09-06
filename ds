@@ -29,6 +29,11 @@ Upstreams (catalogus-invoer):
   upstreams/*.json    immutable externe bronpins + rendererbeleid
   ./ds upstream list|show <id>|check [id]
 
+Specimen library (schaalbare researchlaag):
+  library/registry.json generated + imported specimens
+  library/imported.jsonl append-only externe ingest
+  ./ds library build|stats|sources
+
 Research inbox (random vondsten):
   inbox/items.jsonl   append-friendly URL/idee capture, nog geen production authority
   ./ds inbox add <url> [--title ... --kind ... --tags a,b --note ...]
@@ -59,6 +64,8 @@ STYLES_JSON = os.path.join(ROOT, "styles.json")
 UPSTREAMS = os.path.join(ROOT, "upstreams")
 INBOX = os.path.join(ROOT, "inbox")
 INBOX_ITEMS = os.path.join(INBOX, "items.jsonl")
+LIBRARY = os.path.join(ROOT, "library")
+LIBRARY_REGISTRY = os.path.join(LIBRARY, "registry.json")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
@@ -91,6 +98,7 @@ ICONS = {
     "border-beam": "i-sparkle", "three-orbit": "i-panel", "motion-spring": "i-play",
 }
 SYS_LINKS = [
+    ("/library/", "i-library", "specimens", "1,980+"),
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
     ("/docs/", "i-file", "docs", "alle .md"),
     ("/taste-site/", "i-check", "taste", "regels+log"),
@@ -3376,6 +3384,18 @@ def check_build_idempotent():
             f"Draai ./ds build en commit de gegenereerde output.")
     ok("build --check: idempotent (geen drift)")
 
+def build_specimen_library():
+    """Rebuild the scalable research/specimen registry."""
+    import subprocess
+    script = os.path.join(ROOT, "scripts", "build-library.py")
+    r = subprocess.run([sys.executable, script], cwd=ROOT, capture_output=True, text=True, check=False)
+    if r.returncode != 0:
+        err(f"library build failed: {r.stderr.strip() or r.stdout.strip()}")
+    data = json.loads(Path(LIBRARY_REGISTRY).read_text(encoding="utf-8"))
+    ok(f"library {data['count']:,} specimens")
+    return data
+
+
 def cmd_build(only=None, check=False):
     targets = [only] if only else components()
     for c in targets:
@@ -3385,6 +3405,8 @@ def cmd_build(only=None, check=False):
         print(f"  {_c('32','✓')} {bold(c):<14} {len(m['entries'])} varianten {dim(f'({ns} zelf, {nx} extern)')}")
     build_gallery()
     build_inbox()
+    if not only:
+        build_specimen_library()
     build_home()
     if only:
         ok(f"web bijgewerkt {dim('(' + only + ' + gallery)')}")
@@ -3486,6 +3508,33 @@ def check_visual_antislop():
     return errors
 
 
+def check_specimen_library():
+    errors = []
+    if not os.path.exists(LIBRARY_REGISTRY):
+        return ["library/registry.json ontbreekt; draai ./ds build"]
+    try:
+        data = json.loads(Path(LIBRARY_REGISTRY).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"library registry ongeldig: {exc}"]
+    items = data.get("items", [])
+    if len(items) < 1000:
+        errors.append(f"library: verwacht >=1000 specimens, gevonden {len(items)}")
+    ids = [item.get("id") for item in items]
+    if len(ids) != len(set(ids)):
+        errors.append("library: duplicate specimen ids")
+    required_domains = {"components", "compositions", "motion", "transitions", "3d"}
+    present = {item.get("domain") for item in items}
+    missing = required_domains - present
+    if missing:
+        errors.append("library: ontbrekende domains " + ", ".join(sorted(missing)))
+    for item in items:
+        for key in ("id", "domain", "family", "style", "motion", "renderer"):
+            if not item.get(key):
+                errors.append(f"library: {item.get('id', '?')} mist {key}")
+                break
+    return errors
+
+
 def cmd_check():
     """Valideer catalogus-structuur, sprite-referenties, taste en anti-slop regels."""
     errors = []
@@ -3520,6 +3569,7 @@ def cmd_check():
             errors.extend(de)
             warnings.extend(dw)
     errors.extend(check_visual_antislop())
+    errors.extend(check_specimen_library())
     # versioned external upstream manifests
     for uid in upstream_ids():
         data = load_upstream(uid)
@@ -3543,6 +3593,35 @@ def cmd_check():
         err(f"{ec} errors, {len(warnings)} warnings — fix met bovenstaande")
     ok(f"{len(components())} componenten {dim(f'— {ec} errors, {len(warnings)} warnings')}")
     return ec
+
+
+def cmd_library(args):
+    sub = args[0] if args else "stats"
+    if sub == "build":
+        build_specimen_library()
+        return
+    if not os.path.exists(LIBRARY_REGISTRY):
+        err("library registry ontbreekt; draai ./ds library build")
+    data = json.loads(Path(LIBRARY_REGISTRY).read_text(encoding="utf-8"))
+    if sub == "stats":
+        ok(f"library {data.get('count', 0):,} specimens")
+        print(f"  generated: {data.get('generated_count', data.get('count', 0)):,}")
+        print(f"  imported:  {data.get('imported_count', 0):,}")
+        for name, count in sorted(data.get("domains", {}).items()):
+            print(f"  {name:<13} {count:,}")
+        return
+    if sub == "sources":
+        src = Path(LIBRARY, "sources.json")
+        if not src.exists():
+            err("library/sources.json ontbreekt")
+        payload = json.loads(src.read_text(encoding="utf-8"))
+        rows = payload.get("sources", [])
+        ok(f"sources {len(rows)}")
+        for row in rows:
+            count = row.get("reported_items", row.get("reported_registries", ""))
+            print(f"  {row.get('id', '?'):<24} {count!s:>6}  {row.get('kind', '')}")
+        return
+    err("gebruik: ds library build|stats|sources")
 
 
 def cmd_serve(port=8085):
@@ -3585,6 +3664,8 @@ def main():
         cmd_upstream(args[1:])
     elif args[0] == "inbox":
         cmd_inbox(args[1:])
+    elif args[0] == "library":
+        cmd_library(args[1:])
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()
