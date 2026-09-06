@@ -11,6 +11,36 @@
       "status": "active",
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+    },
+    {
+      "id": "opensourceui-spotlight-bar",
+      "file": "external/opensourceui-spotlight-bar.html",
+      "origin": "external",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "take: query + keyboard suggestion model; reject: glassmorphism, blur, floating shadow shell",
+      "upstream": "opensourceui",
+      "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+      "sourcePath": "components/docks/spotlight-bar.tsx",
+      "license": "MIT",
+      "fidelity": "interaction-study",
+      "take": [
+        "single query field with suggestions",
+        "arrow-key navigation",
+        "escape and enter behavior"
+      ],
+      "reject": [
+        "glassmorphism",
+        "backdrop blur",
+        "floating shadow-heavy shell"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "contract-only"
+      },
+      "h": 330
     }
   ],
   "docs": {

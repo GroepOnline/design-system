@@ -36,15 +36,65 @@
     }
   },
   "candidates": [
-    {"category": "Buttons", "name": "Slide to Confirm", "target": "approval"},
-    {"category": "Docks", "name": "Spotlight Bar", "target": "composer"},
-    {"category": "Dropdowns", "name": "Kebab Actions", "target": "button"},
-    {"category": "Dropdowns", "name": "Workspace Switcher", "target": "nav"},
-    {"category": "Notifications", "name": "Deploy Notification", "target": "worked-row"},
-    {"category": "Notifications", "name": "System Alert", "target": "artifact"},
-    {"category": "Others", "name": "Terminal Log", "target": "artifact"},
-    {"category": "Resources", "name": "Resource Links Panel", "target": "settings"},
-    {"category": "Table", "name": "Tasks Table", "target": "table"},
-    {"category": "Table", "name": "Recent Transactions Table", "target": "table"}
+    {
+      "category": "Buttons",
+      "name": "Slide to Confirm",
+      "target": "approval",
+      "sourcePath": "components/buttons/slide-to-confirm-button.tsx",
+      "curated": true
+    },
+    {
+      "category": "Docks",
+      "name": "Spotlight Bar",
+      "target": "composer",
+      "sourcePath": "components/docks/spotlight-bar.tsx",
+      "curated": true
+    },
+    {
+      "category": "Dropdowns",
+      "name": "Kebab Actions",
+      "target": "button"
+    },
+    {
+      "category": "Dropdowns",
+      "name": "Workspace Switcher",
+      "target": "nav"
+    },
+    {
+      "category": "Notifications",
+      "name": "Deploy Notification",
+      "target": "worked-row",
+      "sourcePath": "components/notifications/deploy-notification-banner.tsx",
+      "curated": true
+    },
+    {
+      "category": "Notifications",
+      "name": "System Alert",
+      "target": "artifact"
+    },
+    {
+      "category": "Others",
+      "name": "Terminal Log",
+      "target": "artifact",
+      "sourcePath": "components/others/terminal-log-card.tsx",
+      "curated": true
+    },
+    {
+      "category": "Resources",
+      "name": "Resource Links Panel",
+      "target": "settings"
+    },
+    {
+      "category": "Table",
+      "name": "Tasks Table",
+      "target": "table",
+      "sourcePath": "components/table/tasks-table.tsx",
+      "curated": true
+    },
+    {
+      "category": "Table",
+      "name": "Recent Transactions Table",
+      "target": "table"
+    }
   ]
 }

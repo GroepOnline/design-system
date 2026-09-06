@@ -273,7 +273,7 @@
     <h1>approval</h1>
     <div class="ph-sub">wacht-op-jou, toetsen 1/2/3</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern<br>blad 01/13</div>
+  <div class="meta">2 varianten<br>1 zelf · 1 extern<br>blad 01/13</div>
 </div>
 <div class="lede">manifest: <code>components/approval/catalog.json</code></div>
 <div class="legend">
@@ -380,8 +380,39 @@
 &lt;/html&gt;
 </pre></details>
   </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">opensourceui-slide-confirm</span>
+      <span class="note">take: deliberate drag-to-commit + pointer semantics; reject: pill-heavy chrome, deep shadows, decorative success green</span>
+      <span class="right">
+        <span class="org external">extern · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="external/opensourceui-slide-confirm.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>external/opensourceui-slide-confirm.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-slide-confirm.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;Opensource UI - Slide to Confirm reference&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
+body{padding:42px 30px;background:#fafafa;color:#171717;font-family:var(--font)}
+.ref{font:11px var(--mono);color:#737373;margin-bottom:20px} .track{position:relative;width:288px;height:56px;padding:4px;border-radius:999px;background:#f5f5f5;box-shadow:inset 0 1px 2px #00000014,inset 0 -2px 3px #0000000f}
+.label{position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:500;color:#737373;pointer-events:none;transition:.18s}
+.knob{position:absolute;left:4px;top:4px;width:48px;height:48px;border:0;border-radius:999px;background:#fafafa;cursor:grab;touch-action:none;box-shadow:0 1px 1px #0002,0 2px 3px #0002,inset 0 1px #fff;transition:transform .25s cubic-bezier(.32,.72,0,1)}
+.knob:active{cursor:grabbing} .track.done{background:#059669} .track.done .label{color:white} .track.done .knob{cursor:default} .arrow{font-size:18px}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;div class=&quot;ref&quot;&gt;external / Opensource UI / slide-to-confirm-button.tsx / MIT / pinned d239c3463c&lt;/div&gt;
+&lt;div class=&quot;track&quot; id=&quot;track&quot;&gt;&lt;span class=&quot;label&quot; id=&quot;label&quot;&gt;Slide to confirm&lt;/span&gt;&lt;button class=&quot;knob&quot; id=&quot;knob&quot; aria-label=&quot;Slide to confirm&quot;&gt;&lt;span class=&quot;arrow&quot;&gt;→&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;
+&lt;script&gt;
+const t=document.querySelector(&#x27;#track&#x27;),k=document.querySelector(&#x27;#knob&#x27;),l=document.querySelector(&#x27;#label&#x27;);let down=false,x=0,done=false;
+const max=()=&gt;t.clientWidth-k.offsetWidth-8;function pos(n,animate=false){x=Math.max(0,Math.min(n,max()));k.style.transition=animate?&#x27;transform .25s cubic-bezier(.32,.72,0,1)&#x27;:&#x27;none&#x27;;k.style.transform=`translateX(${x}px)`;l.style.opacity=done?1:Math.max(.05,1-(x/max())*1.4)}
+k.onpointerdown=e=&gt;{if(done)return;down=true;k.setPointerCapture(e.pointerId)};k.onpointermove=e=&gt;{if(!down||done)return;const r=t.getBoundingClientRect();pos(e.clientX-r.left-28)};
+k.onpointerup=k.onpointercancel=()=&gt;{if(!down)return;down=false;if(x&gt;=max()-6){done=true;pos(max(),true);t.classList.add(&#x27;done&#x27;);l.textContent=&#x27;Confirmed&#x27;;k.innerHTML=&#x27;✓&#x27;}else pos(0,true)};
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
 </div>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-08-31 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-06 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>

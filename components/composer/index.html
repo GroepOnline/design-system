@@ -273,7 +273,7 @@
     <h1>composer</h1>
     <div class="ph-sub">invoer + wachtrij</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern<br>blad 05/13</div>
+  <div class="meta">2 varianten<br>1 zelf · 1 extern<br>blad 05/13</div>
 </div>
 <div class="lede">manifest: <code>components/composer/catalog.json</code></div>
 <div class="legend">
@@ -398,8 +398,36 @@
 &lt;/html&gt;
 </pre></details>
   </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">opensourceui-spotlight-bar</span>
+      <span class="note">take: query + keyboard suggestion model; reject: glassmorphism, blur, floating shadow shell</span>
+      <span class="right">
+        <span class="org external">extern · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="external/opensourceui-spotlight-bar.html" style="min-height:330px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>external/opensourceui-spotlight-bar.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-spotlight-bar.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;Opensource UI - Spotlight reference&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
+body{padding:38px 30px;background:#ededed;color:#171717;font-family:var(--font)} .ref{font:11px var(--mono);color:#737373;margin-bottom:18px} .wrap{width:min(390px,100%);position:relative}
+.bar{display:flex;align-items:center;gap:10px;border:1px solid #fff;background:#ffffffa6;backdrop-filter:blur(12px);padding:12px;border-radius:16px;box-shadow:0 14px 34px #00000018}
+input{min-width:0;flex:1;border:0;background:transparent;outline:0;font:14px var(--font)} kbd{font:10px var(--mono);border:1px solid #e5e5e5;background:#fafafa;border-radius:6px;padding:3px 6px;color:#737373}
+.menu{position:absolute;top:58px;left:0;right:0;background:#fffffff2;backdrop-filter:blur(12px);border:1px solid #fff;border-radius:16px;padding:8px;box-shadow:0 14px 34px #0002}
+.item{display:flex;width:100%;justify-content:space-between;border:0;background:transparent;padding:10px;border-radius:8px;text-align:left;font:13px var(--font);cursor:pointer} .item.active,.item:hover{background:#f5f5f5}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;ref&quot;&gt;external / Opensource UI / spotlight-bar.tsx / MIT / pinned d239c3463c&lt;/div&gt;&lt;div class=&quot;wrap&quot;&gt;
+&lt;form class=&quot;bar&quot; id=&quot;form&quot;&gt;&lt;span aria-hidden&gt;⌕&lt;/span&gt;&lt;input id=&quot;q&quot; aria-label=&quot;Spotlight search&quot; placeholder=&quot;Search actions, pages, people…&quot; autocomplete=&quot;off&quot;&gt;&lt;kbd&gt;⌘K&lt;/kbd&gt;&lt;/form&gt;&lt;div class=&quot;menu&quot; id=&quot;menu&quot; role=&quot;listbox&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;script&gt;
+const all=[[&#x27;new-page&#x27;,&#x27;Create page&#x27;,&#x27;P&#x27;],[&#x27;invite&#x27;,&#x27;Invite teammate&#x27;,&#x27;I&#x27;],[&#x27;analytics&#x27;,&#x27;Open analytics&#x27;,&#x27;A&#x27;]];const q=document.querySelector(&#x27;#q&#x27;),m=document.querySelector(&#x27;#menu&#x27;),f=document.querySelector(&#x27;#form&#x27;);let active=0,view=[];
+function draw(){view=all.filter(x=&gt;x[1].toLowerCase().includes(q.value.trim().toLowerCase()));active=Math.min(active,Math.max(0,view.length-1));m.innerHTML=view.map((x,i)=&gt;`&lt;button type=&quot;button&quot; class=&quot;item ${i===active?&#x27;active&#x27;:&#x27;&#x27;}&quot; data-i=&quot;${i}&quot; role=&quot;option&quot; aria-selected=&quot;${i===active}&quot;&gt;&lt;span&gt;✦ &amp;nbsp;${x[1]}&lt;/span&gt;&lt;kbd&gt;${x[2]}&lt;/kbd&gt;&lt;/button&gt;`).join(&#x27;&#x27;);m.hidden=!view.length}
+q.oninput=()=&gt;{active=0;draw()};q.onkeydown=e=&gt;{if(e.key===&#x27;ArrowDown&#x27;){e.preventDefault();active=(active+1)%view.length;draw()}if(e.key===&#x27;ArrowUp&#x27;){e.preventDefault();active=(active-1+view.length)%view.length;draw()}if(e.key===&#x27;Escape&#x27;)m.hidden=true};m.onclick=e=&gt;{const b=e.target.closest(&#x27;button&#x27;);if(!b)return;q.value=view[+b.dataset.i][1];m.hidden=true};f.onsubmit=e=&gt;{e.preventDefault();if(view[active])q.value=view[active][1];m.hidden=true};draw();
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
 </div>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-08-31 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-06 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
