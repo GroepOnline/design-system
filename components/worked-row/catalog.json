@@ -11,6 +11,36 @@
       "status": "active",
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+    },
+    {
+      "id": "opensourceui-deploy-notification",
+      "file": "external/opensourceui-deploy-notification.html",
+      "origin": "external",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/notifications/deploy-notification-banner.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "take: compact result evidence hierarchy; reject: iOS toast shell, blur, generic success notification semantics",
+      "upstream": "opensourceui",
+      "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+      "sourcePath": "components/notifications/deploy-notification-banner.tsx",
+      "license": "MIT",
+      "fidelity": "interaction-study",
+      "take": [
+        "compact app/project/branch/duration hierarchy",
+        "dismiss lifecycle",
+        "result-first copy"
+      ],
+      "reject": [
+        "iOS notification imitation",
+        "backdrop blur",
+        "toast as primary agent activity model"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "contract-only"
+      },
+      "h": 250
     }
   ],
   "docs": {

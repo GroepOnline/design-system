@@ -11,6 +11,36 @@
       "status": "active",
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+    },
+    {
+      "id": "opensourceui-terminal-log",
+      "file": "external/opensourceui-terminal-log.html",
+      "origin": "external",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/others/terminal-log-card.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "take: typed cmd/out/ok/err evidence rows; reject: traffic-light chrome and continuous cursor pulse",
+      "upstream": "opensourceui",
+      "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+      "sourcePath": "components/others/terminal-log-card.tsx",
+      "license": "MIT",
+      "fidelity": "interaction-study",
+      "take": [
+        "typed command/output/error rows",
+        "mono evidence hierarchy",
+        "compact status footer"
+      ],
+      "reject": [
+        "macOS traffic-light decoration",
+        "continuous pulsing cursor",
+        "terminal window cosplay as default artifact shell"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "contract-only"
+      },
+      "h": 330
     }
   ],
   "docs": {

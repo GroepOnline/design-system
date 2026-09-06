@@ -176,6 +176,44 @@ def validate_upstream(uid, data):
                 errors.append(f"upstream/{uid}: adapter {surface} heeft ongeldige mode '{mode}'")
     return errors, warnings
 
+def validate_curated_entry(component, entry):
+    errors, warnings = [], []
+    uid = entry.get("upstream")
+    if not uid:
+        return errors, warnings
+    if uid not in upstream_ids():
+        errors.append(f"{component}/{entry.get('id','?')}: onbekende upstream '{uid}'")
+        return errors, warnings
+    upstream = load_upstream(uid)
+    ref = entry.get("sourceRef")
+    path = entry.get("sourcePath")
+    if ref != upstream.get("ref"):
+        errors.append(f"{component}/{entry['id']}: sourceRef wijkt af van upstream pin")
+    if not path:
+        errors.append(f"{component}/{entry['id']}: sourcePath ontbreekt")
+    expected = f"{upstream.get('repo')}/blob/{upstream.get('ref')}/{path}" if path else ""
+    if entry.get("source") != expected:
+        errors.append(f"{component}/{entry['id']}: source URL is niet exact aan upstream pin + sourcePath gebonden")
+    if entry.get("license") != upstream.get("license"):
+        errors.append(f"{component}/{entry['id']}: license wijkt af van upstream manifest")
+    if not entry.get("take") or not isinstance(entry.get("take"), list):
+        errors.append(f"{component}/{entry['id']}: take-lijst ontbreekt")
+    if not entry.get("reject") or not isinstance(entry.get("reject"), list):
+        errors.append(f"{component}/{entry['id']}: reject-lijst ontbreekt")
+    renderer = entry.get("renderer", {})
+    required_renderers = {"react-web", "mcp-apps", "gtk-native"}
+    if set(renderer) != required_renderers:
+        errors.append(f"{component}/{entry['id']}: rendererbeleid moet react-web, mcp-apps en gtk-native bevatten")
+    if renderer.get("gtk-native") != "contract-only":
+        errors.append(f"{component}/{entry['id']}: gtk-native moet contract-only blijven")
+    candidates = upstream.get("candidates", [])
+    match = next((c for c in candidates if c.get("sourcePath") == path and c.get("target") == component), None)
+    if not match:
+        errors.append(f"{component}/{entry['id']}: geen matching upstream candidate voor sourcePath/target")
+    elif not match.get("curated"):
+        warnings.append(f"{component}/{entry['id']}: upstream candidate is niet als curated gemarkeerd")
+    return errors, warnings
+
 def cmd_upstream(args):
     sub = args[0] if args else "list"
     if sub == "list":
@@ -183,11 +221,13 @@ def cmd_upstream(args):
         if not ids:
             print("  (geen upstreams geregistreerd)")
             return
-        print(bold(f"{'upstream':<18} {'license':<10} {'mode':<16} {'ref':<12} candidates"))
+        print(bold(f"{'upstream':<18} {'license':<10} {'mode':<16} {'ref':<12} curated"))
         print(dim("─" * 72))
         for uid in ids:
             data = load_upstream(uid)
-            print(f"{bold(uid):<27} {data.get('license','?'):<10} {data.get('mode','?'):<16} {data.get('ref','')[:10]:<12} {len(data.get('candidates', []))}")
+            candidates = data.get('candidates', [])
+            curated = sum(1 for item in candidates if item.get('curated'))
+            print(f"{bold(uid):<27} {data.get('license','?'):<10} {data.get('mode','?'):<16} {data.get('ref','')[:10]:<12} {curated}/{len(candidates)}")
         return
     if sub == "show":
         if len(args) < 2:
@@ -206,7 +246,9 @@ def cmd_upstream(args):
             print("  candidates")
             for item in candidates:
                 target = item.get("target", "-")
-                print(f"    {item.get('category','?')}/{item.get('name','?')} -> {target}")
+                mark = 'curated' if item.get('curated') else 'candidate'
+                path = item.get('sourcePath', '-')
+                print(f"    {item.get('category','?')}/{item.get('name','?')} -> {target} [{mark}] {dim(path)}")
         return
     if sub == "check":
         ids = [args[1]] if len(args) > 1 else upstream_ids()
@@ -265,6 +307,17 @@ def cmd_clist(c):
     for e in m["entries"]:
         st = green("ACTIEF") if e["status"] == "active" else dim("vast")
         print(f"{st:<18} {e['origin']:<15} {bold(e['id']):<31} {dim(e.get('source') or '-'):<24} {e.get('note','')}")
+    curated = [e for e in m["entries"] if e.get("upstream")]
+    for e in curated:
+        print()
+        print(f"  {bold(e['id'])} {dim('· ' + e.get('upstream','?') + '@' + e.get('sourceRef','')[:10])}")
+        if e.get("take"):
+            print(f"    {green('take')}    " + "; ".join(e["take"]))
+        if e.get("reject"):
+            print(f"    {_c('31','reject')}  " + "; ".join(e["reject"]))
+        renderer = e.get("renderer", {})
+        if renderer:
+            print("    renderer " + ", ".join(f"{k}={v}" for k, v in renderer.items()))
 
 def cmd_select(c, eid):
     m = load_manifest(c)
@@ -3067,6 +3120,9 @@ def cmd_check():
             src = e.get("source", "")
             if src and not src.startswith("http"):
                 warnings.append(f"{c}/{e['id']}: source '{src}' is geen URL")
+            ce, cw = validate_curated_entry(c, e)
+            errors.extend(ce)
+            warnings.extend(cw)
     # versioned external upstream manifests
     for uid in upstream_ids():
         data = load_upstream(uid)

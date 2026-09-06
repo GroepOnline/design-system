@@ -326,6 +326,10 @@
 <li><strong>Upstream pinning.</strong> Externe UI-bronnen staan in <code>upstreams/*.json</code> op een</li>
 <p>immutable commit-SHA. Nooit stil <code>main</code> volgen, nooit auto-selecteren en nooit</p>
 <p>een React/web dependency in de native Rust/GTK ChefApp trekken.</p>
+<li><strong>Curatie is expliciet.</strong> Een upstream-entry heeft <code>upstream</code>, <code>sourceRef</code>,</li>
+<p><code>sourcePath</code>, <code>license</code>, <code>take</code>, <code>reject</code> en rendererbeleid. Externe studies</p>
+<p>blijven <code>locked</code>; een ChefGroep-afgeleide wordt een nieuwe <code>self-modified</code></p>
+<p>variant. <code>gtk-native</code> blijft altijd <code>contract-only</code>.</p>
 </ol>
 <h2 data-reg="commando-s">Commando&#x27;s</h2>
 <pre><code>./ds list                                  # overzicht: entries, active, self/ext per component

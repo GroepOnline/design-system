@@ -29,6 +29,10 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 6. **Upstream pinning.** Externe UI-bronnen staan in `upstreams/*.json` op een
    immutable commit-SHA. Nooit stil `main` volgen, nooit auto-selecteren en nooit
    een React/web dependency in de native Rust/GTK ChefApp trekken.
+7. **Curatie is expliciet.** Een upstream-entry heeft `upstream`, `sourceRef`,
+   `sourcePath`, `license`, `take`, `reject` en rendererbeleid. Externe studies
+   blijven `locked`; een ChefGroep-afgeleide wordt een nieuwe `self-modified`
+   variant. `gtk-native` blijft altijd `contract-only`.
 
 ## Commando's
 

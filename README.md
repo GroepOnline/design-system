@@ -73,6 +73,12 @@ Nieuw component of variant:
 | `templates/` + `new-project.sh` | scaffold voor nieuwe producten |
 | `references/` | meetlat-screenshots (Devin-product, eigen states) |
 | `upstreams/` | immutable externe UI-bronnen + rendererbeleid; nooit runtime dependency |
+
+Curated upstream entries blijven `locked` en leggen naast de exacte bronpin ook
+`take`, `reject` en rendererbeleid vast. `react-web` en `mcp-apps` mogen een
+component als kandidaat gebruiken; `gtk-native` blijft `contract-only`. Een
+ChefGroep-aanpassing wordt altijd een nieuwe `self-modified` variant en wordt
+nooit automatisch actief.
 | `surfaces/` | per-surface ontwerpbriefs |
 | `prototype-v2.html` | volledige referentie-app (3-pane sessie) |
 
