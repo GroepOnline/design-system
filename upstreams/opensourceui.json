@@ -1,0 +1,50 @@
+{
+  "id": "opensourceui",
+  "name": "Opensource UI",
+  "repo": "https://github.com/bidyut10/opensourceui",
+  "site": "https://opensourceui.in",
+  "ref": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+  "refDate": "2026-09-05",
+  "license": "MIT",
+  "mode": "curate-copy",
+  "catalog": {
+    "documentedComponents": 170,
+    "documentedCategories": 27,
+    "agentSkill": "skills/opensource-ui/SKILL.md",
+    "catalogPath": "skills/opensource-ui/references/catalog.md",
+    "sourceInventory": "skills/opensource-ui/references/source_inventory.txt"
+  },
+  "policy": {
+    "autoSelect": false,
+    "preserveProvenance": true,
+    "vendorDependency": false,
+    "silentUpdates": false,
+    "promotion": "external reference -> ChefGroep adaptation -> explicit ds select"
+  },
+  "adapters": {
+    "react-web": {
+      "mode": "curate-copy",
+      "note": "Copy selected TSX source into a product or web renderer and adapt to ChefGroep tokens/contracts."
+    },
+    "mcp-apps": {
+      "mode": "react-adapter",
+      "note": "Use selected React components as renderer implementations behind ChefGroep UI contracts."
+    },
+    "gtk-native": {
+      "mode": "contract-only",
+      "note": "ChefApp remains native Rust/GTK. Share semantics, state contracts and tokens only; do not add React or a webview dependency."
+    }
+  },
+  "candidates": [
+    {"category": "Buttons", "name": "Slide to Confirm", "target": "approval"},
+    {"category": "Docks", "name": "Spotlight Bar", "target": "composer"},
+    {"category": "Dropdowns", "name": "Kebab Actions", "target": "button"},
+    {"category": "Dropdowns", "name": "Workspace Switcher", "target": "nav"},
+    {"category": "Notifications", "name": "Deploy Notification", "target": "worked-row"},
+    {"category": "Notifications", "name": "System Alert", "target": "artifact"},
+    {"category": "Others", "name": "Terminal Log", "target": "artifact"},
+    {"category": "Resources", "name": "Resource Links Panel", "target": "settings"},
+    {"category": "Table", "name": "Tasks Table", "target": "table"},
+    {"category": "Table", "name": "Recent Transactions Table", "target": "table"}
+  ]
+}

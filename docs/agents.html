@@ -323,6 +323,9 @@
 <p>via <code>ds &lt;comp&gt; add</code> (de CLI maakt paden root-absoluut bij promotie).</p>
 <li><strong>Single-active.</strong> Exact 1 entry per component heeft status <code>active</code>;</li>
 <p><code>ds select</code> handhaaft dit automatisch.</p>
+<li><strong>Upstream pinning.</strong> Externe UI-bronnen staan in <code>upstreams/*.json</code> op een</li>
+<p>immutable commit-SHA. Nooit stil <code>main</code> volgen, nooit auto-selecteren en nooit</p>
+<p>een React/web dependency in de native Rust/GTK ChefApp trekken.</p>
 </ol>
 <h2 data-reg="commando-s">Commando&#x27;s</h2>
 <pre><code>./ds list                                  # overzicht: entries, active, self/ext per component
@@ -342,7 +345,10 @@
 ./ds brain new research &lt;titel&gt;            # scaffold research-note
 ./ds brain signal &quot;tekst&quot;                  # expliciete signal (geen auto-write)
 ./ds brain eval                            # scorecard → brain/eval/scorecard.json
-./ds brain gate                            # eval + hard fail bij drempels</code></pre>
+./ds brain gate                            # eval + hard fail bij drempels
+./ds upstream list                         # gepinde externe UI-bronnen
+./ds upstream show &lt;id&gt;                    # provenance + rendererbeleid + kandidaten
+./ds upstream check [id]                   # valideer immutable pins + adapters</code></pre>
 <p>Elke <code>add</code>/<code>select</code>/<code>remove</code>/<code>style add</code> mutatie herbouwt web automatisch.</p>
 <p>CLI en web lezen hetzelfde manifest; er bestaat geen tweede bron.</p>
 <h2 data-reg="componenten-toevoegen">Componenten toevoegen of wijzigen</h2>
@@ -446,7 +452,7 @@
 <p>Regel: raakt je commit <code>.github/workflows/</code> → push met <code>git push origin-ssh &lt;branch&gt;</code>.</p>
 <p>Kom je dat pas achter bij een geweigerde push → zelfde branch opnieuw pushen naar</p>
 <p><code>origin-ssh</code>, geen force-push nodig.</p></div>
-<div class="gen" data-reg="colofon">gegenereerd uit AGENTS.md op 2026-08-31 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit AGENTS.md op 2026-09-06 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
