@@ -33,6 +33,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
    `sourcePath`, `license`, `take`, `reject` en rendererbeleid. Externe studies
    blijven `locked`; een ChefGroep-afgeleide wordt een nieuwe `self-modified`
    variant. `gtk-native` blijft altijd `contract-only`.
+8. **Afgeleiden bewaren lineage.** `self-modified` varianten uit een gecureerde
+   bron hebben `derivedFrom` met entry/upstream/ref/path en behouden dezelfde
+   `source` URL. Pas zo mag GTK van `contract-only` naar `native-candidate`.
 
 ## Commando's
 

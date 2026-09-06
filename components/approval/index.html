@@ -273,7 +273,7 @@
     <h1>approval</h1>
     <div class="ph-sub">wacht-op-jou, toetsen 1/2/3</div>
   </div>
-  <div class="meta">2 varianten<br>1 zelf · 1 extern<br>blad 01/13</div>
+  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 01/13</div>
 </div>
 <div class="lede">manifest: <code>components/approval/catalog.json</code></div>
 <div class="legend">
@@ -409,6 +409,27 @@ const max=()=&gt;t.clientWidth-k.offsetWidth-8;function pos(n,animate=false){x=M
 k.onpointerdown=e=&gt;{if(done)return;down=true;k.setPointerCapture(e.pointerId)};k.onpointermove=e=&gt;{if(!down||done)return;const r=t.getBoundingClientRect();pos(e.clientX-r.left-28)};
 k.onpointerup=k.onpointercancel=()=&gt;{if(!down)return;down=false;if(x&gt;=max()-6){done=true;pos(max(),true);t.classList.add(&#x27;done&#x27;);l.textContent=&#x27;Confirmed&#x27;;k.innerHTML=&#x27;✓&#x27;}else pos(0,true)};
 &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">guarded-drag</span>
+      <span class="note">ChefGroep guarded drag: deliberate commit without pill/shadow treatment</span>
+      <span class="right">
+        <span class="org ">zelf (aangepast) · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/guarded-drag.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/guarded-drag.html</span><span>toegevoegd 2026-09-06</span><a href="self/guarded-drag.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;approval: guarded drag&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
+body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--text-faint);margin-bottom:20px}.approval{border:1px solid var(--hold-line);border-radius:var(--r-lg);background:var(--surface);padding:13px 15px}.kind{display:flex;gap:7px;align-items:center;color:var(--amber);font-size:12px;font-weight:500}.cmd{font:12px/1.5 var(--mono);background:var(--surface-sunk);border-radius:var(--r-md);padding:8px 10px;margin:9px 0 11px;overflow:auto}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.guard{position:relative;width:260px;height:34px;border:1px solid var(--line-strong);border-radius:var(--r-md);background:var(--bg);overflow:hidden;touch-action:none}.fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent-soft)}.guard-label{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:var(--text-muted);pointer-events:none}.handle{position:absolute;left:3px;top:3px;width:42px;height:26px;border:1px solid var(--hold-line);border-radius:5px;background:var(--surface);color:var(--amber);font:600 14px var(--font);cursor:grab}.handle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.guard.done{border-color:var(--accent)}.guard.done .guard-label{color:var(--accent-ink);font-weight:500}.deny{height:34px}.hint{font:10px var(--mono);color:var(--text-faint);margin-top:8px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;div class=&quot;head&quot;&gt;self-modified / guarded-drag / derived from Opensource UI slide confirm&lt;/div&gt;&lt;div class=&quot;approval&quot;&gt;&lt;div class=&quot;kind&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-alert&quot;/&gt;&lt;/svg&gt;Wacht op jou: deploy main naar productie&lt;/div&gt;&lt;div class=&quot;cmd&quot;&gt;chef deploy chefapp --ref main --env production&lt;/div&gt;&lt;div class=&quot;actions&quot;&gt;&lt;div class=&quot;guard&quot; id=&quot;guard&quot;&gt;&lt;div class=&quot;fill&quot; id=&quot;fill&quot;&gt;&lt;/div&gt;&lt;span class=&quot;guard-label&quot; id=&quot;label&quot;&gt;Sleep om een keer toe te staan&lt;/span&gt;&lt;button class=&quot;handle&quot; id=&quot;handle&quot; aria-label=&quot;Sleep om een keer toe te staan&quot;&gt;→&lt;/button&gt;&lt;/div&gt;&lt;button class=&quot;btn deny&quot; id=&quot;deny&quot;&gt;Weigeren &lt;kbd&gt;3&lt;/kbd&gt;&lt;/button&gt;&lt;/div&gt;&lt;div class=&quot;hint&quot;&gt;Enter op de sleepknop bevestigt ook. Geen auto-repeat, geen success-groen.&lt;/div&gt;&lt;/div&gt;
+&lt;script&gt;const g=document.querySelector(&#x27;#guard&#x27;),h=document.querySelector(&#x27;#handle&#x27;),f=document.querySelector(&#x27;#fill&#x27;),l=document.querySelector(&#x27;#label&#x27;);let drag=false,x=0,done=false;const max=()=&gt;g.clientWidth-h.offsetWidth-6;function draw(n,anim=false){x=Math.max(0,Math.min(n,max()));h.style.transition=anim?&#x27;transform 160ms var(--ease-out)&#x27;:&#x27;none&#x27;;h.style.transform=`translateX(${x}px)`;f.style.width=`${x+h.offsetWidth+3}px`}function confirm(){done=true;draw(max(),true);g.classList.add(&#x27;done&#x27;);l.textContent=&#x27;Een keer toegestaan&#x27;;h.textContent=&#x27;✓&#x27;;h.disabled=true}h.onpointerdown=e=&gt;{if(done)return;drag=true;h.setPointerCapture(e.pointerId)};h.onpointermove=e=&gt;{if(!drag||done)return;const r=g.getBoundingClientRect();draw(e.clientX-r.left-h.offsetWidth/2)};h.onpointerup=h.onpointercancel=()=&gt;{if(!drag)return;drag=false;x&gt;=max()-5?confirm():draw(0,true)};h.onkeydown=e=&gt;{if((e.key===&#x27;Enter&#x27;||e.key===&#x27; &#x27;)&amp;&amp;!done){e.preventDefault();confirm()}};document.querySelector(&#x27;#deny&#x27;).onclick=()=&gt;{if(done)return;l.textContent=&#x27;Geweigerd&#x27;;g.style.opacity=&#x27;.55&#x27;};&lt;/script&gt;
+&lt;!-- DERIVED: opensourceui-slide-confirm; kept drag semantics; removed pill/material/success-green treatment. --&gt;
+&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
 </div>

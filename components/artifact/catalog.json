@@ -41,6 +41,37 @@
         "gtk-native": "contract-only"
       },
       "h": 330
+    },
+    {
+      "id": "terminal-evidence",
+      "file": "self/terminal-evidence.html",
+      "origin": "self-modified",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/others/terminal-log-card.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "ChefGroep terminal evidence: typed result rows without terminal cosplay",
+      "derivedFrom": {
+        "entry": "opensourceui-terminal-log",
+        "upstream": "opensourceui",
+        "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+        "sourcePath": "components/others/terminal-log-card.tsx"
+      },
+      "take": [
+        "typed cmd/out/ok/err evidence",
+        "mono data hierarchy",
+        "explicit terminal result footer"
+      ],
+      "reject": [
+        "macOS traffic lights",
+        "continuous cursor pulse",
+        "window cosplay"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "native-candidate"
+      },
+      "h": 330
     }
   ],
   "docs": {
