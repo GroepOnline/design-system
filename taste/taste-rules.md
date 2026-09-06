@@ -6,7 +6,7 @@
 ## Seed rules (from AGENTS.md + Signaal DESIGN.md + this session's briefs)
 
 ### color
-- **DO** tint neutrals warm; one accent max. **DON'T** purple gradients, AI-glow, acid-on-black. *(seed: workspace AGENTS.md, Signaal bans)*
+- **DO** tint neutrals warm; color is semantic, not atmosphere. Flat accent is limited to focus, selection, links and explicit state. **DON'T** purple/blue gradients, neon/aurora, AI-glow, colored ambient backgrounds or “tech” color washes. Border/effect specimens may use color only when color is the subject being explored. *(seed strengthened 2026-09-07 after vNext specimen reject)*
 - **DO** light theme as first-class default. **DON'T** dark-only product surfaces. *(seed: Signaal "licht is standaard")*
 
 ### type

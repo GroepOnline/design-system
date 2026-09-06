@@ -80,10 +80,11 @@
       "tags": [
         "buttons",
         "variants",
-        "physics-ish",
-        "beam",
         "live-controls",
-        "random-library"
+        "random-library",
+        "material",
+        "monochrome",
+        "pointer-geometry"
       ],
       "controls": [
         "theme",

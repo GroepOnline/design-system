@@ -322,7 +322,7 @@
 <p><strong>Een stil, warm, mat instrument dat toont wat de agent doet terwijl het gebeurt.</strong></p>
 <p>Drie pijlers:</p>
 <ol>
-<li><strong>Stil oppervlak.</strong> Warm off-white, hairlines, geen glow, geen gradients in UI.</li>
+<li><strong>Stil oppervlak.</strong> Warm off-white, hairlines, geen ambient glow of gradients in UI. Kleur is semantiek, geen sfeer.</li>
 <li><strong>Levende activiteit.</strong> Werk zie je als tijd + golfjes, nooit als spinner.</li>
 <li><strong>Bewijs in beeld.</strong> Diffs, PR-cards, before/after. De agent toont, niet vertelt.</li>
 </ol>
@@ -331,7 +331,7 @@
 <h2 data-reg="3-kleur">3. Kleur</h2>
 <p>Zie <code>tokens.css</code>. Regels:</p>
 <ul>
-<li><strong>Eén accent</strong>: blauw <code>#317CFF</code> (licht) / <code>#5C97FF</code> (donker). Niets anders mag schreeuwen.</li>
+<li><strong>Accent is functioneel, niet atmosferisch</strong>: gebruik een flat accent alleen voor focus, selectie, links en expliciete state. Nooit een blauw/paars “AI/tech” kleurveld bouwen rond gewone UI.</li>
 <li><strong>Groen is gereserveerd</strong> voor git/PR/toestemming (<code>#1F883D</code>). Nooit als decoratie.</li>
 <li><strong>Amber is gereserveerd</strong> voor hold/wacht-op-jou. Rood alleen voor diff-deletes en destructive.</li>
 <li>Neutraal is warm, nooit koudgrijs. Dark mode is basalt-warm, geen zuiver zwart.</li>
@@ -400,7 +400,7 @@
 <li>Geen spinners/loaders (ripple-systeem vervangt ze)</li>
 <li>Geen emoji als icoon of in copy</li>
 <li>Geen em-dashes</li>
-<li>Geen paarse gradients, glassmorphism, glow, bento-kaartjes</li>
+<li>Geen blauw-paarse/neon/aurora gradients, ambient glow, glassmorphism of generieke “AI-tech” kleurvelden. Uitzondering: een effect-specimen waarin kleur/beam zélf het onderzochte materiaal is.</li>
 <li>Geen cards-in-cards, geen geneste elevation</li>
 <li>Geen infinite ambient motion</li>
 <li>Geen marketing-witruimte in product (density 5–7)</li>
@@ -500,15 +500,14 @@
 <li><strong>Line-drawing SVG</strong> voor het merk/logo (stroke-dashoffset, 1.2-1.5s,</li>
 <p>ease-in-out), eenmalig bij binnenkomst.</p>
 <li><strong>Scramble/decode</strong> voor maximaal één stat- of statuslabel.</li>
-<li><strong>Spotlight/glow-cards</strong> (radial-gradient volgt pointer, opacity 0.06-0.08)</li>
-<p>voor de app-library tiles -- de enige gesanctioneerde &quot;glow&quot; in het systeem.</p>
+<li><strong>Pointer response via geometrie/material</strong>: border, displacement, mask of local contrast mag de pointer volgen. Geen gekleurde halo, spotlight-glow of ambient gradient.</li>
 <li><strong>View Transitions</strong> tussen auth-stappen (login → library): morph, geen</li>
 <p>harde swap. <code>@view-transition { navigation: auto; }</code> op MPA-flows.</p>
 <li>Scroll-driven reveals (<code>animation-timeline: view()</code>) op landing-secties,</li>
 <p>eenmalig, met <code>@supports</code>-gate.</p>
 <li>Budget: één hero-motion per beat; ondersteunende motion korter en subtieler.</li>
-<p>Ook hier: reduced-motion variant verplicht, geen paarse gradients, geen</p>
-<p>glassmorphism -- wow komt uit precisie en motief, niet uit effectstapeling.</p>
+<p>Ook hier: reduced-motion variant verplicht, geen ambient gradients, glow of</p>
+<p>glassmorphism. Wow komt uit precisie, materiaal, typografie en motion, niet uit effectstapeling.</p>
 </ul>
 <h2 data-reg="17-brain-en-taste">§17 Brain- en taste-koppeling (v3)</h2>
 <p>Signaal is een lerend systeem; de lus is expliciet:</p>

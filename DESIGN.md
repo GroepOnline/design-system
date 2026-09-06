@@ -17,7 +17,7 @@
 
 Drie pijlers:
 
-1. **Stil oppervlak.** Warm off-white, hairlines, geen glow, geen gradients in UI.
+1. **Stil oppervlak.** Warm off-white, hairlines, geen ambient glow of gradients in UI. Kleur is semantiek, geen sfeer.
 2. **Levende activiteit.** Werk zie je als tijd + golfjes, nooit als spinner.
 3. **Bewijs in beeld.** Diffs, PR-cards, before/after. De agent toont, niet vertelt.
 
@@ -39,7 +39,7 @@ Drie pijlers:
 
 Zie `tokens.css`. Regels:
 
-- **Eén accent**: blauw `#317CFF` (licht) / `#5C97FF` (donker). Niets anders mag schreeuwen.
+- **Accent is functioneel, niet atmosferisch**: gebruik een flat accent alleen voor focus, selectie, links en expliciete state. Nooit een blauw/paars “AI/tech” kleurveld bouwen rond gewone UI.
 - **Groen is gereserveerd** voor git/PR/toestemming (`#1F883D`). Nooit als decoratie.
 - **Amber is gereserveerd** voor hold/wacht-op-jou. Rood alleen voor diff-deletes en destructive.
 - Neutraal is warm, nooit koudgrijs. Dark mode is basalt-warm, geen zuiver zwart.
@@ -133,7 +133,7 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 - Geen spinners/loaders (ripple-systeem vervangt ze)
 - Geen emoji als icoon of in copy
 - Geen em-dashes
-- Geen paarse gradients, glassmorphism, glow, bento-kaartjes
+- Geen blauw-paarse/neon/aurora gradients, ambient glow, glassmorphism of generieke “AI-tech” kleurvelden. Uitzondering: een effect-specimen waarin kleur/beam zélf het onderzochte materiaal is.
 - Geen cards-in-cards, geen geneste elevation
 - Geen infinite ambient motion
 - Geen marketing-witruimte in product (density 5–7)
@@ -282,15 +282,14 @@ voor:
 - **Line-drawing SVG** voor het merk/logo (stroke-dashoffset, 1.2-1.5s,
   ease-in-out), eenmalig bij binnenkomst.
 - **Scramble/decode** voor maximaal één stat- of statuslabel.
-- **Spotlight/glow-cards** (radial-gradient volgt pointer, opacity 0.06-0.08)
-  voor de app-library tiles -- de enige gesanctioneerde "glow" in het systeem.
+- **Pointer response via geometrie/material**: border, displacement, mask of local contrast mag de pointer volgen. Geen gekleurde halo, spotlight-glow of ambient gradient.
 - **View Transitions** tussen auth-stappen (login → library): morph, geen
   harde swap. `@view-transition { navigation: auto; }` op MPA-flows.
 - Scroll-driven reveals (`animation-timeline: view()`) op landing-secties,
   eenmalig, met `@supports`-gate.
 - Budget: één hero-motion per beat; ondersteunende motion korter en subtieler.
-  Ook hier: reduced-motion variant verplicht, geen paarse gradients, geen
-  glassmorphism -- wow komt uit precisie en motief, niet uit effectstapeling.
+  Ook hier: reduced-motion variant verplicht, geen ambient gradients, glow of
+  glassmorphism. Wow komt uit precisie, materiaal, typografie en motion, niet uit effectstapeling.
 
 ## §17 Brain- en taste-koppeling (v3)
 

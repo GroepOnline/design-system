@@ -41,5 +41,9 @@
       "source provenance stays recorded"
     ]
   },
-  "cat": "motion"
+  "cat": "motion",
+  "visualPolicy": {
+    "colorEffect": "explicit",
+    "reason": "color and moving border are the specimen subject"
+  }
 }

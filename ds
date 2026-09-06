@@ -1317,8 +1317,7 @@ HOME_HEAD = """<!DOCTYPE html>
   .lrow::before { content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 2px; border-radius: 1px;
     background: var(--line-strong); transition: background 0.4s; }
   .lrow.live::before { background: var(--accent); }
-  .lrow.live { box-shadow: var(--glow-live); animation: lrowBreathe var(--dur-pulse-cycle) ease-in-out infinite; color: var(--text); }
-  @keyframes lrowBreathe { 0%, 100% { box-shadow: var(--glow-live); } 50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--open-green) 55%, transparent), 0 0 18px 5px color-mix(in srgb, var(--open-green) 45%, transparent); } }
+  .lrow.live { border-color: var(--live-outline); color: var(--text); }
   .lrow .lname { font-weight: 500; color: var(--text); }
   .lrow .ltimer { font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
   .lrow .ltools { margin-left: auto; display: flex; gap: 4px; align-items: center; }
@@ -3328,8 +3327,54 @@ def cmd_style_add(name, css_file, desc=None):
     save_styles(st)
     ok(f"skin '{name}' toegevoegd ({len(lines)} declaraties) — tokens.css + styles.json bijgewerkt")
 
+def _visual_antislop_reasons(text: str):
+    """Return taste violations for generic colored tech-atmosphere CSS."""
+    slop_hues = r"#(?:8b5cf6|7c3aed|a855f7|c084fc|d946ef|22d3ee|06b6d4)"
+    checks = (
+        (
+            re.compile(rf"(?:linear|radial|conic)-gradient\([^;}}]{{0,900}}{slop_hues}", re.IGNORECASE | re.DOTALL),
+            "purple/cyan ambient gradient",
+        ),
+        (
+            re.compile(r"(?:linear|radial|conic)-gradient\([^;}]{0,900}var\(--accent(?:-soft)?\)", re.IGNORECASE | re.DOTALL),
+            "accent used as atmospheric gradient",
+        ),
+        (
+            re.compile(r"box-shadow\s*:[^;]{0,500}color-mix\([^)]*var\(--accent", re.IGNORECASE | re.DOTALL),
+            "accent glow shadow",
+        ),
+    )
+    return [reason for pattern, reason in checks if pattern.search(text)]
+
+
+def check_visual_antislop():
+    """Block generic AI-tech atmosphere in ordinary self-authored specimens.
+
+    Color/effect labs can opt in through catalog.visualPolicy.colorEffect=explicit.
+    Flat semantic accent, syntax highlighting and external reference captures are not blocked.
+    """
+    errors = []
+    for component in sorted(components()):
+        manifest = load_manifest(component)
+        exempt = manifest.get("visualPolicy", {}).get("colorEffect") == "explicit"
+        if exempt:
+            continue
+        self_dir = Path(COMP, component, "self")
+        if not self_dir.is_dir():
+            continue
+        for fp in sorted(self_dir.glob("*.html")):
+            text = fp.read_text(encoding="utf-8")
+            rel = fp.relative_to(ROOT)
+            for reason in _visual_antislop_reasons(text):
+                errors.append(f"{rel}: AI-slop gate: {reason}; use neutral material or move it to an explicit effect specimen")
+    tokens = Path(ROOT, "tokens.css").read_text(encoding="utf-8")
+    if "--glow-live" in tokens:
+        errors.append("tokens.css: AI-slop gate: --glow-live is retired; live state must be flat/semantic")
+    return errors
+
+
 def cmd_check():
-    """Valideer catalogus-structuur, sprite-referenties, em-dash in copy."""
+    """Valideer catalogus-structuur, sprite-referenties, taste en anti-slop regels."""
     errors = []
     warnings = []
     with open(os.path.join(COMP, "icons.svg")) as f:
@@ -3361,6 +3406,7 @@ def cmd_check():
             de, dw = validate_derived_entry(c, e)
             errors.extend(de)
             warnings.extend(dw)
+    errors.extend(check_visual_antislop())
     # versioned external upstream manifests
     for uid in upstream_ids():
         data = load_upstream(uid)

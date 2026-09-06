@@ -195,3 +195,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: "gebruik grok voor explore en simpel werk als worker en vergeet niet m'n plugins (cordis oid) voor deepseekharn" — home-shell moet ook als DSH-frontend-plugin kunnen landen
 - **delta**: home-shell krijgt een tweede variant `menus` met de gemeten popover-patronen (mode-picker, plus-menu, split-send, credits-banner, sessie-rij met werkstatus); DSH-plugin-pad wordt verkend (dsh-ui-frontend)
 - **candidate rule**: composer-menu's zijn onderdeel van de shell-structuur, niet losse componenten — één popover-idioom (surface, r-md, hairline, icoon 16 + label) voor alle drie (plus, mode, env). *1e observatie, watch.*
+
+## 2026-09-07 · vNext specimen colors: AI-slop reject
+
+- **shown**: vNext live specimen explorer met blauw accent, paars/blauw gradients, glow-button, radial spring field en blauwe Three.js points
+- **reaction**: rejected, behalve Border Beam
+- **signal**: kleuren lezen als generieke AI-demo in plaats van ontworpen materiaal
+- **delta**: kleur is voortaan semantiek of expliciet specimen-inhoud, nooit om een surface automatisch “tech/AI” te laten voelen. Button/motion/3D labs worden monochroom en materiaalgedreven; Border Beam behoudt kleur omdat kleur daar het onderzochte effect zelf is.
+- **rule**: **DON'T** blauw-paars/neon/aurora/glow inzetten als ambient/default stijl. **DO** neutrale materialen, contrast, typografie, geometrie en motion gebruiken voor karakter. Flat accent alleen voor focus, selectie, links of expliciete semantiek.

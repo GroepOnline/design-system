@@ -258,8 +258,7 @@
   .lrow::before { content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 2px; border-radius: 1px;
     background: var(--line-strong); transition: background 0.4s; }
   .lrow.live::before { background: var(--accent); }
-  .lrow.live { box-shadow: var(--glow-live); animation: lrowBreathe var(--dur-pulse-cycle) ease-in-out infinite; color: var(--text); }
-  @keyframes lrowBreathe { 0%, 100% { box-shadow: var(--glow-live); } 50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--open-green) 55%, transparent), 0 0 18px 5px color-mix(in srgb, var(--open-green) 45%, transparent); } }
+  .lrow.live { border-color: var(--live-outline); color: var(--text); }
   .lrow .lname { font-weight: 500; color: var(--text); }
   .lrow .ltimer { font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
   .lrow .ltools { margin-left: auto; display: flex; gap: 4px; align-items: center; }
