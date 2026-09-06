@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>components — design-system</title>
+<title>inbox — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -232,28 +232,6 @@
     .card:active { transform: none; }
     .cell, .cell .ch, .rail a.it, .brand .logo { transition: none; }
   }
-<style>
-/* specimen explorer: live cards + search/filter */
-  .gallery-tools { display:grid; grid-template-columns:minmax(260px,1fr) 220px auto; gap:8px; align-items:center; margin:22px 0 8px; }
-  .gallery-tools .input, .gallery-tools .select { height:36px; }
-  .gallery-count { font:11px var(--mono); color:var(--text-faint); white-space:nowrap; }
-  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
-  .spec-card { border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; background:var(--surface); transition:border-color var(--dur-fast),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast); }
-  .spec-card:hover { border-color:var(--line-strong); transform:translateY(-2px); box-shadow:0 12px 36px rgba(0,0,0,.08); }
-  .spec-card[hidden], .gallery-group[hidden] { display:none !important; }
-  .spec-live { height:190px; overflow:hidden; background:var(--bg); border-bottom:1px solid var(--line); }
-  .spec-live iframe { width:100%; height:380px; border:0; display:block; transform:scale(.5); transform-origin:0 0; width:200%; pointer-events:auto; }
-  .spec-info { display:flex; align-items:flex-start; gap:10px; padding:12px; color:inherit; text-decoration:none; }
-  .spec-info .ct { width:32px; height:32px; border:1px solid var(--line); border-radius:8px; display:grid; place-items:center; flex:none; background:var(--bg); }
-  .spec-info .ct svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; color:var(--text-muted); }
-  .spec-copy { min-width:0; flex:1; display:grid; gap:2px; }
-  .spec-copy .cn { font-size:var(--text-md); font-weight:500; }
-  .spec-copy .cd { color:var(--text-faint); font-size:var(--text-sm); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .spec-tags { font:10px var(--mono); color:var(--accent-ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .spec-info .cmeta { display:flex; flex-direction:column; align-items:flex-end; gap:2px; font-family:var(--mono); flex:none; }
-  .spec-info .cnt, .spec-info .act { font-size:10px; color:var(--text-faint); } .spec-info .act { color:var(--open-green); }
-  @media(max-width:760px){ .gallery-tools{grid-template-columns:1fr}.spec-grid{grid-template-columns:1fr}.spec-live{height:170px} }
-</style>
 </style>
 </head>
 <body>
@@ -298,198 +276,18 @@
 </aside>
 <main class="main"><div class="wrap">
 <div class="pagehead" data-reg="kop">
-  <span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-  <div class="ph-text">
-    <div class="eyebrow">Specimen explorer</div>
-    <h1>Library</h1>
-    <div class="ph-sub">15 componenten · 33 varianten · production + studies + random vondsten</div>
-  </div>
+  <span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span>
+  <div class="ph-text"><div class="eyebrow">Research capture</div><h1>Inbox</h1>
+  <div class="ph-sub">2 vondsten · capture first, curate later</div></div>
 </div>
-<div class="lede">Zoek door componenten, motion, effecten en 3D. Kaarten tonen de actieve of eerste variant live; detailpagina's bewaren alle locked specimens. <a href="../inbox/index.html">Research inbox →</a></div>
-<div class="gallery-tools" data-reg="filters">
-  <input class="input" id="gallery-q" type="search" placeholder="Zoek component, tag, engine, effect…" autocomplete="off">
-  <select class="select" id="gallery-cat"><option value="all">Alle categorieën</option><option value="primitieven">Primitieven</option><option value="gesprek">Gesprek</option><option value="bewijs">Bewijs</option><option value="structuur">Structuur</option><option value="interactie">Interactie</option><option value="motion">Motion</option><option value="3d">3D / WebGL</option><option value="experimenteel">Experimenteel</option></select>
-  <span class="gallery-count" id="gallery-count">15 zichtbaar</span>
-</div>
-<section class="gallery-group" data-cat="primitieven">
-<div class="caps" data-reg="primitieven" style="margin:22px 2px 10px">Primitieven</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="primitieven" data-search="badge badge git-status + meta primitieven">
-    <div class="spec-live"><iframe src="./badge/self/default.html" loading="lazy" title="badge live preview"></iframe></div>
-    <a class="spec-info" href="./badge/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-tag"/></svg></span>
-      <span class="spec-copy"><span class="cn">badge</span><span class="cd">git-status + meta</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="primitieven" data-search="button button btn + gbtn + kbd primitieven buttons variants physics-ish beam live-controls random-library css + pointer-js workbench">
-    <div class="spec-live"><iframe src="./button/self/default.html" loading="lazy" title="button live preview"></iframe></div>
-    <a class="spec-info" href="./button/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-click"/></svg></span>
-      <span class="spec-copy"><span class="cn">button</span><span class="cd">btn + gbtn + kbd</span><span class="spec-tags">buttons · variants · physics-ish · beam · css + pointer-js · workbench</span></span>
-      <span class="cmeta"><span class="cnt">6 zelf · 2 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
-</section>
-
-<section class="gallery-group" data-cat="gesprek">
-<div class="caps" data-reg="gesprek" style="margin:22px 2px 10px">Gesprek</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="gesprek" data-search="approval approval wacht-op-jou, toetsen 1/2/3 gesprek">
-    <div class="spec-live"><iframe src="./approval/self/default.html" loading="lazy" title="approval live preview"></iframe></div>
-    <a class="spec-info" href="./approval/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-alert"/></svg></span>
-      <span class="spec-copy"><span class="cn">approval</span><span class="cd">wacht-op-jou, toetsen 1/2/3</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="gesprek" data-search="composer composer invoer + wachtrij gesprek">
-    <div class="spec-live"><iframe src="./composer/self/default.html" loading="lazy" title="composer live preview"></iframe></div>
-    <a class="spec-info" href="./composer/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-pencil"/></svg></span>
-      <span class="spec-copy"><span class="cn">composer</span><span class="cd">invoer + wachtrij</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="gesprek" data-search="transcript transcript user-pill, prose, meta gesprek">
-    <div class="spec-live"><iframe src="./transcript/self/default.html" loading="lazy" title="transcript live preview"></iframe></div>
-    <a class="spec-info" href="./transcript/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-message"/></svg></span>
-      <span class="spec-copy"><span class="cn">transcript</span><span class="cd">user-pill, prose, meta</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="gesprek" data-search="worked-row worked-row signatuur: activiteit zonder spinner gesprek">
-    <div class="spec-live"><iframe src="./worked-row/self/default.html" loading="lazy" title="worked-row live preview"></iframe></div>
-    <a class="spec-info" href="./worked-row/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-clock"/></svg></span>
-      <span class="spec-copy"><span class="cn">worked-row</span><span class="cd">signatuur: activiteit zonder spinner</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
-</section>
-
-<section class="gallery-group" data-cat="bewijs">
-<div class="caps" data-reg="bewijs" style="margin:22px 2px 10px">Bewijs</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="bewijs" data-search="artifact artifact before/after bewijs bewijs">
-    <div class="spec-live"><iframe src="./artifact/self/default.html" loading="lazy" title="artifact live preview"></iframe></div>
-    <a class="spec-info" href="./artifact/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
-      <span class="spec-copy"><span class="cn">artifact</span><span class="cd">before/after bewijs</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="bewijs" data-search="pr-card pr-card bewijs van werk bewijs">
-    <div class="spec-live"><iframe src="./pr-card/self/default.html" loading="lazy" title="pr-card live preview"></iframe></div>
-    <a class="spec-info" href="./pr-card/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-git-pr"/></svg></span>
-      <span class="spec-copy"><span class="cn">pr-card</span><span class="cd">bewijs van werk</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="bewijs" data-search="table table dashboard-tabellen met hairlines, hover, inline status badges bewijs">
-    <div class="spec-live"><iframe src="./table/self/default.html" loading="lazy" title="table live preview"></iframe></div>
-    <a class="spec-info" href="./table/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-      <span class="spec-copy"><span class="cn">table</span><span class="cd">dashboard-tabellen met hairlines, hover, inline status badges</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
-</section>
-
-<section class="gallery-group" data-cat="structuur">
-<div class="caps" data-reg="structuur" style="margin:22px 2px 10px">Structuur</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="structuur" data-search="home-shell home-shell agent-home: sidebar + gecentreerde composer-hero structuur">
-    <div class="spec-live"><iframe src="./home-shell/self/default.html" loading="lazy" title="home-shell live preview"></iframe></div>
-    <a class="spec-info" href="./home-shell/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-      <span class="spec-copy"><span class="cn">home-shell</span><span class="cd">agent-home: sidebar + gecentreerde composer-hero</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">3 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="structuur" data-search="nav nav sidebar-onderdelen structuur">
-    <div class="spec-live"><iframe src="./nav/self/default.html" loading="lazy" title="nav live preview"></iframe></div>
-    <a class="spec-info" href="./nav/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-inbox"/></svg></span>
-      <span class="spec-copy"><span class="cn">nav</span><span class="cd">sidebar-onderdelen</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="structuur" data-search="settings settings volledige instellingen-surface structuur">
-    <div class="spec-live"><iframe src="./settings/self/default.html" loading="lazy" title="settings live preview"></iframe></div>
-    <a class="spec-info" href="./settings/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-settings"/></svg></span>
-      <span class="spec-copy"><span class="cn">settings</span><span class="cd">volledige instellingen-surface</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
-</section>
-
-<section class="gallery-group" data-cat="motion">
-<div class="caps" data-reg="motion" style="margin:22px 2px 10px">Motion</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="motion" data-search="border-beam border beam animated border / glow material motion beam glow border motion tunable vendored-source css effect">
-    <div class="spec-live"><iframe src="./border-beam/self/playground.html" loading="lazy" title="border beam live preview"></iframe></div>
-    <a class="spec-info" href="./border-beam/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span>
-      <span class="spec-copy"><span class="cn">border beam</span><span class="cd">animated border / glow material</span><span class="spec-tags">beam · glow · border · motion · css · effect</span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: playground</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="motion" data-search="motion-spring spring physics tunable damped spring interaction motion spring physics pointer drag motion tunable requestanimationframe physics">
-    <div class="spec-live"><iframe src="./motion-spring/self/pointer-spring.html" loading="lazy" title="spring physics live preview"></iframe></div>
-    <a class="spec-info" href="./motion-spring/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-play"/></svg></span>
-      <span class="spec-copy"><span class="cn">spring physics</span><span class="cd">tunable damped spring interaction</span><span class="spec-tags">spring · physics · pointer · drag · requestAnimationFrame · physics</span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: pointer-spring</span></span>
-    </a>
-  </article>
-</div>
-</section>
-
-<section class="gallery-group" data-cat="3d">
-<div class="caps" data-reg="3d" style="margin:22px 2px 10px">3D / WebGL</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="3d" data-search="three-orbit three orbit three.js / webgl scene specimens 3d threejs webgl particles orbit scene tunable three.js 0.180 3d-scene">
-    <div class="spec-live"><iframe src="./three-orbit/self/orbit-field.html" loading="lazy" title="three orbit live preview"></iframe></div>
-    <a class="spec-info" href="./three-orbit/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
-      <span class="spec-copy"><span class="cn">three orbit</span><span class="cd">Three.js / WebGL scene specimens</span><span class="spec-tags">threejs · webgl · particles · orbit · three.js 0.180 · 3d-scene</span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: orbit-field</span></span>
-    </a>
-  </article>
-</div>
-</section>
-
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-07</div>
-<script>
-(function(){
-  var q=document.getElementById('gallery-q'), cat=document.getElementById('gallery-cat'), out=document.getElementById('gallery-count');
-  function apply(){
-    var needle=(q.value||'').toLowerCase().trim(), selected=cat.value, visible=0;
-    document.querySelectorAll('.spec-card').forEach(function(card){
-      var okCat=selected==='all'||card.dataset.cat===selected;
-      var okText=!needle||(card.dataset.search||'').indexOf(needle)>=0;
-      card.hidden=!(okCat&&okText); if(!card.hidden) visible++;
-    });
-    document.querySelectorAll('.gallery-group').forEach(function(group){
-      group.hidden=!group.querySelector('.spec-card:not([hidden])');
-    });
-    out.textContent=visible+' zichtbaar';
-  }
-  q.addEventListener('input',apply); cat.addEventListener('change',apply); apply();
-})();
-</script>
+<div class="lede">Random UI, motion, 3D en interaction references mogen hier landen zonder directe productkoppeling. Promotie naar de locked componentcatalogus blijft expliciet.</div>
+<div class="cards"><a class="card reveal" href="https://kinetics.colorion.co/#physics" target="_blank" rel="noreferrer"><span class="ct"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="cn" style="font-size:var(--text-md);min-width:150px">Kinetics Physics</span><span class="cd">Physics-specific interactive controls; source inspiration for motion-spring and future transition labs.</span><span class="cmeta"><span class="cnt">physics-lab · new</span><span class="act">spring · physics · motion · interactive · reference</span></span></a>
+<a class="card reveal" href="https://kinetics.colorion.co/#library" target="_blank" rel="noreferrer"><span class="ct"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="cn" style="font-size:var(--text-md);min-width:150px">Kinetics Library</span><span class="cd">Interactive parameterized specimens; strong reference for live tuning and recipe pages.</span><span class="cmeta"><span class="cnt">interaction-library · new</span><span class="act">motion · interaction · physics · controls · reference</span></span></a></div>
+<div class="gen" data-reg="colofon">bron: inbox/items.jsonl · gegenereerd door ds build op 2026-09-07</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">idx</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">inbox</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

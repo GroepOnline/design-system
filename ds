@@ -28,6 +28,11 @@ Brain (vijfde tool):
 Upstreams (catalogus-invoer):
   upstreams/*.json    immutable externe bronpins + rendererbeleid
   ./ds upstream list|show <id>|check [id]
+
+Research inbox (random vondsten):
+  inbox/items.jsonl   append-friendly URL/idee capture, nog geen production authority
+  ./ds inbox add <url> [--title ... --kind ... --tags a,b --note ...]
+  ./ds inbox list|show <id>
 """
 import hashlib
 import html as htmlmod
@@ -52,6 +57,8 @@ BRAIN_THRESHOLDS = os.path.join(BRAIN, "eval", "thresholds.yaml")
 BRAIN_SCORECARD = os.path.join(BRAIN, "eval", "scorecard.json")
 STYLES_JSON = os.path.join(ROOT, "styles.json")
 UPSTREAMS = os.path.join(ROOT, "upstreams")
+INBOX = os.path.join(ROOT, "inbox")
+INBOX_ITEMS = os.path.join(INBOX, "items.jsonl")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
@@ -298,6 +305,74 @@ def cmd_upstream(args):
         ok(f"{len(ids)} upstream(s) valide {dim(f'— {len(warnings)} warnings')}")
         return
     err("gebruik: ds upstream list | show <id> | check [id]")
+
+
+def inbox_items():
+    if not os.path.exists(INBOX_ITEMS):
+        return []
+    out = []
+    for lineno, raw in enumerate(Path(INBOX_ITEMS).read_text().splitlines(), 1):
+        if not raw.strip():
+            continue
+        try:
+            out.append(json.loads(raw))
+        except json.JSONDecodeError as exc:
+            err(f"inbox/items.jsonl regel {lineno}: {exc}")
+    return out
+
+def _inbox_id(url, title=""):
+    stem = re.sub(r"[^a-z0-9]+", "-", (title or "find").lower()).strip("-")[:28] or "find"
+    digest = hashlib.sha256(url.encode()).hexdigest()[:8]
+    return f"{stem}-{digest}"
+
+def cmd_inbox(args):
+    sub = args[0] if args else "list"
+    items = inbox_items()
+    if sub == "list":
+        if not items:
+            print("  (inbox leeg)")
+            return
+        print(bold(f"{'id':<38} {'kind':<14} {'status':<10} title / tags"))
+        print(dim("─" * 92))
+        for item in reversed(items):
+            tags = ",".join(item.get("tags", []))
+            print(f"{item.get('id','?'):<38} {item.get('kind','unknown'):<14} {item.get('status','new'):<10} {item.get('title') or item.get('url')} {dim(tags)}")
+        return
+    if sub == "show":
+        if len(args) < 2:
+            err("gebruik: ds inbox show <id>")
+        item = next((x for x in items if x.get("id") == args[1]), None)
+        if not item:
+            err(f"onbekend inbox item: {args[1]}")
+        print(json.dumps(item, indent=2, ensure_ascii=False))
+        return
+    if sub == "add":
+        if len(args) < 2 or not args[1].startswith(("http://", "https://")):
+            err("gebruik: ds inbox add <url> [--title ... --kind ... --tags a,b --note ...]")
+        url = args[1]
+        kw = {"title": "", "kind": "unknown", "tags": [], "note": ""}
+        it = iter(args[2:])
+        for a in it:
+            if a == "--title": kw["title"] = next(it)
+            elif a == "--kind": kw["kind"] = next(it)
+            elif a == "--tags": kw["tags"] = [x.strip() for x in next(it).split(",") if x.strip()]
+            elif a == "--note": kw["note"] = next(it)
+            else: err(f"onbekende inbox optie: {a}")
+        existing = next((x for x in items if x.get("url") == url), None)
+        if existing:
+            print(dim(f"bestaat al: {existing['id']}"))
+            return
+        os.makedirs(INBOX, exist_ok=True)
+        item = {
+            "id": _inbox_id(url, kw["title"]), "url": url, "title": kw["title"],
+            "kind": kw["kind"], "tags": kw["tags"], "note": kw["note"],
+            "status": "new", "added": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        }
+        with open(INBOX_ITEMS, "a") as f:
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+        ok(f"inbox + {bold(item['id'])} {dim('· ' + url)}")
+        return
+    err("gebruik: ds inbox add|list|show")
 
 def rewrite_paths(text):
     # Component-bronnen (self/external) staan 3 niveaus diep onder root.
@@ -1950,31 +2025,82 @@ CELL = """  <div class="cell{cls}"{wide}>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>{src}</pre></details>
   </div>"""
 
+GALLERY_CSS = """<style>
+/* specimen explorer: live cards + search/filter */
+  .gallery-tools { display:grid; grid-template-columns:minmax(260px,1fr) 220px auto; gap:8px; align-items:center; margin:22px 0 8px; }
+  .gallery-tools .input, .gallery-tools .select { height:36px; }
+  .gallery-count { font:11px var(--mono); color:var(--text-faint); white-space:nowrap; }
+  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
+  .spec-card { border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; background:var(--surface); transition:border-color var(--dur-fast),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast); }
+  .spec-card:hover { border-color:var(--line-strong); transform:translateY(-2px); box-shadow:0 12px 36px rgba(0,0,0,.08); }
+  .spec-card[hidden], .gallery-group[hidden] { display:none !important; }
+  .spec-live { height:190px; overflow:hidden; background:var(--bg); border-bottom:1px solid var(--line); }
+  .spec-live iframe { width:100%; height:380px; border:0; display:block; transform:scale(.5); transform-origin:0 0; width:200%; pointer-events:auto; }
+  .spec-info { display:flex; align-items:flex-start; gap:10px; padding:12px; color:inherit; text-decoration:none; }
+  .spec-info .ct { width:32px; height:32px; border:1px solid var(--line); border-radius:8px; display:grid; place-items:center; flex:none; background:var(--bg); }
+  .spec-info .ct svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; color:var(--text-muted); }
+  .spec-copy { min-width:0; flex:1; display:grid; gap:2px; }
+  .spec-copy .cn { font-size:var(--text-md); font-weight:500; }
+  .spec-copy .cd { color:var(--text-faint); font-size:var(--text-sm); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .spec-tags { font:10px var(--mono); color:var(--accent-ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .spec-info .cmeta { display:flex; flex-direction:column; align-items:flex-end; gap:2px; font-family:var(--mono); flex:none; }
+  .spec-info .cnt, .spec-info .act { font-size:10px; color:var(--text-faint); } .spec-info .act { color:var(--open-green); }
+  @media(max-width:760px){ .gallery-tools{grid-template-columns:1fr}.spec-grid{grid-template-columns:1fr}.spec-live{height:170px} }
+</style>
+"""
+
 GALLERY_BODY = """<div class="pagehead" data-reg="kop">
   <span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span>
   <div class="ph-text">
-    <div class="eyebrow">Catalogus</div>
-    <h1>Components</h1>
-    <div class="ph-sub">{nc} componenten · {nv} varianten · light + dark first-class</div>
+    <div class="eyebrow">Specimen explorer</div>
+    <h1>Library</h1>
+    <div class="ph-sub">{nc} componenten · {nv} varianten · production + studies + random vondsten</div>
   </div>
 </div>
-<div class="lede">Per component een catalogus met eigen ontwerpen (self) en externe referenties (external). Alles is vast tot een expliciete <code>select</code> of <code>remove</code> via de CLI.</div>
+<div class="lede">Zoek door componenten, motion, effecten en 3D. Kaarten tonen de actieve of eerste variant live; detailpagina's bewaren alle locked specimens. <a href="../inbox/index.html">Research inbox →</a></div>
+<div class="gallery-tools" data-reg="filters">
+  <input class="input" id="gallery-q" type="search" placeholder="Zoek component, tag, engine, effect…" autocomplete="off">
+  <select class="select" id="gallery-cat"><option value="all">Alle categorieën</option>{catopts}</select>
+  <span class="gallery-count" id="gallery-count">{nc} zichtbaar</span>
+</div>
 {groups}
 <div class="gen" data-reg="colofon">gegenereerd door ds build op {today}</div>
+<script>
+(function(){{
+  var q=document.getElementById('gallery-q'), cat=document.getElementById('gallery-cat'), out=document.getElementById('gallery-count');
+  function apply(){{
+    var needle=(q.value||'').toLowerCase().trim(), selected=cat.value, visible=0;
+    document.querySelectorAll('.spec-card').forEach(function(card){{
+      var okCat=selected==='all'||card.dataset.cat===selected;
+      var okText=!needle||(card.dataset.search||'').indexOf(needle)>=0;
+      card.hidden=!(okCat&&okText); if(!card.hidden) visible++;
+    }});
+    document.querySelectorAll('.gallery-group').forEach(function(group){{
+      group.hidden=!group.querySelector('.spec-card:not([hidden])');
+    }});
+    out.textContent=visible+' zichtbaar';
+  }}
+  q.addEventListener('input',apply); cat.addEventListener('change',apply); apply();
+}})();
+</script>
 """
 
-GALLERY_GROUP = """<div class="caps" data-reg="{reg}" style="margin:22px 2px 10px">{cat}</div>
-<div class="cards">
+GALLERY_GROUP = """<section class="gallery-group" data-cat="{reg}">
+<div class="caps" data-reg="{reg}" style="margin:22px 2px 10px">{cat}</div>
+<div class="spec-grid">
 {items}
 </div>
+</section>
 """
 
-GALLERY_ITEM = """  <a class="card reveal" href="./{name}/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#{icon}"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">{title}</span>
-    <span class="cd">{desc}</span>
-    <span class="cmeta"><span class="cnt">{nself} zelf · {nx} extern</span><span class="act">{active}</span></span>
-  </a>"""
+GALLERY_ITEM = """  <article class="spec-card reveal" data-cat="{catid}" data-search="{search}">
+    <div class="spec-live"><iframe src="{preview}" loading="lazy" title="{title} live preview"></iframe></div>
+    <a class="spec-info" href="./{name}/index.html">
+      <span class="ct"><svg><use href="../components/icons.svg#{icon}"/></svg></span>
+      <span class="spec-copy"><span class="cn">{title}</span><span class="cd">{desc}</span><span class="spec-tags">{tags}</span></span>
+      <span class="cmeta"><span class="cnt">{nself} zelf · {nx} extern</span><span class="act">{active}</span></span>
+    </a>
+  </article>"""
 
 def nav_html(current=None, rel_root="."):
     out = []
@@ -2084,6 +2210,37 @@ def build_catalog(c):
     with open(os.path.join(COMP, c, "index.html"), "w") as f:
         f.write(page)
 
+INBOX_BODY = """<div class="pagehead" data-reg="kop">
+  <span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span>
+  <div class="ph-text"><div class="eyebrow">Research capture</div><h1>Inbox</h1>
+  <div class="ph-sub">{n} vondsten · capture first, curate later</div></div>
+</div>
+<div class="lede">Random UI, motion, 3D en interaction references mogen hier landen zonder directe productkoppeling. Promotie naar de locked componentcatalogus blijft expliciet.</div>
+<div class="cards">{items}</div>
+<div class="gen" data-reg="colofon">bron: inbox/items.jsonl · gegenereerd door ds build op {today}</div>
+"""
+
+def build_inbox():
+    os.makedirs(INBOX, exist_ok=True)
+    rows = []
+    for item in reversed(inbox_items()):
+        tags = " · ".join(item.get("tags", []))
+        title = htmlmod.escape(item.get("title") or item.get("url", "untitled"))
+        url = htmlmod.escape(item.get("url", "#"), quote=True)
+        kind = htmlmod.escape(item.get("kind", "unknown"))
+        status = htmlmod.escape(item.get("status", "new"))
+        note = htmlmod.escape(item.get("note", ""))
+        rows.append(
+            f'<a class="card reveal" href="{url}" target="_blank" rel="noreferrer">'
+            f'<span class="ct"><svg><use href="../components/icons.svg#i-external"/></svg></span>'
+            f'<span class="cn" style="font-size:var(--text-md);min-width:150px">{title}</span>'
+            f'<span class="cd">{note}</span>'
+            f'<span class="cmeta"><span class="cnt">{kind} · {status}</span><span class="act">{htmlmod.escape(tags)}</span></span></a>'
+        )
+    body = INBOX_BODY.format(n=len(rows), items="\n".join(rows) or '<div class="empty">Inbox leeg</div>', today=_today())
+    Path(INBOX, "index.html").write_text(_shell("inbox", body, rel_root="..", plate="inbox"))
+    print(f"  {_c('32','✓')} {bold('inbox'):<14} {len(rows)} vondsten")
+
 def build_gallery():
     groups = []
     ncomp = 0
@@ -2098,19 +2255,36 @@ def build_gallery():
             ns, nx = counts(m)
             ncomp += 1
             nvar += len(m["entries"])
+            active_entry = next((e for e in m["entries"] if e["status"] == "active"), None)
+            preview_entry = active_entry or (m["entries"][0] if m["entries"] else None)
             acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
+            all_tags = []
+            engines = []
+            kinds = []
+            for e in m["entries"]:
+                all_tags.extend(e.get("tags", []))
+                if e.get("engine"): engines.append(str(e["engine"]))
+                if e.get("kind"): kinds.append(str(e["kind"]))
+            all_tags.extend(m.get("tags", []))
+            seen = set()
+            tags = [x for x in all_tags if x and not (x in seen or seen.add(x))]
+            chip_text = " · ".join(tags[:4] + engines[:1] + kinds[:1])
+            search_text = " ".join([c, m.get("title", c), m.get("desc", ""), cat, *tags, *engines, *kinds]).lower()
+            preview = f"./{c}/{preview_entry['file']}" if preview_entry else "about:blank"
             items.append(GALLERY_ITEM.format(
-                name=c, title=m.get("title", c), desc=m.get("desc", ""),
-                icon=ICONS.get(c, "i-file"), nself=ns, nx=nx,
+                name=c, title=htmlmod.escape(m.get("title", c)), desc=htmlmod.escape(m.get("desc", "")),
+                icon=ICONS.get(c, "i-file"), nself=ns, nx=nx, catid=cat,
+                search=htmlmod.escape(search_text, quote=True), tags=htmlmod.escape(chip_text), preview=preview,
                 active="actief: " + ",".join(acts) if acts else "",
             ))
-        groups.append(GALLERY_GROUP.format(cat=label, reg=label.lower(), items="\n".join(items)))
-    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), today=_today())
+        groups.append(GALLERY_GROUP.format(cat=label, reg=cat, items="\n".join(items)))
+    catopts = "".join(f'<option value="{cat}">{label}</option>' for cat, label in CATS)
+    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), catopts=catopts, today=_today())
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{rel_root}", "..")
             .replace("{nav}", nav_html(rel_root=".."))
             .replace("{sysnav}", sysnav_html(rel_root=".."))
-            .replace("{mdcss}", "")
+            .replace("{mdcss}", GALLERY_CSS)
             .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT.replace("{plate}", "idx"))
     with open(os.path.join(COMP, "index.html"), "w") as f:
@@ -3015,7 +3189,7 @@ def _is_generated_html_output(path: str) -> bool:
     """Return whether path is an HTML artifact owned by ``ds build``."""
     p = Path(path)
     parts = p.parts
-    if p in {Path("index.html"), Path("components/index.html"), Path("taste-site/index.html")}:
+    if p in {Path("index.html"), Path("components/index.html"), Path("taste-site/index.html"), Path("inbox/index.html")}:
         return True
     if len(parts) == 3 and parts[0] == "components" and parts[2] == "index.html":
         return True
@@ -3098,6 +3272,7 @@ def cmd_build(only=None, check=False):
         ns, nx = counts(m)
         print(f"  {_c('32','✓')} {bold(c):<14} {len(m['entries'])} varianten {dim(f'({ns} zelf, {nx} extern)')}")
     build_gallery()
+    build_inbox()
     build_home()
     if only:
         ok(f"web bijgewerkt {dim('(' + only + ' + gallery)')}")
@@ -3249,6 +3424,8 @@ def main():
         cmd_brain(args[1:])
     elif args[0] == "upstream":
         cmd_upstream(args[1:])
+    elif args[0] == "inbox":
+        cmd_inbox(args[1:])
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()
