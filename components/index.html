@@ -233,54 +233,88 @@
     .cell, .cell .ch, .rail a.it, .brand .logo { transition: none; }
   }
 <style>
-/* specimen explorer: live cards + search/filter */
-  .gallery-tools { display:grid; grid-template-columns:minmax(260px,1fr) 190px auto; gap:7px; align-items:center; margin:16px 0 8px; }
-  .gallery-tools .input, .gallery-tools .select { height:30px; }
-  .gallery-count { font:11px var(--mono); color:var(--text-faint); white-space:nowrap; }
-  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:9px; }
-  .spec-card { border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; background:var(--surface); transition:border-color var(--dur-fast),background var(--dur-fast); }
-  .spec-card:hover { border-color:var(--line-strong); background:color-mix(in srgb,var(--surface) 97%,var(--text) 3%); }
-  .spec-card[hidden], .gallery-group[hidden] { display:none !important; }
-  .spec-live { height:126px; overflow:hidden; background:var(--bg); border-bottom:1px solid var(--line); }
-  .spec-live iframe { width:100%; height:380px; border:0; display:block; transform:scale(.5); transform-origin:0 0; width:200%; pointer-events:auto; }
-  .spec-info { display:flex; align-items:flex-start; gap:8px; padding:8px 9px 9px; color:inherit; text-decoration:none; }
-  .spec-info .ct { width:26px; height:26px; border:1px solid var(--line); border-radius:var(--r-md); display:grid; place-items:center; flex:none; background:var(--bg); }
-  .spec-info .ct svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:2; color:var(--text-muted); }
-  .spec-copy { min-width:0; flex:1; display:grid; gap:1px; }
-  .spec-copy .cn { font-size:var(--text-sm); font-weight:500; }
-  .spec-copy .cd { color:var(--text-faint); font-size:var(--text-xs); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .spec-tags { font:9px var(--mono); color:var(--text-faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .spec-info .cmeta { display:flex; flex-direction:column; align-items:flex-end; gap:2px; font-family:var(--mono); flex:none; }
-  .spec-info .cnt, .spec-info .act { font-size:9px; color:var(--text-faint); } .spec-info .act { color:var(--open-green); }
-  @media(max-width:760px){ .gallery-tools{grid-template-columns:1fr}.spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.spec-live{height:112px} } @media(max-width:480px){.spec-grid{grid-template-columns:1fr}}
+body.library-shell { --lib-blue:#4f7cff; --lib-bg:#ffffff; --lib-side:#fbfbfb; --lib-line:#e8e8e8; --lib-text:#202124; --lib-muted:#777b82; --lib-hover:#f5f6f8; background:var(--lib-bg); color:var(--lib-text); }
+body.library-shell .sruler, body.library-shell .splate, body.library-shell .smodeline { display:none !important; }
+body.library-shell .rail { width:244px; padding:8px 9px 10px; background:var(--lib-side); border-right:1px solid var(--lib-line); }
+body.library-shell .brand { height:34px; padding:0 8px; gap:7px; font-size:13px; border-radius:6px; }
+body.library-shell .brand .logo { width:18px; height:18px; border-radius:4px; font-size:10px; background:#ececec; color:#555; }
+body.library-shell .brand:hover .logo { background:#e5e5e5; color:#222; }
+body.library-shell .rail .lbl { margin:13px 8px 4px; font-size:10px; font-weight:500; color:#929292; }
+body.library-shell .rail a.it { min-height:30px; padding:4px 7px; gap:7px; border-radius:6px; margin:0; }
+body.library-shell .rail a.it:hover { background:#f4f4f4; }
+body.library-shell .rail a.it.on { background:#f2f4f8; border-color:#d8dde8; }
+body.library-shell .rail a.it.on::before { display:none; }
+body.library-shell .rail .tile { width:20px; height:20px; border:0; background:transparent; border-radius:4px; }
+body.library-shell .rail .tile svg { width:13px; height:13px; color:#5f6368; }
+body.library-shell .rail .nm { font-size:12px; font-weight:450; color:#303236; }
+body.library-shell .rail .nm .ds, body.library-shell .rail .n, body.library-shell .rail .act { display:none; }
+body.library-shell .rail .foot { border-top:0; padding-top:8px; }
+body.library-shell .main { background:#fff; }
+body.library-shell .wrap { max-width:none; padding:0; }
+.library-topbar { height:48px; border-bottom:1px solid var(--lib-line); display:grid; grid-template-columns:1fr minmax(260px,430px) 1fr; align-items:center; gap:16px; padding:0 18px; }
+.library-title { font-size:12px; font-weight:550; color:#303236; }
+.library-search { position:relative; }
+.library-search svg { position:absolute; left:10px; top:50%; transform:translateY(-50%); width:13px; height:13px; fill:none; stroke:#8b8f95; stroke-width:2; }
+.library-search input { width:100%; height:30px; padding:0 30px; border:1px solid #e1e3e6; border-radius:6px; background:#fff; color:#2b2d31; font:12px var(--font); outline:none; }
+.library-search input:focus { border-color:#9eb8ff; box-shadow:0 0 0 2px rgba(79,124,255,.10); }
+.library-actions { display:flex; justify-content:flex-end; align-items:center; gap:5px; }
+.library-iconbtn { width:28px; height:28px; display:grid; place-items:center; border:1px solid transparent; border-radius:5px; background:transparent; color:#73777d; cursor:pointer; }
+.library-iconbtn:hover, .library-iconbtn.on { background:#f3f4f6; border-color:#e4e5e7; color:#303236; }
+.library-iconbtn svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; }
+.library-body { padding:26px 30px 56px; }
+.library-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:16px; }
+.library-heading h1 { margin:0; font:550 18px var(--font); letter-spacing:-.02em; }
+.library-heading p { margin:3px 0 0; color:#8a8e94; font-size:11px; }
+.library-count { font:10px var(--mono); color:#9a9da2; white-space:nowrap; }
+.library-filters { display:flex; align-items:center; gap:6px; margin-bottom:18px; }
+.library-filter { height:28px; border:1px solid #e3e4e6; border-radius:6px; background:#fff; color:#666b72; padding:0 9px; font:11px var(--font); cursor:pointer; }
+.library-filter:hover { background:#f7f7f7; }
+.library-filter.on { background:#f0f3f9; border-color:#d4dbe9; color:#34415a; }
+.library-group { margin:0 0 22px; }
+.library-group-head { display:flex; align-items:center; gap:8px; margin:0 0 8px; color:#777b82; font-size:10px; font-weight:550; }
+.library-group-head:after { content:""; height:1px; background:#efefef; flex:1; }
+.spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; }
+.spec-card { position:relative; min-width:0; border:1px solid #e8e8e8; border-radius:7px; background:#fff; overflow:hidden; transition:border-color 120ms ease, background 120ms ease; }
+.spec-card:hover { border-color:#d3d5d8; background:#fcfcfc; }
+.spec-card[hidden], .library-group[hidden] { display:none !important; }
+.spec-live { height:108px; overflow:hidden; background:#fff; border-bottom:1px solid #ededed; }
+.spec-live iframe { width:200%; height:216px; border:0; display:block; transform:scale(.5); transform-origin:0 0; pointer-events:auto; background:#fff; }
+.spec-info { min-height:48px; display:flex; align-items:center; gap:8px; padding:7px 8px; color:inherit; text-decoration:none; }
+.spec-info .ct { width:22px; height:22px; border:0; border-radius:5px; display:grid; place-items:center; flex:none; background:#f5f5f5; }
+.spec-info .ct svg { width:12px; height:12px; fill:none; stroke:#74787e; stroke-width:2; }
+.spec-copy { min-width:0; flex:1; display:grid; gap:1px; }
+.spec-copy .cn { font-size:11.5px; font-weight:520; color:#303236; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.spec-copy .cd { color:#96999e; font-size:9.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.spec-tags { display:none; }
+.spec-info .cmeta { flex:none; font:9px var(--mono); color:#a1a4a8; }
+.spec-info .act { display:none; }
+body.library-shell.list-view .spec-grid { grid-template-columns:1fr; gap:3px; }
+body.library-shell.list-view .spec-card { display:grid; grid-template-columns:148px minmax(0,1fr); min-height:58px; }
+body.library-shell.list-view .spec-live { height:58px; border-bottom:0; border-right:1px solid #ededed; }
+body.library-shell.list-view .spec-live iframe { width:400%; height:232px; transform:scale(.25); }
+body.library-shell.list-view .spec-info { min-height:58px; }
+.library-empty { display:none; padding:90px 0; text-align:center; color:#9a9da2; font-size:12px; }
+.library-empty.on { display:block; }
+.library-footer { margin-top:28px; padding-top:12px; border-top:1px solid #eee; color:#aaa; font:9px var(--mono); }
+@media(max-width:860px){ body.library-shell .rail{width:100%} .library-topbar{grid-template-columns:1fr auto;padding:0 12px}.library-title{display:none}.library-search{grid-column:1}.library-body{padding:18px 14px 40px}.spec-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))} }
 </style>
 </style>
 </head>
-<body>
+<body class="library-shell">
 <aside class="rail">
   <a class="brand" href="../index.html"><span class="logo">d</span>design-system</a>
   <div class="rail-links">
-  <div class="lbl caps">Primitieven</div>
-  <a class="it" href="../components/badge/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
-  <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">btn + gbtn + kbd</span></span><span class="act"></span></a>
-  <div class="lbl caps">Gesprek</div>
-  <a class="it" href="../components/approval/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
-  <a class="it" href="../components/composer/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
-  <a class="it" href="../components/transcript/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-message"/></svg></span><span class="nm">transcript<span class="ds">user-pill, prose, meta</span></span><span class="act"></span></a>
-  <a class="it" href="../components/worked-row/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
-  <div class="lbl caps">Bewijs</div>
-  <a class="it" href="../components/artifact/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
-  <a class="it" href="../components/pr-card/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
-  <a class="it" href="../components/table/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="act"></span></a>
-  <div class="lbl caps">Structuur</div>
-  <a class="it" href="../components/home-shell/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
-  <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
-  <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
-  <div class="lbl caps">Motion</div>
-  <a class="it" href="../components/border-beam/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
-  <a class="it" href="../components/motion-spring/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
-  <div class="lbl caps">3D / WebGL</div>
-  <a class="it" href="../components/three-orbit/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">three-orbit<span class="ds">Three.js / WebGL scene specimens</span></span><span class="act"></span></a>
+<div class="lbl caps">Library</div>
+<a class="it on" href="./index.html"><span class="tile"><svg><use href="../components/icons.svg#i-library"/></svg></span><span class="nm">Components</span></a>
+<a class="it" href="../inbox/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">Inbox</span></a>
+<div class="lbl caps">Browse</div>
+<a class="it" href="#" data-sidebar-cat="primitieven" data-cat="primitieven"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">Primitieven</span></a>
+<a class="it" href="#" data-sidebar-cat="gesprek" data-cat="gesprek"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">Gesprek</span></a>
+<a class="it" href="#" data-sidebar-cat="bewijs" data-cat="bewijs"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">Bewijs</span></a>
+<a class="it" href="#" data-sidebar-cat="structuur" data-cat="structuur"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">Structuur</span></a>
+<a class="it" href="#" data-sidebar-cat="systeem" data-cat="systeem"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">Systeem</span></a>
+<a class="it" href="#" data-sidebar-cat="motion" data-cat="motion"><span class="tile"><svg><use href="../components/icons.svg#i-zap"/></svg></span><span class="nm">Motion</span></a>
+<a class="it" href="#" data-sidebar-cat="3d" data-cat="3d"><span class="tile"><svg><use href="../components/icons.svg#i-globe"/></svg></span><span class="nm">3D / WebGL</span></a>
     <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
@@ -297,193 +331,190 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead" data-reg="kop">
-  <span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-  <div class="ph-text">
-    <div class="eyebrow">Specimen explorer</div>
-    <h1>Library</h1>
-    <div class="ph-sub">15 componenten · 33 varianten · production + studies + random vondsten</div>
+<div class="library-topbar">
+  <div class="library-title">Component library</div>
+  <label class="library-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gallery-q" type="search" placeholder="Search components" autocomplete="off"></label>
+  <div class="library-actions">
+    <button class="library-iconbtn on" id="grid-view" title="Grid view"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg></button>
+    <button class="library-iconbtn" id="list-view" title="List view"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg></button>
   </div>
 </div>
-<div class="lede">Zoek door componenten, motion, effecten en 3D. Kaarten tonen de actieve of eerste variant live; detailpagina's bewaren alle locked specimens. <a href="../inbox/index.html">Research inbox →</a></div>
-<div class="gallery-tools" data-reg="filters">
-  <input class="input" id="gallery-q" type="search" placeholder="Zoek component, tag, engine, effect…" autocomplete="off">
-  <select class="select" id="gallery-cat"><option value="all">Alle categorieën</option><option value="primitieven">Primitieven</option><option value="gesprek">Gesprek</option><option value="bewijs">Bewijs</option><option value="structuur">Structuur</option><option value="interactie">Interactie</option><option value="motion">Motion</option><option value="3d">3D / WebGL</option><option value="experimenteel">Experimenteel</option></select>
-  <span class="gallery-count" id="gallery-count">15 zichtbaar</span>
-</div>
-<section class="gallery-group" data-cat="primitieven">
-<div class="caps" data-reg="primitieven" style="margin:22px 2px 10px">Primitieven</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="primitieven" data-search="badge badge git-status + meta primitieven">
-    <div class="spec-live"><iframe src="./badge/self/default.html" loading="lazy" title="badge live preview"></iframe></div>
-    <a class="spec-info" href="./badge/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-tag"/></svg></span>
-      <span class="spec-copy"><span class="cn">badge</span><span class="cd">git-status + meta</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="primitieven" data-search="button button btn + gbtn + kbd primitieven buttons variants live-controls random-library material monochrome pointer-geometry css + pointer-js workbench">
-    <div class="spec-live"><iframe src="./button/self/default.html" loading="lazy" title="button live preview"></iframe></div>
-    <a class="spec-info" href="./button/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-click"/></svg></span>
-      <span class="spec-copy"><span class="cn">button</span><span class="cd">btn + gbtn + kbd</span><span class="spec-tags">buttons · variants · live-controls · random-library · css + pointer-js · workbench</span></span>
-      <span class="cmeta"><span class="cnt">6 zelf · 2 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
+<div class="library-body">
+  <div class="library-heading"><div><h1>Library</h1><p>16 components, 36 variants. Production and studies live together.</p></div><span class="library-count" id="gallery-count">16 visible</span></div>
+  <div class="library-filters" id="library-filters"><button class="library-filter on" data-cat="all">All</button><button class="library-filter" data-cat="primitieven">Primitieven</button><button class="library-filter" data-cat="gesprek">Gesprek</button><button class="library-filter" data-cat="bewijs">Bewijs</button><button class="library-filter" data-cat="structuur">Structuur</button><button class="library-filter" data-cat="systeem">Systeem</button><button class="library-filter" data-cat="motion">Motion</button><button class="library-filter" data-cat="3d">3D / WebGL</button></div>
+  <section class="library-group" data-cat-group="primitieven">
+<div class="library-group-head">Primitieven</div>
+<div class="spec-grid"><article class="spec-card" data-cat="primitieven" data-search="badge badge git-status + meta primitieven">
+  <div class="spec-live"><iframe src="./badge/self/default.html" loading="lazy" title="badge live preview"></iframe></div>
+  <a class="spec-info" href="./badge/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-tag"/></svg></span>
+    <span class="spec-copy"><span class="cn">badge</span><span class="cd">git-status + meta</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">1+0</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="primitieven" data-search="button button btn + gbtn + kbd primitieven buttons variants live-controls random-library material monochrome pointer-geometry css + pointer-js workbench">
+  <div class="spec-live"><iframe src="./button/self/default.html" loading="lazy" title="button live preview"></iframe></div>
+  <a class="spec-info" href="./button/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-click"/></svg></span>
+    <span class="spec-copy"><span class="cn">button</span><span class="cd">btn + gbtn + kbd</span><span class="spec-tags">buttons · variants · live-controls · random-library · css + pointer-js · workbench</span></span>
+    <span class="cmeta"><span class="cnt">6+2</span><span class="act">actief: default</span></span>
+  </a>
+</article></div>
 </section>
-
-<section class="gallery-group" data-cat="gesprek">
-<div class="caps" data-reg="gesprek" style="margin:22px 2px 10px">Gesprek</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="gesprek" data-search="approval approval wacht-op-jou, toetsen 1/2/3 gesprek">
-    <div class="spec-live"><iframe src="./approval/self/default.html" loading="lazy" title="approval live preview"></iframe></div>
-    <a class="spec-info" href="./approval/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-alert"/></svg></span>
-      <span class="spec-copy"><span class="cn">approval</span><span class="cd">wacht-op-jou, toetsen 1/2/3</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="gesprek" data-search="composer composer invoer + wachtrij gesprek">
-    <div class="spec-live"><iframe src="./composer/self/default.html" loading="lazy" title="composer live preview"></iframe></div>
-    <a class="spec-info" href="./composer/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-pencil"/></svg></span>
-      <span class="spec-copy"><span class="cn">composer</span><span class="cd">invoer + wachtrij</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="gesprek" data-search="transcript transcript user-pill, prose, meta gesprek">
-    <div class="spec-live"><iframe src="./transcript/self/default.html" loading="lazy" title="transcript live preview"></iframe></div>
-    <a class="spec-info" href="./transcript/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-message"/></svg></span>
-      <span class="spec-copy"><span class="cn">transcript</span><span class="cd">user-pill, prose, meta</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="gesprek" data-search="worked-row worked-row signatuur: activiteit zonder spinner gesprek">
-    <div class="spec-live"><iframe src="./worked-row/self/default.html" loading="lazy" title="worked-row live preview"></iframe></div>
-    <a class="spec-info" href="./worked-row/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-clock"/></svg></span>
-      <span class="spec-copy"><span class="cn">worked-row</span><span class="cd">signatuur: activiteit zonder spinner</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
+<section class="library-group" data-cat-group="gesprek">
+<div class="library-group-head">Gesprek</div>
+<div class="spec-grid"><article class="spec-card" data-cat="gesprek" data-search="approval approval wacht-op-jou, toetsen 1/2/3 gesprek">
+  <div class="spec-live"><iframe src="./approval/self/default.html" loading="lazy" title="approval live preview"></iframe></div>
+  <a class="spec-info" href="./approval/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-alert"/></svg></span>
+    <span class="spec-copy"><span class="cn">approval</span><span class="cd">wacht-op-jou, toetsen 1/2/3</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">2+1</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="gesprek" data-search="composer composer invoer + wachtrij gesprek">
+  <div class="spec-live"><iframe src="./composer/self/default.html" loading="lazy" title="composer live preview"></iframe></div>
+  <a class="spec-info" href="./composer/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-pencil"/></svg></span>
+    <span class="spec-copy"><span class="cn">composer</span><span class="cd">invoer + wachtrij</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">2+1</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="gesprek" data-search="transcript transcript user-pill, prose, meta gesprek">
+  <div class="spec-live"><iframe src="./transcript/self/default.html" loading="lazy" title="transcript live preview"></iframe></div>
+  <a class="spec-info" href="./transcript/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-message"/></svg></span>
+    <span class="spec-copy"><span class="cn">transcript</span><span class="cd">user-pill, prose, meta</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">1+0</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="gesprek" data-search="worked-row worked-row signatuur: activiteit zonder spinner gesprek">
+  <div class="spec-live"><iframe src="./worked-row/self/default.html" loading="lazy" title="worked-row live preview"></iframe></div>
+  <a class="spec-info" href="./worked-row/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-clock"/></svg></span>
+    <span class="spec-copy"><span class="cn">worked-row</span><span class="cd">signatuur: activiteit zonder spinner</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">1+1</span><span class="act">actief: default</span></span>
+  </a>
+</article></div>
 </section>
-
-<section class="gallery-group" data-cat="bewijs">
-<div class="caps" data-reg="bewijs" style="margin:22px 2px 10px">Bewijs</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="bewijs" data-search="artifact artifact before/after bewijs bewijs">
-    <div class="spec-live"><iframe src="./artifact/self/default.html" loading="lazy" title="artifact live preview"></iframe></div>
-    <a class="spec-info" href="./artifact/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
-      <span class="spec-copy"><span class="cn">artifact</span><span class="cd">before/after bewijs</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="bewijs" data-search="pr-card pr-card bewijs van werk bewijs">
-    <div class="spec-live"><iframe src="./pr-card/self/default.html" loading="lazy" title="pr-card live preview"></iframe></div>
-    <a class="spec-info" href="./pr-card/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-git-pr"/></svg></span>
-      <span class="spec-copy"><span class="cn">pr-card</span><span class="cd">bewijs van werk</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="bewijs" data-search="table table dashboard-tabellen met hairlines, hover, inline status badges bewijs">
-    <div class="spec-live"><iframe src="./table/self/default.html" loading="lazy" title="table live preview"></iframe></div>
-    <a class="spec-info" href="./table/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-      <span class="spec-copy"><span class="cn">table</span><span class="cd">dashboard-tabellen met hairlines, hover, inline status badges</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
+<section class="library-group" data-cat-group="bewijs">
+<div class="library-group-head">Bewijs</div>
+<div class="spec-grid"><article class="spec-card" data-cat="bewijs" data-search="artifact artifact before/after bewijs bewijs">
+  <div class="spec-live"><iframe src="./artifact/self/default.html" loading="lazy" title="artifact live preview"></iframe></div>
+  <a class="spec-info" href="./artifact/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
+    <span class="spec-copy"><span class="cn">artifact</span><span class="cd">before/after bewijs</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">2+1</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="bewijs" data-search="pr-card pr-card bewijs van werk bewijs">
+  <div class="spec-live"><iframe src="./pr-card/self/default.html" loading="lazy" title="pr-card live preview"></iframe></div>
+  <a class="spec-info" href="./pr-card/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-git-pr"/></svg></span>
+    <span class="spec-copy"><span class="cn">pr-card</span><span class="cd">bewijs van werk</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">1+0</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="bewijs" data-search="table table dashboard-tabellen met hairlines, hover, inline status badges bewijs">
+  <div class="spec-live"><iframe src="./table/self/default.html" loading="lazy" title="table live preview"></iframe></div>
+  <a class="spec-info" href="./table/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
+    <span class="spec-copy"><span class="cn">table</span><span class="cd">dashboard-tabellen met hairlines, hover, inline status badges</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">1+1</span><span class="act">actief: default</span></span>
+  </a>
+</article></div>
 </section>
-
-<section class="gallery-group" data-cat="structuur">
-<div class="caps" data-reg="structuur" style="margin:22px 2px 10px">Structuur</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="structuur" data-search="home-shell home-shell agent-home: sidebar + gecentreerde composer-hero structuur">
-    <div class="spec-live"><iframe src="./home-shell/self/default.html" loading="lazy" title="home-shell live preview"></iframe></div>
-    <a class="spec-info" href="./home-shell/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-      <span class="spec-copy"><span class="cn">home-shell</span><span class="cd">agent-home: sidebar + gecentreerde composer-hero</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">3 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="structuur" data-search="nav nav sidebar-onderdelen structuur">
-    <div class="spec-live"><iframe src="./nav/self/default.html" loading="lazy" title="nav live preview"></iframe></div>
-    <a class="spec-info" href="./nav/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-inbox"/></svg></span>
-      <span class="spec-copy"><span class="cn">nav</span><span class="cd">sidebar-onderdelen</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="structuur" data-search="settings settings volledige instellingen-surface structuur">
-    <div class="spec-live"><iframe src="./settings/self/default.html" loading="lazy" title="settings live preview"></iframe></div>
-    <a class="spec-info" href="./settings/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-settings"/></svg></span>
-      <span class="spec-copy"><span class="cn">settings</span><span class="cd">volledige instellingen-surface</span><span class="spec-tags"></span></span>
-      <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: default</span></span>
-    </a>
-  </article>
-</div>
+<section class="library-group" data-cat-group="structuur">
+<div class="library-group-head">Structuur</div>
+<div class="spec-grid"><article class="spec-card" data-cat="structuur" data-search="home-shell home-shell agent-home: sidebar + gecentreerde composer-hero structuur">
+  <div class="spec-live"><iframe src="./home-shell/self/default.html" loading="lazy" title="home-shell live preview"></iframe></div>
+  <a class="spec-info" href="./home-shell/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
+    <span class="spec-copy"><span class="cn">home-shell</span><span class="cd">agent-home: sidebar + gecentreerde composer-hero</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">3+0</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="structuur" data-search="nav nav sidebar-onderdelen structuur">
+  <div class="spec-live"><iframe src="./nav/self/default.html" loading="lazy" title="nav live preview"></iframe></div>
+  <a class="spec-info" href="./nav/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-inbox"/></svg></span>
+    <span class="spec-copy"><span class="cn">nav</span><span class="cd">sidebar-onderdelen</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">1+0</span><span class="act">actief: default</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="structuur" data-search="settings settings volledige instellingen-surface structuur">
+  <div class="spec-live"><iframe src="./settings/self/default.html" loading="lazy" title="settings live preview"></iframe></div>
+  <a class="spec-info" href="./settings/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-settings"/></svg></span>
+    <span class="spec-copy"><span class="cn">settings</span><span class="cd">volledige instellingen-surface</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">2+0</span><span class="act">actief: default</span></span>
+  </a>
+</article></div>
 </section>
-
-<section class="gallery-group" data-cat="motion">
-<div class="caps" data-reg="motion" style="margin:22px 2px 10px">Motion</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="motion" data-search="border-beam border beam animated border / glow material motion beam glow border motion tunable vendored-source css effect">
-    <div class="spec-live"><iframe src="./border-beam/self/playground.html" loading="lazy" title="border beam live preview"></iframe></div>
-    <a class="spec-info" href="./border-beam/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span>
-      <span class="spec-copy"><span class="cn">border beam</span><span class="cd">animated border / glow material</span><span class="spec-tags">beam · glow · border · motion · css · effect</span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: playground</span></span>
-    </a>
-  </article>
-  <article class="spec-card reveal" data-cat="motion" data-search="motion-spring spring physics tunable damped spring interaction motion spring physics pointer drag motion tunable requestanimationframe physics">
-    <div class="spec-live"><iframe src="./motion-spring/self/pointer-spring.html" loading="lazy" title="spring physics live preview"></iframe></div>
-    <a class="spec-info" href="./motion-spring/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-play"/></svg></span>
-      <span class="spec-copy"><span class="cn">spring physics</span><span class="cd">tunable damped spring interaction</span><span class="spec-tags">spring · physics · pointer · drag · requestAnimationFrame · physics</span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: pointer-spring</span></span>
-    </a>
-  </article>
-</div>
+<section class="library-group" data-cat-group="systeem">
+<div class="library-group-head">Systeem</div>
+<div class="spec-grid"><article class="spec-card" data-cat="systeem" data-search="studio studio visueel afstellen zonder code systeem">
+  <div class="spec-live"><iframe src="./studio/self/v3-flow.html" loading="lazy" title="studio live preview"></iframe></div>
+  <a class="spec-info" href="./studio/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span>
+    <span class="spec-copy"><span class="cn">studio</span><span class="cd">visueel afstellen zonder code</span><span class="spec-tags"></span></span>
+    <span class="cmeta"><span class="cnt">3+0</span><span class="act">actief: v3-flow</span></span>
+  </a>
+</article></div>
 </section>
-
-<section class="gallery-group" data-cat="3d">
-<div class="caps" data-reg="3d" style="margin:22px 2px 10px">3D / WebGL</div>
-<div class="spec-grid">
-  <article class="spec-card reveal" data-cat="3d" data-search="three-orbit three orbit three.js / webgl scene specimens 3d threejs webgl particles orbit scene tunable three.js 0.180 3d-scene">
-    <div class="spec-live"><iframe src="./three-orbit/self/orbit-field.html" loading="lazy" title="three orbit live preview"></iframe></div>
-    <a class="spec-info" href="./three-orbit/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
-      <span class="spec-copy"><span class="cn">three orbit</span><span class="cd">Three.js / WebGL scene specimens</span><span class="spec-tags">threejs · webgl · particles · orbit · three.js 0.180 · 3d-scene</span></span>
-      <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: orbit-field</span></span>
-    </a>
-  </article>
-</div>
+<section class="library-group" data-cat-group="motion">
+<div class="library-group-head">Motion</div>
+<div class="spec-grid"><article class="spec-card" data-cat="motion" data-search="border-beam border beam animated border / glow material motion beam glow border motion tunable vendored-source css effect">
+  <div class="spec-live"><iframe src="./border-beam/self/playground.html" loading="lazy" title="border beam live preview"></iframe></div>
+  <a class="spec-info" href="./border-beam/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span>
+    <span class="spec-copy"><span class="cn">border beam</span><span class="cd">animated border / glow material</span><span class="spec-tags">beam · glow · border · motion · css · effect</span></span>
+    <span class="cmeta"><span class="cnt">1+0</span><span class="act">actief: playground</span></span>
+  </a>
+</article>
+<article class="spec-card" data-cat="motion" data-search="motion-spring spring physics tunable damped spring interaction motion spring physics pointer drag motion tunable requestanimationframe physics">
+  <div class="spec-live"><iframe src="./motion-spring/self/pointer-spring.html" loading="lazy" title="spring physics live preview"></iframe></div>
+  <a class="spec-info" href="./motion-spring/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-play"/></svg></span>
+    <span class="spec-copy"><span class="cn">spring physics</span><span class="cd">tunable damped spring interaction</span><span class="spec-tags">spring · physics · pointer · drag · requestAnimationFrame · physics</span></span>
+    <span class="cmeta"><span class="cnt">1+0</span><span class="act">actief: pointer-spring</span></span>
+  </a>
+</article></div>
 </section>
-
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-07</div>
+<section class="library-group" data-cat-group="3d">
+<div class="library-group-head">3D / WebGL</div>
+<div class="spec-grid"><article class="spec-card" data-cat="3d" data-search="three-orbit three orbit three.js / webgl scene specimens 3d threejs webgl particles orbit scene tunable three.js 0.180 3d-scene">
+  <div class="spec-live"><iframe src="./three-orbit/self/orbit-field.html" loading="lazy" title="three orbit live preview"></iframe></div>
+  <a class="spec-info" href="./three-orbit/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
+    <span class="spec-copy"><span class="cn">three orbit</span><span class="cd">Three.js / WebGL scene specimens</span><span class="spec-tags">threejs · webgl · particles · orbit · three.js 0.180 · 3d-scene</span></span>
+    <span class="cmeta"><span class="cnt">1+0</span><span class="act">actief: orbit-field</span></span>
+  </a>
+</article></div>
+</section>
+  <div class="library-empty" id="library-empty">No matching components.</div>
+  <div class="library-footer">generated by ds build · 2026-09-07</div>
+</div>
 <script>
 (function(){
-  var q=document.getElementById('gallery-q'), cat=document.getElementById('gallery-cat'), out=document.getElementById('gallery-count');
+  var q=document.getElementById('gallery-q'), out=document.getElementById('gallery-count'), empty=document.getElementById('library-empty');
+  var selected='all';
   function apply(){
-    var needle=(q.value||'').toLowerCase().trim(), selected=cat.value, visible=0;
+    var needle=(q.value||'').toLowerCase().trim(), visible=0;
     document.querySelectorAll('.spec-card').forEach(function(card){
       var okCat=selected==='all'||card.dataset.cat===selected;
       var okText=!needle||(card.dataset.search||'').indexOf(needle)>=0;
       card.hidden=!(okCat&&okText); if(!card.hidden) visible++;
     });
-    document.querySelectorAll('.gallery-group').forEach(function(group){
-      group.hidden=!group.querySelector('.spec-card:not([hidden])');
-    });
-    out.textContent=visible+' zichtbaar';
+    document.querySelectorAll('.library-group').forEach(function(group){ group.hidden=!group.querySelector('.spec-card:not([hidden])'); });
+    out.textContent=visible+' visible'; empty.classList.toggle('on', visible===0);
   }
-  q.addEventListener('input',apply); cat.addEventListener('change',apply); apply();
+  q.addEventListener('input',apply);
+  document.querySelectorAll('[data-cat]').forEach(function(btn){ if(!btn.classList.contains('spec-card')) btn.addEventListener('click',function(e){
+    if(btn.closest('.library-filters') || btn.dataset.sidebarCat){ e.preventDefault(); selected=btn.dataset.cat||btn.dataset.sidebarCat||'all'; document.querySelectorAll('.library-filter').forEach(function(x){x.classList.toggle('on',x.dataset.cat===selected)}); apply(); }
+  }); });
+  document.getElementById('grid-view').addEventListener('click',function(){document.body.classList.remove('list-view');this.classList.add('on');document.getElementById('list-view').classList.remove('on')});
+  document.getElementById('list-view').addEventListener('click',function(){document.body.classList.add('list-view');this.classList.add('on');document.getElementById('grid-view').classList.remove('on')});
+  apply();
 })();
 </script>
 

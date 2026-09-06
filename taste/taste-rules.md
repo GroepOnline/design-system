@@ -46,6 +46,9 @@
 - **DO** compose dashboard views from primitives (Sidebar + Card + Table + Chart), never hand-rolled. Data tables use zebra striping for scanability and inline color-coded badges for status. *(2026-07-31: dashboard table + shadcn skill install)*
 - **DO** treat mobile (390px) as a first-class viewport: test every generated page at 390px next to light and dark before commit. **DON'T** let rails/navs collapse into unstructured wraps — mobile nav is a horizontal scroll-strip or a deliberate pattern, never an accidental flex-wrap jumble. *(2026-08-05: Joep "bovenin 1 zooi" op iPhone + Fase C responsive-eis)*
 
+### library / tooling surfaces
+- **DO** render component libraries, review tools and internal workbenches as quiet product interfaces: compact sidebar, small controls, restrained borders, white/neutral workspace and search-first navigation. **DON'T** use editorial/showcase chrome, giant specimen cards, decorative page furniture or oversized whitespace around small controls. The specimen or task is the content. *(2026-09-07: Kinetics density reference + clean review-app screenshot direction)*
+
 ### direction
 - **WIP (1 observation)**: Devin's visual language beats own new signatures — teal Stroom redirected toward Devin warm-neutral + blue. Watch: does De Stroom line/motion system survive as element, or fully absorbed into Devin-style rows? *(2026-07-27)*
 

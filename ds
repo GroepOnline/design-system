@@ -77,6 +77,7 @@ CATS = [
     ("gesprek", "Gesprek"),
     ("bewijs", "Bewijs"),
     ("structuur", "Structuur"),
+    ("systeem", "Systeem"),
     ("interactie", "Interactie"),
     ("motion", "Motion"),
     ("3d", "3D / WebGL"),
@@ -2024,82 +2025,182 @@ CELL = """  <div class="cell{cls}"{wide}>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>{src}</pre></details>
   </div>"""
 
-GALLERY_CSS = """<style>
-/* specimen explorer: live cards + search/filter */
-  .gallery-tools { display:grid; grid-template-columns:minmax(260px,1fr) 190px auto; gap:7px; align-items:center; margin:16px 0 8px; }
-  .gallery-tools .input, .gallery-tools .select { height:30px; }
-  .gallery-count { font:11px var(--mono); color:var(--text-faint); white-space:nowrap; }
-  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:9px; }
-  .spec-card { border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; background:var(--surface); transition:border-color var(--dur-fast),background var(--dur-fast); }
-  .spec-card:hover { border-color:var(--line-strong); background:color-mix(in srgb,var(--surface) 97%,var(--text) 3%); }
-  .spec-card[hidden], .gallery-group[hidden] { display:none !important; }
-  .spec-live { height:126px; overflow:hidden; background:var(--bg); border-bottom:1px solid var(--line); }
-  .spec-live iframe { width:100%; height:380px; border:0; display:block; transform:scale(.5); transform-origin:0 0; width:200%; pointer-events:auto; }
-  .spec-info { display:flex; align-items:flex-start; gap:8px; padding:8px 9px 9px; color:inherit; text-decoration:none; }
-  .spec-info .ct { width:26px; height:26px; border:1px solid var(--line); border-radius:var(--r-md); display:grid; place-items:center; flex:none; background:var(--bg); }
-  .spec-info .ct svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:2; color:var(--text-muted); }
-  .spec-copy { min-width:0; flex:1; display:grid; gap:1px; }
-  .spec-copy .cn { font-size:var(--text-sm); font-weight:500; }
-  .spec-copy .cd { color:var(--text-faint); font-size:var(--text-xs); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .spec-tags { font:9px var(--mono); color:var(--text-faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .spec-info .cmeta { display:flex; flex-direction:column; align-items:flex-end; gap:2px; font-family:var(--mono); flex:none; }
-  .spec-info .cnt, .spec-info .act { font-size:9px; color:var(--text-faint); } .spec-info .act { color:var(--open-green); }
-  @media(max-width:760px){ .gallery-tools{grid-template-columns:1fr}.spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.spec-live{height:112px} } @media(max-width:480px){.spec-grid{grid-template-columns:1fr}}
+CATALOG_APP_CSS = """<style>
+body.component-shell { --library-accent:#4f7cff; background:#fff; color:#202124; }
+body.component-shell .sruler, body.component-shell .splate, body.component-shell .smodeline { display:none !important; }
+body.component-shell .rail { width:244px; padding:8px 9px 10px; background:#fbfbfb; border-right:1px solid #e8e8e8; }
+body.component-shell .brand { height:34px; padding:0 8px; gap:7px; font-size:13px; border-radius:6px; }
+body.component-shell .brand .logo { width:18px; height:18px; border-radius:4px; font-size:10px; background:#ececec; color:#555; }
+body.component-shell .brand:hover .logo { background:#e5e5e5; color:#222; }
+body.component-shell .rail .lbl { margin:13px 8px 4px; font-size:10px; color:#8a8a8a; }
+body.component-shell .rail a.it { min-height:30px; padding:4px 7px; gap:7px; border-radius:6px; }
+body.component-shell .rail a.it.on { background:#f3f5f8; border-color:#d9dde5; }
+body.component-shell .rail a.it.on::before { width:2px; height:16px; background:var(--library-accent); }
+body.component-shell .rail .tile { width:20px; height:20px; border:0; background:transparent; border-radius:4px; }
+body.component-shell .rail .tile svg { width:13px; height:13px; color:#5f6368; }
+body.component-shell .rail .nm { font-size:12px; font-weight:450; color:#303236; }
+body.component-shell .rail .nm .ds, body.component-shell .rail .n, body.component-shell .rail .act { display:none; }
+body.component-shell .rail .foot { border-top:0; padding-top:8px; }
+body.component-shell .main { background:#fff; }
+body.component-shell .wrap { max-width:none; padding:0 28px 48px; }
+body.component-shell .pagehead { min-height:56px; align-items:center; gap:10px; margin:0 -28px 20px; padding:0 28px; border-bottom:1px solid #ececec; animation:none; }
+body.component-shell .pagehead .tile { width:28px; height:28px; border-radius:6px; background:#f7f7f7; border-color:#e7e7e7; }
+body.component-shell .pagehead .tile svg { width:14px; height:14px; }
+body.component-shell .pagehead .eyebrow { display:none; }
+body.component-shell .pagehead h1 { font-family:var(--font); font-size:15px; font-weight:550; letter-spacing:-.01em; }
+body.component-shell .pagehead .ph-sub { font-size:11px; margin-top:1px; color:#8a8a8a; }
+body.component-shell .pagehead .meta { font-size:9.5px; line-height:1.4; color:#9a9a9a; }
+body.component-shell .lede, body.component-shell .legend { display:none; }
+body.component-shell .wrap { display:grid; grid-template-columns:minmax(0,1fr) 294px; column-gap:24px; align-items:start; }
+body.component-shell .pagehead, body.component-shell .gen { grid-column:1/-1; }
+body.component-shell .use-now { grid-column:1; margin:0 0 12px; min-height:34px; padding:6px 9px; border:1px solid #e5e5e5; background:#fafafa; border-radius:7px; font-size:11px; }
+body.component-shell .use-now .lbl2 { color:#555; }
+body.component-shell .use-now code { font-size:9.5px; border-color:#e8e8e8; background:#fff; }
+body.component-shell .docs { grid-column:2; grid-row:2 / span 2; position:sticky; top:16px; display:grid; grid-template-columns:1fr; gap:8px; margin:0; }
+body.component-shell .doc { border:1px solid #e8e8e8; border-radius:7px; padding:10px 11px; background:#fff; }
+body.component-shell .doc .dt { margin-bottom:6px; font-size:9px; color:#777 !important; }
+body.component-shell .doc li { font-size:11px; line-height:1.45; color:#5f6368; margin:2px 0; }
+body.component-shell .doc code { font-size:9.5px; background:#f6f6f6; }
+body.component-shell .grid { grid-column:1; display:grid; grid-template-columns:1fr; gap:10px; }
+body.component-shell .cell { border:1px solid #e5e5e5; border-radius:7px; background:#fff; }
+body.component-shell .cell:hover { border-color:#d6d6d6; }
+body.component-shell .cell.active { border-color:#cfd6e3; box-shadow:none; }
+body.component-shell .cell .ch { min-height:34px; padding:6px 9px; background:#fafafa; border-color:#ececec; font-size:11px; }
+body.component-shell .cell .ch .note { font-size:10px; }
+body.component-shell .cell .chips { gap:4px; padding:5px 9px; background:#fff; border-color:#eee; }
+body.component-shell .cell .chip { font-size:8.5px; padding:1px 5px; border-radius:4px; background:#f7f7f7; color:#777; }
+body.component-shell .cell .chip.engine { color:#555; border-color:#ddd; background:#f7f7f7; }
+body.component-shell .cell .cf, body.component-shell .cell summary { font-size:9.5px; padding:6px 9px; }
+body.component-shell .cell pre { font-size:10px; background:#fbfbfb; }
+body.component-shell .st { font-size:8.5px; padding:2px 5px; border-radius:4px; }
+body.component-shell .st.active { background:#f0f4fb; color:#4d6695; }
+body.component-shell .org { font-size:8.5px; padding:2px 5px; border-radius:4px; background:#f5f5f5; color:#777; }
+body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
+@media(max-width:980px){ body.component-shell .wrap{display:block;padding:0 18px 40px} body.component-shell .pagehead{margin:0 -18px 16px;padding:0 18px} body.component-shell .docs{position:static;margin-bottom:12px} }
 </style>
 """
 
-GALLERY_BODY = """<div class="pagehead" data-reg="kop">
-  <span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-  <div class="ph-text">
-    <div class="eyebrow">Specimen explorer</div>
-    <h1>Library</h1>
-    <div class="ph-sub">{nc} componenten · {nv} varianten · production + studies + random vondsten</div>
+GALLERY_CSS = """<style>
+body.library-shell { --lib-blue:#4f7cff; --lib-bg:#ffffff; --lib-side:#fbfbfb; --lib-line:#e8e8e8; --lib-text:#202124; --lib-muted:#777b82; --lib-hover:#f5f6f8; background:var(--lib-bg); color:var(--lib-text); }
+body.library-shell .sruler, body.library-shell .splate, body.library-shell .smodeline { display:none !important; }
+body.library-shell .rail { width:244px; padding:8px 9px 10px; background:var(--lib-side); border-right:1px solid var(--lib-line); }
+body.library-shell .brand { height:34px; padding:0 8px; gap:7px; font-size:13px; border-radius:6px; }
+body.library-shell .brand .logo { width:18px; height:18px; border-radius:4px; font-size:10px; background:#ececec; color:#555; }
+body.library-shell .brand:hover .logo { background:#e5e5e5; color:#222; }
+body.library-shell .rail .lbl { margin:13px 8px 4px; font-size:10px; font-weight:500; color:#929292; }
+body.library-shell .rail a.it { min-height:30px; padding:4px 7px; gap:7px; border-radius:6px; margin:0; }
+body.library-shell .rail a.it:hover { background:#f4f4f4; }
+body.library-shell .rail a.it.on { background:#f2f4f8; border-color:#d8dde8; }
+body.library-shell .rail a.it.on::before { display:none; }
+body.library-shell .rail .tile { width:20px; height:20px; border:0; background:transparent; border-radius:4px; }
+body.library-shell .rail .tile svg { width:13px; height:13px; color:#5f6368; }
+body.library-shell .rail .nm { font-size:12px; font-weight:450; color:#303236; }
+body.library-shell .rail .nm .ds, body.library-shell .rail .n, body.library-shell .rail .act { display:none; }
+body.library-shell .rail .foot { border-top:0; padding-top:8px; }
+body.library-shell .main { background:#fff; }
+body.library-shell .wrap { max-width:none; padding:0; }
+.library-topbar { height:48px; border-bottom:1px solid var(--lib-line); display:grid; grid-template-columns:1fr minmax(260px,430px) 1fr; align-items:center; gap:16px; padding:0 18px; }
+.library-title { font-size:12px; font-weight:550; color:#303236; }
+.library-search { position:relative; }
+.library-search svg { position:absolute; left:10px; top:50%; transform:translateY(-50%); width:13px; height:13px; fill:none; stroke:#8b8f95; stroke-width:2; }
+.library-search input { width:100%; height:30px; padding:0 30px; border:1px solid #e1e3e6; border-radius:6px; background:#fff; color:#2b2d31; font:12px var(--font); outline:none; }
+.library-search input:focus { border-color:#9eb8ff; box-shadow:0 0 0 2px rgba(79,124,255,.10); }
+.library-actions { display:flex; justify-content:flex-end; align-items:center; gap:5px; }
+.library-iconbtn { width:28px; height:28px; display:grid; place-items:center; border:1px solid transparent; border-radius:5px; background:transparent; color:#73777d; cursor:pointer; }
+.library-iconbtn:hover, .library-iconbtn.on { background:#f3f4f6; border-color:#e4e5e7; color:#303236; }
+.library-iconbtn svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; }
+.library-body { padding:26px 30px 56px; }
+.library-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:16px; }
+.library-heading h1 { margin:0; font:550 18px var(--font); letter-spacing:-.02em; }
+.library-heading p { margin:3px 0 0; color:#8a8e94; font-size:11px; }
+.library-count { font:10px var(--mono); color:#9a9da2; white-space:nowrap; }
+.library-filters { display:flex; align-items:center; gap:6px; margin-bottom:18px; }
+.library-filter { height:28px; border:1px solid #e3e4e6; border-radius:6px; background:#fff; color:#666b72; padding:0 9px; font:11px var(--font); cursor:pointer; }
+.library-filter:hover { background:#f7f7f7; }
+.library-filter.on { background:#f0f3f9; border-color:#d4dbe9; color:#34415a; }
+.library-group { margin:0 0 22px; }
+.library-group-head { display:flex; align-items:center; gap:8px; margin:0 0 8px; color:#777b82; font-size:10px; font-weight:550; }
+.library-group-head:after { content:""; height:1px; background:#efefef; flex:1; }
+.spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; }
+.spec-card { position:relative; min-width:0; border:1px solid #e8e8e8; border-radius:7px; background:#fff; overflow:hidden; transition:border-color 120ms ease, background 120ms ease; }
+.spec-card:hover { border-color:#d3d5d8; background:#fcfcfc; }
+.spec-card[hidden], .library-group[hidden] { display:none !important; }
+.spec-live { height:108px; overflow:hidden; background:#fff; border-bottom:1px solid #ededed; }
+.spec-live iframe { width:200%; height:216px; border:0; display:block; transform:scale(.5); transform-origin:0 0; pointer-events:auto; background:#fff; }
+.spec-info { min-height:48px; display:flex; align-items:center; gap:8px; padding:7px 8px; color:inherit; text-decoration:none; }
+.spec-info .ct { width:22px; height:22px; border:0; border-radius:5px; display:grid; place-items:center; flex:none; background:#f5f5f5; }
+.spec-info .ct svg { width:12px; height:12px; fill:none; stroke:#74787e; stroke-width:2; }
+.spec-copy { min-width:0; flex:1; display:grid; gap:1px; }
+.spec-copy .cn { font-size:11.5px; font-weight:520; color:#303236; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.spec-copy .cd { color:#96999e; font-size:9.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.spec-tags { display:none; }
+.spec-info .cmeta { flex:none; font:9px var(--mono); color:#a1a4a8; }
+.spec-info .act { display:none; }
+body.library-shell.list-view .spec-grid { grid-template-columns:1fr; gap:3px; }
+body.library-shell.list-view .spec-card { display:grid; grid-template-columns:148px minmax(0,1fr); min-height:58px; }
+body.library-shell.list-view .spec-live { height:58px; border-bottom:0; border-right:1px solid #ededed; }
+body.library-shell.list-view .spec-live iframe { width:400%; height:232px; transform:scale(.25); }
+body.library-shell.list-view .spec-info { min-height:58px; }
+.library-empty { display:none; padding:90px 0; text-align:center; color:#9a9da2; font-size:12px; }
+.library-empty.on { display:block; }
+.library-footer { margin-top:28px; padding-top:12px; border-top:1px solid #eee; color:#aaa; font:9px var(--mono); }
+@media(max-width:860px){ body.library-shell .rail{width:100%} .library-topbar{grid-template-columns:1fr auto;padding:0 12px}.library-title{display:none}.library-search{grid-column:1}.library-body{padding:18px 14px 40px}.spec-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))} }
+</style>
+"""
+
+GALLERY_BODY = """<div class="library-topbar">
+  <div class="library-title">Component library</div>
+  <label class="library-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gallery-q" type="search" placeholder="Search components" autocomplete="off"></label>
+  <div class="library-actions">
+    <button class="library-iconbtn on" id="grid-view" title="Grid view"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg></button>
+    <button class="library-iconbtn" id="list-view" title="List view"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg></button>
   </div>
 </div>
-<div class="lede">Zoek door componenten, motion, effecten en 3D. Kaarten tonen de actieve of eerste variant live; detailpagina's bewaren alle locked specimens. <a href="../inbox/index.html">Research inbox →</a></div>
-<div class="gallery-tools" data-reg="filters">
-  <input class="input" id="gallery-q" type="search" placeholder="Zoek component, tag, engine, effect…" autocomplete="off">
-  <select class="select" id="gallery-cat"><option value="all">Alle categorieën</option>{catopts}</select>
-  <span class="gallery-count" id="gallery-count">{nc} zichtbaar</span>
+<div class="library-body">
+  <div class="library-heading"><div><h1>Library</h1><p>{nc} components, {nv} variants. Production and studies live together.</p></div><span class="library-count" id="gallery-count">{nc} visible</span></div>
+  <div class="library-filters" id="library-filters"><button class="library-filter on" data-cat="all">All</button>{filterbuttons}</div>
+  {groups}
+  <div class="library-empty" id="library-empty">No matching components.</div>
+  <div class="library-footer">generated by ds build · {today}</div>
 </div>
-{groups}
-<div class="gen" data-reg="colofon">gegenereerd door ds build op {today}</div>
 <script>
 (function(){{
-  var q=document.getElementById('gallery-q'), cat=document.getElementById('gallery-cat'), out=document.getElementById('gallery-count');
+  var q=document.getElementById('gallery-q'), out=document.getElementById('gallery-count'), empty=document.getElementById('library-empty');
+  var selected='all';
   function apply(){{
-    var needle=(q.value||'').toLowerCase().trim(), selected=cat.value, visible=0;
+    var needle=(q.value||'').toLowerCase().trim(), visible=0;
     document.querySelectorAll('.spec-card').forEach(function(card){{
       var okCat=selected==='all'||card.dataset.cat===selected;
       var okText=!needle||(card.dataset.search||'').indexOf(needle)>=0;
       card.hidden=!(okCat&&okText); if(!card.hidden) visible++;
     }});
-    document.querySelectorAll('.gallery-group').forEach(function(group){{
-      group.hidden=!group.querySelector('.spec-card:not([hidden])');
-    }});
-    out.textContent=visible+' zichtbaar';
+    document.querySelectorAll('.library-group').forEach(function(group){{ group.hidden=!group.querySelector('.spec-card:not([hidden])'); }});
+    out.textContent=visible+' visible'; empty.classList.toggle('on', visible===0);
   }}
-  q.addEventListener('input',apply); cat.addEventListener('change',apply); apply();
+  q.addEventListener('input',apply);
+  document.querySelectorAll('[data-cat]').forEach(function(btn){{ if(!btn.classList.contains('spec-card')) btn.addEventListener('click',function(e){{
+    if(btn.closest('.library-filters') || btn.dataset.sidebarCat){{ e.preventDefault(); selected=btn.dataset.cat||btn.dataset.sidebarCat||'all'; document.querySelectorAll('.library-filter').forEach(function(x){{x.classList.toggle('on',x.dataset.cat===selected)}}); apply(); }}
+  }}); }});
+  document.getElementById('grid-view').addEventListener('click',function(){{document.body.classList.remove('list-view');this.classList.add('on');document.getElementById('list-view').classList.remove('on')}});
+  document.getElementById('list-view').addEventListener('click',function(){{document.body.classList.add('list-view');this.classList.add('on');document.getElementById('grid-view').classList.remove('on')}});
+  apply();
 }})();
 </script>
 """
 
-GALLERY_GROUP = """<section class="gallery-group" data-cat="{reg}">
-<div class="caps" data-reg="{reg}" style="margin:22px 2px 10px">{cat}</div>
-<div class="spec-grid">
-{items}
-</div>
-</section>
-"""
+GALLERY_GROUP = """<section class="library-group" data-cat-group="{reg}">
+<div class="library-group-head">{cat}</div>
+<div class="spec-grid">{items}</div>
+</section>"""
 
-GALLERY_ITEM = """  <article class="spec-card reveal" data-cat="{catid}" data-search="{search}">
-    <div class="spec-live"><iframe src="{preview}" loading="lazy" title="{title} live preview"></iframe></div>
-    <a class="spec-info" href="./{name}/index.html">
-      <span class="ct"><svg><use href="../components/icons.svg#{icon}"/></svg></span>
-      <span class="spec-copy"><span class="cn">{title}</span><span class="cd">{desc}</span><span class="spec-tags">{tags}</span></span>
-      <span class="cmeta"><span class="cnt">{nself} zelf · {nx} extern</span><span class="act">{active}</span></span>
-    </a>
-  </article>"""
+GALLERY_ITEM = """<article class="spec-card" data-cat="{catid}" data-search="{search}">
+  <div class="spec-live"><iframe src="{preview}" loading="lazy" title="{title} live preview"></iframe></div>
+  <a class="spec-info" href="./{name}/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#{icon}"/></svg></span>
+    <span class="spec-copy"><span class="cn">{title}</span><span class="cd">{desc}</span><span class="spec-tags">{tags}</span></span>
+    <span class="cmeta"><span class="cnt">{nself}+{nx}</span><span class="act">{active}</span></span>
+  </a>
+</article>"""
 
 def nav_html(current=None, rel_root="."):
     out = []
@@ -2203,9 +2304,10 @@ def build_catalog(c):
             .replace("{rel_root}", "../..")
             .replace("{nav}", nav_html(current=c, rel_root="../.."))
             .replace("{sysnav}", sysnav_html(rel_root="../.."))
-            .replace("{mdcss}", "")
+            .replace("{mdcss}", CATALOG_APP_CSS)
             .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT.replace("{plate}", blad))
+    page = page.replace("<body>", "<body class=\"component-shell\">")
     with open(os.path.join(COMP, c, "index.html"), "w") as f:
         f.write(page)
 
@@ -2277,15 +2379,26 @@ def build_gallery():
                 active="actief: " + ",".join(acts) if acts else "",
             ))
         groups.append(GALLERY_GROUP.format(cat=label, reg=cat, items="\n".join(items)))
-    catopts = "".join(f'<option value="{cat}">{label}</option>' for cat, label in CATS)
-    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), catopts=catopts, today=_today())
+    filterbuttons = "".join(f'<button class="library-filter" data-cat="{cat}">{label}</button>' for cat, label in CATS if any(load_manifest(c).get("cat") == cat for c in components()))
+    sidebar_parts = [
+        '<div class="lbl caps">Library</div>',
+        '<a class="it on" href="./index.html"><span class="tile"><svg><use href="../components/icons.svg#i-library"/></svg></span><span class="nm">Components</span></a>',
+        '<a class="it" href="../inbox/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">Inbox</span></a>',
+        '<div class="lbl caps">Browse</div>',
+    ]
+    for cat, label in CATS:
+        if any(load_manifest(c).get("cat") == cat for c in components()):
+            icon = "i-zap" if cat == "motion" else ("i-globe" if cat == "3d" else "i-blocks")
+            sidebar_parts.append(f'<a class="it" href="#" data-sidebar-cat="{cat}" data-cat="{cat}"><span class="tile"><svg><use href="../components/icons.svg#{icon}"/></svg></span><span class="nm">{label}</span></a>')
+    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), filterbuttons=filterbuttons, today=_today())
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{rel_root}", "..")
-            .replace("{nav}", nav_html(rel_root=".."))
+            .replace("{nav}", "\n".join(sidebar_parts))
             .replace("{sysnav}", sysnav_html(rel_root=".."))
             .replace("{mdcss}", GALLERY_CSS)
             .replace("{styleseg}", styleseg_html())
             + body + SHELL_FOOT.replace("{plate}", "idx"))
+    page = page.replace("<body>", "<body class=\"library-shell\">")
     with open(os.path.join(COMP, "index.html"), "w") as f:
         f.write(page)
 

@@ -211,3 +211,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: the library should feel like a dense collection of live interactions, not a gallery of oversized demo cards
 - **delta**: button workbench now uses a compact top toolbar, 3-column specimen grid, ~88px rows, r-md surfaces and no outer stage card; global library previews shrink to ~126px with 250px minimum columns and no hover elevation
 - **rule**: specimen is the content. Chrome must collapse around it. Large empty card area around a tiny primitive is an anti-pattern.
+
+## 2026-09-07 · Library shell: product UI, not showcase
+
+- **shown**: compact neutral specimen pass after Kinetics-inspired density correction
+- **reaction**: still rejected as visually coarse; clean review-app screenshot supplied as target direction
+- **signal**: the outer system must disappear into a quiet tool shell: small sidebar rows, thin dividers, plain white workspace, compact search/controls and sparse semantic blue only for selection/focus
+- **delta**: `/components` now has a dedicated app-shell, compact category sidebar, centered search, grid/list modes and 108px live previews; component detail routes use the same product shell with canvas left and sticky inspector right; technical drawing/modeline chrome is disabled on these routes
+- **rule**: library/tooling surfaces are product interfaces, never portfolio/showcase pages.

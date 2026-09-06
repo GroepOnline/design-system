@@ -278,6 +278,8 @@
   <a class="it" href="../components/home-shell/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Systeem</div>
+  <a class="it" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio<span class="ds">visueel afstellen zonder code</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
   <a class="it" href="../components/border-beam/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
   <a class="it" href="../components/motion-spring/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
@@ -350,6 +352,10 @@
 <li><strong>DO</strong> shadcn/ui component conventions as baseline (button variants, badge pill, card border + hairline, ghost icon buttons). Devin&#x27;s product UI is shadcn-shaped; Joep recognizes and prefers it. <em>(2026-07-27: &quot;shadcn of soortgelijk gebruiken voor components van hun&quot;)</em></li>
 <li><strong>DO</strong> compose dashboard views from primitives (Sidebar + Card + Table + Chart), never hand-rolled. Data tables use zebra striping for scanability and inline color-coded badges for status. <em>(2026-07-31: dashboard table + shadcn skill install)</em></li>
 <li><strong>DO</strong> treat mobile (390px) as a first-class viewport: test every generated page at 390px next to light and dark before commit. <strong>DON&#x27;T</strong> let rails/navs collapse into unstructured wraps — mobile nav is a horizontal scroll-strip or a deliberate pattern, never an accidental flex-wrap jumble. <em>(2026-08-05: Joep &quot;bovenin 1 zooi&quot; op iPhone + Fase C responsive-eis)</em></li>
+</ul>
+<h3>library / tooling surfaces</h3>
+<ul>
+<li><strong>DO</strong> render component libraries, review tools and internal workbenches as quiet product interfaces: compact sidebar, small controls, restrained borders, white/neutral workspace and search-first navigation. <strong>DON&#x27;T</strong> use editorial/showcase chrome, giant specimen cards, decorative page furniture or oversized whitespace around small controls. The specimen or task is the content. <em>(2026-09-07: Kinetics density reference + clean review-app screenshot direction)</em></li>
 </ul>
 <h3>direction</h3>
 <ul>
@@ -563,6 +569,14 @@
 <li><strong>signal</strong>: the library should feel like a dense collection of live interactions, not a gallery of oversized demo cards</li>
 <li><strong>delta</strong>: button workbench now uses a compact top toolbar, 3-column specimen grid, ~88px rows, r-md surfaces and no outer stage card; global library previews shrink to ~126px with 250px minimum columns and no hover elevation</li>
 <li><strong>rule</strong>: specimen is the content. Chrome must collapse around it. Large empty card area around a tiny primitive is an anti-pattern.</li>
+</ul>
+<h2 data-reg="2026-09-07-library">2026-09-07 · Library shell: product UI, not showcase</h2>
+<ul>
+<li><strong>shown</strong>: compact neutral specimen pass after Kinetics-inspired density correction</li>
+<li><strong>reaction</strong>: still rejected as visually coarse; clean review-app screenshot supplied as target direction</li>
+<li><strong>signal</strong>: the outer system must disappear into a quiet tool shell: small sidebar rows, thin dividers, plain white workspace, compact search/controls and sparse semantic blue only for selection/focus</li>
+<li><strong>delta</strong>: <code>/components</code> now has a dedicated app-shell, compact category sidebar, centered search, grid/list modes and 108px live previews; component detail routes use the same product shell with canvas left and sticky inspector right; technical drawing/modeline chrome is disabled on these routes</li>
+<li><strong>rule</strong>: library/tooling surfaces are product interfaces, never portfolio/showcase pages.</li>
 </ul></div><div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op 2026-09-07</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
