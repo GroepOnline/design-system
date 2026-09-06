@@ -24,6 +24,10 @@ Brain (vijfde tool):
   brain-site/         GEGENEREERD door ds build / ds brain build
   ./ds brain build|check|new decision|new research
   ./ds brain signal|eval|gate
+
+Upstreams (catalogus-invoer):
+  upstreams/*.json    immutable externe bronpins + rendererbeleid
+  ./ds upstream list|show <id>|check [id]
 """
 import hashlib
 import html as htmlmod
@@ -47,6 +51,7 @@ BRAIN_SIGNALS = os.path.join(BRAIN, "signals", "signals.yaml")
 BRAIN_THRESHOLDS = os.path.join(BRAIN, "eval", "thresholds.yaml")
 BRAIN_SCORECARD = os.path.join(BRAIN, "eval", "scorecard.json")
 STYLES_JSON = os.path.join(ROOT, "styles.json")
+UPSTREAMS = os.path.join(ROOT, "upstreams")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
@@ -131,6 +136,93 @@ def components():
     return sorted(d for d in os.listdir(COMP)
                   if os.path.isdir(os.path.join(COMP, d))
                   and os.path.exists(os.path.join(COMP, d, "catalog.json")))
+
+
+def upstream_ids():
+    if not os.path.isdir(UPSTREAMS):
+        return []
+    return sorted(Path(p).stem for p in Path(UPSTREAMS).glob("*.json"))
+
+def load_upstream(uid):
+    path = Path(UPSTREAMS, f"{uid}.json")
+    if not path.exists():
+        err(f"onbekende upstream: {bold(uid)}")
+    try:
+        return json.loads(path.read_text())
+    except json.JSONDecodeError as exc:
+        err(f"ongeldige upstream manifest {uid}: {exc}")
+
+def validate_upstream(uid, data):
+    errors, warnings = [], []
+    required = ("id", "name", "repo", "ref", "license", "mode", "adapters")
+    for key in required:
+        if key not in data:
+            errors.append(f"upstream/{uid}: ontbrekend veld '{key}'")
+    if data.get("id") != uid:
+        errors.append(f"upstream/{uid}: id '{data.get('id')}' komt niet overeen met bestandsnaam")
+    if not str(data.get("repo", "")).startswith("https://github.com/"):
+        warnings.append(f"upstream/{uid}: repo is geen github.com URL")
+    ref = str(data.get("ref", ""))
+    if not re.fullmatch(r"[0-9a-f]{40}", ref):
+        errors.append(f"upstream/{uid}: ref moet een immutable 40-char commit SHA zijn")
+    allowed = {"curate-copy", "reference-only", "contract-only", "react-adapter"}
+    adapters = data.get("adapters", {})
+    if not isinstance(adapters, dict) or not adapters:
+        errors.append(f"upstream/{uid}: adapters moet een niet-lege mapping zijn")
+    else:
+        for surface, spec in adapters.items():
+            mode = spec.get("mode") if isinstance(spec, dict) else None
+            if mode not in allowed:
+                errors.append(f"upstream/{uid}: adapter {surface} heeft ongeldige mode '{mode}'")
+    return errors, warnings
+
+def cmd_upstream(args):
+    sub = args[0] if args else "list"
+    if sub == "list":
+        ids = upstream_ids()
+        if not ids:
+            print("  (geen upstreams geregistreerd)")
+            return
+        print(bold(f"{'upstream':<18} {'license':<10} {'mode':<16} {'ref':<12} candidates"))
+        print(dim("─" * 72))
+        for uid in ids:
+            data = load_upstream(uid)
+            print(f"{bold(uid):<27} {data.get('license','?'):<10} {data.get('mode','?'):<16} {data.get('ref','')[:10]:<12} {len(data.get('candidates', []))}")
+        return
+    if sub == "show":
+        if len(args) < 2:
+            err("gebruik: ds upstream show <id>")
+        data = load_upstream(args[1])
+        print(f"{bold(data['name'])} {dim('· ' + data['id'])}")
+        print(f"  repo     {data['repo']}")
+        print(f"  ref      {data['ref']}")
+        print(f"  license  {data['license']}")
+        print(f"  mode     {data['mode']}")
+        print("  adapters")
+        for surface, spec in data.get("adapters", {}).items():
+            print(f"    {surface:<14} {spec.get('mode','?'):<16} {dim(spec.get('note',''))}")
+        candidates = data.get("candidates", [])
+        if candidates:
+            print("  candidates")
+            for item in candidates:
+                target = item.get("target", "-")
+                print(f"    {item.get('category','?')}/{item.get('name','?')} -> {target}")
+        return
+    if sub == "check":
+        ids = [args[1]] if len(args) > 1 else upstream_ids()
+        errors, warnings = [], []
+        for uid in ids:
+            data = load_upstream(uid)
+            e, w = validate_upstream(uid, data)
+            errors.extend(e)
+            warnings.extend(w)
+        for e in errors: errp(e)
+        for w in warnings: wrn(w)
+        if errors:
+            err(f"{len(errors)} upstream errors, {len(warnings)} warnings")
+        ok(f"{len(ids)} upstream(s) valide {dim(f'— {len(warnings)} warnings')}")
+        return
+    err("gebruik: ds upstream list | show <id> | check [id]")
 
 def rewrite_paths(text):
     # Component-bronnen (self/external) staan 3 niveaus diep onder root.
@@ -2975,6 +3067,12 @@ def cmd_check():
             src = e.get("source", "")
             if src and not src.startswith("http"):
                 warnings.append(f"{c}/{e['id']}: source '{src}' is geen URL")
+    # versioned external upstream manifests
+    for uid in upstream_ids():
+        data = load_upstream(uid)
+        ue, uw = validate_upstream(uid, data)
+        errors.extend(ue)
+        warnings.extend(uw)
     # em-dash in .md files (copy)
     for fn in os.listdir(ROOT):
         if fn.endswith(".md"):
@@ -3030,6 +3128,8 @@ def main():
         cmd_serve(port)
     elif args[0] == "brain":
         cmd_brain(args[1:])
+    elif args[0] == "upstream":
+        cmd_upstream(args[1:])
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()

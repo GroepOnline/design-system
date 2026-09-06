@@ -26,6 +26,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
    via `ds <comp> add` (de CLI maakt paden root-absoluut bij promotie).
 5. **Single-active.** Exact 1 entry per component heeft status `active`;
    `ds select` handhaaft dit automatisch.
+6. **Upstream pinning.** Externe UI-bronnen staan in `upstreams/*.json` op een
+   immutable commit-SHA. Nooit stil `main` volgen, nooit auto-selecteren en nooit
+   een React/web dependency in de native Rust/GTK ChefApp trekken.
 
 ## Commando's
 
@@ -48,6 +51,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 ./ds brain signal "tekst"                  # expliciete signal (geen auto-write)
 ./ds brain eval                            # scorecard → brain/eval/scorecard.json
 ./ds brain gate                            # eval + hard fail bij drempels
+./ds upstream list                         # gepinde externe UI-bronnen
+./ds upstream show <id>                    # provenance + rendererbeleid + kandidaten
+./ds upstream check [id]                   # valideer immutable pins + adapters
 ```
 
 Elke `add`/`select`/`remove`/`style add` mutatie herbouwt web automatisch.
