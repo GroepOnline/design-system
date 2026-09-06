@@ -41,9 +41,9 @@
 <div class="group">
   <div class="lbl">laden</div>
   <div class="row">
-    <button class="btn loading">Opslaan</button>
-    <button class="btn primary loading">Verwerken</button>
-    <button class="btn sm loading">Even geduld</button>
+    <button class="btn loading" aria-busy="true">Opslaan</button>
+    <button class="btn primary loading" aria-busy="true">Verwerken</button>
+    <button class="btn sm loading" aria-busy="true">Even geduld</button>
   </div>
 </div>
 
@@ -61,6 +61,17 @@
       <button class="btn primary">Actief</button>
       <button class="btn">Inactief</button>
     </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">toon / nadruk</div>
+  <div class="row">
+    <button class="btn soft">Zacht</button>
+    <button class="btn ghost">Ghost</button>
+    <button class="btn accent">Accent</button>
+    <button class="btn primary pill">Pill primary</button>
+    <button class="btn danger">Verwijderen</button>
   </div>
 </div>
 
@@ -97,7 +108,7 @@
   .btn.primary    text<->bg omgekeerd, hover opacity .87
   .btn.sm         h28 font-12
   .btn.lg         h38 font-14
-  .btn.loading    spinner::after, color transparent
+  .btn.loading    activity dots, behoudt label, geen spinner
   .btn-group      connected buttons, shared border-collapse
   .gbtn           28px ghost, hover --hover wash, active scale .92
   .gbtn.solid     send-acties

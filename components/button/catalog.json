@@ -65,6 +65,37 @@
       "status": "locked",
       "added": "2026-07-27",
       "note": "radius 0, marketing-site stijl"
+    },
+    {
+      "id": "kinetic-lab",
+      "file": "self/kinetic-lab.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-07",
+      "note": "interactive specimen workbench: 14 button recipes + live tuning",
+      "kind": "workbench",
+      "engine": "css + pointer-js",
+      "license": "ChefGroep",
+      "tags": [
+        "buttons",
+        "variants",
+        "physics-ish",
+        "beam",
+        "live-controls",
+        "random-library"
+      ],
+      "controls": [
+        "theme",
+        "skin",
+        "radius",
+        "height",
+        "weight",
+        "tracking",
+        "motion"
+      ],
+      "wide": true,
+      "h": 760
     }
   ],
   "docs": {
@@ -82,7 +113,7 @@
       ".btn h32 px13 r8",
       ".primary text↔bg inverse",
       ".gbtn 28px ghost",
-      "kbd in knop voor toets-hints"
+      "kbd in knop voor toets-hints; loading gebruikt activity dots, geen spinner"
     ]
   },
   "cat": "primitieven"

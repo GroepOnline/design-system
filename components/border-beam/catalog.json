@@ -1,0 +1,45 @@
+{
+  "component": "border-beam",
+  "title": "border beam",
+  "desc": "animated border / glow material",
+  "entries": [
+    {
+      "id": "playground",
+      "file": "self/playground.html",
+      "origin": "self",
+      "source": "https://libraries.dev/beam.html",
+      "status": "active",
+      "added": "2026-09-07",
+      "note": "ChefGroep compact derivative with live controls",
+      "kind": "effect",
+      "engine": "css",
+      "license": "MIT",
+      "tags": [
+        "beam",
+        "glow",
+        "border",
+        "motion",
+        "tunable",
+        "vendored-source"
+      ],
+      "h": 480,
+      "wide": true
+    }
+  ],
+  "docs": {
+    "use": [
+      "status emphasis, hero details, high-signal interactive surfaces",
+      "strength and speed tuned per context"
+    ],
+    "avoid": [
+      "beam on every card",
+      "continuous motion where state is already obvious"
+    ],
+    "contract": [
+      "reduced-motion must remain static",
+      "effect never blocks pointer input",
+      "source provenance stays recorded"
+    ]
+  },
+  "cat": "motion"
+}

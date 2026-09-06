@@ -12,7 +12,7 @@ Statussen:
   active   het geselecteerde component (1 per component)
   locked   in de catalogus, vast — verandert nooit stilletjes
 
-Categorieën (rail + gallery): primitieven, gesprek, bewijs, structuur.
+Categorieën (rail + gallery): primitieven, gesprek, bewijs, structuur, interactie, motion, 3d, experimenteel.
 Experimenten horen in playground/. Promoveren: ds <c> add.
 Selecteren:      ds <c> select <id>   (demote huidige active automatisch)
 Verwijderen:     ds <c> remove <id>   (expliciet)
@@ -70,12 +70,17 @@ CATS = [
     ("gesprek", "Gesprek"),
     ("bewijs", "Bewijs"),
     ("structuur", "Structuur"),
+    ("interactie", "Interactie"),
+    ("motion", "Motion"),
+    ("3d", "3D / WebGL"),
+    ("experimenteel", "Experimenteel"),
 ]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
     "button": "i-click", "composer": "i-pencil", "nav": "i-inbox",
     "pr-card": "i-git-pr", "settings": "i-settings", "transcript": "i-message",
     "worked-row": "i-clock", "studio": "i-sparkle",
+    "border-beam": "i-sparkle", "three-orbit": "i-panel", "motion-spring": "i-play",
 }
 SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
@@ -688,6 +693,10 @@ SHELL_HEAD = """<!DOCTYPE html>
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .chips { display:flex; flex-wrap:wrap; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .cell .chips:empty { display:none; }
+  .cell .chip { font-family:var(--mono); font-size:10px; color:var(--text-muted); border:1px solid var(--line); background:var(--surface-sunk); border-radius:999px; padding:2px 7px; }
+  .cell .chip.engine { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 28%,var(--line)); background:var(--accent-soft); }
   .cell .cf { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
@@ -1935,6 +1944,7 @@ CELL = """  <div class="cell{cls}"{wide}>
         {stbadge}
       </span>
     </div>
+    <div class="chips">{chips}</div>
     <iframe src="{file}" style="min-height:{h}px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>{file}</span><span>toegevoegd {added}</span><a href="{file}" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>{src}</pre></details>
@@ -2034,9 +2044,19 @@ def build_catalog(c):
             with open(fp) as f:
                 src = htmlmod.escape(f.read())
         wide = ' style="grid-column:1/-1"' if e.get("wide") or e.get("h", 0) >= 600 else ""
+        chip_values = []
+        if e.get("kind"):
+            chip_values.append((e["kind"], ""))
+        if e.get("engine"):
+            chip_values.append((e["engine"], "engine"))
+        if e.get("license"):
+            chip_values.append((e["license"], ""))
+        for tag in e.get("tags", [])[:6]:
+            chip_values.append((tag, ""))
+        chips = "".join(f'<span class="chip {cls}">{htmlmod.escape(str(value))}</span>' for value, cls in chip_values)
         cells.append(CELL.format(
             cls=" active" if act else "", wide=wide,
-            eid=e["id"], note=e.get("note", ""),
+            eid=e["id"], note=e.get("note", ""), chips=chips,
             orgcls="external" if e["origin"] == "external" else "",
             orgtxt=orgtxt,
             stbadge='<span class="st active">ACTIEF</span>' if act else '<span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>',

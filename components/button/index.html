@@ -154,6 +154,10 @@
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .chips { display:flex; flex-wrap:wrap; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .cell .chips:empty { display:none; }
+  .cell .chip { font-family:var(--mono); font-size:10px; color:var(--text-muted); border:1px solid var(--line); background:var(--surface-sunk); border-radius:999px; padding:2px 7px; }
+  .cell .chip.engine { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 28%,var(--line)); background:var(--accent-soft); }
   .cell .cf { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
@@ -250,6 +254,11 @@
   <a class="it" href="../../components/home-shell/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/border-beam/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/motion-spring/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
+  <div class="lbl caps">3D / WebGL</div>
+  <a class="it" href="../../components/three-orbit/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">three-orbit<span class="ds">Three.js / WebGL scene specimens</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../../docs/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
@@ -273,7 +282,7 @@
     <h1>button</h1>
     <div class="ph-sub">btn + gbtn + kbd</div>
   </div>
-  <div class="meta">7 varianten<br>5 zelf · 2 extern<br>blad 04/13</div>
+  <div class="meta">8 varianten<br>6 zelf · 2 extern<br>blad 05/16</div>
 </div>
 <div class="lede">manifest: <code>components/button/catalog.json</code></div>
 <div class="legend">
@@ -289,7 +298,7 @@
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>acties die de gebruiker bewust start</li><li>primary max 1x per context</li><li>gbtn voor icon-only acties in balken</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>twee primary naast elkaar</li><li>knop als navigatie — gebruik een link</li><li>emoji in of naast de knop</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.btn h32 px13 r8</code></li><li><code>.primary text↔bg inverse</code></li><li><code>.gbtn 28px ghost</code></li><li><code>kbd in knop voor toets-hints</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>acties die de gebruiker bewust start</li><li>primary max 1x per context</li><li>gbtn voor icon-only acties in balken</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>twee primary naast elkaar</li><li>knop als navigatie — gebruik een link</li><li>emoji in of naast de knop</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.btn h32 px13 r8</code></li><li><code>.primary text↔bg inverse</code></li><li><code>.gbtn 28px ghost</code></li><li><code>kbd in knop voor toets-hints; loading gebruikt activity dots, geen spinner</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -303,6 +312,7 @@
         <span class="st active">ACTIEF</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
@@ -348,9 +358,9 @@
 &lt;div class=&quot;group&quot;&gt;
   &lt;div class=&quot;lbl&quot;&gt;laden&lt;/div&gt;
   &lt;div class=&quot;row&quot;&gt;
-    &lt;button class=&quot;btn loading&quot;&gt;Opslaan&lt;/button&gt;
-    &lt;button class=&quot;btn primary loading&quot;&gt;Verwerken&lt;/button&gt;
-    &lt;button class=&quot;btn sm loading&quot;&gt;Even geduld&lt;/button&gt;
+    &lt;button class=&quot;btn loading&quot; aria-busy=&quot;true&quot;&gt;Opslaan&lt;/button&gt;
+    &lt;button class=&quot;btn primary loading&quot; aria-busy=&quot;true&quot;&gt;Verwerken&lt;/button&gt;
+    &lt;button class=&quot;btn sm loading&quot; aria-busy=&quot;true&quot;&gt;Even geduld&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -368,6 +378,17 @@
       &lt;button class=&quot;btn primary&quot;&gt;Actief&lt;/button&gt;
       &lt;button class=&quot;btn&quot;&gt;Inactief&lt;/button&gt;
     &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;toon / nadruk&lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;button class=&quot;btn soft&quot;&gt;Zacht&lt;/button&gt;
+    &lt;button class=&quot;btn ghost&quot;&gt;Ghost&lt;/button&gt;
+    &lt;button class=&quot;btn accent&quot;&gt;Accent&lt;/button&gt;
+    &lt;button class=&quot;btn primary pill&quot;&gt;Pill primary&lt;/button&gt;
+    &lt;button class=&quot;btn danger&quot;&gt;Verwijderen&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -404,7 +425,7 @@
   .btn.primary    text&lt;-&gt;bg omgekeerd, hover opacity .87
   .btn.sm         h28 font-12
   .btn.lg         h38 font-14
-  .btn.loading    spinner::after, color transparent
+  .btn.loading    activity dots, behoudt label, geen spinner
   .btn-group      connected buttons, shared border-collapse
   .gbtn           28px ghost, hover --hover wash, active scale .92
   .gbtn.solid     send-acties
@@ -424,6 +445,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/standard.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/standard.html</span><span>toegevoegd 2026-07-27</span><a href="self/standard.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -441,6 +463,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/primary.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/primary.html</span><span>toegevoegd 2026-07-27</span><a href="self/primary.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -458,6 +481,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/with-kbd.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/with-kbd.html</span><span>toegevoegd 2026-07-27</span><a href="self/with-kbd.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -476,6 +500,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/gbtn.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/gbtn.html</span><span>toegevoegd 2026-07-27</span><a href="self/gbtn.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -494,6 +519,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="external/shadcn-default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>external/shadcn-default.html</span><span>toegevoegd 2026-07-27</span><a href="external/shadcn-default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
@@ -524,6 +550,7 @@ body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="external/devin-square.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>external/devin-square.html</span><span>toegevoegd 2026-07-27</span><a href="external/devin-square.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
@@ -538,12 +565,100 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
+  <div class="cell" style="grid-column:1/-1">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">kinetic-lab</span>
+      <span class="note">interactive specimen workbench: 14 button recipes + live tuning</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <div class="chips"><span class="chip ">workbench</span><span class="chip engine">css + pointer-js</span><span class="chip ">ChefGroep</span><span class="chip ">buttons</span><span class="chip ">variants</span><span class="chip ">physics-ish</span><span class="chip ">beam</span><span class="chip ">live-controls</span><span class="chip ">random-library</span></div>
+    <iframe src="self/kinetic-lab.html" style="min-height:760px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/kinetic-lab.html</span><span>toegevoegd 2026-09-07</span><a href="self/kinetic-lab.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nl&quot; data-theme=&quot;dark&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;Button kinetic lab&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;../tokens.css&quot;&gt;
+&lt;style&gt;
+  *{box-sizing:border-box} body{margin:0;padding:28px;background:var(--bg);color:var(--text)}
+  .lab{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:22px;max-width:1180px;margin:auto}
+  .head{grid-column:1/-1;display:flex;align-items:end;gap:16px;border-bottom:1px solid var(--line);padding-bottom:18px}
+  .head h1{margin:0;font-size:26px}.head p{margin:4px 0 0;color:var(--text-muted);max-width:62ch}.kicker{font:10px var(--mono);color:var(--accent-ink);letter-spacing:.1em;text-transform:uppercase}
+  .stage{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:18px;min-height:540px}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .spec{min-height:120px;border:1px solid var(--line);border-radius:14px;padding:14px;background:color-mix(in srgb,var(--surface) 94%,var(--bg));display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+  .spec .meta{display:flex;justify-content:space-between;gap:8px;font:10px var(--mono);color:var(--text-faint)}
+  .preview{display:flex;min-height:62px;align-items:center;justify-content:center;position:relative}
+  .controls{position:sticky;top:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:16px}
+  .controls h2{font-size:14px;margin:0 0 14px}.ctl{display:grid;gap:6px;margin:0 0 14px}.ctl label{font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between}.ctl output{font-family:var(--mono);color:var(--text)}
+  select,input[type=range]{width:100%} select{height:32px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface-sunk);color:var(--text);padding:0 9px}
+  input[type=range]{accent-color:var(--accent)}.copy{width:100%;margin-top:2px}
+  .preview .btn{--lab-r:var(--r-md);--lab-h:32px;--lab-w:500;--lab-track:0em;height:var(--lab-h);border-radius:var(--lab-r);font-weight:var(--lab-w);letter-spacing:var(--lab-track)}
+  .glow .btn{box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 28%,transparent),0 10px 32px color-mix(in srgb,var(--accent) 22%,transparent)}
+  .kinetic{overflow:hidden}.kinetic::after{content:&quot;&quot;;position:absolute;inset:-60%;pointer-events:none;background:radial-gradient(circle at var(--px,50%) var(--py,50%),color-mix(in srgb,var(--accent) 18%,transparent),transparent 24%);opacity:0;transition:opacity 180ms}.kinetic:hover::after{opacity:1}
+  .beam-btn{border-color:transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(110deg,var(--accent),#8b5cf6,#22d3ee,var(--accent)) border-box;background-size:100% 100%,220% 100%;animation:beam 2.8s linear infinite}
+  @keyframes beam{to{background-position:0 0,-220% 0}}
+  .lift .btn:hover{transform:translateY(-3px) scale(1.015)}.snap .btn:hover{transform:translateY(-1px) scale(1.035)}
+  .flat .btn:hover{transform:none}.mono .btn{font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.08em}
+  @media(max-width:820px){.lab{grid-template-columns:1fr}.controls{position:static}.grid{grid-template-columns:1fr}.head{display:block}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main class=&quot;lab&quot; id=&quot;lab&quot;&gt;
+  &lt;header class=&quot;head&quot;&gt;&lt;div&gt;&lt;div class=&quot;kicker&quot;&gt;specimen / interaction lab&lt;/div&gt;&lt;h1&gt;Button workbench&lt;/h1&gt;&lt;p&gt;Geen één “juiste” knop: productievarianten, externe ideeën en random vondsten mogen naast elkaar bestaan. Controls wijzigen alle specimens live.&lt;/p&gt;&lt;/div&gt;&lt;/header&gt;
+  &lt;section class=&quot;stage&quot; id=&quot;stage&quot;&gt;&lt;div class=&quot;grid&quot;&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;01 standard&lt;/span&gt;&lt;span&gt;production&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;Open project&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;02 primary&lt;/span&gt;&lt;span&gt;production&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn primary&quot;&gt;Deploy agent&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;03 soft&lt;/span&gt;&lt;span&gt;quiet&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn soft&quot;&gt;View details&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;04 ghost&lt;/span&gt;&lt;span&gt;toolbar&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn ghost&quot;&gt;Cancel&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec glow&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;05 accent glow&lt;/span&gt;&lt;span&gt;expressive&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn accent&quot;&gt;Start session&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;06 danger&lt;/span&gt;&lt;span&gt;semantic&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn danger&quot;&gt;Delete run&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;07 pill&lt;/span&gt;&lt;span&gt;marketing-ish&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn primary pill&quot;&gt;Try playground&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec mono&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;08 mono&lt;/span&gt;&lt;span&gt;technical&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;run build&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec kinetic&quot; data-kinetic&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;09 kinetic&lt;/span&gt;&lt;span&gt;pointer field&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn accent pill&quot;&gt;Magnetic-ish&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec lift&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;10 lift&lt;/span&gt;&lt;span&gt;motion&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn soft&quot;&gt;Hover me&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec snap&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;11 snap&lt;/span&gt;&lt;span&gt;motion&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;Quick action&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;12 beam&lt;/span&gt;&lt;span&gt;effect&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn beam-btn&quot;&gt;Generate variants&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;13 shortcut&lt;/span&gt;&lt;span&gt;approval&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn primary&quot;&gt;Approve &lt;kbd&gt;1&lt;/kbd&gt;&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;14 activity&lt;/span&gt;&lt;span&gt;no spinner&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn loading&quot; aria-busy=&quot;true&quot;&gt;Building&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+  &lt;/div&gt;&lt;/section&gt;
+  &lt;aside class=&quot;controls&quot;&gt;&lt;h2&gt;Live tuning&lt;/h2&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Theme&lt;/label&gt;&lt;select id=&quot;theme&quot;&gt;&lt;option value=&quot;dark&quot;&gt;Dark&lt;/option&gt;&lt;option value=&quot;light&quot;&gt;Light&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Skin&lt;/label&gt;&lt;select id=&quot;skin&quot;&gt;&lt;option value=&quot;&quot;&gt;Devin&lt;/option&gt;&lt;option value=&quot;strak&quot;&gt;Strak&lt;/option&gt;&lt;option value=&quot;grok&quot;&gt;Grok&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Radius &lt;output id=&quot;radiusO&quot;&gt;6px&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;radius&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;28&quot; value=&quot;6&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Height &lt;output id=&quot;heightO&quot;&gt;32px&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;height&quot; type=&quot;range&quot; min=&quot;26&quot; max=&quot;52&quot; value=&quot;32&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Weight &lt;output id=&quot;weightO&quot;&gt;500&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;weight&quot; type=&quot;range&quot; min=&quot;400&quot; max=&quot;700&quot; step=&quot;50&quot; value=&quot;500&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Tracking &lt;output id=&quot;trackO&quot;&gt;0.00em&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;track&quot; type=&quot;range&quot; min=&quot;-4&quot; max=&quot;10&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Motion&lt;/label&gt;&lt;select id=&quot;motion&quot;&gt;&lt;option value=&quot;default&quot;&gt;Default&lt;/option&gt;&lt;option value=&quot;lift&quot;&gt;Lift&lt;/option&gt;&lt;option value=&quot;snap&quot;&gt;Snap&lt;/option&gt;&lt;option value=&quot;flat&quot;&gt;Flat&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;button class=&quot;btn copy&quot; id=&quot;copy&quot;&gt;Copy tuning&lt;/button&gt;
+  &lt;/aside&gt;
+&lt;/main&gt;
+&lt;script&gt;
+  const root=document.documentElement,stage=document.querySelector(&#x27;#stage&#x27;);
+  const set=(name,val)=&gt;document.querySelectorAll(&#x27;.preview .btn&#x27;).forEach(b=&gt;b.style.setProperty(name,val));
+  const bind=(id,varName,fmt)=&gt;{const el=document.querySelector(&#x27;#&#x27;+id),out=document.querySelector(&#x27;#&#x27;+id+&#x27;O&#x27;);el.addEventListener(&#x27;input&#x27;,()=&gt;{const v=fmt(el.value);set(varName,v);if(out)out.textContent=v});};
+  bind(&#x27;radius&#x27;,&#x27;--lab-r&#x27;,v=&gt;v+&#x27;px&#x27;); bind(&#x27;height&#x27;,&#x27;--lab-h&#x27;,v=&gt;v+&#x27;px&#x27;); bind(&#x27;weight&#x27;,&#x27;--lab-w&#x27;,v=&gt;v); bind(&#x27;track&#x27;,&#x27;--lab-track&#x27;,v=&gt;(Number(v)/100).toFixed(2)+&#x27;em&#x27;);
+  document.querySelector(&#x27;#theme&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;root.dataset.theme=e.target.value===&#x27;dark&#x27;?&#x27;dark&#x27;:&#x27;light&#x27;);
+  document.querySelector(&#x27;#skin&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{if(e.target.value)root.dataset.style=e.target.value;else delete root.dataset.style});
+  document.querySelector(&#x27;#motion&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{stage.classList.remove(&#x27;lift&#x27;,&#x27;snap&#x27;,&#x27;flat&#x27;);if(e.target.value!==&#x27;default&#x27;)stage.classList.add(e.target.value)});
+  document.querySelectorAll(&#x27;[data-kinetic]&#x27;).forEach(card=&gt;card.addEventListener(&#x27;pointermove&#x27;,e=&gt;{const r=card.getBoundingClientRect();card.style.setProperty(&#x27;--px&#x27;,((e.clientX-r.left)/r.width*100)+&#x27;%&#x27;);card.style.setProperty(&#x27;--py&#x27;,((e.clientY-r.top)/r.height*100)+&#x27;%&#x27;)}));
+  document.querySelector(&#x27;#copy&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{const text=`radius=${radius.value}px; height=${height.value}px; weight=${weight.value}; tracking=${(track.value/100).toFixed(2)}em; motion=${motion.value}; theme=${theme.value}; skin=${skin.value||&#x27;devin&#x27;}`;await navigator.clipboard?.writeText(text);document.querySelector(&#x27;#copy&#x27;).textContent=&#x27;Copied&#x27;;setTimeout(()=&gt;document.querySelector(&#x27;#copy&#x27;).textContent=&#x27;Copy tuning&#x27;,900)});
+&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
 </div>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-08-31 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-07 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">04/13</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">05/16</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

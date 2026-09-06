@@ -33,12 +33,15 @@
   .composer-bar { display: flex; align-items: center; gap: 4px; margin-top: 7px; }
   .composer-bar .right { margin-left: auto; display: flex; gap: 4px; align-items: center; }
   .model-chip {
-    font-size: 12px; color: var(--text-muted);
-    padding: 4px 9px; border-radius: var(--r-md);
-    cursor: pointer; display: flex; gap: 5px; align-items: center;
-    transition: background 0.15s;
+    appearance: none; border: 0; outline: none; font-family: var(--font);
+    font-size: 12px; color: var(--text-muted); background: transparent;
+    padding: 5px 22px 5px 9px; border-radius: var(--r-md); cursor: pointer;
+    background-image: linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+    background-position: calc(100% - 12px) 50%,calc(100% - 8px) 50%; background-size:4px 4px; background-repeat:no-repeat;
+    transition: background-color var(--dur-fast), color var(--dur-fast);
   }
-  .model-chip:hover { background: var(--hover); }
+  .model-chip:hover { background-color: var(--hover); color:var(--text); }
+  .model-chip:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
   .queued-chip {
     display: flex; align-items: center; gap: 8px;
     background: var(--accent-soft); color: var(--accent-ink);
@@ -58,7 +61,7 @@
     <div class="composer-bar">
       <button class="gbtn" title="Bijlage"><svg class="ic lg"><use href="../../../components/icons.svg#i-plus"/></svg></button>
       <div class="right">
-        <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="../../../components/icons.svg#i-chevrons-updown"/></svg></div>
+        <select class="model-chip" aria-label="Model"><option>Default model</option><option>Reasoning</option><option>Fast</option></select>
         <button class="gbtn" title="Spraak"><svg class="ic"><use href="../../../components/icons.svg#i-mic"/></svg></button>
         <button class="gbtn solid" title="Stuur"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
       </div>
@@ -74,7 +77,7 @@
     <div class="composer-bar">
       <button class="gbtn"><svg class="ic lg"><use href="../../../components/icons.svg#i-plus"/></svg></button>
       <div class="right">
-        <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="../../../components/icons.svg#i-chevrons-updown"/></svg></div>
+        <select class="model-chip" aria-label="Model"><option>Default model</option><option>Reasoning</option><option>Fast</option></select>
         <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-mic"/></svg></button>
         <button class="gbtn solid"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
       </div>

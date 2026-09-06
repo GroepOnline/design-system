@@ -154,6 +154,10 @@
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .chips { display:flex; flex-wrap:wrap; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .cell .chips:empty { display:none; }
+  .cell .chip { font-family:var(--mono); font-size:10px; color:var(--text-muted); border:1px solid var(--line); background:var(--surface-sunk); border-radius:999px; padding:2px 7px; }
+  .cell .chip.engine { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 28%,var(--line)); background:var(--accent-soft); }
   .cell .cf { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
@@ -250,6 +254,11 @@
   <a class="it" href="../../components/home-shell/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it on" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/border-beam/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/motion-spring/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
+  <div class="lbl caps">3D / WebGL</div>
+  <a class="it" href="../../components/three-orbit/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">three-orbit<span class="ds">Three.js / WebGL scene specimens</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../../docs/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
@@ -273,7 +282,7 @@
     <h1>settings</h1>
     <div class="ph-sub">volledige instellingen-surface</div>
   </div>
-  <div class="meta">2 varianten<br>2 zelf · 0 extern<br>blad 09/13</div>
+  <div class="meta">2 varianten<br>2 zelf · 0 extern<br>blad 11/16</div>
 </div>
 <div class="lede">manifest: <code>components/settings/catalog.json</code></div>
 <div class="legend">
@@ -303,6 +312,7 @@
         <span class="st active">ACTIEF</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
@@ -552,6 +562,7 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/grouped.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/grouped.html</span><span>toegevoegd 2026-07-28</span><a href="self/grouped.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
@@ -804,11 +815,11 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
 </pre></details>
   </div>
 </div>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-08-31 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-07 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">09/13</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">11/16</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
