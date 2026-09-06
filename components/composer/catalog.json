@@ -41,6 +41,37 @@
         "gtk-native": "contract-only"
       },
       "h": 330
+    },
+    {
+      "id": "command-suggest",
+      "file": "self/command-suggest.html",
+      "origin": "self-modified",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "ChefGroep command suggestions: keyboard model without glass chrome",
+      "derivedFrom": {
+        "entry": "opensourceui-spotlight-bar",
+        "upstream": "opensourceui",
+        "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+        "sourcePath": "components/docks/spotlight-bar.tsx"
+      },
+      "take": [
+        "query + suggestion model",
+        "arrow/enter/escape keyboard flow",
+        "shortcut hints as data"
+      ],
+      "reject": [
+        "glassmorphism",
+        "backdrop blur",
+        "floating shadow shell"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "native-candidate"
+      },
+      "h": 330
     }
   ],
   "docs": {

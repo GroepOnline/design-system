@@ -330,6 +330,9 @@
 <p><code>sourcePath</code>, <code>license</code>, <code>take</code>, <code>reject</code> en rendererbeleid. Externe studies</p>
 <p>blijven <code>locked</code>; een ChefGroep-afgeleide wordt een nieuwe <code>self-modified</code></p>
 <p>variant. <code>gtk-native</code> blijft altijd <code>contract-only</code>.</p>
+<li><strong>Afgeleiden bewaren lineage.</strong> <code>self-modified</code> varianten uit een gecureerde</li>
+<p>bron hebben <code>derivedFrom</code> met entry/upstream/ref/path en behouden dezelfde</p>
+<p><code>source</code> URL. Pas zo mag GTK van <code>contract-only</code> naar <code>native-candidate</code>.</p>
 </ol>
 <h2 data-reg="commando-s">Commando&#x27;s</h2>
 <pre><code>./ds list                                  # overzicht: entries, active, self/ext per component

@@ -214,6 +214,34 @@ def validate_curated_entry(component, entry):
         warnings.append(f"{component}/{entry['id']}: upstream candidate is niet als curated gemarkeerd")
     return errors, warnings
 
+def validate_derived_entry(component, entry):
+    errors, warnings = [], []
+    derived = entry.get("derivedFrom")
+    if not derived:
+        return errors, warnings
+    if entry.get("origin") != "self-modified":
+        errors.append(f"{component}/{entry.get('id','?')}: derivedFrom vereist origin self-modified")
+        return errors, warnings
+    source_id = derived.get("entry")
+    manifest = load_manifest(component)
+    source = next((item for item in manifest.get("entries", []) if item.get("id") == source_id), None)
+    if not source:
+        errors.append(f"{component}/{entry['id']}: derivedFrom entry bestaat niet")
+        return errors, warnings
+    if source.get("origin") != "external" or not source.get("upstream"):
+        errors.append(f"{component}/{entry['id']}: derivedFrom moet naar curated external wijzen")
+    for key in ("upstream", "sourceRef", "sourcePath"):
+        if derived.get(key) != source.get(key):
+            errors.append(f"{component}/{entry['id']}: derivedFrom.{key} wijkt af")
+    if entry.get("source") != source.get("source"):
+        errors.append(f"{component}/{entry['id']}: source provenance wijkt af")
+    renderer = entry.get("renderer", {})
+    if set(renderer) != {"react-web", "mcp-apps", "gtk-native"}:
+        errors.append(f"{component}/{entry['id']}: rendererkaart incompleet")
+    if renderer.get("gtk-native") not in ("candidate", "native-candidate"):
+        errors.append(f"{component}/{entry['id']}: gtk-native moet candidate blijven")
+    return errors, warnings
+
 def cmd_upstream(args):
     sub = args[0] if args else "list"
     if sub == "list":
@@ -315,6 +343,18 @@ def cmd_clist(c):
             print(f"    {green('take')}    " + "; ".join(e["take"]))
         if e.get("reject"):
             print(f"    {_c('31','reject')}  " + "; ".join(e["reject"]))
+        renderer = e.get("renderer", {})
+        if renderer:
+            print("    renderer " + ", ".join(f"{k}={v}" for k, v in renderer.items()))
+    derived = [e for e in m["entries"] if e.get("derivedFrom")]
+    for e in derived:
+        src = e["derivedFrom"]
+        print()
+        print(f"  {bold(e['id'])} {dim('· derived from ' + src.get('entry','?'))}")
+        if e.get("take"):
+            print(f"    {green('kept')}    " + "; ".join(e["take"]))
+        if e.get("reject"):
+            print(f"    {_c('31','removed')} " + "; ".join(e["reject"]))
         renderer = e.get("renderer", {})
         if renderer:
             print("    renderer " + ", ".join(f"{k}={v}" for k, v in renderer.items()))
@@ -3123,6 +3163,9 @@ def cmd_check():
             ce, cw = validate_curated_entry(c, e)
             errors.extend(ce)
             warnings.extend(cw)
+            de, dw = validate_derived_entry(c, e)
+            errors.extend(de)
+            warnings.extend(dw)
     # versioned external upstream manifests
     for uid in upstream_ids():
         data = load_upstream(uid)
