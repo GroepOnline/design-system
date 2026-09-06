@@ -19,6 +19,7 @@
 
 ### density
 - **DO** compact, information-dense tool surfaces (density 5–7). **DON'T** marketing-hero whitespace inside product. *(seed: Signaal density 7)*
+- **DO** treat a library specimen as the content, not as a small object floating inside a large card. Preview-first grids use tight chrome, 3+ columns on desktop where viable, small labels, and only the padding the interaction needs. **DON'T** spend 100+ vertical pixels of empty card space to display a 28–36px control, wrap every specimen in oversized r14/r18 panels, or stack card-within-stage-within-card. *(2026-08-05 catalog-card corrections + 2026-09-07 Kinetics density reject)*
 
 ### voice
 - **DO** warm, direct, human Dutch on Joep-facing surfaces. **DON'T** em-dashes, buzzwords, lifecycle-jargon, fake metrics. *(seed: AGENTS.md)*

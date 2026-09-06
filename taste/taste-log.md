@@ -203,3 +203,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: kleuren lezen als generieke AI-demo in plaats van ontworpen materiaal
 - **delta**: kleur is voortaan semantiek of expliciet specimen-inhoud, nooit om een surface automatisch “tech/AI” te laten voelen. Button/motion/3D labs worden monochroom en materiaalgedreven; Border Beam behoudt kleur omdat kleur daar het onderzochte effect zelf is.
 - **rule**: **DON'T** blauw-paars/neon/aurora/glow inzetten als ambient/default stijl. **DO** neutrale materialen, contrast, typografie, geometrie en motion gebruiken voor karakter. Flat accent alleen voor focus, selectie, links of expliciete semantiek.
+
+## 2026-09-07 · Library density: Kinetics as interaction-library reference
+
+- **shown**: button specimen grid after neutral color pass, with one small button centered inside ~120px rounded cards
+- **reaction**: rejected as too coarse; Kinetics/Colorion library given as the quality reference
+- **signal**: the library should feel like a dense collection of live interactions, not a gallery of oversized demo cards
+- **delta**: button workbench now uses a compact top toolbar, 3-column specimen grid, ~88px rows, r-md surfaces and no outer stage card; global library previews shrink to ~126px with 250px minimum columns and no hover elevation
+- **rule**: specimen is the content. Chrome must collapse around it. Large empty card area around a tiny primitive is an anti-pattern.

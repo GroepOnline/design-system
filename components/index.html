@@ -234,25 +234,25 @@
   }
 <style>
 /* specimen explorer: live cards + search/filter */
-  .gallery-tools { display:grid; grid-template-columns:minmax(260px,1fr) 220px auto; gap:8px; align-items:center; margin:22px 0 8px; }
-  .gallery-tools .input, .gallery-tools .select { height:36px; }
+  .gallery-tools { display:grid; grid-template-columns:minmax(260px,1fr) 190px auto; gap:7px; align-items:center; margin:16px 0 8px; }
+  .gallery-tools .input, .gallery-tools .select { height:30px; }
   .gallery-count { font:11px var(--mono); color:var(--text-faint); white-space:nowrap; }
-  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
-  .spec-card { border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; background:var(--surface); transition:border-color var(--dur-fast),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast); }
-  .spec-card:hover { border-color:var(--line-strong); transform:translateY(-2px); box-shadow:0 12px 36px rgba(0,0,0,.08); }
+  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:9px; }
+  .spec-card { border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; background:var(--surface); transition:border-color var(--dur-fast),background var(--dur-fast); }
+  .spec-card:hover { border-color:var(--line-strong); background:color-mix(in srgb,var(--surface) 97%,var(--text) 3%); }
   .spec-card[hidden], .gallery-group[hidden] { display:none !important; }
-  .spec-live { height:190px; overflow:hidden; background:var(--bg); border-bottom:1px solid var(--line); }
+  .spec-live { height:126px; overflow:hidden; background:var(--bg); border-bottom:1px solid var(--line); }
   .spec-live iframe { width:100%; height:380px; border:0; display:block; transform:scale(.5); transform-origin:0 0; width:200%; pointer-events:auto; }
-  .spec-info { display:flex; align-items:flex-start; gap:10px; padding:12px; color:inherit; text-decoration:none; }
-  .spec-info .ct { width:32px; height:32px; border:1px solid var(--line); border-radius:8px; display:grid; place-items:center; flex:none; background:var(--bg); }
-  .spec-info .ct svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; color:var(--text-muted); }
-  .spec-copy { min-width:0; flex:1; display:grid; gap:2px; }
-  .spec-copy .cn { font-size:var(--text-md); font-weight:500; }
-  .spec-copy .cd { color:var(--text-faint); font-size:var(--text-sm); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .spec-tags { font:10px var(--mono); color:var(--accent-ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .spec-info { display:flex; align-items:flex-start; gap:8px; padding:8px 9px 9px; color:inherit; text-decoration:none; }
+  .spec-info .ct { width:26px; height:26px; border:1px solid var(--line); border-radius:var(--r-md); display:grid; place-items:center; flex:none; background:var(--bg); }
+  .spec-info .ct svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:2; color:var(--text-muted); }
+  .spec-copy { min-width:0; flex:1; display:grid; gap:1px; }
+  .spec-copy .cn { font-size:var(--text-sm); font-weight:500; }
+  .spec-copy .cd { color:var(--text-faint); font-size:var(--text-xs); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .spec-tags { font:9px var(--mono); color:var(--text-faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .spec-info .cmeta { display:flex; flex-direction:column; align-items:flex-end; gap:2px; font-family:var(--mono); flex:none; }
-  .spec-info .cnt, .spec-info .act { font-size:10px; color:var(--text-faint); } .spec-info .act { color:var(--open-green); }
-  @media(max-width:760px){ .gallery-tools{grid-template-columns:1fr}.spec-grid{grid-template-columns:1fr}.spec-live{height:170px} }
+  .spec-info .cnt, .spec-info .act { font-size:9px; color:var(--text-faint); } .spec-info .act { color:var(--open-green); }
+  @media(max-width:760px){ .gallery-tools{grid-template-columns:1fr}.spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.spec-live{height:112px} } @media(max-width:480px){.spec-grid{grid-template-columns:1fr}}
 </style>
 </style>
 </head>
