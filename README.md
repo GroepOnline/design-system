@@ -24,6 +24,7 @@ Nederlandse copy-stem.
 ./ds button list             # één component in detail
 ./ds build                   # web herbouwen (catalogus + docs + taste + brain)
 ./ds brain new decision "…"  # decision-note in de vault
+./ds upstream list            # gepinde externe UI-bronnen + rendererbeleid
 ./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem
 ```
 
@@ -71,6 +72,13 @@ Nieuw component of variant:
 | `CLAUDE.md` | gegenereerde Claude taste-sectie uit `kater-dev-tools` |
 | `templates/` + `new-project.sh` | scaffold voor nieuwe producten |
 | `references/` | meetlat-screenshots (Devin-product, eigen states) |
+| `upstreams/` | immutable externe UI-bronnen + rendererbeleid; nooit runtime dependency |
+
+Curated upstream entries blijven `locked` en leggen naast de exacte bronpin ook
+`take`, `reject` en rendererbeleid vast. `react-web` en `mcp-apps` mogen een
+component als kandidaat gebruiken; `gtk-native` blijft `contract-only`. Een
+ChefGroep-aanpassing wordt altijd een nieuwe `self-modified` variant en wordt
+nooit automatisch actief.
 | `surfaces/` | per-surface ontwerpbriefs |
 | `prototype-v2.html` | volledige referentie-app (3-pane sessie) |
 

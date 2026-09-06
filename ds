@@ -24,6 +24,10 @@ Brain (vijfde tool):
   brain-site/         GEGENEREERD door ds build / ds brain build
   ./ds brain build|check|new decision|new research
   ./ds brain signal|eval|gate
+
+Upstreams (catalogus-invoer):
+  upstreams/*.json    immutable externe bronpins + rendererbeleid
+  ./ds upstream list|show <id>|check [id]
 """
 import hashlib
 import html as htmlmod
@@ -47,6 +51,7 @@ BRAIN_SIGNALS = os.path.join(BRAIN, "signals", "signals.yaml")
 BRAIN_THRESHOLDS = os.path.join(BRAIN, "eval", "thresholds.yaml")
 BRAIN_SCORECARD = os.path.join(BRAIN, "eval", "scorecard.json")
 STYLES_JSON = os.path.join(ROOT, "styles.json")
+UPSTREAMS = os.path.join(ROOT, "upstreams")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
@@ -132,6 +137,163 @@ def components():
                   if os.path.isdir(os.path.join(COMP, d))
                   and os.path.exists(os.path.join(COMP, d, "catalog.json")))
 
+
+def upstream_ids():
+    if not os.path.isdir(UPSTREAMS):
+        return []
+    return sorted(Path(p).stem for p in Path(UPSTREAMS).glob("*.json"))
+
+def load_upstream(uid):
+    path = Path(UPSTREAMS, f"{uid}.json")
+    if not path.exists():
+        err(f"onbekende upstream: {bold(uid)}")
+    try:
+        return json.loads(path.read_text())
+    except json.JSONDecodeError as exc:
+        err(f"ongeldige upstream manifest {uid}: {exc}")
+
+def validate_upstream(uid, data):
+    errors, warnings = [], []
+    required = ("id", "name", "repo", "ref", "license", "mode", "adapters")
+    for key in required:
+        if key not in data:
+            errors.append(f"upstream/{uid}: ontbrekend veld '{key}'")
+    if data.get("id") != uid:
+        errors.append(f"upstream/{uid}: id '{data.get('id')}' komt niet overeen met bestandsnaam")
+    if not str(data.get("repo", "")).startswith("https://github.com/"):
+        warnings.append(f"upstream/{uid}: repo is geen github.com URL")
+    ref = str(data.get("ref", ""))
+    if not re.fullmatch(r"[0-9a-f]{40}", ref):
+        errors.append(f"upstream/{uid}: ref moet een immutable 40-char commit SHA zijn")
+    allowed = {"curate-copy", "reference-only", "contract-only", "react-adapter"}
+    adapters = data.get("adapters", {})
+    if not isinstance(adapters, dict) or not adapters:
+        errors.append(f"upstream/{uid}: adapters moet een niet-lege mapping zijn")
+    else:
+        for surface, spec in adapters.items():
+            mode = spec.get("mode") if isinstance(spec, dict) else None
+            if mode not in allowed:
+                errors.append(f"upstream/{uid}: adapter {surface} heeft ongeldige mode '{mode}'")
+    return errors, warnings
+
+def validate_curated_entry(component, entry):
+    errors, warnings = [], []
+    uid = entry.get("upstream")
+    if not uid:
+        return errors, warnings
+    if uid not in upstream_ids():
+        errors.append(f"{component}/{entry.get('id','?')}: onbekende upstream '{uid}'")
+        return errors, warnings
+    upstream = load_upstream(uid)
+    ref = entry.get("sourceRef")
+    path = entry.get("sourcePath")
+    if ref != upstream.get("ref"):
+        errors.append(f"{component}/{entry['id']}: sourceRef wijkt af van upstream pin")
+    if not path:
+        errors.append(f"{component}/{entry['id']}: sourcePath ontbreekt")
+    expected = f"{upstream.get('repo')}/blob/{upstream.get('ref')}/{path}" if path else ""
+    if entry.get("source") != expected:
+        errors.append(f"{component}/{entry['id']}: source URL is niet exact aan upstream pin + sourcePath gebonden")
+    if entry.get("license") != upstream.get("license"):
+        errors.append(f"{component}/{entry['id']}: license wijkt af van upstream manifest")
+    if not entry.get("take") or not isinstance(entry.get("take"), list):
+        errors.append(f"{component}/{entry['id']}: take-lijst ontbreekt")
+    if not entry.get("reject") or not isinstance(entry.get("reject"), list):
+        errors.append(f"{component}/{entry['id']}: reject-lijst ontbreekt")
+    renderer = entry.get("renderer", {})
+    required_renderers = {"react-web", "mcp-apps", "gtk-native"}
+    if set(renderer) != required_renderers:
+        errors.append(f"{component}/{entry['id']}: rendererbeleid moet react-web, mcp-apps en gtk-native bevatten")
+    if renderer.get("gtk-native") != "contract-only":
+        errors.append(f"{component}/{entry['id']}: gtk-native moet contract-only blijven")
+    candidates = upstream.get("candidates", [])
+    match = next((c for c in candidates if c.get("sourcePath") == path and c.get("target") == component), None)
+    if not match:
+        errors.append(f"{component}/{entry['id']}: geen matching upstream candidate voor sourcePath/target")
+    elif not match.get("curated"):
+        warnings.append(f"{component}/{entry['id']}: upstream candidate is niet als curated gemarkeerd")
+    return errors, warnings
+
+def validate_derived_entry(component, entry):
+    errors, warnings = [], []
+    derived = entry.get("derivedFrom")
+    if not derived:
+        return errors, warnings
+    if entry.get("origin") != "self-modified":
+        errors.append(f"{component}/{entry.get('id','?')}: derivedFrom vereist origin self-modified")
+        return errors, warnings
+    source_id = derived.get("entry")
+    manifest = load_manifest(component)
+    source = next((item for item in manifest.get("entries", []) if item.get("id") == source_id), None)
+    if not source:
+        errors.append(f"{component}/{entry['id']}: derivedFrom entry bestaat niet")
+        return errors, warnings
+    if source.get("origin") != "external" or not source.get("upstream"):
+        errors.append(f"{component}/{entry['id']}: derivedFrom moet naar curated external wijzen")
+    for key in ("upstream", "sourceRef", "sourcePath"):
+        if derived.get(key) != source.get(key):
+            errors.append(f"{component}/{entry['id']}: derivedFrom.{key} wijkt af")
+    if entry.get("source") != source.get("source"):
+        errors.append(f"{component}/{entry['id']}: source provenance wijkt af")
+    renderer = entry.get("renderer", {})
+    if set(renderer) != {"react-web", "mcp-apps", "gtk-native"}:
+        errors.append(f"{component}/{entry['id']}: rendererkaart incompleet")
+    if renderer.get("gtk-native") not in ("candidate", "native-candidate"):
+        errors.append(f"{component}/{entry['id']}: gtk-native moet candidate blijven")
+    return errors, warnings
+
+def cmd_upstream(args):
+    sub = args[0] if args else "list"
+    if sub == "list":
+        ids = upstream_ids()
+        if not ids:
+            print("  (geen upstreams geregistreerd)")
+            return
+        print(bold(f"{'upstream':<18} {'license':<10} {'mode':<16} {'ref':<12} curated"))
+        print(dim("─" * 72))
+        for uid in ids:
+            data = load_upstream(uid)
+            candidates = data.get('candidates', [])
+            curated = sum(1 for item in candidates if item.get('curated'))
+            print(f"{bold(uid):<27} {data.get('license','?'):<10} {data.get('mode','?'):<16} {data.get('ref','')[:10]:<12} {curated}/{len(candidates)}")
+        return
+    if sub == "show":
+        if len(args) < 2:
+            err("gebruik: ds upstream show <id>")
+        data = load_upstream(args[1])
+        print(f"{bold(data['name'])} {dim('· ' + data['id'])}")
+        print(f"  repo     {data['repo']}")
+        print(f"  ref      {data['ref']}")
+        print(f"  license  {data['license']}")
+        print(f"  mode     {data['mode']}")
+        print("  adapters")
+        for surface, spec in data.get("adapters", {}).items():
+            print(f"    {surface:<14} {spec.get('mode','?'):<16} {dim(spec.get('note',''))}")
+        candidates = data.get("candidates", [])
+        if candidates:
+            print("  candidates")
+            for item in candidates:
+                target = item.get("target", "-")
+                mark = 'curated' if item.get('curated') else 'candidate'
+                path = item.get('sourcePath', '-')
+                print(f"    {item.get('category','?')}/{item.get('name','?')} -> {target} [{mark}] {dim(path)}")
+        return
+    if sub == "check":
+        ids = [args[1]] if len(args) > 1 else upstream_ids()
+        errors, warnings = [], []
+        for uid in ids:
+            data = load_upstream(uid)
+            e, w = validate_upstream(uid, data)
+            errors.extend(e)
+            warnings.extend(w)
+        for e in errors: errp(e)
+        for w in warnings: wrn(w)
+        if errors:
+            err(f"{len(errors)} upstream errors, {len(warnings)} warnings")
+        ok(f"{len(ids)} upstream(s) valide {dim(f'— {len(warnings)} warnings')}")
+        return
+    err("gebruik: ds upstream list | show <id> | check [id]")
+
 def rewrite_paths(text):
     # Component-bronnen (self/external) staan 3 niveaus diep onder root.
     # Normaliseer absolute root-paden naar ../../../ zodat ze zowel via file://
@@ -173,6 +335,29 @@ def cmd_clist(c):
     for e in m["entries"]:
         st = green("ACTIEF") if e["status"] == "active" else dim("vast")
         print(f"{st:<18} {e['origin']:<15} {bold(e['id']):<31} {dim(e.get('source') or '-'):<24} {e.get('note','')}")
+    curated = [e for e in m["entries"] if e.get("upstream")]
+    for e in curated:
+        print()
+        print(f"  {bold(e['id'])} {dim('· ' + e.get('upstream','?') + '@' + e.get('sourceRef','')[:10])}")
+        if e.get("take"):
+            print(f"    {green('take')}    " + "; ".join(e["take"]))
+        if e.get("reject"):
+            print(f"    {_c('31','reject')}  " + "; ".join(e["reject"]))
+        renderer = e.get("renderer", {})
+        if renderer:
+            print("    renderer " + ", ".join(f"{k}={v}" for k, v in renderer.items()))
+    derived = [e for e in m["entries"] if e.get("derivedFrom")]
+    for e in derived:
+        src = e["derivedFrom"]
+        print()
+        print(f"  {bold(e['id'])} {dim('· derived from ' + src.get('entry','?'))}")
+        if e.get("take"):
+            print(f"    {green('kept')}    " + "; ".join(e["take"]))
+        if e.get("reject"):
+            print(f"    {_c('31','removed')} " + "; ".join(e["reject"]))
+        renderer = e.get("renderer", {})
+        if renderer:
+            print("    renderer " + ", ".join(f"{k}={v}" for k, v in renderer.items()))
 
 def cmd_select(c, eid):
     m = load_manifest(c)
@@ -2803,11 +2988,58 @@ def cmd_brain(args):
     else:
         err("gebruik: ds brain build|check|new|signal|eval|gate")
 
+_ISO_DATE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
+
+
+def _is_generated_html_output(path: str) -> bool:
+    """Return whether path is an HTML artifact owned by ``ds build``."""
+    p = Path(path)
+    parts = p.parts
+    if p in {Path("index.html"), Path("components/index.html"), Path("taste-site/index.html")}:
+        return True
+    if len(parts) == 3 and parts[0] == "components" and parts[2] == "index.html":
+        return True
+    return len(parts) == 2 and parts[0] in {"docs", "brain-site"} and p.suffix == ".html"
+
+
+def _normalize_generated_wall_clock(path: str, text: str) -> str:
+    """Normalize wall-clock dates only for HTML artifacts owned by ``ds build``."""
+    if not _is_generated_html_output(path):
+        return text
+    chrome_markers = ("gegenereerd", "titelblok", "ml-opt")
+    lines = []
+    for line in text.splitlines(keepends=True):
+        if any(marker in line for marker in chrome_markers):
+            line = _ISO_DATE_RE.sub("<DATE>", line)
+        lines.append(line)
+    return "".join(lines)
+
+
+def _date_only_generated_drift(path: str) -> bool:
+    """True when a tracked file differs from HEAD only by generated chrome dates."""
+    import subprocess
+
+    current = Path(ROOT, path)
+    if not current.is_file():
+        return False
+    baseline = subprocess.run(
+        ["git", "show", f"HEAD:{path}"], cwd=ROOT, capture_output=True, text=True, check=False
+    )
+    if baseline.returncode != 0:
+        return False
+    try:
+        current_text = current.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return False
+    return _normalize_generated_wall_clock(path, baseline.stdout) == _normalize_generated_wall_clock(path, current_text)
+
+
 def check_build_idempotent():
-    """build --check: fail hard als de werkboom na build drift vertoont vs git.
-    
-    Genegeerd: gegenereerde bestanden met timestamps (scorecard.json, etc.)
-    die veranderen bij elke run maar geen handmatige wijziging aangeven.
+    """build --check: fail hard on semantic generated drift vs git.
+
+    Wall-clock-only dates in generated chrome are ignored. Real generated
+    content drift remains blocking, even when the same file also has a date
+    change. scorecard.json remains an explicitly volatile generated artifact.
     """
     import subprocess
     r = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
@@ -2827,7 +3059,7 @@ def check_build_idempotent():
     for line in lines:
         # git status --porcelain: "XY pad" — split op eerste whitespace voor het pad
         path = line.split(None, 1)[-1]
-        if path in generated_drift:
+        if path in generated_drift or _date_only_generated_drift(path):
             gen_drift.append(path)
         else:
             real_drift.append(line)
@@ -2928,6 +3160,18 @@ def cmd_check():
             src = e.get("source", "")
             if src and not src.startswith("http"):
                 warnings.append(f"{c}/{e['id']}: source '{src}' is geen URL")
+            ce, cw = validate_curated_entry(c, e)
+            errors.extend(ce)
+            warnings.extend(cw)
+            de, dw = validate_derived_entry(c, e)
+            errors.extend(de)
+            warnings.extend(dw)
+    # versioned external upstream manifests
+    for uid in upstream_ids():
+        data = load_upstream(uid)
+        ue, uw = validate_upstream(uid, data)
+        errors.extend(ue)
+        warnings.extend(uw)
     # em-dash in .md files (copy)
     for fn in os.listdir(ROOT):
         if fn.endswith(".md"):
@@ -2983,6 +3227,8 @@ def main():
         cmd_serve(port)
     elif args[0] == "brain":
         cmd_brain(args[1:])
+    elif args[0] == "upstream":
+        cmd_upstream(args[1:])
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()

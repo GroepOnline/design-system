@@ -273,7 +273,7 @@
     <h1>table</h1>
     <div class="ph-sub">dashboard-tabellen met hairlines, hover, inline status badges</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern<br>blad 11/13</div>
+  <div class="meta">2 varianten<br>1 zelf · 1 extern<br>blad 11/13</div>
 </div>
 <div class="lede">manifest: <code>components/table/catalog.json</code></div>
 <div class="legend">
@@ -397,8 +397,30 @@
 &lt;/html&gt;
 </pre></details>
   </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">opensourceui-tasks-table</span>
+      <span class="note">take: compact task/due structure + direct completion affordance; reject: avatar-first ownership and mutable demo state as product contract</span>
+      <span class="right">
+        <span class="org external">extern · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/table/tasks-table.tsx</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="external/opensourceui-tasks-table.html" style="min-height:370px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>external/opensourceui-tasks-table.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-tasks-table.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;Opensource UI - Tasks table reference&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
+body{padding:34px 24px;background:#fafafa;color:#171717;font-family:var(--font)} .ref{font:11px var(--mono);color:#737373;margin-bottom:18px} .box{width:min(560px,100%);overflow:hidden;border:1px solid #e5e5e5;border-radius:12px;background:white} .head{padding:12px 16px;border-bottom:1px solid #f0f0f0} .head b{font-size:14px} .meta{font-size:12px;color:#737373;margin-top:2px}table{width:100%;border-collapse:collapse;font-size:13px}th{font-size:12px;color:#737373;font-weight:500;text-align:left;padding:9px 10px}td{padding:12px 10px;border-top:1px solid #f0f0f0}tr:hover td{background:#fafafa} .check{width:17px;height:17px;border:1px solid #d4d4d4;border-radius:4px;background:white;cursor:pointer} .check.done{background:#171717;color:white} .title.done{color:#a3a3a3;text-decoration:line-through} .who{color:#525252} .due{color:#737373}@media(max-width:470px){.who-col{display:none}}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;ref&quot;&gt;external / Opensource UI / tasks-table.tsx / MIT / pinned d239c3463c&lt;/div&gt;&lt;div class=&quot;box&quot;&gt;&lt;div class=&quot;head&quot;&gt;&lt;b&gt;Tasks&lt;/b&gt;&lt;div class=&quot;meta&quot; id=&quot;meta&quot;&gt;1 of 4 done&lt;/div&gt;&lt;/div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Task&lt;/th&gt;&lt;th class=&quot;who-col&quot;&gt;Assignee&lt;/th&gt;&lt;th&gt;Due&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;button class=&quot;check done&quot;&gt;✓&lt;/button&gt;&lt;/td&gt;&lt;td class=&quot;title done&quot;&gt;Ship operator contracts&lt;/td&gt;&lt;td class=&quot;who who-col&quot;&gt;ChefGroep&lt;/td&gt;&lt;td class=&quot;due&quot;&gt;Today&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;button class=&quot;check&quot;&gt;&lt;/button&gt;&lt;/td&gt;&lt;td class=&quot;title&quot;&gt;Review MCP renderer&lt;/td&gt;&lt;td class=&quot;who who-col&quot;&gt;Commander&lt;/td&gt;&lt;td class=&quot;due&quot;&gt;Today&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;button class=&quot;check&quot;&gt;&lt;/button&gt;&lt;/td&gt;&lt;td class=&quot;title&quot;&gt;Validate GTK contract&lt;/td&gt;&lt;td class=&quot;who who-col&quot;&gt;ChefApp&lt;/td&gt;&lt;td class=&quot;due&quot;&gt;Tomorrow&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;button class=&quot;check&quot;&gt;&lt;/button&gt;&lt;/td&gt;&lt;td class=&quot;title&quot;&gt;Publish catalog evidence&lt;/td&gt;&lt;td class=&quot;who who-col&quot;&gt;Factory&lt;/td&gt;&lt;td class=&quot;due&quot;&gt;Sep 7&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;script&gt;const bs=[...document.querySelectorAll(&#x27;.check&#x27;)],meta=document.querySelector(&#x27;#meta&#x27;);function sync(){meta.textContent=`${bs.filter(b=&gt;b.classList.contains(&#x27;done&#x27;)).length} of ${bs.length} done`}bs.forEach(b=&gt;b.onclick=()=&gt;{b.classList.toggle(&#x27;done&#x27;);b.textContent=b.classList.contains(&#x27;done&#x27;)?&#x27;✓&#x27;:&#x27;&#x27;;b.closest(&#x27;tr&#x27;).querySelector(&#x27;.title&#x27;).classList.toggle(&#x27;done&#x27;);sync()});&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
 </div>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-08-31 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-06 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>

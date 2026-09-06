@@ -405,17 +405,22 @@
 <hr>
 <h2 data-reg="11-typografie">§11 Typografie (v2.1, web-typography skill)</h2>
 <p>Schaal via tokens, nooit losse px-waarden in componenten:</p>
-<table><thead><tr><th>Token</th><th>px</th><th>Gebruik</th></tr></thead><tbody><tr><td><code>--text-2xs</code></td><td>10.5</td><td>meta, counts, badge</td></tr><tr><td><code>--text-xs</code></td><td>11.5</td><td>labels, kbd, captions</td></tr><tr><td><code>--text-sm</code></td><td>12.5</td><td>beschrijvingen, secondair</td></tr><tr><td><code>--text-md</code></td><td>13.5</td><td><strong>UI-standaard</strong></td></tr><tr><td><code>--text-lg</code></td><td>15</td><td>prose, kleine titels</td></tr><tr><td><code>--text-xl</code></td><td>18</td><td>sectie-headers</td></tr><tr><td><code>--text-2xl</code></td><td>24</td><td>pagina-titels</td></tr></tbody></table>
+<table><thead><tr><th>Token</th><th>px</th><th>Gebruik</th></tr></thead><tbody><tr><td><code>--text-2xs</code></td><td>10.5</td><td>meta, counts, badge</td></tr><tr><td><code>--text-xs</code></td><td>11.5</td><td>labels, kbd, captions</td></tr><tr><td><code>--text-sm</code></td><td>12.5</td><td>beschrijvingen, secondair</td></tr><tr><td><code>--text-md</code></td><td>13.5</td><td><strong>UI-standaard</strong></td></tr><tr><td><code>--text-lg</code></td><td>15</td><td>kleine titels</td></tr><tr><td><code>--text-prose</code></td><td>16</td><td>doorlees-prose</td></tr><tr><td><code>--text-xl</code></td><td>18</td><td>sectie-headers</td></tr><tr><td><code>--text-2xl</code></td><td>24</td><td>pagina-titels</td></tr></tbody></table>
 <p>Regels:</p>
 <ul>
 <li>Rendering: <code>antialiased</code> + <code>optimizeLegibility</code> op html (staat in tokens.css)</li>
 <li>Headings: <code>--leading-head</code> 1.2, tracking <code>−0.02em</code>, <code>text-wrap: balance</code></li>
-<li>Prose: <code>.prose</code> = 15px / 1.62 / max 65ch (measure-cap)</li>
+<li>Prose: <code>.prose</code> = <code>--text-prose</code> (16px) / 1.62 / max 65ch (measure-cap; 15px was onder de 16px-vloer voor doorlezen; web-typography skill ri 1)</li>
 <li>Data (timer, diff, counts): <code>.num</code> = tabular-nums</li>
 <li>Sectie-labels: <code>.caps</code> = 10.5px / 600 / +0.07em / faint</li>
 <li><code>text-wrap: pretty</code> op paragrafen</li>
 <li>Display (site/blad): <code>--font-display</code> = Instrument Serif, gewicht 400,</li>
 <p>tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers</p>
+<li>Font stacks: <code>--font-display</code> = <code>Instrument Serif, General Sans, Georgia, serif</code>; body gebruikt</li>
+<p><code>--font</code> = <code>General Sans, system-ui, -apple-system, Segoe UI, sans-serif</code>. Display-face</p>
+<p>subsetten (Latijn) + <code>font-display: swap</code>; payload-budget &lt;200KB totaal.</p>
+<li>Zoom: schaal overleeft 200% (scrollcontainers nooit height-fixed zonder overflow)</li>
+<p>Controleer dit bij elke render-check; hiërarchie moet bij squint blijven bestaan</p>
 </ul>
 <h2 data-reg="12-iconen">§12 Iconen (v2.1, icon-system skill)</h2>
 <ul>

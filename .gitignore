@@ -52,3 +52,7 @@ Pods/
 .env
 .env.local
 .env.*.local
+
+# Python interpreter caches (parallel verification lanes)
+__pycache__/
+*.py[cod]

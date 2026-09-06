@@ -26,6 +26,16 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
    via `ds <comp> add` (de CLI maakt paden root-absoluut bij promotie).
 5. **Single-active.** Exact 1 entry per component heeft status `active`;
    `ds select` handhaaft dit automatisch.
+6. **Upstream pinning.** Externe UI-bronnen staan in `upstreams/*.json` op een
+   immutable commit-SHA. Nooit stil `main` volgen, nooit auto-selecteren en nooit
+   een React/web dependency in de native Rust/GTK ChefApp trekken.
+7. **Curatie is expliciet.** Een upstream-entry heeft `upstream`, `sourceRef`,
+   `sourcePath`, `license`, `take`, `reject` en rendererbeleid. Externe studies
+   blijven `locked`; een ChefGroep-afgeleide wordt een nieuwe `self-modified`
+   variant. `gtk-native` blijft altijd `contract-only`.
+8. **Afgeleiden bewaren lineage.** `self-modified` varianten uit een gecureerde
+   bron hebben `derivedFrom` met entry/upstream/ref/path en behouden dezelfde
+   `source` URL. Pas zo mag GTK van `contract-only` naar `native-candidate`.
 
 ## Commando's
 
@@ -48,6 +58,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 ./ds brain signal "tekst"                  # expliciete signal (geen auto-write)
 ./ds brain eval                            # scorecard → brain/eval/scorecard.json
 ./ds brain gate                            # eval + hard fail bij drempels
+./ds upstream list                         # gepinde externe UI-bronnen
+./ds upstream show <id>                    # provenance + rendererbeleid + kandidaten
+./ds upstream check [id]                   # valideer immutable pins + adapters
 ```
 
 Elke `add`/`select`/`remove`/`style add` mutatie herbouwt web automatisch.
