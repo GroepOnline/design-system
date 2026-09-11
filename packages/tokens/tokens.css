@@ -482,6 +482,13 @@ body {
 .setting .st-state { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 4px; }
 .setting .st-control { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding-top: 2px; }
 
+@media (max-width: 620px) {
+  .setting { flex-direction: column; gap: 10px; padding: 14px 0; }
+  .setting .st-control { width: 100%; padding-top: 0; }
+  .setting .st-control > .select { width: 100%; }
+  .setting .st-control > .seg { max-width: 100%; overflow-x: auto; }
+}
+
 /* ---- loading skeleton (shimmer) ---- */
 .skel { display: flex; flex-direction: column; gap: 12px; padding: 16px 2px; }
 .skel-row { height: 18px; border-radius: 6px; background: var(--surface-sunk); position: relative; overflow: hidden; }

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "viewports": {
+    "phone": [390, 844],
+    "desktop": [1440, 960]
+  },
+  "themes": ["light", "dark"],
+  "cases": [
+    {"id":"button-beam","path":"components/button/self/beam-cta.html","category":"primitieven"},
+    {"id":"composer","path":"components/composer/self/default.html","category":"gesprek"},
+    {"id":"artifact","path":"components/artifact/self/default.html","category":"bewijs"},
+    {"id":"settings","path":"components/settings/self/default.html","category":"structuur"},
+    {"id":"motion-beam","path":"components/motion/self/beam.html","category":"motion"},
+    {"id":"input-search","path":"components/input/self/search-beam.html","category":"forms"},
+    {"id":"dialog","path":"components/dialog/self/default.html","category":"overlays"},
+    {"id":"tabs","path":"components/tabs/self/line.html","category":"navigation"},
+    {"id":"alert","path":"components/alert/self/neutral.html","category":"feedback"},
+    {"id":"data-grid","path":"components/data-grid/self/default.html","category":"data"},
+    {"id":"pattern-command","path":"patterns/command-surface/example.html","pattern":"command-surface"},
+    {"id":"pattern-data-inspector","path":"patterns/data-inspector/example.html","pattern":"data-inspector"},
+    {"id":"pattern-destructive","path":"patterns/destructive-confirm/example.html","pattern":"destructive-confirm"},
+    {"id":"pattern-empty","path":"patterns/empty-to-action/example.html","pattern":"empty-to-action"},
+    {"id":"pattern-mobile-sheet","path":"patterns/mobile-sheet/example.html","pattern":"mobile-sheet"},
+    {"id":"pattern-public-hero","path":"patterns/public-product-hero/example.html","pattern":"public-product-hero"},
+    {"id":"pattern-search","path":"patterns/search-results/example.html","pattern":"search-results"},
+    {"id":"pattern-settings","path":"patterns/settings-section/example.html","pattern":"settings-section"}
+  ]
+}

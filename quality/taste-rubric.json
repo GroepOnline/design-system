@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "scale": {"min": 0, "max": 3, "meaning": ["reject", "weak", "good", "exceptional"]},
+  "criteria": [
+    {"id": "hierarchy", "label": "Hierarchy", "question": "Is the primary action or idea obvious before secondary detail?"},
+    {"id": "composition", "label": "Composition", "question": "Does spacing and grouping create a deliberate composition rather than card soup?"},
+    {"id": "density", "label": "Density", "question": "Is information density appropriate for the selected profile and viewport?"},
+    {"id": "interaction", "label": "Interaction", "question": "Do states and motion communicate behavior without decorative noise?"},
+    {"id": "restraint", "label": "Restraint", "question": "Are effects, pills, elevation and accent reserved for moments that need them?"},
+    {"id": "originality", "label": "Originality", "question": "Would the surface still be recognisable without a logo, rather than reading as generic SaaS/AI UI?"},
+    {"id": "mobile", "label": "Mobile composition", "question": "Does the composition remain intentional on touch and narrow viewports?"},
+    {"id": "coherence", "label": "System coherence", "question": "Does it use the design language without forcing every component to look identical?"}
+  ],
+  "hard_bans": [
+    "generic AI gradient as default identity",
+    "unbounded cards-inside-cards composition",
+    "infinite ambient motion without state meaning",
+    "emoji as interface iconography",
+    "product-specific dependency inside Signaal core",
+    "one visual treatment forced across every variant in a family"
+  ],
+  "evidence": ["reference", "before", "after", "desktop", "phone"]
+}

@@ -416,6 +416,25 @@
     cursor: pointer; transition: transform 120ms var(--ease-out);
   }
   input[type=&quot;range&quot;]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+  @media (max-width: 620px) {
+    .shell { display: block; min-width: 0; }
+    .sections {
+      width: 100%; max-width: 100%; box-sizing: border-box;
+      display: flex; align-items: center; gap: 2px; overflow-x: auto;
+      border-right: 0; border-bottom: 1px solid var(--line); padding: 8px;
+      scrollbar-width: none;
+    }
+    .sections::-webkit-scrollbar { display: none; }
+    .sections .back { flex: 0 0 auto; margin: 0 6px 0 0; }
+    .sec-item { flex: 0 0 auto; white-space: nowrap; }
+    .sec-item.active::before { left: 8px; right: 8px; top: auto; bottom: -8px; width: auto; height: 2px; }
+    .content { box-sizing: border-box; width: 100%; max-width: none; min-width: 0; padding: 18px 16px 30px; }
+    .content .sub, .font-preview { overflow-wrap: anywhere; }
+    .size-row { width: 100%; }
+    .size-row input[type=&quot;range&quot;] { flex: 1 1 auto; min-width: 0; width: auto; }
+    .size-row .val { flex: 0 0 52px; }
+  }
   kbd.k {
     font-family: var(--mono); font-size: 11px;
     border: 1px solid var(--line-strong); border-radius: 5px;
@@ -467,7 +486,7 @@
         &lt;div class=&quot;st-desc&quot;&gt;Voor alle tekst in de app. Koppen altijd gewicht 500.&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;st-control&quot;&gt;
-        &lt;select class=&quot;select&quot; id=&quot;fontSel&quot;&gt;
+        &lt;select class=&quot;select&quot; id=&quot;fontSel&quot; aria-label=&quot;Interface-lettertype&quot;&gt;
           &lt;option&gt;General Sans&lt;/option&gt;
           &lt;option&gt;Systeemstandaard&lt;/option&gt;
         &lt;/select&gt;
@@ -479,7 +498,7 @@
         &lt;div class=&quot;st-desc&quot;&gt;Voor timers, diffs, commands en paden. Altijd tabular cijfers.&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;st-control&quot;&gt;
-        &lt;select class=&quot;select&quot; id=&quot;monoSel&quot;&gt;
+        &lt;select class=&quot;select&quot; id=&quot;monoSel&quot; aria-label=&quot;Data-lettertype&quot;&gt;
           &lt;option&gt;JetBrains Mono&lt;/option&gt;
           &lt;option&gt;Systeem-mono&lt;/option&gt;
         &lt;/select&gt;
@@ -493,7 +512,7 @@
       &lt;/div&gt;
       &lt;div class=&quot;st-control&quot;&gt;
         &lt;div class=&quot;size-row&quot;&gt;
-          &lt;input type=&quot;range&quot; min=&quot;13&quot; max=&quot;17&quot; step=&quot;1&quot; value=&quot;15&quot; id=&quot;sizeRange&quot;&gt;
+          &lt;input type=&quot;range&quot; min=&quot;13&quot; max=&quot;17&quot; step=&quot;1&quot; value=&quot;15&quot; id=&quot;sizeRange&quot; aria-label=&quot;Tekstgrootte&quot;&gt;
           &lt;span class=&quot;val&quot; id=&quot;sizeVal&quot;&gt;15px&lt;/span&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -513,7 +532,7 @@
         &lt;div class=&quot;st-state&quot; id=&quot;motionState&quot;&gt;aan&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;st-control&quot;&gt;
-        &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; id=&quot;motionSw&quot;&gt;&lt;/button&gt;
+        &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; id=&quot;motionSw&quot; aria-label=&quot;Animaties&quot;&gt;&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;setting&quot;&gt;
@@ -523,7 +542,7 @@
         &lt;div class=&quot;st-state&quot;&gt;aan&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;st-control&quot;&gt;
-        &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; onclick=&quot;flip(this)&quot;&gt;&lt;/button&gt;
+        &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; aria-label=&quot;Enter stuurt direct&quot; onclick=&quot;flip(this)&quot;&gt;&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 
@@ -665,6 +684,25 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
     cursor: pointer; transition: transform 120ms var(--ease-out);
   }
   input[type=&quot;range&quot;]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+  @media (max-width: 620px) {
+    .shell { display: block; min-width: 0; }
+    .sections {
+      width: 100%; max-width: 100%; box-sizing: border-box;
+      display: flex; align-items: center; gap: 2px; overflow-x: auto;
+      border-right: 0; border-bottom: 1px solid var(--line); padding: 8px;
+      scrollbar-width: none;
+    }
+    .sections::-webkit-scrollbar { display: none; }
+    .sections .back { flex: 0 0 auto; margin: 0 6px 0 0; }
+    .sec-item { flex: 0 0 auto; white-space: nowrap; }
+    .sec-item.active::before { left: 8px; right: 8px; top: auto; bottom: -8px; width: auto; height: 2px; }
+    .content { box-sizing: border-box; width: 100%; max-width: none; min-width: 0; padding: 18px 16px 30px; }
+    .content .sub, .font-preview { overflow-wrap: anywhere; }
+    .size-row { width: 100%; }
+    .size-row input[type=&quot;range&quot;] { flex: 1 1 auto; min-width: 0; width: auto; }
+    .size-row .val { flex: 0 0 52px; }
+  }
   kbd.k {
     font-family: var(--mono); font-size: 11px;
     border: 1px solid var(--line-strong); border-radius: 5px;
@@ -719,7 +757,7 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
           &lt;div class=&quot;st-desc&quot;&gt;Voor alle tekst in de app. Koppen altijd gewicht 500.&lt;/div&gt;
         &lt;/div&gt;
         &lt;div class=&quot;st-control&quot;&gt;
-          &lt;select class=&quot;select&quot; id=&quot;fontSel&quot;&gt;
+          &lt;select class=&quot;select&quot; id=&quot;fontSel&quot; aria-label=&quot;Interface-lettertype&quot;&gt;
             &lt;option&gt;General Sans&lt;/option&gt;
             &lt;option&gt;Systeemstandaard&lt;/option&gt;
           &lt;/select&gt;
@@ -731,7 +769,7 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
           &lt;div class=&quot;st-desc&quot;&gt;Voor timers, diffs, commands en paden. Altijd tabular cijfers.&lt;/div&gt;
         &lt;/div&gt;
         &lt;div class=&quot;st-control&quot;&gt;
-          &lt;select class=&quot;select&quot; id=&quot;monoSel&quot;&gt;
+          &lt;select class=&quot;select&quot; id=&quot;monoSel&quot; aria-label=&quot;Data-lettertype&quot;&gt;
             &lt;option&gt;JetBrains Mono&lt;/option&gt;
             &lt;option&gt;Systeem-mono&lt;/option&gt;
           &lt;/select&gt;
@@ -745,7 +783,7 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
         &lt;/div&gt;
         &lt;div class=&quot;st-control&quot;&gt;
           &lt;div class=&quot;size-row&quot;&gt;
-            &lt;input type=&quot;range&quot; min=&quot;13&quot; max=&quot;17&quot; step=&quot;1&quot; value=&quot;15&quot; id=&quot;sizeRange&quot;&gt;
+            &lt;input type=&quot;range&quot; min=&quot;13&quot; max=&quot;17&quot; step=&quot;1&quot; value=&quot;15&quot; id=&quot;sizeRange&quot; aria-label=&quot;Tekstgrootte&quot;&gt;
             &lt;span class=&quot;val&quot; id=&quot;sizeVal&quot;&gt;15px&lt;/span&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -771,7 +809,7 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
           &lt;div class=&quot;st-state&quot; id=&quot;motionState&quot;&gt;aan&lt;/div&gt;
         &lt;/div&gt;
         &lt;div class=&quot;st-control&quot;&gt;
-          &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; id=&quot;motionSw&quot;&gt;&lt;/button&gt;
+          &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; id=&quot;motionSw&quot; aria-label=&quot;Animaties&quot;&gt;&lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;setting&quot;&gt;
@@ -781,7 +819,7 @@ if (new URLSearchParams(location.search).get(&quot;theme&quot;) === &quot;dark&q
           &lt;div class=&quot;st-state&quot;&gt;aan&lt;/div&gt;
         &lt;/div&gt;
         &lt;div class=&quot;st-control&quot;&gt;
-          &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; onclick=&quot;flip(this)&quot;&gt;&lt;/button&gt;
+          &lt;button class=&quot;switch&quot; role=&quot;switch&quot; aria-checked=&quot;true&quot; aria-label=&quot;Enter stuurt direct&quot; onclick=&quot;flip(this)&quot;&gt;&lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
