@@ -291,6 +291,8 @@
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../taste-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="../profiles/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sliders"/></svg></span><span class="nm">profiles</span><span class="n">design overlays</span></a>
+  <a class="it sys" href="../patterns/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">patterns</span><span class="n">composities</span></a>
   <a class="it sys" href="../brain-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
   <a class="it sys" href="../DESIGN.md"><span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="../WORKFLOW.md"><span class="tile"><svg><use href="../components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
@@ -308,11 +310,16 @@
   <div class="ph-text">
     <div class="eyebrow">Catalogus</div>
     <h1>Components</h1>
-    <div class="ph-sub">42 componenten · 122 varianten · light + dark first-class</div>
+    <div class="ph-sub">43 componenten · 125 varianten · light + dark first-class</div>
   </div>
 </div>
 <div class="lede">Per component een catalogus met eigen ontwerpen (self) en externe referenties (external). Alles is vast tot een expliciete <code>select</code> of <code>remove</code> via de CLI.</div>
-<div class="caps" data-reg="primitieven" style="margin:22px 2px 10px">Primitieven</div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0 18px">
+  <input class="input" id="componentFilter" type="search" placeholder="Zoek componenten…" aria-label="Zoek componenten" style="min-width:260px">
+  <select class="select" id="categoryFilter" aria-label="Filter categorie" style="width:auto;min-width:170px"><option value="">Alle categorieën</option><option value="primitieven">Primitieven</option><option value="gesprek">Gesprek</option><option value="bewijs">Bewijs</option><option value="structuur">Structuur</option><option value="motion">Motion</option><option value="forms">Forms</option><option value="overlays">Overlays</option><option value="navigation">Navigation</option><option value="feedback">Feedback</option><option value="data display">Data display</option><option value="overig">Overig</option></select>
+  <span id="componentCount" class="caps">43 zichtbaar</span>
+</div>
+<section class="gallery-group" data-cat="primitieven"><div class="caps" data-reg="primitieven" style="margin:22px 2px 10px">Primitieven</div>
 <div class="cards">
   <a class="card reveal" href="./badge/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-tag"/></svg></span>
@@ -326,9 +333,9 @@
     <span class="cd">button library: semantic families plus independent interaction models</span>
     <span class="cmeta"><span class="cnt">17 zelf · 2 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="gesprek" style="margin:22px 2px 10px">Gesprek</div>
+<section class="gallery-group" data-cat="gesprek"><div class="caps" data-reg="gesprek" style="margin:22px 2px 10px">Gesprek</div>
 <div class="cards">
   <a class="card reveal" href="./approval/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-alert"/></svg></span>
@@ -354,9 +361,9 @@
     <span class="cd">signatuur: activiteit zonder spinner</span>
     <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="bewijs" style="margin:22px 2px 10px">Bewijs</div>
+<section class="gallery-group" data-cat="bewijs"><div class="caps" data-reg="bewijs" style="margin:22px 2px 10px">Bewijs</div>
 <div class="cards">
   <a class="card reveal" href="./artifact/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
@@ -376,9 +383,9 @@
     <span class="cd">dashboard-tabellen met hairlines, hover, inline status badges</span>
     <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="structuur" style="margin:22px 2px 10px">Structuur</div>
+<section class="gallery-group" data-cat="structuur"><div class="caps" data-reg="structuur" style="margin:22px 2px 10px">Structuur</div>
 <div class="cards">
   <a class="card reveal" href="./home-shell/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
@@ -398,9 +405,9 @@
     <span class="cd">volledige instellingen-surface</span>
     <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="motion" style="margin:22px 2px 10px">Motion</div>
+<section class="gallery-group" data-cat="motion"><div class="caps" data-reg="motion" style="margin:22px 2px 10px">Motion</div>
 <div class="cards">
   <a class="card reveal" href="./motion/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span>
@@ -408,9 +415,9 @@
     <span class="cd">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span>
     <span class="cmeta"><span class="cnt">6 zelf · 0 extern</span><span class="act">actief: beam</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="forms" style="margin:22px 2px 10px">Forms</div>
+<section class="gallery-group" data-cat="forms"><div class="caps" data-reg="forms" style="margin:22px 2px 10px">Forms</div>
 <div class="cards">
   <a class="card reveal" href="./checkbox/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-check"/></svg></span>
@@ -454,9 +461,9 @@
     <span class="cd">multiline input for prose, notes and prompts</span>
     <span class="cmeta"><span class="cnt">4 zelf · 0 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="overlays" style="margin:22px 2px 10px">Overlays</div>
+<section class="gallery-group" data-cat="overlays"><div class="caps" data-reg="overlays" style="margin:22px 2px 10px">Overlays</div>
 <div class="cards">
   <a class="card reveal" href="./dialog/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
@@ -488,9 +495,9 @@
     <span class="cd">short contextual labels for compact controls</span>
     <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="navigation" style="margin:22px 2px 10px">Navigation</div>
+<section class="gallery-group" data-cat="navigation"><div class="caps" data-reg="navigation" style="margin:22px 2px 10px">Navigation</div>
 <div class="cards">
   <a class="card reveal" href="./breadcrumb/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-chevron"/></svg></span>
@@ -510,9 +517,9 @@
     <span class="cd">switch between peer views without navigation</span>
     <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: line</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="feedback" style="margin:22px 2px 10px">Feedback</div>
+<section class="gallery-group" data-cat="feedback"><div class="caps" data-reg="feedback" style="margin:22px 2px 10px">Feedback</div>
 <div class="cards">
   <a class="card reveal" href="./alert/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-alert"/></svg></span>
@@ -544,9 +551,9 @@
     <span class="cd">transient acknowledgement and action feedback</span>
     <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
-<div class="caps" data-reg="data display" style="margin:22px 2px 10px">Data display</div>
+<section class="gallery-group" data-cat="data display"><div class="caps" data-reg="data display" style="margin:22px 2px 10px">Data display</div>
 <div class="cards">
   <a class="card reveal" href="./avatar/index.html">
     <span class="ct"><svg><use href="../components/icons.svg#i-bot"/></svg></span>
@@ -602,8 +609,43 @@
     <span class="cd">ordered events and execution history</span>
     <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: default</span></span>
   </a>
-</div>
+</div></section>
 
+<section class="gallery-group" data-cat="overig"><div class="caps" data-reg="overig" style="margin:22px 2px 10px">Overig</div>
+<div class="cards">
+  <a class="card reveal" href="./studio/index.html">
+    <span class="ct"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span>
+    <span class="cn" style="font-size:var(--text-md);min-width:120px">studio</span>
+    <span class="cd">visueel afstellen zonder code</span>
+    <span class="cmeta"><span class="cnt">3 zelf · 0 extern</span><span class="act">actief: v3-flow</span></span>
+  </a>
+</div></section>
+
+<script>
+(() => {
+  const q = document.getElementById("componentFilter");
+  const cat = document.getElementById("categoryFilter");
+  const count = document.getElementById("componentCount");
+  function apply() {
+    const term = (q.value || "").trim().toLowerCase();
+    const wanted = cat.value;
+    let shown = 0;
+    document.querySelectorAll(".gallery-group").forEach(group => {
+      const catOk = !wanted || group.dataset.cat === wanted;
+      let any = false;
+      group.querySelectorAll(".card").forEach(card => {
+        const textOk = !term || card.textContent.toLowerCase().includes(term);
+        const visible = catOk && textOk;
+        card.hidden = !visible;
+        if (visible) { any = true; shown += 1; }
+      });
+      group.hidden = !any;
+    });
+    count.textContent = shown + " zichtbaar";
+  }
+  q.addEventListener("input", apply); cat.addEventListener("change", apply);
+})();
+</script>
 <div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-11</div>
 
 </div></main>

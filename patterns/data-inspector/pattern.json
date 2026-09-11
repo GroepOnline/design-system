@@ -1,0 +1,27 @@
+{
+  "id": "data-inspector",
+  "label": "Data inspector",
+  "category": "data",
+  "optional": true,
+  "profiles": [
+    "operator-dense"
+  ],
+  "components": {
+    "key-value": [
+      "default"
+    ],
+    "status": [
+      "default"
+    ],
+    "code": [
+      "block"
+    ],
+    "timeline": [
+      "compact"
+    ],
+    "sheet": [
+      "right"
+    ]
+  },
+  "example": "example.html"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "settings-section",
+  "label": "Settings section",
+  "category": "forms",
+  "optional": true,
+  "profiles": [
+    "operator-dense"
+  ],
+  "components": {
+    "field": [
+      "default"
+    ],
+    "switch": [
+      "labelled"
+    ],
+    "select": [
+      "default"
+    ],
+    "button": [
+      "primary"
+    ]
+  },
+  "example": "example.html"
+}

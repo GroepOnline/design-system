@@ -86,3 +86,7 @@ Deze bestanden zijn output, niet handmatig bewerken. Zie
 Scorecard: `brain/eval/scorecard.json` (gegenereerd). Nightly:
 `.github/workflows/brain-eval.yml`. Shared fleet runner leeft in
 kater-dev-tools `scripts/run-taste-brain-eval.sh`.
+
+## Signaal context
+
+`.agents/hooks/signaal-context.sh` is advisory en fail-open. `SIGNAAL_PROFILE` kiest een generiek design/taste-profiel; `SIGNAAL_EXTENSION` kiest optionele productcontext. Resolution order: base, profile, extension. Geen van beide mag runtime/build-dependency worden.
