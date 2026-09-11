@@ -13,11 +13,12 @@ export const Button = React.forwardRef(function Button(
 });
 
 export const IconButton = React.forwardRef(function IconButton(
-  { label, className, children, ...props }, ref
+  { label, variant = "ghost", pending = false, className, disabled, children, ...props }, ref
 ) {
   return React.createElement("button", {
-    ref, type: props.type || "button", "data-slot": "icon-button", "aria-label": label,
-    className: cx("sg-icon-button", className), ...props,
+    ref, type: props.type || "button", "data-slot": "icon-button", "data-variant": variant,
+    "data-pending": pending || undefined, "aria-busy": pending || undefined, "aria-label": label,
+    className: cx("sg-icon-button", className), disabled: disabled || pending, ...props,
   }, children);
 });
 

@@ -1,7 +1,7 @@
 {
   "component": "button",
   "title": "button",
-  "desc": "btn + gbtn + kbd",
+  "desc": "button family: default, emphasis, quiet, destructive, icon, pending and keyboard states",
   "entries": [
     {
       "id": "default",
@@ -65,24 +65,84 @@
       "status": "locked",
       "added": "2026-07-27",
       "note": "radius 0, marketing-site stijl"
+    },
+    {
+      "id": "subtle",
+      "file": "self/subtle.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "quiet filled action without primary emphasis"
+    },
+    {
+      "id": "ghost",
+      "file": "self/ghost.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "text action with no persistent container"
+    },
+    {
+      "id": "destructive",
+      "file": "self/destructive.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "destructive action using reserved red semantics"
+    },
+    {
+      "id": "pending",
+      "file": "self/pending.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "quiet pending acknowledgement without spinner"
+    },
+    {
+      "id": "icon-leading",
+      "file": "self/icon-leading.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "labelled action with leading Lucide icon"
+    },
+    {
+      "id": "icon-outline",
+      "file": "self/icon-outline.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "outlined icon-only action with accessible label"
     }
   ],
   "docs": {
     "use": [
       "acties die de gebruiker bewust start",
-      "primary max 1x per context",
-      "gbtn voor icon-only acties in balken"
+      "primary maximaal één keer per lokale besliscontext",
+      "subtle en ghost voor lagere visuele nadruk",
+      "destructive alleen voor daadwerkelijk destructieve acties",
+      "icon-only alleen met toegankelijke naam"
     ],
     "avoid": [
-      "twee primary naast elkaar",
-      "knop als navigatie — gebruik een link",
+      "meerdere primary-acties naast elkaar",
+      "knop als navigatie, gebruik daarvoor een link",
+      "kleur als enige betekenis",
+      "infinite spinner of ambient loading motion",
       "emoji in of naast de knop"
     ],
     "contract": [
-      ".btn h32 px13 r8",
-      ".primary text↔bg inverse",
-      ".gbtn 28px ghost",
-      "kbd in knop voor toets-hints"
+      ".btn h32, sm h28, lg h38; coarse pointer min-h44",
+      ".primary inverse high emphasis",
+      ".subtle quiet filled, .ghost containerless, .destructive semantic red",
+      ".gbtn 30px visual / 44px coarse-pointer target",
+      "pending = static activity mark + aria-busy, nooit spinner",
+      "focus-visible = 2px accent outline"
     ]
   },
   "cat": "primitieven"

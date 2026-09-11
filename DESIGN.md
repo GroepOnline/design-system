@@ -72,8 +72,8 @@ Baseline is shadcn/ui-denken: simpele variants, hairline borders, rustige hovers
 
 | Component | Contract |
 |---|---|---|
-| `.btn` | h-32px, px-13px, r-6px, border hairline-strong. `.primary` = text↔bg omgekeerd. `:active` scale 0.97, `:focus-visible` outline 2px accent |
-| `.gbtn` | 28px ghost icon-button, hover = `--hover` wash. `:focus-visible` outline 2px accent. `.solid` voor send-acties |
+| `.btn` | h-32px, optische px-12px, r-6px, hairline. Families: default, `.primary`, `.subtle`, `.ghost`, `.destructive`; sm 28 / lg 38. `:active` = 1px press + scale .985; focus = 2px accent. Coarse pointer min-h 44. |
+| `.gbtn` | 30px visual icon-button, 44px op coarse pointer. Ghost default, `.outline` en `.solid` beschikbaar. Altijd toegankelijke naam; focus = 2px accent. |
 | `.badge` | pill, 12px, `.green` voor Open/merged, `.outline` voor meta |
 | card | r-12px, border `--line`, hover → `--line-strong`. Geen shadow in product |
 | composer | r-12px, focus = accent border + 3px `--accent-soft` ring |
