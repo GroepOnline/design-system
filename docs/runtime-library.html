@@ -261,7 +261,7 @@
   <div class="rail-links">
   <div class="lbl caps">Primitieven</div>
   <a class="it" href="../components/badge/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
-  <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</span></span><span class="act"></span></a>
+  <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button library: semantic families plus independent interaction models</span></span><span class="act"></span></a>
   <div class="lbl caps">Gesprek</div>
   <a class="it" href="../components/approval/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
   <a class="it" href="../components/composer/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
@@ -321,7 +321,10 @@
 <p>The dependency direction is one-way: consumers may use Signaal or an extension view, but Signaal core never imports ChefGroep, DSH or another consumer extension. Removing an extension cannot break tokens, packages, catalog build or base checks.</p>
 <h2 data-reg="optional-motion">Optional motion capability</h2>
 <p>Motion is distributed independently from component semantics. <code>@signaal/tokens</code> exposes opt-in <code>.sg-motion-*</code> primitives and <code>@signaal/react</code> exposes <code>MotionSurface</code> plus <code>attachPressRipple</code>. A Button, Input or custom consumer can adopt one primitive without importing a product theme or requiring motion to function.</p>
-<p>The current primitives are <code>beam</code>, <code>halo</code>, <code>sweep</code>, <code>ripple</code>, <code>glide</code> and <code>status</code>. They are catalogued under <code>components/motion/</code> and are tested as a separate family rather than baked into every button.</p></div>
+<p>The current primitives are <code>beam</code>, <code>halo</code>, <code>sweep</code>, <code>ripple</code>, <code>glide</code> and <code>status</code>. They are catalogued under <code>components/motion/</code> and are tested as a separate family rather than baked into every button.</p>
+<ul>
+<li><code>@signaal/interactions</code>: optionele zero-dependency button interaction helpers; geen core/runtime dependency.</li>
+</ul></div>
 <div class="gen" data-reg="colofon">gegenereerd uit RUNTIME-LIBRARY.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
