@@ -96,10 +96,13 @@ CATS = [
     ("bewijs", "Bewijs"),
     ("structuur", "Structuur"),
     ("motion", "Motion"),
+    ("forms", "Forms"),
 ]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
     "button": "i-click", "composer": "i-pencil", "nav": "i-inbox",
+    "field": "i-info", "input": "i-square-pen", "textarea": "i-file", "select": "i-chevrons-updown",
+    "checkbox": "i-check", "radio": "i-list", "switch": "i-sliders",
     "pr-card": "i-git-pr", "settings": "i-settings", "transcript": "i-message",
     "worked-row": "i-clock", "studio": "i-sparkle", "motion": "i-sparkle",
 }

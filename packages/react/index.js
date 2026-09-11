@@ -63,6 +63,46 @@ export const Textarea = React.forwardRef(function Textarea({ className, ...props
   return React.createElement("textarea", { ref, "data-slot": "textarea", className: cx("sg-textarea", className), ...props });
 });
 
+export const Select = React.forwardRef(function Select({ className, children, ...props }, ref) {
+  return React.createElement("select", { ref, "data-slot": "select", className: cx("sg-select", className), ...props }, children);
+});
+
+export const InputGroup = React.forwardRef(function InputGroup({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "input-group", className: cx("sg-input-group", className), ...props }, children);
+});
+
+export const InputAffix = React.forwardRef(function InputAffix({ className, children, ...props }, ref) {
+  return React.createElement("span", { ref, "data-slot": "input-affix", className: cx("sg-input-affix", className), ...props }, children);
+});
+
+function Choice({ type, label, description, className, inputClassName, ...props }, ref) {
+  return React.createElement("label", { className: cx("sg-choice", className) },
+    React.createElement("input", { ref, type, className: cx("sg-choice__control", inputClassName), ...props }),
+    React.createElement("span", { className: "sg-choice__copy" },
+      React.createElement("span", null, label),
+      description ? React.createElement("small", null, description) : null
+    )
+  );
+}
+export const Checkbox = React.forwardRef((props, ref) => Choice({ ...props, type: "checkbox" }, ref));
+export const Radio = React.forwardRef((props, ref) => Choice({ ...props, type: "radio" }, ref));
+
+export const Switch = React.forwardRef(function Switch({ checked = false, onCheckedChange, onClick, className, disabled, ...props }, ref) {
+  const handleClick = (event) => {
+    if (onClick) onClick(event);
+    if (!event.defaultPrevented && !disabled && onCheckedChange) onCheckedChange(!checked);
+  };
+  return React.createElement("button", { ref, type: props.type || "button", role: "switch", "aria-checked": checked,
+    "data-slot": "switch", className: cx("sg-switch", className), disabled, onClick: handleClick, ...props });
+});
+
+export function Field({ label, htmlFor, help, error, required = false, layout = "stacked", className, children, ...props }) {
+  return React.createElement("div", { "data-slot": "field", "data-layout": layout, className: cx("sg-field", className), ...props },
+    label ? React.createElement("label", { className: "sg-field__label", htmlFor }, label, required ? React.createElement("span", { className: "sg-field__required", "aria-hidden": "true" }, "*") : null) : null,
+    React.createElement("div", null, children, error ? React.createElement("div", { className: "sg-field__error" }, error) : help ? React.createElement("div", { className: "sg-field__help" }, help) : null)
+  );
+}
+
 export const Separator = React.forwardRef(function Separator({ orientation = "horizontal", className, ...props }, ref) {
   return React.createElement("div", { ref, role: "separator", "aria-orientation": orientation, "data-orientation": orientation, className: cx("sg-separator", className), ...props });
 });

@@ -29,3 +29,7 @@ The dependency direction is one-way: consumers may use Signaal or an extension v
 Motion is distributed independently from component semantics. `@signaal/tokens` exposes opt-in `.sg-motion-*` primitives and `@signaal/react` exposes `MotionSurface` plus `attachPressRipple`. A Button, Input or custom consumer can adopt one primitive without importing a product theme or requiring motion to function.
 
 The current primitives are `beam`, `halo`, `sweep`, `ripple`, `glide` and `status`. They are catalogued under `components/motion/` and are tested as a separate family rather than baked into every button.
+
+### Form controls
+
+`@signaal/react` exposes Field, Input, Textarea, Select, Checkbox, Radio and Switch. Native browser semantics stay primary; motion remains an optional composition wrapper rather than a form-control dependency.
