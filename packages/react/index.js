@@ -133,3 +133,44 @@ export function Activity({ state = "running", label, detail, elapsed, className,
     )
   );
 }
+
+
+export const Dialog = React.forwardRef(function Dialog({ className, children, ...props }, ref) {
+  return React.createElement("dialog", { ref, "data-slot": "dialog", className: cx("sg-dialog", className), ...props }, children);
+});
+export const Sheet = React.forwardRef(function Sheet({ side = "right", className, children, ...props }, ref) {
+  return React.createElement("dialog", { ref, "data-slot": "sheet", "data-side": side, className: cx("sg-sheet", className), ...props }, children);
+});
+export const Popover = React.forwardRef(function Popover({ popover = "auto", className, children, ...props }, ref) {
+  return React.createElement("div", { ref, popover, "data-slot": "popover", className: cx("sg-popover", className), ...props }, children);
+});
+export const Menu = React.forwardRef(function Menu({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, role: "menu", "data-slot": "menu", className: cx("sg-menu", className), ...props }, children);
+});
+export const MenuItem = React.forwardRef(function MenuItem({ tone = "default", className, children, ...props }, ref) {
+  return React.createElement("button", { ref, type: props.type || "button", role: props.role || "menuitem", "data-tone": tone, "data-slot": "menu-item", className: cx("sg-menu-item", className), ...props }, children);
+});
+export const Tooltip = React.forwardRef(function Tooltip({ className, children, ...props }, ref) {
+  return React.createElement("span", { ref, role: "tooltip", "data-slot": "tooltip", className: cx("sg-tooltip", className), ...props }, children);
+});
+export const TabList = React.forwardRef(function TabList({ variant = "line", className, children, ...props }, ref) {
+  return React.createElement("div", { ref, role: "tablist", "data-variant": variant, "data-slot": "tabs", className: cx("sg-tabs", className), ...props }, children);
+});
+export const Tab = React.forwardRef(function Tab({ selected = false, className, children, ...props }, ref) {
+  return React.createElement("button", { ref, type: props.type || "button", role: "tab", "aria-selected": selected, "data-slot": "tab", className: cx("sg-tab", className), ...props }, children);
+});
+export const Breadcrumb = React.forwardRef(function Breadcrumb({ label = "Breadcrumb", className, children, ...props }, ref) {
+  return React.createElement("nav", { ref, "aria-label": label, "data-slot": "breadcrumb", className: cx("sg-breadcrumb", className), ...props }, children);
+});
+export const Pagination = React.forwardRef(function Pagination({ label = "Pagination", className, children, ...props }, ref) {
+  return React.createElement("nav", { ref, "aria-label": label, "data-slot": "pagination", className: cx("sg-pagination", className), ...props }, children);
+});
+export const Toast = React.forwardRef(function Toast({ live = "polite", className, children, ...props }, ref) {
+  return React.createElement("div", { ref, role: "status", "aria-live": live, "data-slot": "toast", className: cx("sg-toast", className), ...props }, children);
+});
+export const Progress = React.forwardRef(function Progress({ className, ...props }, ref) {
+  return React.createElement("progress", { ref, "data-slot": "progress", className: cx("sg-progress", className), ...props });
+});
+export const Skeleton = React.forwardRef(function Skeleton({ width, height, className, style, ...props }, ref) {
+  return React.createElement("div", { ref, "aria-hidden": "true", "data-slot": "skeleton", className: cx("sg-skeleton", className), style: { width, height, ...style }, ...props });
+});
