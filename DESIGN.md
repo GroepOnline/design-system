@@ -306,3 +306,15 @@ Signaal is een lerend systeem; de lus is expliciet:
    mesh-drift-fix, geen designkeuze.
 5. Design-evolutie (nieuwe skin, motief, kleurshift) = taste-log eerst, dan
    Brain-ingest, dan pas tokens.
+
+## §18 Extension-contexten
+
+Signaal heeft één universele design authority en optionele context-overlays.
+
+1. Root `DESIGN.md` + `taste/taste-rules.md` gelden universeel.
+2. `extensions/<id>/DESIGN.md` en `TASTE.md` mogen alleen delta's voor die scope bevatten.
+3. Een extension selecteert catalogus-id's maar bevat geen gekopieerde componentimplementatie.
+4. De Signaal-core importeert nooit een extension. De dependency-richting blijft consumer → library.
+5. Een product mag Signaal volledig niet gebruiken en moet functioneel blijven; extensions zijn versnellers, geen lifecycle-dependency.
+
+Een componentfamilie mag honderden immutable varianten bevatten. `active` blijft alleen de universele default; extensions hebben hun eigen `preferred` keuze zonder de catalogusstatus te muteren.

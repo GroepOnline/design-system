@@ -10,7 +10,7 @@ historie; runtime packages krijgen normale semver-releases.
 
 | Tool | Waar | Wat |
 |---|---|---|
-| **catalogus** | `components/` + `./ds` | alle varianten ooit: self + external. Lock-model: vast tot expliciete select/remove |
+| **catalogus** | `components/` + `./ds` | alle varianten ooit: self + external. Honderden varianten per familie zijn toegestaan; extensions maken optionele subsets |
 | **studio** | `/components/studio/` | visueel afstellen zonder code: presets (incl. **Vanaf nul**), accent, warmte, radius, tekstgrootte. Tabs: Afstellen + **Docs** (de taal lezen terwijl je stelt). Export: Kopieer tokens |
 | **docs** | `/docs/` | alle .md-documenten gerenderd als lees-laag. De .md blijft de bron |
 | **taste** | `/taste-site/` | het lerende smaak-systeem: bindende regels + observatie-log. Onderhoud via de `joep-design-taste` skill, gekoppeld aan alles via het propagatie-contract |
@@ -21,6 +21,9 @@ historie; runtime packages krijgen normale semver-releases.
 ```bash
 ./ds list                    # overzicht van alles
 ./ds button list             # één component in detail
+./ds button list --extension chefgroep  # alleen de ChefGroep-view
+./ds extension list          # optionele consumer-contexten
+./s.sh context dsh           # DESIGN/TASTE-context, advisory en fail-open
 ./ds build                   # web herbouwen (catalogus + docs + taste + brain)
 ./ds brain new decision "…"  # decision-note in de vault
 ./ds upstream list            # gepinde externe UI-bronnen + rendererbeleid
@@ -72,6 +75,8 @@ Nieuw component of variant:
 | `templates/` + `new-project.sh` | scaffold voor nieuwe producten |
 | `references/` | meetlat-screenshots (Devin-product, eigen states) |
 | `upstreams/` | immutable externe UI-bronnen + rendererbeleid; nooit runtime dependency |
+| `extensions/` | optionele consumer-subsets met eigen `DESIGN.md` + `TASTE.md`; core importeert ze nooit |
+| `s.sh` | zero-dependency contextresolver voor base/extension design+taste |
 
 Curated upstream entries blijven `locked` en leggen naast de exacte bronpin ook
 `take`, `reject` en rendererbeleid vast. `react-web` en `mcp-apps` mogen een
@@ -87,7 +92,8 @@ nooit automatisch actief.
   geen em-dashes, één accent, groen/amber/rood gereserveerd, light én dark
   first-class. Volledig: `DESIGN.md` §10-13.
 - Catalogus is **vast**: entries veranderen nooit stilletjes. Selecteren en
-  verwijderen zijn de enige mutaties, altijd via `ds`.
+  verwijderen zijn de enige mutaties, altijd via `ds`. Er is geen kunstmatige limiet per componentfamilie.
+- Extensions zijn views, geen forks: ze refereren catalogus-id's en mogen nooit een dependency van de Signaal-core worden.
 - Gegenereerde bestanden (`components/*/index.html`, `docs/`, `taste-site/`,
   `brain-site/`) nooit handmatig bewerken.
 - Pushen gaat via `origin-ssh` (SSH, volledige scope); `origin` (HTTPS) heeft

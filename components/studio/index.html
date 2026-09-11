@@ -273,6 +273,10 @@
   <div class="meta">3 varianten<br>3 zelf · 0 extern<br>blad 10/13</div>
 </div>
 <div class="lede">manifest: <code>components/studio/catalog.json</code></div>
+<div style="display:flex;gap:10px;align-items:center;margin:14px 0">
+  <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
+  <span id="catalogCount" class="caps">3 zichtbaar</span>
+</div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
@@ -1462,6 +1466,23 @@ apply();
 </pre></details>
   </div>
 </div>
+<script>
+(() => {
+  const input = document.getElementById("catalogFilter");
+  const count = document.getElementById("catalogCount");
+  if (!input) return;
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll(".grid > .cell").forEach(cell => {
+      const visible = !q || cell.textContent.toLowerCase().includes(q);
+      cell.hidden = !visible;
+      if (visible) shown += 1;
+    });
+    if (count) count.textContent = shown + " zichtbaar";
+  });
+})();
+</script>
 <div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-11 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
