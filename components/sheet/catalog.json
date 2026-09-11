@@ -1,0 +1,43 @@
+{
+  "component": "sheet",
+  "title": "sheet / drawer",
+  "desc": "edge-attached secondary workspace",
+  "entries": [
+    {
+      "id": "right",
+      "file": "self/right.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "right-side sheet"
+    },
+    {
+      "id": "left",
+      "file": "self/left.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "left-side navigation drawer"
+    }
+  ],
+  "docs": {
+    "use": [
+      "native browser semantics waar beschikbaar",
+      "Escape en focusgedrag behouden",
+      "één overlaylaag per lokale taak"
+    ],
+    "avoid": [
+      "overlay voor gewone inline content",
+      "nested modals",
+      "motion als vereiste voor begrip"
+    ],
+    "contract": [
+      "focus zichtbaar",
+      "Escape sluit modal/popup",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "overlays"
+}

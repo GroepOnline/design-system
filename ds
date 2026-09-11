@@ -97,6 +97,9 @@ CATS = [
     ("structuur", "Structuur"),
     ("motion", "Motion"),
     ("forms", "Forms"),
+    ("overlays", "Overlays"),
+    ("navigation", "Navigation"),
+    ("feedback", "Feedback"),
 ]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
@@ -105,6 +108,9 @@ ICONS = {
     "checkbox": "i-check", "radio": "i-list", "switch": "i-sliders",
     "pr-card": "i-git-pr", "settings": "i-settings", "transcript": "i-message",
     "worked-row": "i-clock", "studio": "i-sparkle", "motion": "i-sparkle",
+    "dialog": "i-panel", "sheet": "i-panel", "popover": "i-blocks", "menu": "i-list", "tooltip": "i-info",
+    "tabs": "i-list", "breadcrumb": "i-chevron", "pagination": "i-chevrons-left",
+    "alert": "i-alert", "toast": "i-message", "progress": "i-clock", "skeleton": "i-blocks", "empty-state": "i-inbox",
 }
 SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
