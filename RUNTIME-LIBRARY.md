@@ -30,3 +30,7 @@ Motion is distributed independently from component semantics. `@signaal/tokens` 
 
 The current primitives are `beam`, `halo`, `sweep`, `ripple`, `glide` and `status`. They are catalogued under `components/motion/` and are tested as a separate family rather than baked into every button.
 - `@signaal/interactions`: optionele zero-dependency button interaction helpers; geen core/runtime dependency.
+
+### Form controls
+
+`@signaal/react` exposes Field, Input, Textarea, Select, InputGroup/InputAffix, Checkbox, Radio and Switch. Native browser semantics stay primary; motion remains an optional composition wrapper rather than a form-control dependency.

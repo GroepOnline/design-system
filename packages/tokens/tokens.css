@@ -396,22 +396,61 @@ body {
   box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
-/* ---- input / select ---- */
-.input, .select {
-  height: 28px; padding: 0 10px;
-  font-family: var(--font); font-size: 13px; color: var(--text);
-  background: var(--surface); border: 1px solid var(--line-strong);
-  border-radius: var(--r-md); outline: none;
-  transition: border-color 150ms, box-shadow 150ms;
+/* ---- field + form controls ---- */
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.inline { grid-template-columns: minmax(120px, .55fr) minmax(0, 1fr); align-items: start; column-gap: 18px; }
+.field-label { display: inline-flex; align-items: baseline; gap: 5px; font-size: 12.5px; font-weight: 500; color: var(--text); }
+.field-label .req { color: var(--red); }
+.field-help, .field-error { font-size: 11.5px; line-height: 1.45; color: var(--text-muted); }
+.field-error { color: var(--red); }
+.input, .select, .textarea {
+  width: 100%; min-width: 0; font-family: var(--font); font-size: 13px; color: var(--text);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-md); outline: none;
+  transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out), background-color 150ms var(--ease-out);
 }
-.input:focus, .select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.input:disabled, .select:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
-.input::placeholder { color: var(--text-faint); }
-.select { appearance: none; padding-right: 28px; cursor: pointer;
+.input, .select { height: 32px; padding: 0 10px; }
+.textarea { min-height: 96px; padding: 9px 10px; resize: vertical; line-height: 1.45; }
+.input:hover:not(:disabled), .select:hover:not(:disabled), .textarea:hover:not(:disabled) { border-color: color-mix(in srgb, var(--text) 34%, var(--line-strong)); }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.input[aria-invalid="true"], .select[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: color-mix(in srgb, var(--red) 55%, var(--line-strong)); }
+.input[aria-invalid="true"]:focus-visible, .select[aria-invalid="true"]:focus-visible, .textarea[aria-invalid="true"]:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--red) 12%, transparent); }
+.input:disabled, .select:disabled, .textarea:disabled { opacity: .45; cursor: not-allowed; background: var(--surface-sunk); }
+.input[readonly], .textarea[readonly] { background: var(--surface-sunk); color: var(--text-muted); }
+.input::placeholder, .textarea::placeholder { color: var(--text-faint); }
+.select { appearance: none; padding-right: 30px; cursor: pointer;
   background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
-  background-position: calc(100% - 15px) 50%, calc(100% - 10px) 50%;
-  background-size: 5px 5px; background-repeat: no-repeat;
+  background-position: calc(100% - 15px) 50%, calc(100% - 10px) 50%; background-size: 5px 5px; background-repeat: no-repeat;
 }
+.input-wrap { position: relative; display: flex; align-items: center; min-width: 0; }
+.input-wrap > .ic, .input-wrap > .prefix, .input-wrap > .suffix { position: absolute; z-index: 1; color: var(--text-muted); pointer-events: none; }
+.input-wrap > .ic:first-child, .input-wrap > .prefix { left: 10px; }
+.input-wrap > .suffix { right: 10px; }
+.input-wrap:has(> .ic:first-child) .input, .input-wrap:has(> .prefix) .input { padding-left: 32px; }
+.input-wrap:has(> .suffix) .input { padding-right: 36px; }
+.input-group { display: flex; align-items: stretch; width: 100%; min-width: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-md); overflow: hidden; transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out); }
+.input-group:hover { border-color: color-mix(in srgb, var(--text) 34%, var(--line-strong)); }
+.input-group:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.input-group .input { flex: 1 1 auto; width: 1%; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+.input-group .input:focus-visible { border: 0; box-shadow: none; }
+.input-affix { display: inline-flex; align-items: center; padding: 0 10px; color: var(--text-muted); font-size: 12px; white-space: nowrap; background: var(--surface-sunk); }
+.input-affix:first-child { border-right: 1px solid var(--line); }
+.input-affix:last-child { border-left: 1px solid var(--line); }
+.choice { display: inline-flex; align-items: flex-start; gap: 9px; min-height: 24px; font-size: 13px; color: var(--text); cursor: pointer; }
+.choice input { appearance: none; width: 17px; height: 17px; margin: 1px 0 0; border: 1px solid var(--line-strong); background: var(--surface); display: inline-grid; place-items: center; flex: 0 0 17px; transition: background 140ms, border-color 140ms, box-shadow 140ms; }
+.choice input[type="checkbox"] { border-radius: 4px; }
+.choice input[type="radio"] { border-radius: 50%; }
+.choice input:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.choice input:checked { background: var(--text); border-color: var(--text); }
+.choice input[type="checkbox"]:checked::after { content: ""; width: 8px; height: 4px; border: solid var(--bg); border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg); }
+.choice input[type="radio"]:checked::after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--bg); }
+.choice input[data-indeterminate="true"] { background: var(--text); border-color: var(--text); }
+.choice input[data-indeterminate="true"]::after { content: ""; width: 8px; height: 2px; border-radius: 2px; background: var(--bg); }
+.choice input:disabled, .choice:has(input:disabled) { opacity: .45; cursor: not-allowed; }
+.choice-copy { display: grid; gap: 2px; line-height: 1.35; }
+.choice-copy small { color: var(--text-muted); font-size: 11.5px; }
+@media (pointer: coarse) { .input, .select { min-height: 44px; } .choice { min-height: 44px; align-items: center; } }
+@media (max-width: 620px) { .field.inline { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .input, .select, .textarea, .choice input { transition: none; } }
 
 /* ---- setting row ---- */
 .setting {

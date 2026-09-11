@@ -1,0 +1,70 @@
+{
+  "component": "radio",
+  "title": "radio",
+  "desc": "exclusive selection within a named group",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "exclusive radio group",
+      "family": "selection",
+      "h": 210
+    },
+    {
+      "id": "description",
+      "file": "self/description.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "radio options with descriptions",
+      "family": "selection",
+      "h": 250
+    },
+    {
+      "id": "disabled",
+      "file": "self/disabled.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "mixed available and disabled options",
+      "family": "state",
+      "h": 210
+    }
+  ],
+  "docs": {
+    "use": [
+      "zelfde name voor één groep",
+      "fieldset/legend in echte formulieren",
+      "beschrijvingen als opties uitleg nodig hebben"
+    ],
+    "avoid": [
+      "radio voor onafhankelijke toggles",
+      "meer dan circa 5-7 opties zonder select/combobox te overwegen",
+      "name-attribuut vergeten"
+    ],
+    "contract": [
+      "native radio keyboard behavior",
+      "17px visual / coarse row 44px",
+      "checked state shape + contrast"
+    ]
+  },
+  "cat": "forms",
+  "families": [
+    {
+      "id": "selection",
+      "label": "Selection",
+      "desc": "Één keuze uit een beperkte set."
+    },
+    {
+      "id": "state",
+      "label": "States",
+      "desc": "Disabled opties blijven semantisch zichtbaar."
+    }
+  ]
+}

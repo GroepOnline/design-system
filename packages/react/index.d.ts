@@ -7,6 +7,15 @@ export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & { tone?: "neutr
 export const Badge: React.ForwardRefExoticComponent<BadgeProps & React.RefAttributes<HTMLSpanElement>>;
 export const Input: React.ForwardRefExoticComponent<React.InputHTMLAttributes<HTMLInputElement> & React.RefAttributes<HTMLInputElement>>;
 export const Textarea: React.ForwardRefExoticComponent<React.TextareaHTMLAttributes<HTMLTextAreaElement> & React.RefAttributes<HTMLTextAreaElement>>;
+export const Select: React.ForwardRefExoticComponent<React.SelectHTMLAttributes<HTMLSelectElement> & React.RefAttributes<HTMLSelectElement>>;
+export const InputGroup: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+export const InputAffix: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLSpanElement> & React.RefAttributes<HTMLSpanElement>>;
+export type ChoiceProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> & { label: React.ReactNode; description?: React.ReactNode; inputClassName?: string };
+export const Checkbox: React.ForwardRefExoticComponent<ChoiceProps & React.RefAttributes<HTMLInputElement>>;
+export const Radio: React.ForwardRefExoticComponent<ChoiceProps & React.RefAttributes<HTMLInputElement>>;
+export type SwitchProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange"> & { checked?: boolean; onCheckedChange?: (checked: boolean) => void };
+export const Switch: React.ForwardRefExoticComponent<SwitchProps & React.RefAttributes<HTMLButtonElement>>;
+export function Field(props: React.HTMLAttributes<HTMLDivElement> & { label?: React.ReactNode; htmlFor?: string; help?: React.ReactNode; error?: React.ReactNode; required?: boolean; layout?: "stacked"|"inline"; children: React.ReactNode }): React.ReactElement;
 export const Separator: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & { orientation?: "horizontal"|"vertical" } & React.RefAttributes<HTMLDivElement>>;
 export function Alert(props: React.HTMLAttributes<HTMLDivElement> & { tone?: "neutral"|"accent"|"success"|"warning"|"danger" }): React.ReactElement;
 export function EmptyState(props: React.HTMLAttributes<HTMLElement> & { title: React.ReactNode; description?: React.ReactNode; action?: React.ReactNode }): React.ReactElement;
