@@ -237,7 +237,7 @@
   <div class="rail-links">
   <div class="lbl caps">Primitieven</div>
   <a class="it" href="../../components/badge/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
-  <a class="it on" href="../../components/button/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</span></span><span class="act"></span></a>
+  <a class="it on" href="../../components/button/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button library: semantic families plus independent interaction models</span></span><span class="act"></span></a>
   <div class="lbl caps">Gesprek</div>
   <a class="it" href="../../components/approval/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
   <a class="it" href="../../components/composer/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
@@ -274,14 +274,14 @@
   <div class="ph-text">
     <div class="eyebrow">primitieven</div>
     <h1>button</h1>
-    <div class="ph-sub">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</div>
+    <div class="ph-sub">button library: semantic families plus independent interaction models</div>
   </div>
-  <div class="meta">13 varianten<br>11 zelf · 2 extern<br>blad 04/14</div>
+  <div class="meta">19 varianten<br>17 zelf · 2 extern<br>blad 04/14</div>
 </div>
 <div class="lede">manifest: <code>components/button/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
   <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
-  <span id="catalogCount" class="caps">13 zichtbaar</span>
+  <span id="catalogCount" class="caps">19 zichtbaar</span>
 </div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
@@ -296,7 +296,7 @@
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>acties die de gebruiker bewust start</li><li>primary maximaal één keer per lokale besliscontext</li><li>subtle en ghost voor lagere visuele nadruk</li><li>destructive alleen voor daadwerkelijk destructieve acties</li><li>icon-only alleen met toegankelijke naam</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>meerdere primary-acties naast elkaar</li><li>knop als navigatie, gebruik daarvoor een link</li><li>kleur als enige betekenis</li><li>infinite spinner of ambient loading motion</li><li>emoji in of naast de knop</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.btn h32, sm h28, lg h38; coarse pointer min-h44</code></li><li><code>.primary inverse high emphasis</code></li><li><code>.subtle quiet filled, .ghost containerless, .destructive semantic red</code></li><li><code>.gbtn 30px visual / 44px coarse-pointer target</code></li><li><code>pending = static activity mark + aria-busy, nooit spinner</code></li><li><code>focus-visible = 2px accent outline</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>acties die de gebruiker bewust start</li><li>primary maximaal één keer per lokale besliscontext</li><li>subtle en ghost voor lagere visuele nadruk</li><li>destructive alleen voor daadwerkelijk destructieve acties</li><li>icon-only alleen met toegankelijke naam</li><li>kies interaction per buttondoel; motion is nooit verplicht voor de hele familie</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>meerdere primary-acties naast elkaar</li><li>knop als navigatie, gebruik daarvoor een link</li><li>kleur als enige betekenis</li><li>infinite spinner of ambient loading motion</li><li>emoji in of naast de knop</li><li>dezelfde motion op elk knoptype plakken</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.btn h32, sm h28, lg h38; coarse pointer min-h44</code></li><li><code>.primary inverse high emphasis</code></li><li><code>.subtle quiet filled, .ghost containerless, .destructive semantic red</code></li><li><code>.gbtn 30px visual / 44px coarse-pointer target</code></li><li><code>pending = static activity mark + aria-busy, nooit spinner</code></li><li><code>focus-visible = 2px accent outline</code></li><li><code>interaction helpers zijn optioneel via @signaal/interactions</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -494,6 +494,42 @@
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">beam-cta</span>
+      <span class="note">pill CTA with independent traveling edge beam</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/beam-cta.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/beam-cta.html</span><span>toegevoegd 2026-09-11</span><a href="self/beam-cta.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn btn-beam lg&quot;&gt;Genereer &lt;span aria-hidden=&quot;true&quot;&gt;→&lt;/span&gt;&lt;/button&gt;
+&lt;span class=&quot;note&quot;&gt;hover / focus&lt;/span&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">sweep-cta</span>
+      <span class="note">outlined action with one-shot directional hover sweep</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/sweep-cta.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/sweep-cta.html</span><span>toegevoegd 2026-09-11</span><a href="self/sweep-cta.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn btn-sweep lg&quot;&gt;Bekijk details &lt;span aria-hidden=&quot;true&quot;&gt;↗&lt;/span&gt;&lt;/button&gt;
+&lt;span class=&quot;note&quot;&gt;one-shot sweep&lt;/span&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
 <div class="family-head" data-family="utility"><span class="family-title">Utility</span><span class="family-desc">Compacte acties voor toolbars, menus en lokale bewerkingen.</span></div>
   <div class="cell">
     <div class="ch">
@@ -564,6 +600,47 @@
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">ripple-press</span>
+      <span class="note">icon action with pointer-position press ripple</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/ripple-press.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/ripple-press.html</span><span>toegevoegd 2026-09-11</span><a href="self/ripple-press.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button id=&quot;ripple&quot; class=&quot;gbtn outline btn-ripple&quot; aria-label=&quot;Favoriet&quot;&gt;♡&lt;/button&gt;
+&lt;span class=&quot;note&quot;&gt;pointer press&lt;/span&gt;
+&lt;script type=&quot;module&quot;&gt;import {attachPressRipple} from &quot;../../../packages/interactions/index.js&quot;; attachPressRipple(document.querySelector(&quot;#ripple&quot;));&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">split-action</span>
+      <span class="note">primary action plus independent menu trigger</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/split-action.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/split-action.html</span><span>toegevoegd 2026-09-11</span><a href="self/split-action.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;div class=&quot;btn-split&quot; id=&quot;split&quot;&gt;
+  &lt;button class=&quot;btn primary&quot;&gt;Publiceer&lt;/button&gt;
+  &lt;button class=&quot;btn primary&quot; id=&quot;more&quot; aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Meer publicatie-opties&quot;&gt;⌄&lt;/button&gt;
+  &lt;div class=&quot;btn-split-menu&quot; id=&quot;menu&quot; role=&quot;menu&quot; hidden&gt;&lt;button role=&quot;menuitem&quot;&gt;Plan publicatie&lt;/button&gt;&lt;button role=&quot;menuitem&quot;&gt;Publiceer concept&lt;/button&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;const m=document.querySelector(&quot;#more&quot;),menu=document.querySelector(&quot;#menu&quot;);m.addEventListener(&quot;click&quot;,()=&gt;{const open=menu.hidden;menu.hidden=!open;m.setAttribute(&quot;aria-expanded&quot;,String(open))});&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
 <div class="family-head" data-family="risk"><span class="family-title">Destructive / risk</span><span class="family-desc">Alleen voor destructieve of gevoelige acties.</span></div>
   <div class="cell">
     <div class="ch">
@@ -579,6 +656,25 @@
     <div class="cf"><span>self/destructive.html</span><span>toegevoegd 2026-09-11</span><a href="self/destructive.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;button class=&quot;btn destructive&quot;&gt;Verwijderen&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">hold-confirm</span>
+      <span class="note">destructive action confirmed by finite press-and-hold</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/hold-confirm.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/hold-confirm.html</span><span>toegevoegd 2026-09-11</span><a href="self/hold-confirm.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button id=&quot;hold&quot; class=&quot;btn destructive btn-hold lg&quot;&gt;&lt;span id=&quot;label&quot;&gt;Houd vast om te verwijderen&lt;/span&gt;&lt;/button&gt;
+&lt;span class=&quot;note&quot;&gt;900ms hold&lt;/span&gt;
+&lt;script type=&quot;module&quot;&gt;import {attachHoldConfirm} from &quot;../../../packages/interactions/index.js&quot;; const b=document.querySelector(&quot;#hold&quot;),l=document.querySelector(&quot;#label&quot;); attachHoldConfirm(b,{onConfirm(){l.textContent=&quot;Verwijderd&quot;; setTimeout(()=&gt;{b.removeAttribute(&quot;data-confirmed&quot;); l.textContent=&quot;Houd vast om te verwijderen&quot;},900)}});&lt;/script&gt;
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -598,6 +694,25 @@
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;button class=&quot;btn primary&quot;&gt;Een keer &lt;kbd&gt;1&lt;/kbd&gt;&lt;/button&gt;
 &lt;button class=&quot;btn&quot;&gt;Altijd in deze map &lt;kbd&gt;2&lt;/kbd&gt;&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">command-ack</span>
+      <span class="note">keyboard-oriented action with finite acknowledgement</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/command-ack.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/command-ack.html</span><span>toegevoegd 2026-09-11</span><a href="self/command-ack.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button id=&quot;cmd&quot; class=&quot;btn btn-command lg&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;⌘&lt;/span&gt; Open command &lt;kbd&gt;⌘ K&lt;/kbd&gt;&lt;/button&gt;
+&lt;span class=&quot;note&quot;&gt;click acknowledgement&lt;/span&gt;
+&lt;script type=&quot;module&quot;&gt;import {attachCommandAck} from &quot;../../../packages/interactions/index.js&quot;; attachCommandAck(document.querySelector(&quot;#cmd&quot;));&lt;/script&gt;
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
