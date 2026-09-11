@@ -1,0 +1,27 @@
+name: Package release bundle
+on:
+  workflow_dispatch:
+  push:
+    tags: ["signaal-v*"]
+permissions:
+  contents: read
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v7
+        with: { node-version: "20" }
+      - name: Build runtime package bundle
+        run: python3 scripts/build-release-bundle.py
+      - name: Smoke actual tarballs
+        run: python3 scripts/smoke-runtime-bundle.py
+      - name: Upload release bundle
+        uses: actions/upload-artifact@v7
+        with:
+          name: signaal-runtime-${{ github.sha }}
+          path: dist/runtime-packages/
+          retention-days: 30

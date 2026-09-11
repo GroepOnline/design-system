@@ -2,11 +2,35 @@
   "name": "@signaal/tokens",
   "version": "0.1.0",
   "private": true,
+  "description": "Canonical CSS and JavaScript design tokens for Signaal.",
+  "keywords": [
+    "design-system",
+    "tokens",
+    "css",
+    "signaal"
+  ],
   "type": "module",
-  "sideEffects": ["./tokens.css"],
+  "sideEffects": [
+    "./tokens.css"
+  ],
   "exports": {
-    ".": { "types": "./index.d.ts", "import": "./index.js" },
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
     "./tokens.css": "./tokens.css"
   },
-  "files": ["index.js", "index.d.ts", "tokens.css"]
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "tokens.css"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GroepOnline/design-system.git",
+    "directory": "packages/tokens"
+  }
 }

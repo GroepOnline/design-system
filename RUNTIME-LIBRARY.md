@@ -34,3 +34,9 @@ The current primitives are `beam`, `halo`, `sweep`, `ripple`, `glide` and `statu
 ### Form controls
 
 `@signaal/react` exposes Field, Input, Textarea, Select, InputGroup/InputAffix, Checkbox, Radio and Switch. Native browser semantics stay primary; motion remains an optional composition wrapper rather than a form-control dependency.
+
+## Release safety
+
+The repository root `package.json` is upstream research material, not a Signaal workspace root. Runtime packaging is scoped explicitly to `packages/release.json`. All runtime packages share one semver, remain `private: true` during alpha, and are verified from their actual npm tarballs before a release bundle is accepted.
+
+`catalog-index.json` is the generated machine-readable index for agents and tooling. Use `./ds search <query> --json` for global variant discovery; optional `--category`, `--origin`, `--extension` and `--pattern` filters narrow the result without changing catalog authority.

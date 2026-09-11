@@ -33,6 +33,7 @@ Extensions (optionele consumer-views):
   extensions/<id>/    subset + DESIGN/TASTE-overlay, nooit core dependency
   ./ds extension list|show <id>|check <id>
   ./ds <component> list --extension <id> [--query <tekst>] [--origin <origin>]
+  ./ds search <query> [--category <cat>] [--origin <origin>] [--extension <id>] [--pattern <id>] [--json]
 """
 import hashlib
 import html as htmlmod
@@ -60,6 +61,7 @@ UPSTREAMS = os.path.join(ROOT, "upstreams")
 EXTENSIONS = os.path.join(ROOT, "extensions")
 PROFILES = os.path.join(ROOT, "profiles")
 PATTERNS = os.path.join(ROOT, "patterns")
+CATALOG_INDEX = os.path.join(ROOT, "catalog-index.json")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
@@ -364,6 +366,123 @@ def cmd_list():
     tot = sum(len(load_manifest(c)["entries"]) for c in components())
     print(dim("─" * 66))
     print(f"{len(components())} componenten, {tot} varianten " + dim("· ./ds <component> list voor detail"))
+
+def _pattern_manifest(pattern_id):
+    path = Path(PATTERNS, pattern_id, "pattern.json")
+    if not path.is_file():
+        err(f"onbekend pattern: {bold(pattern_id)}")
+    return json.loads(path.read_text())
+
+
+def _global_search_records(query="", category=None, origin=None, extension=None, pattern=None):
+    q = (query or "").lower().strip()
+    pattern_components = None
+    if pattern:
+        pattern_components = (_pattern_manifest(pattern).get("components") or {})
+    records = []
+    for c in components():
+        m = load_manifest(c)
+        cat = m.get("cat", "")
+        cat_label = next((label for cid, label in CATS if cid == cat), cat or "overig")
+        if category and category.lower() not in {cat.lower(), cat_label.lower()}:
+            continue
+        entries = list(m["entries"])
+        preferred = None
+        if extension:
+            cfg = extension_component(extension, c)
+            if not cfg:
+                continue
+            allowed = set(cfg.get("include") or [])
+            preferred = cfg.get("preferred")
+            entries = [e for e in entries if e["id"] in allowed]
+        if pattern_components is not None:
+            if c not in pattern_components:
+                continue
+            allowed = set(pattern_components.get(c) or [])
+            if allowed:
+                entries = [e for e in entries if e["id"] in allowed]
+        for e in entries:
+            if origin and e.get("origin") != origin:
+                continue
+            hay = " ".join([
+                c, m.get("title", ""), m.get("desc", ""), cat, cat_label,
+                e.get("id", ""), e.get("note", ""), e.get("family", ""), e.get("source") or "",
+            ]).lower()
+            if q and q not in hay:
+                continue
+            records.append({
+                "component": c,
+                "title": m.get("title", c),
+                "category": cat,
+                "variant": e.get("id"),
+                "status": e.get("status"),
+                "origin": e.get("origin"),
+                "family": e.get("family"),
+                "note": e.get("note", ""),
+                "file": f"components/{c}/{e.get('file', '')}",
+                "preferred": bool(preferred and e.get("id") == preferred),
+            })
+    return records
+
+
+def cmd_search(query="", category=None, origin=None, extension=None, pattern=None, json_output=False):
+    records = _global_search_records(query, category, origin, extension, pattern)
+    if json_output:
+        print(json.dumps(records, indent=2, ensure_ascii=False))
+        return
+    scope = []
+    if category: scope.append(f"category={category}")
+    if origin: scope.append(f"origin={origin}")
+    if extension: scope.append(f"extension={extension}")
+    if pattern: scope.append(f"pattern={pattern}")
+    print(f"{bold('search')} {dim('· ' + ', '.join(scope)) if scope else ''}")
+    print(dim(f"{'component':<18} {'variant':<22} {'cat':<13} {'origin':<14} note"))
+    for r in records:
+        mark = green("*") if r["preferred"] else " "
+        print(f"{mark} {r['component']:<16} {r['variant']:<22} {r['category']:<13} {r['origin']:<14} {r['note']}")
+    print(dim(f"{len(records)} resultaten"))
+
+
+def build_catalog_index():
+    component_rows = []
+    for c in components():
+        m = load_manifest(c)
+        component_rows.append({
+            "id": c,
+            "title": m.get("title", c),
+            "description": m.get("desc", ""),
+            "category": m.get("cat", ""),
+            "manifest": f"components/{c}/catalog.json",
+            "catalog": f"components/{c}/index.html",
+            "active": [e["id"] for e in m["entries"] if e.get("status") == "active"],
+            "variants": [{k: e.get(k) for k in ("id", "file", "status", "origin", "family", "note", "source") if e.get(k) is not None} for e in m["entries"]],
+        })
+    profiles = []
+    if Path(PROFILES).is_dir():
+        for path in sorted(Path(PROFILES).glob("*/profile.json")):
+            profiles.append(json.loads(path.read_text()))
+    patterns = []
+    if Path(PATTERNS).is_dir():
+        for path in sorted(Path(PATTERNS).glob("*/pattern.json")):
+            patterns.append(json.loads(path.read_text()))
+    extensions = [load_extension(eid) for eid in extension_ids()]
+    data = {
+        "schema": 1,
+        "counts": {
+            "components": len(component_rows),
+            "variants": sum(len(x["variants"]) for x in component_rows),
+            "profiles": len(profiles),
+            "patterns": len(patterns),
+            "extensions": len(extensions),
+        },
+        "components": component_rows,
+        "profiles": profiles,
+        "patterns": patterns,
+        "extensions": extensions,
+    }
+    Path(CATALOG_INDEX).write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+    print(f"  {_c('32','✓')} {bold('catalog-index'):<14} {data['counts']['components']} componenten · {data['counts']['variants']} varianten")
+
 
 def cmd_clist(c, extension=None, query=None, origin=None):
     m = load_manifest(c)
@@ -3346,6 +3465,7 @@ def cmd_build(only=None, check=False):
     else:
         build_docs()
         build_profiles_patterns()
+        build_catalog_index()
         build_taste()
         build_brain()
         ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery + docs + profiles + patterns + taste + brain)')}")
@@ -3498,6 +3618,20 @@ def main():
         cmd_upstream(args[1:])
     elif args[0] == "extension":
         cmd_extension(args[1:])
+    elif args[0] == "search":
+        query = args[1] if len(args) > 1 and not args[1].startswith("--") else ""
+        category = origin = extension = pattern = None
+        json_output = "--json" in args
+        rest = args[2:] if query else args[1:]
+        it = iter(rest)
+        for a in it:
+            if a == "--category": category = next(it)
+            elif a == "--origin": origin = next(it)
+            elif a == "--extension": extension = next(it)
+            elif a == "--pattern": pattern = next(it)
+            elif a == "--json": continue
+            else: err(f"onbekende search-optie: {a}")
+        cmd_search(query, category=category, origin=origin, extension=extension, pattern=pattern, json_output=json_output)
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()

@@ -25,5 +25,9 @@ jobs:
         name: "ds build --check (failt als gegenereerde output drift vertoont)"
       - run: python3 ds check
         name: "ds check (catalogus, sprites, em-dash, brain wikilinks)"
+      - run: python3 scripts/verify-runtime-packages.py
+        name: "runtime package contract + npm pack dry-run"
+      - run: python3 scripts/build-release-bundle.py && python3 scripts/smoke-runtime-bundle.py
+        name: "packed runtime consumer smoke"
       - run: python3 ds brain gate
         name: "ds brain gate (signals + scorecard)"
