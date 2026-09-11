@@ -22,6 +22,33 @@ export const IconButton = React.forwardRef(function IconButton(
   }, children);
 });
 
+
+export const MotionSurface = React.forwardRef(function MotionSurface(
+  { as = "div", motion = "beam", active = false, className, children, ...props }, ref
+) {
+  const Tag = as;
+  return React.createElement(Tag, {
+    ref, "data-slot": "motion-surface", "data-motion": motion,
+    "data-active": active ? "true" : undefined, className: cx(`sg-motion-${motion}`, className), ...props,
+  }, children);
+});
+
+export function attachPressRipple(element) {
+  if (!element || typeof element.addEventListener !== "function") return () => {};
+  const onPointerDown = (event) => {
+    if (typeof document === "undefined") return;
+    const rect = element.getBoundingClientRect();
+    const ripple = document.createElement("span");
+    ripple.className = "sg-ripple";
+    ripple.style.setProperty("--sg-ripple-x", `${event.clientX - rect.left}px`);
+    ripple.style.setProperty("--sg-ripple-y", `${event.clientY - rect.top}px`);
+    element.append(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+  };
+  element.addEventListener("pointerdown", onPointerDown);
+  return () => element.removeEventListener("pointerdown", onPointerDown);
+}
+
 export const Badge = React.forwardRef(function Badge(
   { tone = "neutral", className, children, ...props }, ref
 ) {

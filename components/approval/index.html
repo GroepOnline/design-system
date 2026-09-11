@@ -133,6 +133,10 @@
   .doc.contract li { margin: 6px 0; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
+  .family-head { grid-column: 1/-1; display:flex; align-items:baseline; gap:12px; margin:18px 2px -2px; padding-top:14px; border-top:1px solid var(--line); }
+  .family-head:first-child { margin-top:0; padding-top:0; border-top:0; }
+  .family-head .family-title { font-size:var(--text-lg); font-weight:500; letter-spacing:var(--h-tracking); }
+  .family-head .family-desc { color:var(--text-faint); font-size:var(--text-sm); }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); transition: border-color var(--dur-fast); }
   .cell:hover { border-color: var(--line-strong); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
@@ -247,6 +251,8 @@
   <a class="it" href="../../components/home-shell/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/motion/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../../docs/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
@@ -270,7 +276,7 @@
     <h1>approval</h1>
     <div class="ph-sub">wacht-op-jou, toetsen 1/2/3</div>
   </div>
-  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 01/13</div>
+  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 01/14</div>
 </div>
 <div class="lede">manifest: <code>components/approval/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
@@ -447,6 +453,15 @@ body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--t
       cell.hidden = !visible;
       if (visible) shown += 1;
     });
+    document.querySelectorAll(".grid > .family-head").forEach(head => {
+      let node = head.nextElementSibling;
+      let any = false;
+      while (node && !node.classList.contains("family-head")) {
+        if (node.classList.contains("cell") && !node.hidden) any = true;
+        node = node.nextElementSibling;
+      }
+      head.hidden = !any;
+    });
     if (count) count.textContent = shown + " zichtbaar";
   });
 })();
@@ -455,7 +470,7 @@ body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--t
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">01/13</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">01/14</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

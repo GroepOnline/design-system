@@ -10,7 +10,8 @@
       "source": null,
       "status": "active",
       "added": "2026-07-27",
-      "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+      "note": "oorspronkelijke demo, gemigreerd naar catalogus",
+      "family": "emphasis"
     },
     {
       "id": "standard",
@@ -19,7 +20,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "basis btn, hairline border"
+      "note": "basis btn, hairline border",
+      "family": "emphasis"
     },
     {
       "id": "primary",
@@ -28,7 +30,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "inverse text/bg"
+      "note": "inverse text/bg",
+      "family": "emphasis"
     },
     {
       "id": "with-kbd",
@@ -37,7 +40,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "approval-patroon met toets-hints"
+      "note": "approval-patroon met toets-hints",
+      "family": "shortcut"
     },
     {
       "id": "gbtn",
@@ -46,7 +50,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "ghost icon + solid send"
+      "note": "ghost icon + solid send",
+      "family": "utility"
     },
     {
       "id": "shadcn-default",
@@ -55,7 +60,8 @@
       "source": "https://ui.shadcn.com",
       "status": "locked",
       "added": "2026-07-27",
-      "note": "zinc-schaal, radius 6, shadow-xs, 36px hoog"
+      "note": "zinc-schaal, radius 6, shadow-xs, 36px hoog",
+      "family": "references"
     },
     {
       "id": "devin-square",
@@ -64,7 +70,8 @@
       "source": "https://devin.ai",
       "status": "locked",
       "added": "2026-07-27",
-      "note": "radius 0, marketing-site stijl"
+      "note": "radius 0, marketing-site stijl",
+      "family": "references"
     },
     {
       "id": "subtle",
@@ -73,7 +80,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-09-11",
-      "note": "quiet filled action without primary emphasis"
+      "note": "quiet filled action without primary emphasis",
+      "family": "emphasis"
     },
     {
       "id": "ghost",
@@ -82,7 +90,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-09-11",
-      "note": "text action with no persistent container"
+      "note": "text action with no persistent container",
+      "family": "emphasis"
     },
     {
       "id": "destructive",
@@ -91,7 +100,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-09-11",
-      "note": "destructive action using reserved red semantics"
+      "note": "destructive action using reserved red semantics",
+      "family": "risk"
     },
     {
       "id": "pending",
@@ -100,7 +110,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-09-11",
-      "note": "quiet pending acknowledgement without spinner"
+      "note": "quiet pending acknowledgement without spinner",
+      "family": "utility"
     },
     {
       "id": "icon-leading",
@@ -109,7 +120,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-09-11",
-      "note": "labelled action with leading Lucide icon"
+      "note": "labelled action with leading Lucide icon",
+      "family": "utility"
     },
     {
       "id": "icon-outline",
@@ -118,7 +130,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-09-11",
-      "note": "outlined icon-only action with accessible label"
+      "note": "outlined icon-only action with accessible label",
+      "family": "utility"
     }
   ],
   "docs": {
@@ -145,5 +158,32 @@
       "focus-visible = 2px accent outline"
     ]
   },
-  "cat": "primitieven"
+  "cat": "primitieven",
+  "families": [
+    {
+      "id": "emphasis",
+      "label": "Emphasis",
+      "desc": "Primary, secondary en rustige nadruk voor beslissingen en journeys."
+    },
+    {
+      "id": "utility",
+      "label": "Utility",
+      "desc": "Compacte acties voor toolbars, menus en lokale bewerkingen."
+    },
+    {
+      "id": "risk",
+      "label": "Destructive / risk",
+      "desc": "Alleen voor destructieve of gevoelige acties."
+    },
+    {
+      "id": "shortcut",
+      "label": "Shortcut / command",
+      "desc": "Snelle acties voor power users en keyboard-first flows."
+    },
+    {
+      "id": "references",
+      "label": "References",
+      "desc": "Externe meetlatten, nooit automatisch runtime-authority."
+    }
+  ]
 }

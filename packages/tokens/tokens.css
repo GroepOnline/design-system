@@ -216,6 +216,85 @@ body {
 .ic-18 { width: 18px; height: 18px; }
 .ic-24 { width: 24px; height: 24px; }
 
+/* ---- optional motion primitives: opt-in, component-agnostic ---- */
+.sg-motion-beam,
+.sg-motion-halo,
+.sg-motion-sweep,
+.sg-motion-ripple,
+.sg-motion-status { position: relative; isolation: isolate; }
+
+.sg-motion-beam { overflow: hidden; transition: border-color var(--dur-pop) var(--ease-out), box-shadow var(--dur-pop) var(--ease-out); }
+.sg-motion-beam:focus-within,
+.sg-motion-beam[data-active="true"] {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line-strong)) !important;
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--accent) 55%, transparent), 0 6px 18px color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.sg-motion-beam::after {
+  content: ""; position: absolute; left: 7%; bottom: -1px; width: 30%; height: 2px;
+  border-radius: 999px; pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--accent), color-mix(in srgb, var(--accent) 35%, white), transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 65%, transparent);
+  transform: translateX(-120%);
+}
+.sg-motion-beam:focus-within::after,
+.sg-motion-beam[data-active="true"]::after {
+  opacity: 1; animation: sgBeamTravel 1.65s var(--ease-in-out) infinite alternate;
+}
+@keyframes sgBeamTravel { to { transform: translateX(300%); } }
+
+.sg-motion-halo {
+  transition: box-shadow var(--dur-panel) var(--ease-out), border-color var(--dur-pop) var(--ease-out);
+}
+.sg-motion-halo:focus-within,
+.sg-motion-halo[data-active="true"] {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 0 24px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.sg-motion-sweep { overflow: hidden; }
+.sg-motion-sweep::after {
+  content: ""; position: absolute; inset: -40% auto -40% -35%; width: 24%; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, white 22%, transparent), transparent);
+  transform: skewX(-18deg) translateX(-220%); opacity: 0;
+}
+@media (hover:hover) and (pointer:fine) {
+  .sg-motion-sweep:hover::after { opacity: 1; animation: sgSweep 560ms var(--ease-out) 1; }
+}
+@keyframes sgSweep { to { transform: skewX(-18deg) translateX(720%); } }
+
+.sg-motion-ripple { overflow: hidden; }
+.sg-motion-ripple > .sg-ripple {
+  position: absolute; width: 12px; height: 12px; border-radius: 50%; pointer-events: none;
+  left: var(--sg-ripple-x, 50%); top: var(--sg-ripple-y, 50%);
+  translate: -50% -50%; background: currentColor; opacity: 0;
+  animation: sgRipple 480ms var(--ease-out) 1;
+}
+@keyframes sgRipple { 0% { opacity: .18; scale: .2; } 100% { opacity: 0; scale: 10; } }
+
+.sg-motion-glide { --sg-index: 0; position: relative; isolation: isolate; }
+.sg-motion-glide::before {
+  content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px;
+  width: calc((100% - 6px) / var(--sg-count, 3)); border-radius: calc(var(--r-md) - 1px);
+  background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  transform: translateX(calc(var(--sg-index) * 100%));
+  transition: transform var(--dur-panel) var(--ease-drawer), background-color var(--dur-pop);
+}
+
+.sg-motion-status { overflow: hidden; }
+.sg-motion-status::after {
+  content: ""; position: absolute; inset: 0 auto 0 -28%; width: 28%; pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.sg-motion-status[data-active="true"]::after { opacity: .9; animation: sgStatus 1.35s linear infinite; }
+@keyframes sgStatus { to { transform: translateX(460%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sg-motion-beam::after, .sg-motion-sweep::after, .sg-motion-ripple > .sg-ripple, .sg-motion-status::after { animation: none !important; }
+  .sg-motion-beam:focus-within::after, .sg-motion-beam[data-active="true"]::after { opacity: .65; transform: translateX(120%); }
+  .sg-motion-glide::before { transition: none; }
+  .sg-motion-halo { transition: none; }
+}
+
 /* ---- toggle switch ---- */
 .switch {
   position: relative; width: 36px; height: 20px; flex-shrink: 0;
