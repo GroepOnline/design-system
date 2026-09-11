@@ -309,7 +309,10 @@
 </ul>
 <h2 data-reg="first-extraction-from">First extraction from DSH</h2>
 <p>DSH remains owner of session lifecycle, adapters and product composition. The first generic contracts promoted are Button, IconButton, Badge, Input, Textarea, Separator, Alert, EmptyState and Activity. <code>Activity</code> generalizes the proven worked-row state model without hard-coding agents, repositories or ChefGroep product names.</p>
-<p>Runtime packages must remain product-agnostic. ChefGroep products are consumers and test beds, not namespaces in the component API.</p></div>
+<p>Runtime packages must remain product-agnostic. ChefGroep products are consumers and test beds, not namespaces in the component API.</p>
+<h2 data-reg="catalog-versus">Catalog versus extensions</h2>
+<p>A component family may contain hundreds of immutable variants. The catalog is exhaustive; an extension is only an optional named subset with a preferred variant and scope-specific <code>DESIGN.md</code> / <code>TASTE.md</code>.</p>
+<p>The dependency direction is one-way: consumers may use Signaal or an extension view, but Signaal core never imports ChefGroep, DSH or another consumer extension. Removing an extension cannot break tokens, packages, catalog build or base checks.</p></div>
 <div class="gen" data-reg="colofon">gegenereerd uit RUNTIME-LIBRARY.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
 
 </div></main>

@@ -28,6 +28,11 @@ Brain (vijfde tool):
 Upstreams (catalogus-invoer):
   upstreams/*.json    immutable externe bronpins + rendererbeleid
   ./ds upstream list|show <id>|check [id]
+
+Extensions (optionele consumer-views):
+  extensions/<id>/    subset + DESIGN/TASTE-overlay, nooit core dependency
+  ./ds extension list|show <id>|check <id>
+  ./ds <component> list --extension <id> [--query <tekst>] [--origin <origin>]
 """
 import hashlib
 import html as htmlmod
@@ -52,6 +57,7 @@ BRAIN_THRESHOLDS = os.path.join(BRAIN, "eval", "thresholds.yaml")
 BRAIN_SCORECARD = os.path.join(BRAIN, "eval", "scorecard.json")
 STYLES_JSON = os.path.join(ROOT, "styles.json")
 UPSTREAMS = os.path.join(ROOT, "upstreams")
+EXTENSIONS = os.path.join(ROOT, "extensions")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
@@ -64,6 +70,25 @@ def save_styles(st):
     with open(STYLES_JSON, "w") as f:
         json.dump(st, f, indent=2, ensure_ascii=False)
         f.write("\n")
+
+def extension_ids():
+    if not os.path.isdir(EXTENSIONS):
+        return []
+    return sorted(
+        d for d in os.listdir(EXTENSIONS)
+        if os.path.isfile(os.path.join(EXTENSIONS, d, "extension.json"))
+    )
+
+def load_extension(ext_id):
+    path = os.path.join(EXTENSIONS, ext_id, "extension.json")
+    if not os.path.isfile(path):
+        err(f"onbekende extension: {bold(ext_id)}")
+    with open(path) as f:
+        return json.load(f)
+
+def extension_component(ext_id, component):
+    data = load_extension(ext_id)
+    return (data.get("components") or {}).get(component)
 
 CATS = [
     ("primitieven", "Primitieven"),
@@ -323,9 +348,25 @@ def cmd_list():
     print(dim("─" * 66))
     print(f"{len(components())} componenten, {tot} varianten " + dim("· ./ds <component> list voor detail"))
 
-def cmd_clist(c):
+def cmd_clist(c, extension=None, query=None, origin=None):
     m = load_manifest(c)
-    print(f"{bold(m.get('title', c))} {dim('· ' + m.get('cat','?'))} — {m.get('desc','')}")
+    entries = list(m["entries"])
+    preferred = None
+    if extension:
+        cfg = extension_component(extension, c)
+        if not cfg:
+            entries = []
+        else:
+            allowed = set(cfg.get("include") or [])
+            preferred = cfg.get("preferred")
+            entries = [e for e in entries if e["id"] in allowed]
+    if origin:
+        entries = [e for e in entries if e.get("origin") == origin]
+    if query:
+        q = query.lower()
+        entries = [e for e in entries if q in " ".join([e.get("id", ""), e.get("note", ""), e.get("source") or ""]).lower()]
+    suffix = f" · extension={extension}" if extension else ""
+    print(f"{bold(m.get('title', c))} {dim('· ' + m.get('cat','?') + suffix)} — {m.get('desc','')}")
     d = m.get("docs", {})
     if d.get("use"):
         print(f"  {green('✓ gebruik')}  " + dim("; ".join(d["use"])))
@@ -333,10 +374,14 @@ def cmd_clist(c):
         print(f"  {_c('31','✕ vermijd')}  " + dim("; ".join(d["avoid"])))
     print()
     print(dim(f"{'status':<9} {'origin':<15} {'id':<22} {'source':<15} note"))
-    for e in m["entries"]:
-        st = green("ACTIEF") if e["status"] == "active" else dim("vast")
+    for e in entries:
+        if preferred and e["id"] == preferred:
+            st = green("PREFERRED")
+        else:
+            st = green("ACTIEF") if e["status"] == "active" else dim("vast")
         print(f"{st:<18} {e['origin']:<15} {bold(e['id']):<31} {dim(e.get('source') or '-'):<24} {e.get('note','')}")
-    curated = [e for e in m["entries"] if e.get("upstream")]
+    print(dim(f"{len(entries)} getoond van {len(m['entries'])} varianten"))
+    curated = [e for e in entries if e.get("upstream")]
     for e in curated:
         print()
         print(f"  {bold(e['id'])} {dim('· ' + e.get('upstream','?') + '@' + e.get('sourceRef','')[:10])}")
@@ -347,7 +392,7 @@ def cmd_clist(c):
         renderer = e.get("renderer", {})
         if renderer:
             print("    renderer " + ", ".join(f"{k}={v}" for k, v in renderer.items()))
-    derived = [e for e in m["entries"] if e.get("derivedFrom")]
+    derived = [e for e in entries if e.get("derivedFrom")]
     for e in derived:
         src = e["derivedFrom"]
         print()
@@ -410,6 +455,59 @@ def cmd_remove(c, eid, yes=False):
     save_manifest(c, m)
     cmd_build(only=c)
     ok(f"{bold(c)}/{eid} verwijderd uit catalogus")
+
+def validate_extension(ext_id):
+    data = load_extension(ext_id)
+    errors = []
+    base = os.path.join(EXTENSIONS, ext_id)
+    for key in ("design", "taste"):
+        rel = data.get(key)
+        if not rel or not os.path.isfile(os.path.join(base, rel)):
+            errors.append(f"{ext_id}: ontbrekende {key}-doc ({rel or '-'})")
+    for component, cfg in (data.get("components") or {}).items():
+        if component not in components():
+            errors.append(f"{ext_id}: onbekend component {component}")
+            continue
+        manifest = load_manifest(component)
+        ids = {e["id"] for e in manifest["entries"]}
+        include = cfg.get("include") or []
+        missing = [eid for eid in include if eid not in ids]
+        for eid in missing:
+            errors.append(f"{ext_id}: {component}/{eid} bestaat niet")
+        preferred = cfg.get("preferred")
+        if preferred and preferred not in include:
+            errors.append(f"{ext_id}: {component} preferred {preferred} staat niet in include")
+    return errors
+
+def cmd_extension(args):
+    sub = args[0] if args else "list"
+    if sub == "list":
+        print(bold(f"{'extension':<18} {'label':<28} components"))
+        print(dim("─" * 64))
+        for ext_id in extension_ids():
+            data = load_extension(ext_id)
+            print(f"{ext_id:<18} {data.get('label', ext_id):<28} {len(data.get('components') or {})}")
+        return
+    if len(args) < 2:
+        err("gebruik: ds extension list | show <id> | check <id>")
+    ext_id = args[1]
+    data = load_extension(ext_id)
+    if sub == "show":
+        print(f"{bold(data.get('label', ext_id))} {dim('· optional extension')}")
+        print(dim(f"design={data.get('design')} · taste={data.get('taste')}"))
+        for component, cfg in (data.get("components") or {}).items():
+            pref = cfg.get("preferred") or "-"
+            print(f"{component:<18} preferred={pref:<18} " + ", ".join(cfg.get("include") or []))
+        return
+    if sub == "check":
+        errors = validate_extension(ext_id)
+        for item in errors:
+            errp(item)
+        if errors:
+            err(f"{len(errors)} extension errors")
+        ok(f"extension {ext_id}: contract + component references geldig")
+        return
+    err("gebruik: ds extension list | show <id> | check <id>")
 
 # ---------- markdown renderer (geen deps) ----------
 
@@ -1897,6 +1995,10 @@ CATALOG_BODY = """<div class="pagehead" data-reg="kop">
   <div class="meta">{n} varianten<br>{nself} zelf · {next} extern<br>blad {blad}</div>
 </div>
 <div class="lede">manifest: <code>components/{name}/catalog.json</code></div>
+<div style="display:flex;gap:10px;align-items:center;margin:14px 0">
+  <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
+  <span id="catalogCount" class="caps">{n} zichtbaar</span>
+</div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
@@ -1907,6 +2009,23 @@ CATALOG_BODY = """<div class="pagehead" data-reg="kop">
 <div class="grid" data-reg="varianten">
 {cells}
 </div>
+<script>
+(() => {{
+  const input = document.getElementById("catalogFilter");
+  const count = document.getElementById("catalogCount");
+  if (!input) return;
+  input.addEventListener("input", () => {{
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll(".grid > .cell").forEach(cell => {{
+      const visible = !q || cell.textContent.toLowerCase().includes(q);
+      cell.hidden = !visible;
+      if (visible) shown += 1;
+    }});
+    if (count) count.textContent = shown + " zichtbaar";
+  }});
+}})();
+</script>
 <div class="gen" data-reg="colofon">gegenereerd door ds build op {today} · catalog.json is de bron · dit bestand niet bewerken</div>
 """
 
@@ -3231,6 +3350,8 @@ def main():
         cmd_brain(args[1:])
     elif args[0] == "upstream":
         cmd_upstream(args[1:])
+    elif args[0] == "extension":
+        cmd_extension(args[1:])
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()
@@ -3254,7 +3375,18 @@ def main():
         c = args[0]
         sub = args[1] if len(args) > 1 else "list"
         if sub == "list":
-            cmd_clist(c)
+            ext = None
+            query = None
+            origin = None
+            it = iter(args[2:])
+            for a in it:
+                if a == "--extension":
+                    ext = next(it)
+                elif a == "--query":
+                    query = next(it)
+                elif a == "--origin":
+                    origin = next(it)
+            cmd_clist(c, extension=ext, query=query, origin=origin)
         elif sub == "select":
             cmd_select(c, args[2])
         elif sub == "add":
