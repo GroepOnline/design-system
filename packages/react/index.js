@@ -209,3 +209,35 @@ export const DataGrid = React.forwardRef(function DataGrid({ label, className, c
   return React.createElement("div", { "data-slot": "data-grid-wrap", className: "sg-data-grid-wrap" },
     React.createElement("table", { ref, "aria-label": label, "data-slot": "data-grid", className: cx("sg-data-grid", className), ...props }, children));
 });
+
+function LayoutPrimitive({ as = "div", slot, className, children, ...props }, ref) {
+  const Tag = as;
+  return React.createElement(Tag, { ref, "data-slot": slot, className, ...props }, children);
+}
+export const Stack = React.forwardRef(function Stack({ as = "div", gap = "md", className, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "stack", "data-gap": gap, className: cx("sg-stack", className), children, ...props }, ref);
+});
+export const Cluster = React.forwardRef(function Cluster({ as = "div", justify = "start", align = "center", className, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "cluster", "data-justify": justify, "data-align": align, className: cx("sg-cluster", className), children, ...props }, ref);
+});
+export const Grid = React.forwardRef(function Grid({ as = "div", columns = "auto", min = "220px", className, style, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "grid", "data-columns": columns, className: cx("sg-grid", className), style: { "--sg-grid-min": min, ...style }, children, ...props }, ref);
+});
+export const Page = React.forwardRef(function Page({ as = "main", size = "default", className, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "page", "data-size": size, className: cx("sg-page", className), children, ...props }, ref);
+});
+export const Section = React.forwardRef(function Section({ as = "section", divided = false, className, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "section", "data-divided": divided || undefined, className: cx("sg-section", className), children, ...props }, ref);
+});
+export const SplitPane = React.forwardRef(function SplitPane({ as = "div", variant = "balanced", className, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "split-pane", "data-variant": variant, className: cx("sg-split-pane", className), children, ...props }, ref);
+});
+export const AppShell = React.forwardRef(function AppShell({ as = "div", collapse = "top", railWidth = "220px", className, style, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "app-shell", "data-collapse": collapse, className: cx("sg-app-shell", className), style: { "--sg-rail-width": railWidth, ...style }, children, ...props }, ref);
+});
+export const AppShellRail = React.forwardRef(function AppShellRail({ as = "aside", className, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "app-shell-rail", className: cx("sg-app-shell__rail", className), children, ...props }, ref);
+});
+export const AppShellMain = React.forwardRef(function AppShellMain({ as = "main", className, children, ...props }, ref) {
+  return LayoutPrimitive({ as, slot: "app-shell-main", className: cx("sg-app-shell__main", className), children, ...props }, ref);
+});

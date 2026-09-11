@@ -1,0 +1,40 @@
+{
+  "component": "section",
+  "title": "section",
+  "desc": "semantic section spacing and optional boundary",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "plain semantic section"
+    },
+    {
+      "id": "divided",
+      "file": "self/divided.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "section with visible boundary"
+    }
+  ],
+  "docs": {
+    "use": [
+      "compose layouts from semantic regions",
+      "keep product-specific behavior outside the primitive"
+    ],
+    "avoid": [
+      "baking product navigation or data semantics into layout",
+      "using layout primitives as decorative cards"
+    ],
+    "contract": [
+      "works at 390px and desktop",
+      "does not impose product colors or copy"
+    ]
+  },
+  "cat": "layout"
+}
