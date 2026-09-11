@@ -233,7 +233,7 @@
   <div class="rail-links">
   <div class="lbl caps">Primitieven</div>
   <a class="it" href="../../components/badge/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
-  <a class="it on" href="../../components/button/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">btn + gbtn + kbd</span></span><span class="act"></span></a>
+  <a class="it on" href="../../components/button/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</span></span><span class="act"></span></a>
   <div class="lbl caps">Gesprek</div>
   <a class="it" href="../../components/approval/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
   <a class="it" href="../../components/composer/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
@@ -268,14 +268,14 @@
   <div class="ph-text">
     <div class="eyebrow">primitieven</div>
     <h1>button</h1>
-    <div class="ph-sub">btn + gbtn + kbd</div>
+    <div class="ph-sub">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</div>
   </div>
-  <div class="meta">7 varianten<br>5 zelf · 2 extern<br>blad 04/13</div>
+  <div class="meta">13 varianten<br>11 zelf · 2 extern<br>blad 04/13</div>
 </div>
 <div class="lede">manifest: <code>components/button/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
   <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
-  <span id="catalogCount" class="caps">7 zichtbaar</span>
+  <span id="catalogCount" class="caps">13 zichtbaar</span>
 </div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
@@ -290,7 +290,7 @@
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>acties die de gebruiker bewust start</li><li>primary max 1x per context</li><li>gbtn voor icon-only acties in balken</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>twee primary naast elkaar</li><li>knop als navigatie — gebruik een link</li><li>emoji in of naast de knop</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.btn h32 px13 r8</code></li><li><code>.primary text↔bg inverse</code></li><li><code>.gbtn 28px ghost</code></li><li><code>kbd in knop voor toets-hints</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>acties die de gebruiker bewust start</li><li>primary maximaal één keer per lokale besliscontext</li><li>subtle en ghost voor lagere visuele nadruk</li><li>destructive alleen voor daadwerkelijk destructieve acties</li><li>icon-only alleen met toegankelijke naam</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>meerdere primary-acties naast elkaar</li><li>knop als navigatie, gebruik daarvoor een link</li><li>kleur als enige betekenis</li><li>infinite spinner of ambient loading motion</li><li>emoji in of naast de knop</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>.btn h32, sm h28, lg h38; coarse pointer min-h44</code></li><li><code>.primary inverse high emphasis</code></li><li><code>.subtle quiet filled, .ghost containerless, .destructive semantic red</code></li><li><code>.gbtn 30px visual / 44px coarse-pointer target</code></li><li><code>pending = static activity mark + aria-busy, nooit spinner</code></li><li><code>focus-visible = 2px accent outline</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -332,6 +332,9 @@
   &lt;div class=&quot;row&quot;&gt;
     &lt;button class=&quot;btn&quot;&gt;Standaard&lt;/button&gt;
     &lt;button class=&quot;btn primary&quot;&gt;Primaire actie&lt;/button&gt;
+    &lt;button class=&quot;btn subtle&quot;&gt;Subtiel&lt;/button&gt;
+    &lt;button class=&quot;btn ghost&quot;&gt;Ghost&lt;/button&gt;
+    &lt;button class=&quot;btn destructive&quot;&gt;Verwijderen&lt;/button&gt;
     &lt;button class=&quot;btn&quot; disabled&gt;Uitgeschakeld&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -349,9 +352,9 @@
 &lt;div class=&quot;group&quot;&gt;
   &lt;div class=&quot;lbl&quot;&gt;laden&lt;/div&gt;
   &lt;div class=&quot;row&quot;&gt;
-    &lt;button class=&quot;btn loading&quot;&gt;Opslaan&lt;/button&gt;
-    &lt;button class=&quot;btn primary loading&quot;&gt;Verwerken&lt;/button&gt;
-    &lt;button class=&quot;btn sm loading&quot;&gt;Even geduld&lt;/button&gt;
+    &lt;button class=&quot;btn loading&quot; aria-busy=&quot;true&quot;&gt;Opslaan&lt;/button&gt;
+    &lt;button class=&quot;btn primary loading&quot; aria-busy=&quot;true&quot;&gt;Verwerken&lt;/button&gt;
+    &lt;button class=&quot;btn sm loading&quot; aria-busy=&quot;true&quot;&gt;Even geduld&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -384,10 +387,10 @@
 &lt;div class=&quot;group&quot;&gt;
   &lt;div class=&quot;lbl&quot;&gt;icoon-knoppen (.gbtn)&lt;/div&gt;
   &lt;div class=&quot;row&quot;&gt;
-    &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-plus&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-mic&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-search&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-    &lt;button class=&quot;gbtn solid&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-arrow-up&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;button class=&quot;gbtn&quot; aria-label=&quot;Toevoegen&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-plus&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;button class=&quot;gbtn&quot; aria-label=&quot;Microfoon&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-mic&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;button class=&quot;gbtn outline&quot; aria-label=&quot;Zoeken&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-search&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;button class=&quot;gbtn solid&quot; aria-label=&quot;Versturen&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-arrow-up&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -401,15 +404,16 @@
 &lt;/div&gt;
 
 &lt;!-- CONTRACT
-  .btn            h32 px13 r-md border--line-strong, hover bg--surface-sunk, active scale .97
-  .btn.primary    text&lt;-&gt;bg omgekeerd, hover opacity .87
-  .btn.sm         h28 font-12
-  .btn.lg         h38 font-14
-  .btn.loading    spinner::after, color transparent
-  .btn-group      connected buttons, shared border-collapse
-  .gbtn           28px ghost, hover --hover wash, active scale .92
-  .gbtn.solid     send-acties
-  kbd             mono 10px, border currentColor 30%, r3, p1px 5px
+  .btn             h32 / optical px12 / r-md / hairline; coarse pointer min-h44
+  .btn.primary     inverse high emphasis; max one primary per local decision context
+  .btn.subtle      quiet filled action; .btn.ghost = containerless lower emphasis
+  .btn.destructive semantic red only for destructive actions
+  .btn.sm/.lg      h28/h38; same interaction physics
+  .btn.loading     static activity mark + aria-busy; never infinite spinner
+  .gbtn            30px visual; coarse pointer 44px; accessible name required
+  .gbtn.solid      high-emphasis icon action; .gbtn.outline = persistent boundary
+  :active          1px press + subtle scale; :focus-visible 2px accent outline
+  kbd              compact mono key hint with quiet inset surface
 --&gt;
 &lt;/body&gt;
 &lt;/html&gt;
@@ -536,6 +540,108 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;button class=&quot;dv-btn dv-primary&quot;&gt;Try Devin&lt;/button&gt;
 &lt;button class=&quot;dv-btn dv-ghost&quot;&gt;Contact sales&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">subtle</span>
+      <span class="note">quiet filled action without primary emphasis</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/subtle.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/subtle.html</span><span>toegevoegd 2026-09-11</span><a href="self/subtle.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn subtle&quot;&gt;Subtiele actie&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">ghost</span>
+      <span class="note">text action with no persistent container</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/ghost.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/ghost.html</span><span>toegevoegd 2026-09-11</span><a href="self/ghost.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn ghost&quot;&gt;Ghost actie&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">destructive</span>
+      <span class="note">destructive action using reserved red semantics</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/destructive.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/destructive.html</span><span>toegevoegd 2026-09-11</span><a href="self/destructive.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn destructive&quot;&gt;Verwijderen&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">pending</span>
+      <span class="note">quiet pending acknowledgement without spinner</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/pending.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/pending.html</span><span>toegevoegd 2026-09-11</span><a href="self/pending.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn primary loading&quot; aria-busy=&quot;true&quot;&gt;Publiceren&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">icon-leading</span>
+      <span class="note">labelled action with leading Lucide icon</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/icon-leading.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/icon-leading.html</span><span>toegevoegd 2026-09-11</span><a href="self/icon-leading.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn&quot;&gt;&lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-download&quot;/&gt;&lt;/svg&gt;Download&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">icon-outline</span>
+      <span class="note">outlined icon-only action with accessible label</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/icon-outline.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/icon-outline.html</span><span>toegevoegd 2026-09-11</span><a href="self/icon-outline.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;gbtn outline&quot; aria-label=&quot;Open&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-external&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>

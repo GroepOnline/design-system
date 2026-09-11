@@ -21,5 +21,21 @@ class RuntimePackagesTest(unittest.TestCase):
         for forbidden in ("dsh-", "chefgroep", "deepseek", "commander", "opencodex"):
             self.assertNotIn(forbidden, source)
 
+    def test_button_family_contract_is_exposed_in_tokens_and_runtime(self):
+        tokens = (ROOT / "tokens.css").read_text()
+        runtime = (ROOT / "packages/react/styles.css").read_text()
+        for selector in (".btn.primary", ".btn.subtle", ".btn.ghost", ".btn.destructive"):
+            self.assertIn(selector, tokens)
+        for variant in ('data-variant="primary"', 'data-variant="subtle"', 'data-variant="ghost"', 'data-variant="destructive"'):
+            self.assertIn(variant, runtime)
+        self.assertIn("@media (pointer: coarse)", tokens)
+        self.assertIn("min-height: 44px", tokens)
+
+    def test_button_pending_contract_never_uses_spinner_animation(self):
+        tokens = (ROOT / "tokens.css").read_text()
+        block = tokens[tokens.index("/* pending is quiet acknowledgement"):tokens.index("/* button group */")]
+        self.assertIn('aria-busy="true"', block)
+        self.assertNotIn("animation:", block)
+
 if __name__ == "__main__":
     unittest.main()

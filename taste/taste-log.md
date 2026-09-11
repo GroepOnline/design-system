@@ -195,3 +195,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: "gebruik grok voor explore en simpel werk als worker en vergeet niet m'n plugins (cordis oid) voor deepseekharn" — home-shell moet ook als DSH-frontend-plugin kunnen landen
 - **delta**: home-shell krijgt een tweede variant `menus` met de gemeten popover-patronen (mode-picker, plus-menu, split-send, credits-banner, sessie-rij met werkstatus); DSH-plugin-pad wordt verkend (dsh-ui-frontend)
 - **candidate rule**: composer-menu's zijn onderdeel van de shell-structuur, niet losse componenten — één popover-idioom (surface, r-md, hairline, icoon 16 + label) voor alle drie (plus, mode, env). *1e observatie, watch.*
+
+## 2026-09-11 · Button family polish
+
+- **shown**: bestaande Signaal button family met default/primary/gbtn en de eerste algemene runtime-package
+- **reaction**: adjusted: de button moet flink verder gepolished en aangepast worden
+- **signal**: de primitive mag niet blijven steken op een generieke shadcn-baseline; herbruikbaarheid betekent ook dat states, nadruk, iconen en input-modality zorgvuldig uitgewerkt zijn
+- **delta**: button-contract aangescherpt met optische padding, subtielere press-fysica, coarse-pointer targets, expliciete focus, rustige pending-mark zonder spinner en aparte default/primary/subtle/ghost/destructive/icon varianten; HTML-catalogus en runtime-package gelijkgetrokken
+- **candidate rule**: primitives die breed hergebruikt worden moeten als volledige families worden ontworpen, niet als één default plus losse uitzonderingen. Eerste expliciete observatie, nog niet promoveren.
