@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>components — design-system</title>
+<title>RUNTIME-LIBRARY — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -225,6 +225,30 @@
     .card:active { transform: none; }
     .cell, .cell .ch, .rail a.it, .brand .logo { transition: none; }
   }
+
+  .md { max-width: 760px; }
+  .md h1 { font-size: 27px; margin: 8px 0 10px; letter-spacing: -0.02em; }
+  .md h2 { font-size: 20px; margin: 34px 0 10px; padding-top: 18px; border-top: 1px solid var(--line); letter-spacing: -0.01em; }
+  .md h3 { font-size: 16px; margin: 24px 0 8px; }
+  .md h4 { font-size: 14px; margin: 20px 0 6px; }
+  .md p, .md li { font-size: 14.5px; line-height: 1.7; color: var(--text-muted); }
+  .md p { margin: 10px 0; }
+  .md ul, .md ol { padding-left: 21px; margin: 10px 0; }
+  .md li { margin: 4px 0; }
+  .md li::marker { color: var(--text-faint); }
+  .md strong { color: var(--text); font-weight: 500; }
+  .md code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
+  .md pre { background: var(--surface-sunk); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; overflow-x: auto; margin: 14px 0; scrollbar-width: thin; }
+  .md pre code { background: none; padding: 0; font-size: 12px; line-height: 1.65; }
+  .md table { border-collapse: collapse; margin: 16px 0; width: 100%; font-size: 13.5px; border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .md th { text-align: left; font-weight: 500; color: var(--text); padding: 9px 13px; border-bottom: 1px solid var(--line-strong); background: var(--bg); }
+  .md td { padding: 9px 13px; border-bottom: 1px solid var(--line); color: var(--text-muted); vertical-align: top; }
+  .md tr:last-child td { border-bottom: none; }
+  .md a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color var(--dur-fast); }
+  .md a:hover { border-bottom-color: var(--accent-ink); }
+  .md blockquote { border-left: 2px solid var(--accent); background: var(--accent-soft); padding: 6px 16px; margin: 14px 0; color: var(--text-muted); border-radius: 0 var(--r-md) var(--r-md) 0; }
+  .md blockquote p { margin: 4px 0; }
+  .md hr { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
 </style>
 </head>
 <body>
@@ -264,107 +288,33 @@
 </aside>
 <main class="main"><div class="wrap">
 <div class="pagehead" data-reg="kop">
-  <span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span>
+  <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
   <div class="ph-text">
-    <div class="eyebrow">Catalogus</div>
-    <h1>Components</h1>
-    <div class="ph-sub">12 componenten · 29 varianten · light + dark first-class</div>
+    <div class="eyebrow">systeem</div>
+    <h1>RUNTIME-LIBRARY</h1>
+    <div class="ph-sub">bron: RUNTIME-LIBRARY.md</div>
   </div>
+  <div class="meta"><a href="../docs/index.html" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
 </div>
-<div class="lede">Per component een catalogus met eigen ontwerpen (self) en externe referenties (external). Alles is vast tot een expliciete <code>select</code> of <code>remove</code> via de CLI.</div>
-<div class="caps" data-reg="primitieven" style="margin:22px 2px 10px">Primitieven</div>
-<div class="cards">
-  <a class="card reveal" href="./badge/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-tag"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">badge</span>
-    <span class="cd">git-status + meta</span>
-    <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./button/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-click"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">button</span>
-    <span class="cd">btn + gbtn + kbd</span>
-    <span class="cmeta"><span class="cnt">5 zelf · 2 extern</span><span class="act">actief: default</span></span>
-  </a>
-</div>
-
-<div class="caps" data-reg="gesprek" style="margin:22px 2px 10px">Gesprek</div>
-<div class="cards">
-  <a class="card reveal" href="./approval/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-alert"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">approval</span>
-    <span class="cd">wacht-op-jou, toetsen 1/2/3</span>
-    <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./composer/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-pencil"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">composer</span>
-    <span class="cd">invoer + wachtrij</span>
-    <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./transcript/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-message"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">transcript</span>
-    <span class="cd">user-pill, prose, meta</span>
-    <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./worked-row/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-clock"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">worked-row</span>
-    <span class="cd">signatuur: activiteit zonder spinner</span>
-    <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
-  </a>
-</div>
-
-<div class="caps" data-reg="bewijs" style="margin:22px 2px 10px">Bewijs</div>
-<div class="cards">
-  <a class="card reveal" href="./artifact/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-panel"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">artifact</span>
-    <span class="cd">before/after bewijs</span>
-    <span class="cmeta"><span class="cnt">2 zelf · 1 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./pr-card/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-git-pr"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">pr-card</span>
-    <span class="cd">bewijs van werk</span>
-    <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./table/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">table</span>
-    <span class="cd">dashboard-tabellen met hairlines, hover, inline status badges</span>
-    <span class="cmeta"><span class="cnt">1 zelf · 1 extern</span><span class="act">actief: default</span></span>
-  </a>
-</div>
-
-<div class="caps" data-reg="structuur" style="margin:22px 2px 10px">Structuur</div>
-<div class="cards">
-  <a class="card reveal" href="./home-shell/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-file"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">home-shell</span>
-    <span class="cd">agent-home: sidebar + gecentreerde composer-hero</span>
-    <span class="cmeta"><span class="cnt">3 zelf · 0 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./nav/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-inbox"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">nav</span>
-    <span class="cd">sidebar-onderdelen</span>
-    <span class="cmeta"><span class="cnt">1 zelf · 0 extern</span><span class="act">actief: default</span></span>
-  </a>
-  <a class="card reveal" href="./settings/index.html">
-    <span class="ct"><svg><use href="../components/icons.svg#i-settings"/></svg></span>
-    <span class="cn" style="font-size:var(--text-md);min-width:120px">settings</span>
-    <span class="cd">volledige instellingen-surface</span>
-    <span class="cmeta"><span class="cnt">2 zelf · 0 extern</span><span class="act">actief: default</span></span>
-  </a>
-</div>
-
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-11</div>
+<div class="md"><h1>Signaal runtime library</h1>
+<p>Signaal has two delivery modes that share one design authority: the immutable catalog for inspection/copying and runtime packages for versioned application imports.</p>
+<h2 data-reg="promotion-path">Promotion path</h2>
+<p><code>local -&gt; candidate -&gt; shared -&gt; canonical -&gt; deprecated</code></p>
+<ul>
+<li><strong>local</strong>: one product or one screen.</li>
+<li><strong>candidate</strong>: reusable contract identified and demonstrated in the catalog.</li>
+<li><strong>shared</strong>: used on two independent surfaces with accessibility/responsive states.</li>
+<li><strong>canonical</strong>: stable public system contract with visual regression coverage.</li>
+<li><strong>deprecated</strong>: retained for migration, no new use.</li>
+</ul>
+<h2 data-reg="first-extraction-from">First extraction from DSH</h2>
+<p>DSH remains owner of session lifecycle, adapters and product composition. The first generic contracts promoted are Button, IconButton, Badge, Input, Textarea, Separator, Alert, EmptyState and Activity. <code>Activity</code> generalizes the proven worked-row state model without hard-coding agents, repositories or ChefGroep product names.</p>
+<p>Runtime packages must remain product-agnostic. ChefGroep products are consumers and test beds, not namespaces in the component API.</p></div>
+<div class="gen" data-reg="colofon">gegenereerd uit RUNTIME-LIBRARY.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">idx</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

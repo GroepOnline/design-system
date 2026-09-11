@@ -1,0 +1,12 @@
+{
+  "name": "@signaal/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": ["./tokens.css"],
+  "exports": {
+    ".": { "types": "./index.d.ts", "import": "./index.js" },
+    "./tokens.css": "./tokens.css"
+  },
+  "files": ["index.js", "index.d.ts", "tokens.css"]
+}

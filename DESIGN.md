@@ -1,8 +1,8 @@
-# DESIGN.md -- v3 "Signaal"
+# DESIGN.md -- "Signaal"
 
 > De design language. Standalone systeem, niet gekoppeld aan één product.
 > v1 was "Stroom" (teal). v2 mat de Devin-producttaal als kalibratie.
-> **v3 (2026-08-22): de taal heet Signaal en staat op eigen benen.** De
+> **Sinds 2026-08-22 heet de actieve taal Signaal en staat ze op eigen benen.** De
 > Devin-meting (§2) blijft staan als historische kalibratie, niet als doel:
 > we klonen geen stijl, we meten er onze eigen beslissingen aan. Alles wat
 > Signaal herkenbaar maakt is van ons: de meetlat/doorsnede-layout (§8), de
@@ -152,7 +152,7 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 
 ## 12. Status
 
-**v3 actief** -- de taal heet **Signaal**. prototype-v2.html blijft de levende
+**Signaal actief** -- de taal heet **Signaal**. prototype-v2.html blijft de levende
 referentie voor product-feel; §15-§17 zijn de v3-lagen (motion-canon, wow-tier,
 brain-koppeling). Naamvraag uit v2 is gesloten.
 
@@ -190,7 +190,7 @@ Regels:
 
 ## §12 Iconen (v2.1, icon-system skill)
 
-- Grid 24×24, stroke 2, round caps/joins -- Lucide-conventie, sprite `components/icons.svg`
+- Grid 24×24, stroke 1.75, round caps/joins -- Lucide-conventie, sprite `components/icons.svg`
 - Maten: `.ic` (15, standaard) · `.ic-13` (compact) · `.ic-18` (knoppen) · `.ic-24` (hero)
 - Elke svg die een sprite-symbol gebruikt MOET `fill:none;stroke:currentColor` hebben (via `.ic` of expliciet) -- symbols erven niets van de sprite-root
 - Icon-tiles in navigatie: 28px tile / 14px icon; pagina-headers 44px / 20px

@@ -1,9 +1,8 @@
 # design-system
 
 Standalone design language + componentencatalogus + tools. Geen product;
-de taal en het systeem waar producten mee gebouwd worden. v2 richt zich op de
-Devin-producttaal (gemeten aan hun live site), met eigen motion-discipline en
-Nederlandse copy-stem.
+de taal en het systeem waar producten mee gebouwd worden. Signaal is de huidige taal. Stroom en de Devin-kalibratie blijven alleen als
+historie; runtime packages krijgen normale semver-releases.
 
 **Live (tailnet):** `https://joep.tail86a8f2.ts.net:8443/`
 
