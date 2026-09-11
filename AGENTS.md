@@ -38,6 +38,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 8. **Afgeleiden bewaren lineage.** `self-modified` varianten uit een gecureerde
    bron hebben `derivedFrom` met entry/upstream/ref/path en behouden dezelfde
    `source` URL. Pas zo mag GTK van `contract-only` naar `native-candidate`.
+9. **Quality split.** Deterministische kwaliteit is blocking: accessibility,
+   catalog/runtime-contracten, responsive coverage en reduced-motion. Taste is
+   review-evidence via `quality/taste-rubric.json`; geen automatische smaakscore.
 
 ## Commando's
 
@@ -63,6 +66,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 ./ds upstream list                         # gepinde externe UI-bronnen
 ./ds upstream show <id>                    # provenance + rendererbeleid + kandidaten
 ./ds upstream check [id]                   # valideer immutable pins + adapters
+./s.sh context [extension] [profile]        # resolve base → profile → extension ontwerpcontext
+./s.sh quality                              # blocking a11y + quality-contract + ds check
+./s.sh quality visual [--out <pad>]         # 18 cases × phone/desktop × light/dark screenshots
 ```
 
 Elke `add`/`select`/`remove`/`style add` mutatie herbouwt web automatisch.
@@ -148,6 +154,7 @@ orkestreert Fase 1-3 in volgorde met gates. Nooit een tweede bron aanmaken.
 | --- | --- | --- |
 | `.agents/hooks/guard-generated.sh` | `preToolUse` (Write) | weigert edits in gegenereerde output (invariant 3) |
 | `.agents/hooks/brain-build.sh` | `afterFileEdit` | herbouwt `brain-site/` na een vault-note edit |
+| `.agents/hooks/signaal-quality.sh` | quality gate | a11y + quality-contract + `ds check`; fail hard op structurele regressies |
 
 Agent-gedrag-taste (canonieke `taste.yaml` met per-tool generators) staat
 **buiten dit repo** (besluit 2026-07-30, zie
@@ -167,7 +174,7 @@ Nooit de gegenereerde overlays handmatig bewerken.
 | `ds` | CLI + web-generator (python3 stdlib, geen deps) |
 | `tokens.css` | tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting) |
 | `styles.json` | skins (devin, strak, ...) -- schakel via `data-style` |
-| `components/` | 12 families, elk catalog.json + self/ + external/; plus icons.svg + lib.js |
+| `components/` | 43 families / 125 varianten; elk catalog.json + self/ + external/; plus icons.svg + lib.js |
 | `components/icons.svg` | Lucide-sprite (`<use href="...#i-*">`) |
 | `components/lib.js` | `?theme=` deep-link + gallery-postMessage op standalone varianten |
 | `prototype-v2.html` | volledige referentie-app (3-pane sessie) |
@@ -177,7 +184,7 @@ Nooit de gegenereerde overlays handmatig bewerken.
 | `brain/` | Obsidian Second Brain (niet-bindende context) |
 | `brain-site/` | gegenereerde leeslaag uit `brain/` (`ds brain build`) |
 | `.agents/` | canonieke agent-skills + subagents + hooks (`.cursor/` is overlay) |
-| `packages/` | optionele runtime-distributie (`@signaal/tokens`, `@signaal/react`) |
+| `packages/` | optionele runtime-distributie (`@signaal/tokens`, `@signaal/interactions`, `@signaal/react`) |
 | `new-project.sh` | scaffold nieuw product vanuit dit systeem |
 
 ## Build, check, serve (elke agent/CI)

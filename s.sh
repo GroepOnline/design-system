@@ -20,6 +20,14 @@ case "$cmd" in
     [[ -f "$file" ]] || { printf 'unknown pattern: %s\n' "$id" >&2; exit 2; }
     cat "$file"
     ;;
+  quality)
+    mode="${2:-gate}"
+    if [[ "$mode" == "visual" ]]; then
+      shift 2 || true
+      exec python3 "$ROOT/scripts/capture-visual-contracts.py" "$@"
+    fi
+    exec "$ROOT/.agents/hooks/signaal-quality.sh"
+    ;;
   context)
     printf 'base_design=%s\nbase_taste=%s\n' "$ROOT/DESIGN.md" "$ROOT/taste/taste-rules.md"
     if [[ "$profile" != "base" ]]; then
@@ -39,5 +47,5 @@ case "$cmd" in
       fi
     else printf 'extension=base\n'; fi
     ;;
-  *) printf 'usage: ./s.sh [extensions|profiles|patterns|pattern|context] [extension|pattern] [profile]\n' >&2; exit 2 ;;
+  *) printf 'usage: ./s.sh [extensions|profiles|patterns|pattern|context|quality] [extension|pattern|gate|visual] [profile]\n' >&2; exit 2 ;;
 esac
