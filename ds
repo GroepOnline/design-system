@@ -105,6 +105,7 @@ CATS = [
     ("navigation", "Navigation"),
     ("feedback", "Feedback"),
     ("data", "Data display"),
+    ("layout", "Layout"),
 ]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
@@ -118,6 +119,8 @@ ICONS = {
     "alert": "i-alert", "toast": "i-message", "progress": "i-clock", "skeleton": "i-blocks", "empty-state": "i-inbox",
     "avatar": "i-bot", "avatar-stack": "i-bot", "metric": "i-zap", "key-value": "i-list", "status": "i-info",
     "code": "i-file-code", "diff": "i-git-branch", "timeline": "i-clock", "data-grid": "i-list",
+    "stack": "i-list", "cluster": "i-blocks", "grid": "i-blocks", "page": "i-file", "section": "i-panel",
+    "split-pane": "i-panel", "app-shell": "i-panel",
 }
 SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),

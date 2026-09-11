@@ -43,7 +43,7 @@ def main() -> None:
         )
         smoke = consumer / "smoke.mjs"
         smoke.write_text(
-            """import {themes} from "@signaal/tokens";\nimport {attachCommandAck} from "@signaal/interactions";\nimport {Button,DataGrid} from "@signaal/react";\nif (!themes.light || !themes.dark) throw new Error("tokens missing");\nif (typeof attachCommandAck !== "function") throw new Error("interactions missing");\nif (typeof Button !== "function" || typeof DataGrid !== "function") throw new Error("react exports missing");\nconsole.log("consumer-smoke: ok");\n"""
+            """import {themes} from "@signaal/tokens";\nimport {attachCommandAck} from "@signaal/interactions";\nimport {Button,DataGrid,Grid,AppShell} from "@signaal/react";\nif (!themes.light || !themes.dark) throw new Error("tokens missing");\nif (typeof attachCommandAck !== "function") throw new Error("interactions missing");\nif (typeof Button !== "function" || typeof DataGrid !== "function" || typeof Grid !== "function" || typeof AppShell !== "function") throw new Error("react exports missing");\nconsole.log("consumer-smoke: ok");\n"""
         )
         subprocess.run(["node", str(smoke)], cwd=consumer, check=True)
     print(

@@ -40,3 +40,9 @@ The current primitives are `beam`, `halo`, `sweep`, `ripple`, `glide` and `statu
 The repository root `package.json` is upstream research material, not a Signaal workspace root. Runtime packaging is scoped explicitly to `packages/release.json`. All runtime packages share one semver, remain `private: true` during alpha, and are verified from their actual npm tarballs before a release bundle is accepted.
 
 `catalog-index.json` is the generated machine-readable index for agents and tooling. Use `./ds search <query> --json` for global variant discovery; optional `--category`, `--origin`, `--extension` and `--pattern` filters narrow the result without changing catalog authority.
+
+## Layout primitives
+
+`@signaal/react` exposes generic composition primitives: `Stack`, `Cluster`, `Grid`, `Page`, `Section`, `SplitPane`, `AppShell`, `AppShellRail` and `AppShellMain`. They own layout behavior only. Navigation meaning, product state and business semantics remain in the consumer.
+
+The layout contract is responsive by default: fixed grids collapse at 620px, split panes become one column, and an `AppShell` with `collapse="top"` moves its rail above the main region.

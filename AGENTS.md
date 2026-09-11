@@ -83,7 +83,7 @@ CLI en web lezen hetzelfde manifest; er bestaat geen tweede bron.
 
 Nieuwe component-familie: map + `catalog.json` aanmaken (bestaand manifest als
 template), dan `./ds build`. Elke component krijgt verplicht een `cat`:
-primitieven · gesprek · bewijs · structuur (rail/gallery groeperen erop).
+primitieven · gesprek · bewijs · structuur · motion · forms · overlays · navigation · feedback · data · layout (rail/gallery groeperen erop).
 
 ## Taste-propagatie (verplicht, zelfde commit)
 

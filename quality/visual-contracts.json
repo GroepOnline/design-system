@@ -23,6 +23,7 @@
     {"id":"pattern-mobile-sheet","path":"patterns/mobile-sheet/example.html","pattern":"mobile-sheet"},
     {"id":"pattern-public-hero","path":"patterns/public-product-hero/example.html","pattern":"public-product-hero"},
     {"id":"pattern-search","path":"patterns/search-results/example.html","pattern":"search-results"},
-    {"id":"pattern-settings","path":"patterns/settings-section/example.html","pattern":"settings-section"}
+    {"id":"pattern-settings","path":"patterns/settings-section/example.html","pattern":"settings-section"},
+    {"id":"layout-app-shell","path":"components/app-shell/self/responsive.html","category":"layout"}
   ]
 }

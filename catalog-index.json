@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "counts": {
-    "components": 43,
-    "variants": 125,
+    "components": 50,
+    "variants": 139,
     "profiles": 4,
     "patterns": 8,
     "extensions": 2
@@ -46,6 +46,33 @@
           "status": "locked",
           "origin": "self",
           "note": "danger state"
+        }
+      ]
+    },
+    {
+      "id": "app-shell",
+      "title": "app shell",
+      "description": "generic rail/content frame without product navigation semantics",
+      "category": "layout",
+      "manifest": "components/app-shell/catalog.json",
+      "catalog": "components/app-shell/index.html",
+      "active": [
+        "rail"
+      ],
+      "variants": [
+        {
+          "id": "rail",
+          "file": "self/rail.html",
+          "status": "active",
+          "origin": "self",
+          "note": "persistent rail plus content"
+        },
+        {
+          "id": "responsive",
+          "file": "self/responsive.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "rail collapses to top strip on narrow viewports"
         }
       ]
     },
@@ -435,6 +462,33 @@
       ]
     },
     {
+      "id": "cluster",
+      "title": "cluster",
+      "description": "wrapping inline group for actions, tags and controls",
+      "category": "layout",
+      "manifest": "components/cluster/catalog.json",
+      "catalog": "components/cluster/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "wrapping action cluster"
+        },
+        {
+          "id": "between",
+          "file": "self/between.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "distributed cluster"
+        }
+      ]
+    },
+    {
       "id": "code",
       "title": "code",
       "description": "inline and block code presentation",
@@ -647,6 +701,33 @@
           "origin": "self",
           "family": "structure",
           "note": "desktop label/control alignment; stacks on small screens"
+        }
+      ]
+    },
+    {
+      "id": "grid",
+      "title": "grid",
+      "description": "responsive repeatable layout without fixed breakpoints",
+      "category": "layout",
+      "manifest": "components/grid/catalog.json",
+      "catalog": "components/grid/index.html",
+      "active": [
+        "auto"
+      ],
+      "variants": [
+        {
+          "id": "auto",
+          "file": "self/auto.html",
+          "status": "active",
+          "origin": "self",
+          "note": "auto-fit grid from minimum item width"
+        },
+        {
+          "id": "fixed",
+          "file": "self/fixed.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "explicit column grid"
         }
       ]
     },
@@ -916,6 +997,33 @@
       ]
     },
     {
+      "id": "page",
+      "title": "page",
+      "description": "readable page/container width and gutters",
+      "category": "layout",
+      "manifest": "components/page/catalog.json",
+      "catalog": "components/page/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "balanced application page width"
+        },
+        {
+          "id": "wide",
+          "file": "self/wide.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "wide data/workbench page"
+        }
+      ]
+    },
+    {
       "id": "pagination",
       "title": "pagination",
       "description": "bounded page navigation",
@@ -1054,6 +1162,33 @@
       ]
     },
     {
+      "id": "section",
+      "title": "section",
+      "description": "semantic section spacing and optional boundary",
+      "category": "layout",
+      "manifest": "components/section/catalog.json",
+      "catalog": "components/section/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "plain semantic section"
+        },
+        {
+          "id": "divided",
+          "file": "self/divided.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "section with visible boundary"
+        }
+      ]
+    },
+    {
       "id": "select",
       "title": "select",
       "description": "native single-select control with predictable keyboard semantics",
@@ -1176,6 +1311,60 @@
           "status": "locked",
           "origin": "self",
           "note": "card skeleton"
+        }
+      ]
+    },
+    {
+      "id": "split-pane",
+      "title": "split pane",
+      "description": "two-region composition that collapses intentionally",
+      "category": "layout",
+      "manifest": "components/split-pane/catalog.json",
+      "catalog": "components/split-pane/index.html",
+      "active": [
+        "balanced"
+      ],
+      "variants": [
+        {
+          "id": "balanced",
+          "file": "self/balanced.html",
+          "status": "active",
+          "origin": "self",
+          "note": "balanced two-pane layout"
+        },
+        {
+          "id": "aside",
+          "file": "self/aside.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "main region plus narrow aside"
+        }
+      ]
+    },
+    {
+      "id": "stack",
+      "title": "vertical stack",
+      "description": "vertical rhythm without screen-specific margins",
+      "category": "layout",
+      "manifest": "components/stack/catalog.json",
+      "catalog": "components/stack/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "regular vertical rhythm"
+        },
+        {
+          "id": "compact",
+          "file": "self/compact.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "dense vertical rhythm"
         }
       ]
     },
