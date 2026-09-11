@@ -1,0 +1,19 @@
+{
+  "id": "empty-to-action",
+  "label": "Empty to action",
+  "category": "feedback",
+  "optional": true,
+  "profiles": [
+    "public-editorial",
+    "mobile-touch"
+  ],
+  "components": {
+    "empty-state": [
+      "action"
+    ],
+    "button": [
+      "primary"
+    ]
+  },
+  "example": "example.html"
+}

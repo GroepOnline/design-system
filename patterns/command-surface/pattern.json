@@ -1,0 +1,22 @@
+{
+  "id": "command-surface",
+  "label": "Command surface",
+  "category": "workflow",
+  "optional": true,
+  "profiles": [
+    "operator-dense"
+  ],
+  "components": {
+    "input": [
+      "search"
+    ],
+    "menu": [
+      "default"
+    ],
+    "button": [
+      "command-ack",
+      "with-kbd"
+    ]
+  },
+  "example": "example.html"
+}

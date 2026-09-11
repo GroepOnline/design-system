@@ -220,3 +220,15 @@ CI: `.github/workflows/validate.yml` (build + check + brain gate) en
 Regel: raakt je commit `.github/workflows/` → push met `git push origin-ssh <branch>`.
 Kom je dat pas achter bij een geweigerde push → zelfde branch opnieuw pushen naar
 `origin-ssh`, geen force-push nodig.
+
+## Design context overlays
+
+For design work, resolve optional context before inventing product-specific rules:
+
+```sh
+SIGNAAL_PROFILE=operator-dense SIGNAAL_EXTENSION=dsh ./.agents/hooks/signaal-context.sh
+```
+
+Resolution is `base -> profile -> extension`. Profiles describe a generic surface class; extensions describe optional product/organization choices. Both are advisory and fail-open. Neither may become a runtime/build dependency of Signaal core.
+
+Use `./s.sh profiles`, `./s.sh patterns`, and `./s.sh pattern <id>` to discover reusable composition context before creating local UI from scratch.
