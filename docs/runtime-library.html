@@ -133,6 +133,10 @@
   .doc.contract li { margin: 6px 0; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
+  .family-head { grid-column: 1/-1; display:flex; align-items:baseline; gap:12px; margin:18px 2px -2px; padding-top:14px; border-top:1px solid var(--line); }
+  .family-head:first-child { margin-top:0; padding-top:0; border-top:0; }
+  .family-head .family-title { font-size:var(--text-lg); font-weight:500; letter-spacing:var(--h-tracking); }
+  .family-head .family-desc { color:var(--text-faint); font-size:var(--text-sm); }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); transition: border-color var(--dur-fast); }
   .cell:hover { border-color: var(--line-strong); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
@@ -271,6 +275,8 @@
   <a class="it" href="../components/home-shell/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Motion</div>
+  <a class="it" href="../components/motion/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
@@ -312,7 +318,10 @@
 <p>Runtime packages must remain product-agnostic. ChefGroep products are consumers and test beds, not namespaces in the component API.</p>
 <h2 data-reg="catalog-versus">Catalog versus extensions</h2>
 <p>A component family may contain hundreds of immutable variants. The catalog is exhaustive; an extension is only an optional named subset with a preferred variant and scope-specific <code>DESIGN.md</code> / <code>TASTE.md</code>.</p>
-<p>The dependency direction is one-way: consumers may use Signaal or an extension view, but Signaal core never imports ChefGroep, DSH or another consumer extension. Removing an extension cannot break tokens, packages, catalog build or base checks.</p></div>
+<p>The dependency direction is one-way: consumers may use Signaal or an extension view, but Signaal core never imports ChefGroep, DSH or another consumer extension. Removing an extension cannot break tokens, packages, catalog build or base checks.</p>
+<h2 data-reg="optional-motion">Optional motion capability</h2>
+<p>Motion is distributed independently from component semantics. <code>@signaal/tokens</code> exposes opt-in <code>.sg-motion-*</code> primitives and <code>@signaal/react</code> exposes <code>MotionSurface</code> plus <code>attachPressRipple</code>. A Button, Input or custom consumer can adopt one primitive without importing a product theme or requiring motion to function.</p>
+<p>The current primitives are <code>beam</code>, <code>halo</code>, <code>sweep</code>, <code>ripple</code>, <code>glide</code> and <code>status</code>. They are catalogued under <code>components/motion/</code> and are tested as a separate family rather than baked into every button.</p></div>
 <div class="gen" data-reg="colofon">gegenereerd uit RUNTIME-LIBRARY.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
 
 </div></main>

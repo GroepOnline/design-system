@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design Language — design-system</title>
+<title>motion — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../../tokens.css">
 <style>
   html, body { height: 100%; }
   body { display: flex; overflow: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
@@ -229,63 +229,39 @@
     .card:active { transform: none; }
     .cell, .cell .ch, .rail a.it, .brand .logo { transition: none; }
   }
-
-  .md { max-width: 760px; }
-  .md h1 { font-size: 27px; margin: 8px 0 10px; letter-spacing: -0.02em; }
-  .md h2 { font-size: 20px; margin: 34px 0 10px; padding-top: 18px; border-top: 1px solid var(--line); letter-spacing: -0.01em; }
-  .md h3 { font-size: 16px; margin: 24px 0 8px; }
-  .md h4 { font-size: 14px; margin: 20px 0 6px; }
-  .md p, .md li { font-size: 14.5px; line-height: 1.7; color: var(--text-muted); }
-  .md p { margin: 10px 0; }
-  .md ul, .md ol { padding-left: 21px; margin: 10px 0; }
-  .md li { margin: 4px 0; }
-  .md li::marker { color: var(--text-faint); }
-  .md strong { color: var(--text); font-weight: 500; }
-  .md code { font-family: var(--mono); font-size: 12px; background: var(--surface-sunk); padding: 1px 6px; border-radius: 5px; }
-  .md pre { background: var(--surface-sunk); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; overflow-x: auto; margin: 14px 0; scrollbar-width: thin; }
-  .md pre code { background: none; padding: 0; font-size: 12px; line-height: 1.65; }
-  .md table { border-collapse: collapse; margin: 16px 0; width: 100%; font-size: 13.5px; border: 1px solid var(--line); border-radius: var(--r-lg); }
-  .md th { text-align: left; font-weight: 500; color: var(--text); padding: 9px 13px; border-bottom: 1px solid var(--line-strong); background: var(--bg); }
-  .md td { padding: 9px 13px; border-bottom: 1px solid var(--line); color: var(--text-muted); vertical-align: top; }
-  .md tr:last-child td { border-bottom: none; }
-  .md a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color var(--dur-fast); }
-  .md a:hover { border-bottom-color: var(--accent-ink); }
-  .md blockquote { border-left: 2px solid var(--accent); background: var(--accent-soft); padding: 6px 16px; margin: 14px 0; color: var(--text-muted); border-radius: 0 var(--r-md) var(--r-md) 0; }
-  .md blockquote p { margin: 4px 0; }
-  .md hr { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
 </style>
 </head>
 <body>
 <aside class="rail">
-  <a class="brand" href="../index.html"><span class="logo">d</span>design-system</a>
+  <a class="brand" href="../../index.html"><span class="logo">d</span>design-system</a>
   <div class="rail-links">
   <div class="lbl caps">Primitieven</div>
-  <a class="it" href="../components/badge/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
-  <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/badge/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/button/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</span></span><span class="act"></span></a>
   <div class="lbl caps">Gesprek</div>
-  <a class="it" href="../components/approval/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
-  <a class="it" href="../components/composer/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
-  <a class="it" href="../components/transcript/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-message"/></svg></span><span class="nm">transcript<span class="ds">user-pill, prose, meta</span></span><span class="act"></span></a>
-  <a class="it" href="../components/worked-row/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/approval/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/composer/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/transcript/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-message"/></svg></span><span class="nm">transcript<span class="ds">user-pill, prose, meta</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/worked-row/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-clock"/></svg></span><span class="nm">worked-row<span class="ds">signatuur: activiteit zonder spinner</span></span><span class="act"></span></a>
   <div class="lbl caps">Bewijs</div>
-  <a class="it" href="../components/artifact/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
-  <a class="it" href="../components/pr-card/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
-  <a class="it" href="../components/table/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/artifact/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">artifact<span class="ds">before/after bewijs</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/pr-card/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-git-pr"/></svg></span><span class="nm">pr-card<span class="ds">bewijs van werk</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/table/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">table<span class="ds">dashboard-tabellen met hairlines, hover, inline status badges</span></span><span class="act"></span></a>
   <div class="lbl caps">Structuur</div>
-  <a class="it" href="../components/home-shell/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
-  <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
-  <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/home-shell/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
-  <a class="it" href="../components/motion/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <a class="it on" href="../../components/motion/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
-  <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
-  <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
-  <a class="it sys" href="../taste-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
-  <a class="it sys" href="../brain-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
-  <a class="it sys" href="../DESIGN.md"><span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
-  <a class="it sys" href="../WORKFLOW.md"><span class="tile"><svg><use href="../components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
-  <a class="it sys" href="../AGENTS.md"><span class="tile"><svg><use href="../components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
-  <a class="it sys" href="../references/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="nm">references</span><span class="n">shots</span></a>
+  <a class="it sys" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
+  <a class="it sys" href="../../docs/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
+  <a class="it sys" href="../../taste-site/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="../../brain-site/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
+  <a class="it sys" href="../../DESIGN.md"><span class="tile"><svg><use href="../../components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
+  <a class="it sys" href="../../WORKFLOW.md"><span class="tile"><svg><use href="../../components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
+  <a class="it sys" href="../../AGENTS.md"><span class="tile"><svg><use href="../../components/icons.svg#i-terminal"/></svg></span><span class="nm">AGENTS.md</span><span class="n">voor ai</span></a>
+  <a class="it sys" href="../../references/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-external"/></svg></span><span class="nm">references</span><span class="n">shots</span></a>
   </div>
   <div class="foot">
     <div class="seg" id="styleSeg"><button class="on" data-s="">Devin</button><button data-s="strak">Strak</button><button data-s="grok">Grok</button></div>
@@ -293,31 +269,157 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead" data-reg="kop"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>Design Language</h1><div class="cat caps">brain · bron: brain/Indexes/Design Language.md</div></div><div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div><div class="md"><h1>Design Language</h1>
-<p>Hub naar de gelockte UI-taal. SSOT blijft buiten de vault.</p>
-<h2 data-reg="bronnen">Bronnen (repo)</h2>
-<ul>
-<li><code>../DESIGN.md</code> - tokens, Devin-DNA, bans (§10-13)</li>
-<li><code>../motion-spec.md</code> - bewegingsfysica</li>
-<li><code>../tokens.css</code> - tokens + primitives</li>
-</ul>
-<h2 data-reg="concepten">Concepten</h2>
-<ul>
-<li><a href="./concepts-lock-model.html">Lock-model</a></li>
-<li><a href="./concepts-taste-propagatie.html">Taste-propagatie</a></li>
-<li><a href="./indexes-concepts.html">Concepts</a></li>
-</ul>
-<h2 data-reg="gerelateerd">Gerelateerd</h2>
-<ul>
-<li><a href="./indexes-components.html">Components</a></li>
-<li><a href="./indexes-surfaces.html">Surfaces</a></li>
-<li><a href="./indexes-taste.html">Taste</a></li>
-<li><a href="./indexes-research.html">Research</a></li>
-<li><a href="./home.html">Home</a></li>
-</ul></div><div class="gen">gegenereerd uit brain/Indexes/Design Language.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
+<div class="pagehead" data-reg="kop">
+  <span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span>
+  <div class="ph-text">
+    <div class="eyebrow">motion</div>
+    <h1>motion</h1>
+    <div class="ph-sub">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</div>
+  </div>
+  <div class="meta">6 varianten<br>6 zelf · 0 extern<br>blad 07/14</div>
+</div>
+<div class="lede">manifest: <code>components/motion/catalog.json</code></div>
+<div style="display:flex;gap:10px;align-items:center;margin:14px 0">
+  <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
+  <span id="catalogCount" class="caps">6 zichtbaar</span>
+</div>
+<div class="legend">
+  <span class="st active">ACTIEF</span> geselecteerd voor gebruik
+  <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
+  <span>wijzigt alleen via <code>ds motion select|remove</code> · experimenten in <code>playground/</code></span>
+</div>
+<div class="use-now" data-reg="gebruik">
+  <span class="lbl2">Gebruik nu</span>
+  <span>actieve variant <code>beam</code></span>
+  <code>components/motion/self/beam.html</code>
+  <button class="gbtn cp" data-copy-path style="width:auto;height:auto;padding:4px 11px;font-size:11px">kopieer pad</button>
+</div>
+
+<div class="docs" data-reg="contract">
+  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>motion is opt-in; component functioneert volledig zonder motion</li><li>kies één motion primitive per interaction beat</li><li>reduced-motion houdt state zichtbaar zonder verplaatsing</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>motion als verplichte dependency</li><li>meerdere effecten stapelen op één control</li><li>ambient loops zonder actieve user/system state</li><li>motion gebruiken om slechte hierarchy te maskeren</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>beam = focus/active only</code></li><li><code>sweep = hover fine-pointer only</code></li><li><code>ripple = finite press acknowledgement</code></li><li><code>glide = state index transition</code></li><li><code>status = active-work only</code></li></ul></div>
+</div>
+
+<div class="grid" data-reg="varianten">
+<div class="family-head" data-family="attention"><span class="family-title">Attention / focus</span><span class="family-desc">Reageert op focus of hover zonder de inhoud te verplaatsen.</span></div>
+  <div class="cell active">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">beam</span>
+      <span class="note">traveling beam along an active edge</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st active">ACTIEF</span>
+      </span>
+    </div>
+    <iframe src="self/beam.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/beam.html</span><span>toegevoegd 2026-09-11</span><a href="self/beam.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px;min-height:220px;display:grid;place-items:center;background:var(--bg)} .demo{width:min(520px,100%)} .field{height:46px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 14px} input{all:unset;flex:1;font:14px var(--font);color:var(--text)} .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:3px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface)} .seg button{height:34px;border:0;background:transparent;color:var(--text-muted);font:500 13px var(--font);cursor:pointer}.seg button[aria-pressed=true]{color:var(--text)} .bar{height:10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface-sunk)} &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;label class=&quot;demo field sg-motion-beam&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;⌕&lt;/span&gt;&lt;input autofocus placeholder=&quot;Search components…&quot;&gt;&lt;/label&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">focus-halo</span>
+      <span class="note">focus halo for context and attention</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/focus-halo.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/focus-halo.html</span><span>toegevoegd 2026-09-11</span><a href="self/focus-halo.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px;min-height:220px;display:grid;place-items:center;background:var(--bg)} .demo{width:min(520px,100%)} .field{height:46px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 14px} input{all:unset;flex:1;font:14px var(--font);color:var(--text)} .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:3px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface)} .seg button{height:34px;border:0;background:transparent;color:var(--text-muted);font:500 13px var(--font);cursor:pointer}.seg button[aria-pressed=true]{color:var(--text)} .bar{height:10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface-sunk)} &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;label class=&quot;demo field sg-motion-halo&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;⌕&lt;/span&gt;&lt;input autofocus placeholder=&quot;Type something…&quot;&gt;&lt;/label&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">hover-sweep</span>
+      <span class="note">one-shot directional hover sweep</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/hover-sweep.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/hover-sweep.html</span><span>toegevoegd 2026-09-11</span><a href="self/hover-sweep.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px;min-height:220px;display:grid;place-items:center;background:var(--bg)} .demo{width:min(520px,100%)} .field{height:46px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 14px} input{all:unset;flex:1;font:14px var(--font);color:var(--text)} .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:3px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface)} .seg button{height:34px;border:0;background:transparent;color:var(--text-muted);font:500 13px var(--font);cursor:pointer}.seg button[aria-pressed=true]{color:var(--text)} .bar{height:10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface-sunk)} &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot; style=&quot;display:grid;place-items:center&quot;&gt;&lt;button class=&quot;btn primary lg sg-motion-sweep&quot;&gt;Explore &lt;span aria-hidden=&quot;true&quot;&gt;→&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
+  </div>
+<div class="family-head" data-family="ack"><span class="family-title">Acknowledgement</span><span class="family-desc">Bevestigt een bewuste input of actie.</span></div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">press-ripple</span>
+      <span class="note">finite pointer-position press acknowledgement</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/press-ripple.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/press-ripple.html</span><span>toegevoegd 2026-09-11</span><a href="self/press-ripple.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px;min-height:220px;display:grid;place-items:center;background:var(--bg)} .demo{width:min(520px,100%)} .field{height:46px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 14px} input{all:unset;flex:1;font:14px var(--font);color:var(--text)} .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:3px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface)} .seg button{height:34px;border:0;background:transparent;color:var(--text-muted);font:500 13px var(--font);cursor:pointer}.seg button[aria-pressed=true]{color:var(--text)} .bar{height:10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface-sunk)} &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot; style=&quot;display:grid;place-items:center&quot;&gt;&lt;button id=&quot;r&quot; class=&quot;btn primary lg sg-motion-ripple&quot;&gt;Submit&lt;/button&gt;&lt;/div&gt;&lt;script&gt;const b=document.getElementById(&#x27;r&#x27;);b.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{const x=e.clientX-b.getBoundingClientRect().left,y=e.clientY-b.getBoundingClientRect().top,s=document.createElement(&#x27;span&#x27;);s.className=&#x27;sg-ripple&#x27;;s.style.setProperty(&#x27;--sg-ripple-x&#x27;,x+&#x27;px&#x27;);s.style.setProperty(&#x27;--sg-ripple-y&#x27;,y+&#x27;px&#x27;);b.append(s);s.addEventListener(&#x27;animationend&#x27;,()=&gt;s.remove())});&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
+  </div>
+<div class="family-head" data-family="state"><span class="family-title">State transition</span><span class="family-desc">Maakt verandering tussen gerelateerde states leesbaar.</span></div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">toggle-glide</span>
+      <span class="note">gliding selected state for segmented controls</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/toggle-glide.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/toggle-glide.html</span><span>toegevoegd 2026-09-11</span><a href="self/toggle-glide.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px;min-height:220px;display:grid;place-items:center;background:var(--bg)} .demo{width:min(520px,100%)} .field{height:46px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 14px} input{all:unset;flex:1;font:14px var(--font);color:var(--text)} .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:3px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface)} .seg button{height:34px;border:0;background:transparent;color:var(--text-muted);font:500 13px var(--font);cursor:pointer}.seg button[aria-pressed=true]{color:var(--text)} .bar{height:10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface-sunk)} &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo seg sg-motion-glide&quot; id=&quot;seg&quot; style=&quot;--sg-count:3;--sg-index:0&quot;&gt;&lt;button aria-pressed=&quot;true&quot;&gt;Light&lt;/button&gt;&lt;button aria-pressed=&quot;false&quot;&gt;Dark&lt;/button&gt;&lt;button aria-pressed=&quot;false&quot;&gt;System&lt;/button&gt;&lt;/div&gt;&lt;script&gt;const s=document.getElementById(&#x27;seg&#x27;);[...s.children].forEach((b,i)=&gt;b.onclick=()=&gt;{[...s.children].forEach(x=&gt;x.setAttribute(&#x27;aria-pressed&#x27;,&#x27;false&#x27;));b.setAttribute(&#x27;aria-pressed&#x27;,&#x27;true&#x27;);s.style.setProperty(&#x27;--sg-index&#x27;,i)})&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
+  </div>
+<div class="family-head" data-family="progress"><span class="family-title">Progress / live</span><span class="family-desc">Alleen actief zolang er daadwerkelijk werk loopt.</span></div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">status-pulse</span>
+      <span class="note">moving active-work pulse; never ambient</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/status-pulse.html" style="min-height:260px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/status-pulse.html</span><span>toegevoegd 2026-09-11</span><a href="self/status-pulse.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px;min-height:220px;display:grid;place-items:center;background:var(--bg)} .demo{width:min(520px,100%)} .field{height:46px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 14px} input{all:unset;flex:1;font:14px var(--font);color:var(--text)} .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:3px;border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface)} .seg button{height:34px;border:0;background:transparent;color:var(--text-muted);font:500 13px var(--font);cursor:pointer}.seg button[aria-pressed=true]{color:var(--text)} .bar{height:10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface-sunk)} &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;bar sg-motion-status&quot; data-active=&quot;true&quot;&gt;&lt;/div&gt;&lt;div style=&quot;margin-top:10px;font:12px var(--mono);color:var(--text-muted)&quot;&gt;Generating…&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
+  </div>
+</div>
+<script>
+(() => {
+  const input = document.getElementById("catalogFilter");
+  const count = document.getElementById("catalogCount");
+  if (!input) return;
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll(".grid > .cell").forEach(cell => {
+      const visible = !q || cell.textContent.toLowerCase().includes(q);
+      cell.hidden = !visible;
+      if (visible) shown += 1;
+    });
+    document.querySelectorAll(".grid > .family-head").forEach(head => {
+      let node = head.nextElementSibling;
+      let any = false;
+      while (node && !node.classList.contains("family-head")) {
+        if (node.classList.contains("cell") && !node.hidden) any = true;
+        node = node.nextElementSibling;
+      }
+      head.hidden = !any;
+    });
+    if (count) count.textContent = shown + " zichtbaar";
+  });
+})();
+</script>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-11 · catalog.json is de bron · dit bestand niet bewerken</div>
+
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">brain</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">07/14</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

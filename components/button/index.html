@@ -133,6 +133,10 @@
   .doc.contract li { margin: 6px 0; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
+  .family-head { grid-column: 1/-1; display:flex; align-items:baseline; gap:12px; margin:18px 2px -2px; padding-top:14px; border-top:1px solid var(--line); }
+  .family-head:first-child { margin-top:0; padding-top:0; border-top:0; }
+  .family-head .family-title { font-size:var(--text-lg); font-weight:500; letter-spacing:var(--h-tracking); }
+  .family-head .family-desc { color:var(--text-faint); font-size:var(--text-sm); }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); transition: border-color var(--dur-fast); }
   .cell:hover { border-color: var(--line-strong); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
@@ -247,6 +251,8 @@
   <a class="it" href="../../components/home-shell/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/motion/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../../docs/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
@@ -270,7 +276,7 @@
     <h1>button</h1>
     <div class="ph-sub">button family: default, emphasis, quiet, destructive, icon, pending and keyboard states</div>
   </div>
-  <div class="meta">13 varianten<br>11 zelf · 2 extern<br>blad 04/13</div>
+  <div class="meta">13 varianten<br>11 zelf · 2 extern<br>blad 04/14</div>
 </div>
 <div class="lede">manifest: <code>components/button/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
@@ -294,6 +300,7 @@
 </div>
 
 <div class="grid" data-reg="varianten">
+<div class="family-head" data-family="emphasis"><span class="family-title">Emphasis</span><span class="family-desc">Primary, secondary en rustige nadruk voor beslissingen en journeys.</span></div>
   <div class="cell active">
     <div class="ch">
       <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -456,96 +463,6 @@
   <div class="cell">
     <div class="ch">
       <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-      <span class="id">with-kbd</span>
-      <span class="note">approval-patroon met toets-hints</span>
-      <span class="right">
-        <span class="org ">zelf</span>
-        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
-      </span>
-    </div>
-    <iframe src="self/with-kbd.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/with-kbd.html</span><span>toegevoegd 2026-07-27</span><a href="self/with-kbd.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;button class=&quot;btn primary&quot;&gt;Een keer &lt;kbd&gt;1&lt;/kbd&gt;&lt;/button&gt;
-&lt;button class=&quot;btn&quot;&gt;Altijd in deze map &lt;kbd&gt;2&lt;/kbd&gt;&lt;/button&gt;
-&lt;/body&gt;&lt;/html&gt;
-</pre></details>
-  </div>
-  <div class="cell">
-    <div class="ch">
-      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-      <span class="id">gbtn</span>
-      <span class="note">ghost icon + solid send</span>
-      <span class="right">
-        <span class="org ">zelf</span>
-        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
-      </span>
-    </div>
-    <iframe src="self/gbtn.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/gbtn.html</span><span>toegevoegd 2026-07-27</span><a href="self/gbtn.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-plus&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-&lt;button class=&quot;gbtn solid&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-arrow-up&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-&lt;/body&gt;&lt;/html&gt;
-</pre></details>
-  </div>
-  <div class="cell">
-    <div class="ch">
-      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-      <span class="id">shadcn-default</span>
-      <span class="note">zinc-schaal, radius 6, shadow-xs, 36px hoog</span>
-      <span class="right">
-        <span class="org external">extern · https://ui.shadcn.com</span>
-        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
-      </span>
-    </div>
-    <iframe src="external/shadcn-default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>external/shadcn-default.html</span><span>toegevoegd 2026-07-27</span><a href="external/shadcn-default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
-body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-/* shadcn/ui default button (geobserveerd) */
-.sh-btn{height:36px;padding:0 16px;border-radius:6px;border:none;font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.05)}
-.sh-default{background:#18181B;color:#FAFAFA}.sh-default:hover{background:#27272A}
-.sh-secondary{background:#F4F4F5;color:#18181B}.sh-secondary:hover{background:#E4E4E7}
-.sh-outline{background:#fff;border:1px solid #E4E4E7;color:#18181B}.sh-outline:hover{background:#F4F4F5}
-.sh-destructive{background:#DC2626;color:#fff}.sh-destructive:hover{background:#B91C1C}
-.sh-ghost{background:transparent;color:#18181B;box-shadow:none}.sh-ghost:hover{background:#F4F4F5}
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;button class=&quot;sh-btn sh-default&quot;&gt;Default&lt;/button&gt;
-&lt;button class=&quot;sh-btn sh-secondary&quot;&gt;Secondary&lt;/button&gt;
-&lt;button class=&quot;sh-btn sh-outline&quot;&gt;Outline&lt;/button&gt;
-&lt;button class=&quot;sh-btn sh-destructive&quot;&gt;Destructive&lt;/button&gt;
-&lt;button class=&quot;sh-btn sh-ghost&quot;&gt;Ghost&lt;/button&gt;
-&lt;/body&gt;&lt;/html&gt;
-</pre></details>
-  </div>
-  <div class="cell">
-    <div class="ch">
-      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-      <span class="id">devin-square</span>
-      <span class="note">radius 0, marketing-site stijl</span>
-      <span class="right">
-        <span class="org external">extern · https://devin.ai</span>
-        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
-      </span>
-    </div>
-    <iframe src="external/devin-square.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>external/devin-square.html</span><span>toegevoegd 2026-07-27</span><a href="external/devin-square.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
-body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6F5}
-/* devin.ai marketing knoppen (gemeten 2026-07-27): radius 0, pad 14.4px 24px, weight 400 */
-.dv-btn{padding:14.4px 24px;border-radius:0;font-family:var(--font);font-size:15px;font-weight:400;cursor:pointer;border:1px solid #141414}
-.dv-primary{background:#141414;color:#FCFCFC}
-.dv-ghost{background:transparent;color:#141414}
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;button class=&quot;dv-btn dv-primary&quot;&gt;Try Devin&lt;/button&gt;
-&lt;button class=&quot;dv-btn dv-ghost&quot;&gt;Contact sales&lt;/button&gt;
-&lt;/body&gt;&lt;/html&gt;
-</pre></details>
-  </div>
-  <div class="cell">
-    <div class="ch">
-      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
       <span class="id">subtle</span>
       <span class="note">quiet filled action without primary emphasis</span>
       <span class="right">
@@ -577,20 +494,22 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
+<div class="family-head" data-family="utility"><span class="family-title">Utility</span><span class="family-desc">Compacte acties voor toolbars, menus en lokale bewerkingen.</span></div>
   <div class="cell">
     <div class="ch">
       <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-      <span class="id">destructive</span>
-      <span class="note">destructive action using reserved red semantics</span>
+      <span class="id">gbtn</span>
+      <span class="note">ghost icon + solid send</span>
       <span class="right">
         <span class="org ">zelf</span>
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
-    <iframe src="self/destructive.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/destructive.html</span><span>toegevoegd 2026-09-11</span><a href="self/destructive.html" target="_blank" style="margin-left:auto">open ↗</a></div>
-    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;button class=&quot;btn destructive&quot;&gt;Verwijderen&lt;/button&gt;
+    <iframe src="self/gbtn.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/gbtn.html</span><span>toegevoegd 2026-07-27</span><a href="self/gbtn.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;gbtn&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-plus&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
+&lt;button class=&quot;gbtn solid&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-arrow-up&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -645,6 +564,98 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
+<div class="family-head" data-family="risk"><span class="family-title">Destructive / risk</span><span class="family-desc">Alleen voor destructieve of gevoelige acties.</span></div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">destructive</span>
+      <span class="note">destructive action using reserved red semantics</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/destructive.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/destructive.html</span><span>toegevoegd 2026-09-11</span><a href="self/destructive.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn destructive&quot;&gt;Verwijderen&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+<div class="family-head" data-family="shortcut"><span class="family-title">Shortcut / command</span><span class="family-desc">Snelle acties voor power users en keyboard-first flows.</span></div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">with-kbd</span>
+      <span class="note">approval-patroon met toets-hints</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="self/with-kbd.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/with-kbd.html</span><span>toegevoegd 2026-07-27</span><a href="self/with-kbd.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;btn primary&quot;&gt;Een keer &lt;kbd&gt;1&lt;/kbd&gt;&lt;/button&gt;
+&lt;button class=&quot;btn&quot;&gt;Altijd in deze map &lt;kbd&gt;2&lt;/kbd&gt;&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+<div class="family-head" data-family="references"><span class="family-title">References</span><span class="family-desc">Externe meetlatten, nooit automatisch runtime-authority.</span></div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">shadcn-default</span>
+      <span class="note">zinc-schaal, radius 6, shadow-xs, 36px hoog</span>
+      <span class="right">
+        <span class="org external">extern · https://ui.shadcn.com</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="external/shadcn-default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>external/shadcn-default.html</span><span>toegevoegd 2026-07-27</span><a href="external/shadcn-default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
+body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+/* shadcn/ui default button (geobserveerd) */
+.sh-btn{height:36px;padding:0 16px;border-radius:6px;border:none;font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.sh-default{background:#18181B;color:#FAFAFA}.sh-default:hover{background:#27272A}
+.sh-secondary{background:#F4F4F5;color:#18181B}.sh-secondary:hover{background:#E4E4E7}
+.sh-outline{background:#fff;border:1px solid #E4E4E7;color:#18181B}.sh-outline:hover{background:#F4F4F5}
+.sh-destructive{background:#DC2626;color:#fff}.sh-destructive:hover{background:#B91C1C}
+.sh-ghost{background:transparent;color:#18181B;box-shadow:none}.sh-ghost:hover{background:#F4F4F5}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;sh-btn sh-default&quot;&gt;Default&lt;/button&gt;
+&lt;button class=&quot;sh-btn sh-secondary&quot;&gt;Secondary&lt;/button&gt;
+&lt;button class=&quot;sh-btn sh-outline&quot;&gt;Outline&lt;/button&gt;
+&lt;button class=&quot;sh-btn sh-destructive&quot;&gt;Destructive&lt;/button&gt;
+&lt;button class=&quot;sh-btn sh-ghost&quot;&gt;Ghost&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+  <div class="cell">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">devin-square</span>
+      <span class="note">radius 0, marketing-site stijl</span>
+      <span class="right">
+        <span class="org external">extern · https://devin.ai</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <iframe src="external/devin-square.html" style="min-height:240px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>external/devin-square.html</span><span>toegevoegd 2026-07-27</span><a href="external/devin-square.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
+body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6F5}
+/* devin.ai marketing knoppen (gemeten 2026-07-27): radius 0, pad 14.4px 24px, weight 400 */
+.dv-btn{padding:14.4px 24px;border-radius:0;font-family:var(--font);font-size:15px;font-weight:400;cursor:pointer;border:1px solid #141414}
+.dv-primary{background:#141414;color:#FCFCFC}
+.dv-ghost{background:transparent;color:#141414}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;button class=&quot;dv-btn dv-primary&quot;&gt;Try Devin&lt;/button&gt;
+&lt;button class=&quot;dv-btn dv-ghost&quot;&gt;Contact sales&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
 </div>
 <script>
 (() => {
@@ -659,6 +670,15 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
       cell.hidden = !visible;
       if (visible) shown += 1;
     });
+    document.querySelectorAll(".grid > .family-head").forEach(head => {
+      let node = head.nextElementSibling;
+      let any = false;
+      while (node && !node.classList.contains("family-head")) {
+        if (node.classList.contains("cell") && !node.hidden) any = true;
+        node = node.nextElementSibling;
+      }
+      head.hidden = !any;
+    });
     if (count) count.textContent = shown + " zichtbaar";
   });
 })();
@@ -667,7 +687,7 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">04/13</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">04/14</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

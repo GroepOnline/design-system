@@ -139,3 +139,18 @@ Banned micro-interactions: everything not listed here. If a designer wants a six
 - The Current render loop: ≤ 0.5ms/frame on a 2019 laptop. If exceeded, drop to 30fps silently before dropping frames visibly.
 - Intent reveals: GPU-composited, `will-change` applied at trigger and removed at settle.
 - No animation may delay input handling. Keystrokes preempt everything.
+
+## Reusable motion primitives
+
+Motion is an optional capability layer. Components must remain usable and understandable when every motion primitive is removed.
+
+| Primitive | Trigger | Contract |
+|---|---|---|
+| `beam` | focus / explicit active | traveling edge signal; never ambient |
+| `halo` | focus / explicit active | static depth + attention, no layout shift |
+| `sweep` | hover on fine pointer | one-shot directional pass |
+| `ripple` | pointer press | finite acknowledgement from press coordinate |
+| `glide` | state index change | indicator moves between related options |
+| `status` | real running state | moving edge pulse only while work is active |
+
+Runtime CSS classes use `.sg-motion-*`. React consumers can use `MotionSurface`; press ripples can use `attachPressRipple`. Every moving primitive has a `prefers-reduced-motion` fallback.

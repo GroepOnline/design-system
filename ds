@@ -95,12 +95,13 @@ CATS = [
     ("gesprek", "Gesprek"),
     ("bewijs", "Bewijs"),
     ("structuur", "Structuur"),
+    ("motion", "Motion"),
 ]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
     "button": "i-click", "composer": "i-pencil", "nav": "i-inbox",
     "pr-card": "i-git-pr", "settings": "i-settings", "transcript": "i-message",
-    "worked-row": "i-clock", "studio": "i-sparkle",
+    "worked-row": "i-clock", "studio": "i-sparkle", "motion": "i-sparkle",
 }
 SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
@@ -766,6 +767,10 @@ SHELL_HEAD = """<!DOCTYPE html>
   .doc.contract li { margin: 6px 0; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
+  .family-head { grid-column: 1/-1; display:flex; align-items:baseline; gap:12px; margin:18px 2px -2px; padding-top:14px; border-top:1px solid var(--line); }
+  .family-head:first-child { margin-top:0; padding-top:0; border-top:0; }
+  .family-head .family-title { font-size:var(--text-lg); font-weight:500; letter-spacing:var(--h-tracking); }
+  .family-head .family-desc { color:var(--text-faint); font-size:var(--text-sm); }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); transition: border-color var(--dur-fast); }
   .cell:hover { border-color: var(--line-strong); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
@@ -2022,6 +2027,15 @@ CATALOG_BODY = """<div class="pagehead" data-reg="kop">
       cell.hidden = !visible;
       if (visible) shown += 1;
     }});
+    document.querySelectorAll(".grid > .family-head").forEach(head => {{
+      let node = head.nextElementSibling;
+      let any = false;
+      while (node && !node.classList.contains("family-head")) {{
+        if (node.classList.contains("cell") && !node.hidden) any = true;
+        node = node.nextElementSibling;
+      }}
+      head.hidden = !any;
+    }});
     if (count) count.textContent = shown + " zichtbaar";
   }});
 }})();
@@ -2139,8 +2153,28 @@ def build_catalog(c):
     m = load_manifest(c)
     cells = []
     active_entry = next((e for e in m["entries"] if e["status"] == "active"), None)
-    ordered = sorted(m["entries"], key=lambda e: 0 if e["status"] == "active" else 1)
+    families = m.get("families", [])
+    family_meta = {f["id"]: f for f in families}
+    family_order = {f["id"]: i for i, f in enumerate(families)}
+    if families:
+        entry_order = {id(e): i for i, e in enumerate(m["entries"])}
+        ordered = sorted(
+            m["entries"],
+            key=lambda e: (family_order.get(e.get("family"), len(families)), entry_order[id(e)]),
+        )
+    else:
+        ordered = sorted(m["entries"], key=lambda e: 0 if e["status"] == "active" else 1)
+    current_family = object()
     for e in ordered:
+        family = e.get("family")
+        if families and family != current_family:
+            meta = family_meta.get(family, {"label": family or "Overig", "desc": ""})
+            cells.append(
+                f'<div class="family-head" data-family="{htmlmod.escape(family or "other")}">'
+                f'<span class="family-title">{htmlmod.escape(meta.get("label", family or "Overig"))}</span>'
+                f'<span class="family-desc">{htmlmod.escape(meta.get("desc", ""))}</span></div>'
+            )
+            current_family = family
         act = e["status"] == "active"
         orgtxt = {"self": "zelf", "self-modified": "zelf (aangepast)", "external": "extern"}.get(e["origin"], e["origin"])
         if e.get("source"):

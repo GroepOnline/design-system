@@ -29,7 +29,7 @@ class ExtensionsTest(unittest.TestCase):
     def test_core_listing_does_not_require_extensions(self):
         with mock.patch.object(ds, "EXTENSIONS", str(ROOT / "missing-extensions")), contextlib.redirect_stdout(io.StringIO()) as out:
             ds.cmd_list()
-        self.assertIn("13 componenten", out.getvalue())
+        self.assertIn(f"{len(ds.components())} componenten", out.getvalue())
 
     def test_unknown_shell_context_falls_back_without_failing(self):
         result = subprocess.run(["./s.sh", "context", "does-not-exist"], cwd=ROOT, text=True, capture_output=True)
