@@ -174,3 +174,38 @@ export const Progress = React.forwardRef(function Progress({ className, ...props
 export const Skeleton = React.forwardRef(function Skeleton({ width, height, className, style, ...props }, ref) {
   return React.createElement("div", { ref, "aria-hidden": "true", "data-slot": "skeleton", className: cx("sg-skeleton", className), style: { width, height, ...style }, ...props });
 });
+
+
+export const Avatar = React.forwardRef(function Avatar({ src, alt = "", fallback, size = "md", tone = "neutral", className, children, ...props }, ref) {
+  return React.createElement("span", { ref, "data-slot": "avatar", "data-size": size, "data-tone": tone, className: cx("sg-avatar", className), ...props }, src ? React.createElement("img", { src, alt }) : (fallback ?? children));
+});
+export const AvatarStack = React.forwardRef(function AvatarStack({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "avatar-stack", className: cx("sg-avatar-stack", className), ...props }, children);
+});
+export function Metric({ label, value, meta, className, ...props }) {
+  return React.createElement("div", { "data-slot": "metric", className: cx("sg-metric", className), ...props },
+    React.createElement("span", { className: "sg-metric__label" }, label),
+    React.createElement("strong", { className: "sg-metric__value" }, value),
+    meta != null ? React.createElement("span", { className: "sg-metric__meta" }, meta) : null);
+}
+export const KeyValue = React.forwardRef(function KeyValue({ className, children, ...props }, ref) {
+  return React.createElement("dl", { ref, "data-slot": "key-value", className: cx("sg-kv", className), ...props }, children);
+});
+export const Status = React.forwardRef(function Status({ tone = "neutral", dot = false, className, children, ...props }, ref) {
+  return React.createElement("span", { ref, "data-slot": "status", "data-tone": tone, "data-dot": dot || undefined, className: cx("sg-status", className), ...props }, children);
+});
+export const CodeBlock = React.forwardRef(function CodeBlock({ language, className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "code", className: cx("sg-code", className), ...props },
+    language ? React.createElement("div", { className: "sg-code__head" }, language) : null,
+    React.createElement("pre", null, React.createElement("code", null, children)));
+});
+export const Diff = React.forwardRef(function Diff({ label = "Diff", className, children, ...props }, ref) {
+  return React.createElement("pre", { ref, "aria-label": label, "data-slot": "diff", className: cx("sg-diff", className), ...props }, children);
+});
+export const Timeline = React.forwardRef(function Timeline({ className, children, ...props }, ref) {
+  return React.createElement("ol", { ref, "data-slot": "timeline", className: cx("sg-timeline", className), ...props }, children);
+});
+export const DataGrid = React.forwardRef(function DataGrid({ label, className, children, ...props }, ref) {
+  return React.createElement("div", { "data-slot": "data-grid-wrap", className: "sg-data-grid-wrap" },
+    React.createElement("table", { ref, "aria-label": label, "data-slot": "data-grid", className: cx("sg-data-grid", className), ...props }, children));
+});

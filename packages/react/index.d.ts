@@ -48,3 +48,18 @@ export const Toast: React.ForwardRefExoticComponent<ToastProps & React.RefAttrib
 export const Progress: React.ForwardRefExoticComponent<React.ProgressHTMLAttributes<HTMLProgressElement> & React.RefAttributes<HTMLProgressElement>>;
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & { width?: React.CSSProperties["width"]; height?: React.CSSProperties["height"] };
 export const Skeleton: React.ForwardRefExoticComponent<SkeletonProps & React.RefAttributes<HTMLDivElement>>;
+
+export type AvatarProps = React.HTMLAttributes<HTMLSpanElement> & { src?: string; alt?: string; fallback?: React.ReactNode; size?: "sm"|"md"|"lg"; tone?: "neutral"|"accent" };
+export const Avatar: React.ForwardRefExoticComponent<AvatarProps & React.RefAttributes<HTMLSpanElement>>;
+export const AvatarStack: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+export function Metric(props: React.HTMLAttributes<HTMLDivElement> & { label: React.ReactNode; value: React.ReactNode; meta?: React.ReactNode }): React.ReactElement;
+export const KeyValue: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDListElement> & React.RefAttributes<HTMLDListElement>>;
+export type StatusProps = React.HTMLAttributes<HTMLSpanElement> & { tone?: "neutral"|"info"|"success"|"warning"|"danger"; dot?: boolean };
+export const Status: React.ForwardRefExoticComponent<StatusProps & React.RefAttributes<HTMLSpanElement>>;
+export type CodeBlockProps = React.HTMLAttributes<HTMLDivElement> & { language?: string };
+export const CodeBlock: React.ForwardRefExoticComponent<CodeBlockProps & React.RefAttributes<HTMLDivElement>>;
+export type DiffProps = React.HTMLAttributes<HTMLPreElement> & { label?: string };
+export const Diff: React.ForwardRefExoticComponent<DiffProps & React.RefAttributes<HTMLPreElement>>;
+export const Timeline: React.ForwardRefExoticComponent<React.OlHTMLAttributes<HTMLOListElement> & React.RefAttributes<HTMLOListElement>>;
+export type DataGridProps = React.TableHTMLAttributes<HTMLTableElement> & { label?: string };
+export const DataGrid: React.ForwardRefExoticComponent<DataGridProps & React.RefAttributes<HTMLTableElement>>;

@@ -1,0 +1,40 @@
+{
+  "component": "diff",
+  "title": "diff",
+  "desc": "line-oriented code or text change display",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "add/remove/context lines"
+    },
+    {
+      "id": "split",
+      "file": "self/split.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "before / after columns"
+    }
+  ],
+  "docs": {
+    "use": [
+      "informatie compact en scanbaar maken",
+      "native semantics behouden waar beschikbaar"
+    ],
+    "avoid": [
+      "decoratieve data zonder bron of betekenis",
+      "kleur als enige statusindicator"
+    ],
+    "contract": [
+      "responsive zonder informatieverlies",
+      "tekst blijft selecteerbaar en kopieerbaar"
+    ]
+  },
+  "cat": "data"
+}
