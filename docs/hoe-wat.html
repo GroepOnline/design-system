@@ -318,7 +318,7 @@
 <li>Light- en dark-mode (Basalt) zijn first-class</li>
 </ul>
 <p>De v1 was &quot;Stroom&quot; (teal, eigen signatuurlijn). v2 mat Devins product-UI als</p>
-<p>historische kalibratie (2026-07-27). <strong>v3 heet Signaal</strong>: eigen identiteit,</p>
+<p>historische kalibratie (2026-07-27). <strong>Signaal</strong> is de actieve taal: eigen identiteit,</p>
 <p>eigen motion-canon (§15) en wow-tier surfaces (§16); zie <code>DESIGN.md</code>.</p>
 <hr>
 <h2 data-reg="2-de-vijf-tools">2. De vijf tools</h2>
@@ -451,7 +451,7 @@
 <li><strong>Toggle thema</strong> met de dark-mode knop of via <code>?theme=dark</code> in de URL</li>
 </ol>
 <h3>Tokens kopiëren naar een product</h3>
-<p>Het systeem gebruikt geen package-manager of CDN. Kopieer wat je nodig hebt:</p>
+<p>De catalogus gebruikt geen package-manager of CDN. Voor copy-paste gebruik kopieer je wat je nodig hebt; bewezen generieke contracts zijn daarnaast beschikbaar als runtime-package:</p>
 <pre><code>cp tokens.css /pad/naar/mijn-product/
 cp components/icons.svg /pad/naar/mijn-product/components/
 cp components/lib.js /pad/naar/mijn-product/components/</code></pre>
@@ -466,7 +466,7 @@ cp components/lib.js /pad/naar/mijn-product/components/</code></pre>
 <p>Daarnaast werkt <code>?theme=dark</code> in de URL op elke component-pagina en gallery.</p>
 <hr>
 <h2 data-reg="6-veelgemaakte-fouten">6. Veelgemaakte fouten</h2>
-<table><thead><tr><th>Fout</th><th>Waarom het fout is</th><th>Wat wel</th></tr></thead><tbody><tr><td>Handmatig <code>components/button/index.html</code> bewerken</td><td>Dat bestand is gegenereerd door <code>ds build</code>. Je wijziging wordt overschreven</td><td>Wijzig het manifest of voeg een nieuwe entry toe via <code>ds add</code></td></tr><tr><td>Een nieuwe variant in <code>self/</code> zetten terwijl het een shadcn-kopie is</td><td><code>self/</code> is voor eigen ontwerpen en aanpassingen. <code>external/</code> is voor ongewijzigde referenties</td><td>Zet shadcn-kopieën in <code>external/</code> met <code>source</code>-veld</td></tr><tr><td>Twee componenten tegelijk <code>active</code> maken</td><td>Het systeem verwacht exact 1 actieve variant per component. De gallery toont alleen de actieve</td><td>Gebruik <code>ds select</code>, dat handhaaft single-active</td></tr><tr><td>Emoji gebruiken als icoon in een knop</td><td>Emoji zijn geen iconen; ze hebben geen vaste stijl, schalen anders en breken de visuele taal</td><td>Gebruik een Lucide SVG uit <code>icons.svg</code> via <code>&lt;use href=&quot;#i-...&quot;&gt;</code></td></tr><tr><td>Een taste-regel toevoegen zonder propagatie</td><td>Een regel die alleen in taste-rules.md staat, bestaat niet. Anderen (mens of agent) zien de consequentie niet</td><td>Werk in dezelfde commit ook DESIGN.md, tokens.css, componenten en surfaces bij</td></tr><tr><td>Een product direct via npm/CDN koppelen</td><td>Dit systeem gebruikt copy-paste (shadcn-model). Geen package.json dependency</td><td>Kopieer tokens.css, icons.svg en lib.js naar het product</td></tr><tr><td>Inter/Geist gebruiken als font</td><td>Die zijn verboden. General Sans is het interface-font, JetBrains Mono alleen voor data</td><td>Gebruik General Sans 400/500/600 voor alles behalve data</td></tr><tr><td><code>ds build</code> overslaan na een wijziging</td><td>De web-gallery is dan niet in sync met de catalogus</td><td>Elke mutatie via de CLI herbouwt automatisch. Bij twijfel: <code>./ds build</code></td></tr></tbody></table>
+<table><thead><tr><th>Fout</th><th>Waarom het fout is</th><th>Wat wel</th></tr></thead><tbody><tr><td>Handmatig <code>components/button/index.html</code> bewerken</td><td>Dat bestand is gegenereerd door <code>ds build</code>. Je wijziging wordt overschreven</td><td>Wijzig het manifest of voeg een nieuwe entry toe via <code>ds add</code></td></tr><tr><td>Een nieuwe variant in <code>self/</code> zetten terwijl het een shadcn-kopie is</td><td><code>self/</code> is voor eigen ontwerpen en aanpassingen. <code>external/</code> is voor ongewijzigde referenties</td><td>Zet shadcn-kopieën in <code>external/</code> met <code>source</code>-veld</td></tr><tr><td>Twee componenten tegelijk <code>active</code> maken</td><td>Het systeem verwacht exact 1 actieve variant per component. De gallery toont alleen de actieve</td><td>Gebruik <code>ds select</code>, dat handhaaft single-active</td></tr><tr><td>Emoji gebruiken als icoon in een knop</td><td>Emoji zijn geen iconen; ze hebben geen vaste stijl, schalen anders en breken de visuele taal</td><td>Gebruik een Lucide SVG uit <code>icons.svg</code> via <code>&lt;use href=&quot;#i-...&quot;&gt;</code></td></tr><tr><td>Een taste-regel toevoegen zonder propagatie</td><td>Een regel die alleen in taste-rules.md staat, bestaat niet. Anderen (mens of agent) zien de consequentie niet</td><td>Werk in dezelfde commit ook DESIGN.md, tokens.css, componenten en surfaces bij</td></tr><tr><td>Een product direct koppelen</td><td>Catalogus = copy-paste; <code>packages/</code> = optionele versioneerbare runtime-distributie</td><td>Gebruik copy-paste voor lokale varianten of <code>@signaal/*</code> voor canonieke runtime-contracten</td></tr><tr><td>Inter/Geist gebruiken als font</td><td>Die zijn verboden. General Sans is het interface-font, JetBrains Mono alleen voor data</td><td>Gebruik General Sans 400/500/600 voor alles behalve data</td></tr><tr><td><code>ds build</code> overslaan na een wijziging</td><td>De web-gallery is dan niet in sync met de catalogus</td><td>Elke mutatie via de CLI herbouwt automatisch. Bij twijfel: <code>./ds build</code></td></tr></tbody></table>
 <hr>
 <h2 data-reg="7-faq">7. FAQ</h2>
 <p><strong>Waarom zitten er geen spinners in het systeem?</strong></p>
@@ -530,7 +530,7 @@ cp components/lib.js /pad/naar/mijn-product/components/</code></pre>
 <li><code>taste/taste-rules.md</code>, alle geleerde regels met bron</li>
 <li><code>motion-spec.md</code>, de gelockte motion-fysica</li>
 </ul></div>
-<div class="gen" data-reg="colofon">gegenereerd uit hoe-wat.md op 2026-08-31 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit hoe-wat.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>

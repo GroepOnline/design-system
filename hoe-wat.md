@@ -22,7 +22,7 @@ De kern in een paar zinnen:
 - Light- en dark-mode (Basalt) zijn first-class
 
 De v1 was "Stroom" (teal, eigen signatuurlijn). v2 mat Devins product-UI als
-historische kalibratie (2026-07-27). **v3 heet Signaal**: eigen identiteit,
+historische kalibratie (2026-07-27). **Signaal** is de actieve taal: eigen identiteit,
 eigen motion-canon (§15) en wow-tier surfaces (§16); zie `DESIGN.md`.
 
 ---
@@ -228,7 +228,7 @@ Commit-prefix: `taste: <wat>` of `component: <wat>`.
 
 ### Tokens kopiëren naar een product
 
-Het systeem gebruikt geen package-manager of CDN. Kopieer wat je nodig hebt:
+De catalogus gebruikt geen package-manager of CDN. Voor copy-paste gebruik kopieer je wat je nodig hebt; bewezen generieke contracts zijn daarnaast beschikbaar als runtime-package:
 
 ```bash
 cp tokens.css /pad/naar/mijn-product/
@@ -261,7 +261,7 @@ Daarnaast werkt `?theme=dark` in de URL op elke component-pagina en gallery.
 | Twee componenten tegelijk `active` maken | Het systeem verwacht exact 1 actieve variant per component. De gallery toont alleen de actieve | Gebruik `ds select`, dat handhaaft single-active |
 | Emoji gebruiken als icoon in een knop | Emoji zijn geen iconen; ze hebben geen vaste stijl, schalen anders en breken de visuele taal | Gebruik een Lucide SVG uit `icons.svg` via `<use href="#i-...">` |
 | Een taste-regel toevoegen zonder propagatie | Een regel die alleen in taste-rules.md staat, bestaat niet. Anderen (mens of agent) zien de consequentie niet | Werk in dezelfde commit ook DESIGN.md, tokens.css, componenten en surfaces bij |
-| Een product direct via npm/CDN koppelen | Dit systeem gebruikt copy-paste (shadcn-model). Geen package.json dependency | Kopieer tokens.css, icons.svg en lib.js naar het product |
+| Een product direct koppelen | Catalogus = copy-paste; `packages/` = optionele versioneerbare runtime-distributie | Gebruik copy-paste voor lokale varianten of `@signaal/*` voor canonieke runtime-contracten |
 | Inter/Geist gebruiken als font | Die zijn verboden. General Sans is het interface-font, JetBrains Mono alleen voor data | Gebruik General Sans 400/500/600 voor alles behalve data |
 | `ds build` overslaan na een wijziging | De web-gallery is dan niet in sync met de catalogus | Elke mutatie via de CLI herbouwt automatisch. Bij twijfel: `./ds build` |
 

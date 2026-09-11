@@ -6,9 +6,11 @@
 
 ## Wat dit is
 
-Design-system v3 ("Signaal") voor agent-producten. Standalone, geen
-npm-package: kopieermodel (shadcn-achtig). Bron van waarheid per component:
-`components/<naam>/catalog.json`. Tokens + primitives: `tokens.css`.
+Design-system ("Signaal") voor productinterfaces. De catalogus blijft het
+shadcn-achtige kopieermodel en de ontwerp-authority. `packages/` is de tweede,
+versioneerbare distributievorm voor bewezen generieke runtime-contracten.
+Bron van waarheid per cataloguscomponent: `components/<naam>/catalog.json`.
+Tokens + primitives: `tokens.css`; `@signaal/tokens` wordt daaruit gegenereerd.
 Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 
 ## Invarianten (nooit breken)
@@ -175,12 +177,12 @@ Nooit de gegenereerde overlays handmatig bewerken.
 | `brain/` | Obsidian Second Brain (niet-bindende context) |
 | `brain-site/` | gegenereerde leeslaag uit `brain/` (`ds brain build`) |
 | `.agents/` | canonieke agent-skills + subagents + hooks (`.cursor/` is overlay) |
+| `packages/` | optionele runtime-distributie (`@signaal/tokens`, `@signaal/react`) |
 | `new-project.sh` | scaffold nieuw product vanuit dit systeem |
 
 ## Build, check, serve (elke agent/CI)
 
-Geen package manager of third-party deps nodig voor de kern: `ds` is pure
-Python 3.12 stdlib. Een runtime-check is `python3 --version`. Er is geen
+Geen package manager of third-party deps nodig voor de kern of voor het genereren van runtime-artifacts: `ds` en de package-generator gebruiken Python 3.12 stdlib. Een runtime-check is `python3 --version`. Er is geen
 setup-script en geen environment-config nodig.
 Remote: `https://github.com/GroepOnline/design-system.git` (org: GroepOnline).
 CI: `.github/workflows/validate.yml` (build + check + brain gate) en

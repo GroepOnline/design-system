@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home — design-system</title>
+<title>RUNTIME-LIBRARY — design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -290,42 +290,34 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead" data-reg="kop"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>Home</h1><div class="cat caps">brain · bron: brain/Home.md</div></div><div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div><div class="md"><h1>Home</h1>
-<p>Design-system Second Brain. Niet-bindende context: research, decisions, concept-graph.</p>
-<p>Product-waarheid blijft buiten deze vault: <code>DESIGN.md</code>, <code>tokens.css</code>, <code>taste/</code>, <code>components/*/catalog.json</code>.</p>
-<h2 data-reg="indexes">Indexes</h2>
+<div class="pagehead" data-reg="kop">
+  <span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span>
+  <div class="ph-text">
+    <div class="eyebrow">systeem</div>
+    <h1>RUNTIME-LIBRARY</h1>
+    <div class="ph-sub">bron: RUNTIME-LIBRARY.md</div>
+  </div>
+  <div class="meta"><a href="../docs/index.html" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
+</div>
+<div class="md"><h1>Signaal runtime library</h1>
+<p>Signaal has two delivery modes that share one design authority: the immutable catalog for inspection/copying and runtime packages for versioned application imports.</p>
+<h2 data-reg="promotion-path">Promotion path</h2>
+<p><code>local -&gt; candidate -&gt; shared -&gt; canonical -&gt; deprecated</code></p>
 <ul>
-<li><a href="./indexes-design-language.html">Design Language</a></li>
-<li><a href="./indexes-components.html">Components</a></li>
-<li><a href="./indexes-surfaces.html">Surfaces</a></li>
-<li><a href="./indexes-taste.html">Taste</a></li>
-<li><a href="./indexes-concepts.html">Concepts</a></li>
-<li><a href="./indexes-decisions.html">Decisions</a></li>
-<li><a href="./indexes-research.html">Research</a></li>
+<li><strong>local</strong>: one product or one screen.</li>
+<li><strong>candidate</strong>: reusable contract identified and demonstrated in the catalog.</li>
+<li><strong>shared</strong>: used on two independent surfaces with accessibility/responsive states.</li>
+<li><strong>canonical</strong>: stable public system contract with visual regression coverage.</li>
+<li><strong>deprecated</strong>: retained for migration, no new use.</li>
 </ul>
-<h2 data-reg="concepts">Concepts (snel)</h2>
-<ul>
-<li><a href="./concepts-lock-model.html">Lock-model</a> · <a href="./concepts-origin-split.html">Origin-split</a> · <a href="./concepts-gegenereerde-bestanden.html">Gegenereerde bestanden</a></li>
-<li><a href="./concepts-playground.html">Playground</a> · <a href="./concepts-single-active.html">Single-active</a> · <a href="./concepts-taste-propagatie.html">Taste-propagatie</a></li>
-</ul>
-<h2 data-reg="recent">Recent</h2>
-<ul>
-<li><a href="./research-2026-08-04-web-motion-refs.html">2026-08-04 Web motion refs</a></li>
-<li><a href="./decisions-2026-07-30-brain-signals-eval-dual-gate.html">2026-07-30 Brain signals eval dual gate</a></li>
-<li><a href="./decisions-2026-07-30-brain-als-vijfde-tool.html">2026-07-30 Brain als vijfde tool</a></li>
-<li><a href="./decisions-2026-07-30-agent-laag-in-punt-agents.html">2026-07-30 Agent-laag in punt-agents</a></li>
-<li><a href="./decisions-2026-07-30-agent-taste-buiten-dit-repo.html">2026-07-30 Agent-taste buiten dit repo</a></li>
-<li><a href="./research-2026-07-30-devin-meetlat-pointers.html">2026-07-30 Devin meetlat pointers</a></li>
-</ul>
-<h2 data-reg="meta">Meta</h2>
-<ul>
-<li><a href="./readme.html">README</a> - openen, CLI, wat wel/niet</li>
-<li>Templates: <a href="./templates-new-decision.html">New Decision</a>, <a href="./templates-new-research.html">New Research</a></li>
-<li>Leeslaag: <code>/brain-site/</code> (<code>./ds brain build</code>)</li>
-</ul></div><div class="gen">gegenereerd uit brain/Home.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
+<h2 data-reg="first-extraction-from">First extraction from DSH</h2>
+<p>DSH remains owner of session lifecycle, adapters and product composition. The first generic contracts promoted are Button, IconButton, Badge, Input, Textarea, Separator, Alert, EmptyState and Activity. <code>Activity</code> generalizes the proven worked-row state model without hard-coding agents, repositories or ChefGroep product names.</p>
+<p>Runtime packages must remain product-agnostic. ChefGroep products are consumers and test beds, not namespaces in the component API.</p></div>
+<div class="gen" data-reg="colofon">gegenereerd uit RUNTIME-LIBRARY.md op 2026-09-11 · bewerk de .md, niet deze pagina</div>
+
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">brain</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
