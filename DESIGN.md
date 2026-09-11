@@ -190,7 +190,7 @@ Regels:
 
 ## §12 Iconen (v2.1, icon-system skill)
 
-- Grid 24×24, stroke 2, round caps/joins -- Lucide-conventie, sprite `components/icons.svg`
+- Grid 24×24, stroke 1.75, round caps/joins -- Lucide-conventie, sprite `components/icons.svg`
 - Maten: `.ic` (15, standaard) · `.ic-13` (compact) · `.ic-18` (knoppen) · `.ic-24` (hero)
 - Elke svg die een sprite-symbol gebruikt MOET `fill:none;stroke:currentColor` hebben (via `.ic` of expliciet) -- symbols erven niets van de sprite-root
 - Icon-tiles in navigatie: 28px tile / 14px icon; pagina-headers 44px / 20px

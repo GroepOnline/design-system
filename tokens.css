@@ -45,6 +45,21 @@
   --h-weight: 500;            /* devin meetwaarde: koppen zijn medium, niet bold */
   --h-tracking: -0.02em;      /* product-UI; marketing-hero: -0.04em */
 
+  /* ---- type scale ---- */
+  --text-2xs: 10.5px;
+  --text-xs: 11.5px;
+  --text-sm: 12.5px;
+  --text-md: 13.5px;
+  --text-lg: 15px;
+  --text-prose: 16px;
+  --text-xl: 18px;
+  --text-2xl: 24px;
+  --leading-head: 1.2;
+  --leading-ui: 1.45;
+  --leading-prose: 1.62;
+  --track-tight: -0.02em;
+  --track-caps: 0.07em;
+
   /* ---- radius (shadcn scale) ---- */
   --r-md: 6px;                /* controls, inputs, meta-rows */
   --r-lg: 10px;               /* cards, composer, user-pill */
@@ -91,6 +106,8 @@ body {
   color: var(--text);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
+  font-size: var(--text-md);
+  line-height: var(--leading-ui);
 }
 .mono { font-family: var(--mono); }
 
@@ -122,7 +139,7 @@ body {
   width: 28px; height: 28px; flex-shrink: 0;
   display: inline-grid; place-items: center;
   border: none; background: transparent; color: var(--text-muted);
-  border-radius: var(--r-md); cursor: pointer;
+  border-radius: var(--r-md); cursor: pointer; position: relative;
   transition: background var(--dur-fast), color var(--dur-fast), transform 100ms var(--ease-out);
 }
 .gbtn:hover { background: var(--hover); color: var(--text); }
@@ -130,7 +147,6 @@ body {
 .gbtn:active { transform: scale(0.92); }
 .gbtn:disabled, .gbtn[aria-disabled] { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 /* touch target expansion: 28px visual → 44px hit area */
-.gbtn { position: relative; }
 .gbtn::before { content: ""; position: absolute; inset: -8px; border-radius: inherit; z-index: -1; }
 .gbtn.solid { background: var(--text); color: var(--bg); }
 .gbtn.solid:hover { opacity: 0.87; }
@@ -171,6 +187,9 @@ body {
 }
 .ic.sm { width: 12px; height: 12px; }
 .ic.lg { width: 17px; height: 17px; }
+.ic-13 { width: 13px; height: 13px; }
+.ic-18 { width: 18px; height: 18px; }
+.ic-24 { width: 24px; height: 24px; }
 
 /* ---- toggle switch ---- */
 .switch {
@@ -190,7 +209,6 @@ body {
 .switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .switch[aria-disabled] { opacity: 0.35; cursor: default; pointer-events: none; }
 /* touch target expansion: 36px switch → 44px */
-.switch { position: relative; }
 .switch::before { content: ""; position: absolute; inset: -4px -10px; border-radius: inherit; }
 
 /* ---- segmented control ---- */
@@ -283,26 +301,9 @@ body {
   }
 }
 
-/* ── Typografie v2.1 (web-typography skill) ─────────────────
-   schaal-tokens, rendering, measure, numeriek. Gebruik overal:
-   UI standaard --text-md, prose .prose (65ch), data .num. */
-:root {
-  --text-2xs: 10.5px;   /* meta, counts, badge */
-  --text-xs:  11.5px;   /* labels, kbd, captions */
-  --text-sm:  12.5px;   /* beschrijvingen, secondair */
-  --text-md:  13.5px;   /* UI-standaard */
-  --text-lg:  15px;     /* kleine titels */
-  --text-prose: 16px;    /* doorlees-prose */
-  --text-xl:  18px;     /* sectie-headers */
-  --text-2xl: 24px;     /* pagina-titels */
-  --leading-head: 1.2;
-  --leading-ui: 1.45;
-  --leading-prose: 1.62;
-  --track-tight: -0.02em;
-  --track-caps: 0.07em;
-}
+/* ── Typografie ────────────────────────────────────────────
+   schaal-tokens staan in de canonieke :root hierboven. */
 html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
-body { font-size: var(--text-md); line-height: var(--leading-ui); }
 h1, h2, h3, h4 { line-height: var(--leading-head); letter-spacing: var(--track-tight); text-wrap: balance; }
 h1 { font-size: var(--text-2xl); font-weight: 500; }
 h2 { font-size: var(--text-xl); font-weight: 500; }
@@ -311,13 +312,6 @@ p { text-wrap: pretty; }
 .prose { font-size: var(--text-prose); line-height: var(--leading-prose); max-width: 65ch; color: var(--text); }
 .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
 .caps { font-size: var(--text-2xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--text-faint); }
-
-/* ── Iconen v2.1 (icon-system skill) ────────────────────────
-   grid 24, stroke 2, optische maten: 13/15/18/24. */
-.ic   { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-.ic-13 { width: 13px; height: 13px; }
-.ic-18 { width: 18px; height: 18px; }
-.ic-24 { width: 24px; height: 24px; }
 
 /* ── Stijl-laag (v2.2) ──────────────────────────────────────
    Twee complete skins over hetzelfde systeem. Zet met

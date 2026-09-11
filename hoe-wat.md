@@ -328,7 +328,7 @@ zijn allebei first-class; test altijd beide.
 
 De Lucide-sprite staat in `components/icons.svg`. Een nieuw symbool toevoegen:
 
-1. Kopieer het pad uit Lucide (of teken zelf, stroke 2, round caps/joins)
+1. Kopieer het pad uit Lucide (of teken zelf, stroke 1.75, round caps/joins)
 2. Voeg een `<symbol id="i-mijn-icoon" viewBox="0 0 24 24">...</symbol>` toe
    vóór de sluit-`</svg>`
 3. Gebruik het met `<svg class="ic"><use href="#i-mijn-icoon"></use></svg>`
