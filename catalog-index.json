@@ -1,0 +1,1791 @@
+{
+  "schema": 1,
+  "counts": {
+    "components": 43,
+    "variants": 125,
+    "profiles": 4,
+    "patterns": 8,
+    "extensions": 2
+  },
+  "components": [
+    {
+      "id": "alert",
+      "title": "alert",
+      "description": "persistent contextual feedback",
+      "category": "feedback",
+      "manifest": "components/alert/catalog.json",
+      "catalog": "components/alert/index.html",
+      "active": [
+        "neutral"
+      ],
+      "variants": [
+        {
+          "id": "neutral",
+          "file": "self/neutral.html",
+          "status": "active",
+          "origin": "self",
+          "note": "neutral information"
+        },
+        {
+          "id": "success",
+          "file": "self/success.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "success state"
+        },
+        {
+          "id": "warning",
+          "file": "self/warning.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "warning state"
+        },
+        {
+          "id": "danger",
+          "file": "self/danger.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "danger state"
+        }
+      ]
+    },
+    {
+      "id": "approval",
+      "title": "approval",
+      "description": "wacht-op-jou, toetsen 1/2/3",
+      "category": "gesprek",
+      "manifest": "components/approval/catalog.json",
+      "catalog": "components/approval/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        },
+        {
+          "id": "opensourceui-slide-confirm",
+          "file": "external/opensourceui-slide-confirm.html",
+          "status": "locked",
+          "origin": "external",
+          "note": "take: deliberate drag-to-commit + pointer semantics; reject: pill-heavy chrome, deep shadows, decorative success green",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx"
+        },
+        {
+          "id": "guarded-drag",
+          "file": "self/guarded-drag.html",
+          "status": "locked",
+          "origin": "self-modified",
+          "note": "ChefGroep guarded drag: deliberate commit without pill/shadow treatment",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx"
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "title": "artifact",
+      "description": "before/after bewijs",
+      "category": "bewijs",
+      "manifest": "components/artifact/catalog.json",
+      "catalog": "components/artifact/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        },
+        {
+          "id": "opensourceui-terminal-log",
+          "file": "external/opensourceui-terminal-log.html",
+          "status": "locked",
+          "origin": "external",
+          "note": "take: typed cmd/out/ok/err evidence rows; reject: traffic-light chrome and continuous cursor pulse",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/others/terminal-log-card.tsx"
+        },
+        {
+          "id": "terminal-evidence",
+          "file": "self/terminal-evidence.html",
+          "status": "locked",
+          "origin": "self-modified",
+          "note": "ChefGroep terminal evidence: typed result rows without terminal cosplay",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/others/terminal-log-card.tsx"
+        }
+      ]
+    },
+    {
+      "id": "avatar",
+      "title": "avatar",
+      "description": "identity image or deterministic fallback",
+      "category": "data",
+      "manifest": "components/avatar/catalog.json",
+      "catalog": "components/avatar/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "image + fallback examples"
+        },
+        {
+          "id": "sizes",
+          "file": "self/sizes.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "avatar size scale"
+        }
+      ]
+    },
+    {
+      "id": "avatar-stack",
+      "title": "avatar stack",
+      "description": "compact overlapping participant group",
+      "category": "data",
+      "manifest": "components/avatar-stack/catalog.json",
+      "catalog": "components/avatar-stack/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "overlapping stack with count"
+        },
+        {
+          "id": "dense",
+          "file": "self/dense.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "dense small stack"
+        }
+      ]
+    },
+    {
+      "id": "badge",
+      "title": "badge",
+      "description": "git-status + meta",
+      "category": "primitieven",
+      "manifest": "components/badge/catalog.json",
+      "catalog": "components/badge/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        }
+      ]
+    },
+    {
+      "id": "breadcrumb",
+      "title": "breadcrumb",
+      "description": "hierarchical location trail",
+      "category": "navigation",
+      "manifest": "components/breadcrumb/catalog.json",
+      "catalog": "components/breadcrumb/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "three-level breadcrumb"
+        },
+        {
+          "id": "collapsed",
+          "file": "self/collapsed.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "collapsed middle trail"
+        }
+      ]
+    },
+    {
+      "id": "button",
+      "title": "button",
+      "description": "button library: semantic families plus independent interaction models",
+      "category": "primitieven",
+      "manifest": "components/button/catalog.json",
+      "catalog": "components/button/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "emphasis",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        },
+        {
+          "id": "standard",
+          "file": "self/standard.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "emphasis",
+          "note": "basis btn, hairline border"
+        },
+        {
+          "id": "primary",
+          "file": "self/primary.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "emphasis",
+          "note": "inverse text/bg"
+        },
+        {
+          "id": "with-kbd",
+          "file": "self/with-kbd.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "shortcut",
+          "note": "approval-patroon met toets-hints"
+        },
+        {
+          "id": "gbtn",
+          "file": "self/gbtn.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "utility",
+          "note": "ghost icon + solid send"
+        },
+        {
+          "id": "shadcn-default",
+          "file": "external/shadcn-default.html",
+          "status": "locked",
+          "origin": "external",
+          "family": "references",
+          "note": "zinc-schaal, radius 6, shadow-xs, 36px hoog",
+          "source": "https://ui.shadcn.com"
+        },
+        {
+          "id": "devin-square",
+          "file": "external/devin-square.html",
+          "status": "locked",
+          "origin": "external",
+          "family": "references",
+          "note": "radius 0, marketing-site stijl",
+          "source": "https://devin.ai"
+        },
+        {
+          "id": "subtle",
+          "file": "self/subtle.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "emphasis",
+          "note": "quiet filled action without primary emphasis"
+        },
+        {
+          "id": "ghost",
+          "file": "self/ghost.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "emphasis",
+          "note": "text action with no persistent container"
+        },
+        {
+          "id": "destructive",
+          "file": "self/destructive.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "risk",
+          "note": "destructive action using reserved red semantics"
+        },
+        {
+          "id": "pending",
+          "file": "self/pending.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "utility",
+          "note": "quiet pending acknowledgement without spinner"
+        },
+        {
+          "id": "icon-leading",
+          "file": "self/icon-leading.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "utility",
+          "note": "labelled action with leading Lucide icon"
+        },
+        {
+          "id": "icon-outline",
+          "file": "self/icon-outline.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "utility",
+          "note": "outlined icon-only action with accessible label"
+        },
+        {
+          "id": "beam-cta",
+          "file": "self/beam-cta.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "emphasis",
+          "note": "pill CTA with independent traveling edge beam"
+        },
+        {
+          "id": "sweep-cta",
+          "file": "self/sweep-cta.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "emphasis",
+          "note": "outlined action with one-shot directional hover sweep"
+        },
+        {
+          "id": "ripple-press",
+          "file": "self/ripple-press.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "utility",
+          "note": "icon action with pointer-position press ripple"
+        },
+        {
+          "id": "split-action",
+          "file": "self/split-action.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "utility",
+          "note": "primary action plus independent menu trigger"
+        },
+        {
+          "id": "hold-confirm",
+          "file": "self/hold-confirm.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "risk",
+          "note": "destructive action confirmed by finite press-and-hold"
+        },
+        {
+          "id": "command-ack",
+          "file": "self/command-ack.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "shortcut",
+          "note": "keyboard-oriented action with finite acknowledgement"
+        }
+      ]
+    },
+    {
+      "id": "checkbox",
+      "title": "checkbox",
+      "description": "independent multi-selection and boolean acknowledgement",
+      "category": "forms",
+      "manifest": "components/checkbox/catalog.json",
+      "catalog": "components/checkbox/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "selection",
+          "note": "unchecked + checked examples"
+        },
+        {
+          "id": "description",
+          "file": "self/description.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "selection",
+          "note": "checkbox with supporting copy"
+        },
+        {
+          "id": "indeterminate",
+          "file": "self/indeterminate.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "mixed parent state"
+        },
+        {
+          "id": "disabled",
+          "file": "self/disabled.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "disabled checkbox"
+        }
+      ]
+    },
+    {
+      "id": "code",
+      "title": "code",
+      "description": "inline and block code presentation",
+      "category": "data",
+      "manifest": "components/code/catalog.json",
+      "catalog": "components/code/index.html",
+      "active": [
+        "block"
+      ],
+      "variants": [
+        {
+          "id": "block",
+          "file": "self/block.html",
+          "status": "active",
+          "origin": "self",
+          "note": "code block with header"
+        },
+        {
+          "id": "inline",
+          "file": "self/inline.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "inline code tokens"
+        }
+      ]
+    },
+    {
+      "id": "composer",
+      "title": "composer",
+      "description": "invoer + wachtrij",
+      "category": "gesprek",
+      "manifest": "components/composer/catalog.json",
+      "catalog": "components/composer/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        },
+        {
+          "id": "opensourceui-spotlight-bar",
+          "file": "external/opensourceui-spotlight-bar.html",
+          "status": "locked",
+          "origin": "external",
+          "note": "take: query + keyboard suggestion model; reject: glassmorphism, blur, floating shadow shell",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx"
+        },
+        {
+          "id": "command-suggest",
+          "file": "self/command-suggest.html",
+          "status": "locked",
+          "origin": "self-modified",
+          "note": "ChefGroep command suggestions: keyboard model without glass chrome",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx"
+        }
+      ]
+    },
+    {
+      "id": "data-grid",
+      "title": "data grid",
+      "description": "dense native table for comparable records",
+      "category": "data",
+      "manifest": "components/data-grid/catalog.json",
+      "catalog": "components/data-grid/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "dense sortable-looking table"
+        },
+        {
+          "id": "selection",
+          "file": "self/selection.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "row selection"
+        }
+      ]
+    },
+    {
+      "id": "dialog",
+      "title": "dialog",
+      "description": "modal decision and focused task surface",
+      "category": "overlays",
+      "manifest": "components/dialog/catalog.json",
+      "catalog": "components/dialog/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "native modal dialog"
+        },
+        {
+          "id": "destructive",
+          "file": "self/destructive.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "destructive confirmation dialog"
+        }
+      ]
+    },
+    {
+      "id": "diff",
+      "title": "diff",
+      "description": "line-oriented code or text change display",
+      "category": "data",
+      "manifest": "components/diff/catalog.json",
+      "catalog": "components/diff/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "add/remove/context lines"
+        },
+        {
+          "id": "split",
+          "file": "self/split.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "before / after columns"
+        }
+      ]
+    },
+    {
+      "id": "empty-state",
+      "title": "empty state",
+      "description": "zero-data and no-result state",
+      "category": "feedback",
+      "manifest": "components/empty-state/catalog.json",
+      "catalog": "components/empty-state/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "quiet empty state"
+        },
+        {
+          "id": "action",
+          "file": "self/action.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "empty state with recovery action"
+        }
+      ]
+    },
+    {
+      "id": "field",
+      "title": "field",
+      "description": "form structure: label, help, required and error semantics",
+      "category": "forms",
+      "manifest": "components/field/catalog.json",
+      "catalog": "components/field/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "structure",
+          "note": "label + control + help"
+        },
+        {
+          "id": "required",
+          "file": "self/required.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "structure",
+          "note": "required marker without replacing native required"
+        },
+        {
+          "id": "error",
+          "file": "self/error.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "error message paired with invalid control"
+        },
+        {
+          "id": "inline",
+          "file": "self/inline.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "structure",
+          "note": "desktop label/control alignment; stacks on small screens"
+        }
+      ]
+    },
+    {
+      "id": "home-shell",
+      "title": "home-shell",
+      "description": "agent-home: sidebar + gecentreerde composer-hero",
+      "category": "structuur",
+      "manifest": "components/home-shell/catalog.json",
+      "catalog": "components/home-shell/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "grok.com hoofdscherm-meting als eigen component; referentie-skin grok dark"
+        },
+        {
+          "id": "menus",
+          "file": "self/menus.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "popover-idioom, split-send, banner, sessie-status; Devin-meting 2026-08-31"
+        },
+        {
+          "id": "live",
+          "file": "self/live.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "full-viewport product surface, geen gallery-chrome"
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "title": "input",
+      "description": "single-line text and search controls with explicit states",
+      "category": "forms",
+      "manifest": "components/input/catalog.json",
+      "catalog": "components/input/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "text",
+          "note": "single-line text input"
+        },
+        {
+          "id": "search",
+          "file": "self/search.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "search",
+          "note": "search input with leading icon"
+        },
+        {
+          "id": "search-beam",
+          "file": "self/search-beam.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "search",
+          "note": "search composed with optional motion beam"
+        },
+        {
+          "id": "prefix-suffix",
+          "file": "self/prefix-suffix.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "text",
+          "note": "prefix and suffix affordances"
+        },
+        {
+          "id": "invalid",
+          "file": "self/invalid.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "aria-invalid error state"
+        },
+        {
+          "id": "readonly",
+          "file": "self/readonly.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "read-only information"
+        },
+        {
+          "id": "disabled",
+          "file": "self/disabled.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "disabled unavailable control"
+        }
+      ]
+    },
+    {
+      "id": "key-value",
+      "title": "key / value",
+      "description": "definition-list facts and metadata",
+      "category": "data",
+      "manifest": "components/key-value/catalog.json",
+      "catalog": "components/key-value/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "two-column definition list"
+        },
+        {
+          "id": "dense",
+          "file": "self/dense.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "dense technical metadata"
+        }
+      ]
+    },
+    {
+      "id": "menu",
+      "title": "menu",
+      "description": "action and selection menus",
+      "category": "overlays",
+      "manifest": "components/menu/catalog.json",
+      "catalog": "components/menu/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "vertical action menu"
+        },
+        {
+          "id": "selection",
+          "file": "self/selection.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "checked menu items"
+        }
+      ]
+    },
+    {
+      "id": "metric",
+      "title": "metric",
+      "description": "single value with label delta and context",
+      "category": "data",
+      "manifest": "components/metric/catalog.json",
+      "catalog": "components/metric/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "value + supporting label"
+        },
+        {
+          "id": "compact",
+          "file": "self/compact.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "compact inline metric"
+        }
+      ]
+    },
+    {
+      "id": "motion",
+      "title": "motion",
+      "description": "opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse",
+      "category": "motion",
+      "manifest": "components/motion/catalog.json",
+      "catalog": "components/motion/index.html",
+      "active": [
+        "beam"
+      ],
+      "variants": [
+        {
+          "id": "beam",
+          "file": "self/beam.html",
+          "status": "active",
+          "origin": "self",
+          "family": "attention",
+          "note": "traveling beam along an active edge"
+        },
+        {
+          "id": "focus-halo",
+          "file": "self/focus-halo.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "attention",
+          "note": "focus halo for context and attention"
+        },
+        {
+          "id": "hover-sweep",
+          "file": "self/hover-sweep.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "attention",
+          "note": "one-shot directional hover sweep"
+        },
+        {
+          "id": "press-ripple",
+          "file": "self/press-ripple.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "ack",
+          "note": "finite pointer-position press acknowledgement"
+        },
+        {
+          "id": "toggle-glide",
+          "file": "self/toggle-glide.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "gliding selected state for segmented controls"
+        },
+        {
+          "id": "status-pulse",
+          "file": "self/status-pulse.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "progress",
+          "note": "moving active-work pulse; never ambient"
+        }
+      ]
+    },
+    {
+      "id": "nav",
+      "title": "nav",
+      "description": "sidebar-onderdelen",
+      "category": "structuur",
+      "manifest": "components/nav/catalog.json",
+      "catalog": "components/nav/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        }
+      ]
+    },
+    {
+      "id": "pagination",
+      "title": "pagination",
+      "description": "bounded page navigation",
+      "category": "navigation",
+      "manifest": "components/pagination/catalog.json",
+      "catalog": "components/pagination/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "numbered pagination"
+        },
+        {
+          "id": "compact",
+          "file": "self/compact.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "previous/next compact"
+        }
+      ]
+    },
+    {
+      "id": "popover",
+      "title": "popover",
+      "description": "anchored transient content using native popover",
+      "category": "overlays",
+      "manifest": "components/popover/catalog.json",
+      "catalog": "components/popover/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "native popover"
+        },
+        {
+          "id": "actions",
+          "file": "self/actions.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "popover with actions"
+        }
+      ]
+    },
+    {
+      "id": "pr-card",
+      "title": "pr-card",
+      "description": "bewijs van werk",
+      "category": "bewijs",
+      "manifest": "components/pr-card/catalog.json",
+      "catalog": "components/pr-card/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "title": "progress",
+      "description": "determinate work progress",
+      "category": "feedback",
+      "manifest": "components/progress/catalog.json",
+      "catalog": "components/progress/index.html",
+      "active": [
+        "bar"
+      ],
+      "variants": [
+        {
+          "id": "bar",
+          "file": "self/bar.html",
+          "status": "active",
+          "origin": "self",
+          "note": "determinate progress bar"
+        },
+        {
+          "id": "steps",
+          "file": "self/steps.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "discrete step progress"
+        }
+      ]
+    },
+    {
+      "id": "radio",
+      "title": "radio",
+      "description": "exclusive selection within a named group",
+      "category": "forms",
+      "manifest": "components/radio/catalog.json",
+      "catalog": "components/radio/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "selection",
+          "note": "exclusive radio group"
+        },
+        {
+          "id": "description",
+          "file": "self/description.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "selection",
+          "note": "radio options with descriptions"
+        },
+        {
+          "id": "disabled",
+          "file": "self/disabled.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "mixed available and disabled options"
+        }
+      ]
+    },
+    {
+      "id": "select",
+      "title": "select",
+      "description": "native single-select control with predictable keyboard semantics",
+      "category": "forms",
+      "manifest": "components/select/catalog.json",
+      "catalog": "components/select/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "selection",
+          "note": "native select"
+        },
+        {
+          "id": "grouped",
+          "file": "self/grouped.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "selection",
+          "note": "optgroup structure"
+        },
+        {
+          "id": "invalid",
+          "file": "self/invalid.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "invalid selection state"
+        },
+        {
+          "id": "disabled",
+          "file": "self/disabled.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "disabled unavailable select"
+        }
+      ]
+    },
+    {
+      "id": "settings",
+      "title": "settings",
+      "description": "volledige instellingen-surface",
+      "category": "structuur",
+      "manifest": "components/settings/catalog.json",
+      "catalog": "components/settings/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        },
+        {
+          "id": "grouped",
+          "file": "self/grouped.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "Devin grouped-card patroon (gemeten 2026-07-28): sectie = title + één card met hairlines"
+        }
+      ]
+    },
+    {
+      "id": "sheet",
+      "title": "sheet / drawer",
+      "description": "edge-attached secondary workspace",
+      "category": "overlays",
+      "manifest": "components/sheet/catalog.json",
+      "catalog": "components/sheet/index.html",
+      "active": [
+        "right"
+      ],
+      "variants": [
+        {
+          "id": "right",
+          "file": "self/right.html",
+          "status": "active",
+          "origin": "self",
+          "note": "right-side sheet"
+        },
+        {
+          "id": "left",
+          "file": "self/left.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "left-side navigation drawer"
+        }
+      ]
+    },
+    {
+      "id": "skeleton",
+      "title": "skeleton",
+      "description": "loading placeholders for known layout",
+      "category": "feedback",
+      "manifest": "components/skeleton/catalog.json",
+      "catalog": "components/skeleton/index.html",
+      "active": [
+        "rows"
+      ],
+      "variants": [
+        {
+          "id": "rows",
+          "file": "self/rows.html",
+          "status": "active",
+          "origin": "self",
+          "note": "text row skeleton"
+        },
+        {
+          "id": "card",
+          "file": "self/card.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "card skeleton"
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "title": "status",
+      "description": "semantic state indicator with text",
+      "category": "data",
+      "manifest": "components/status/catalog.json",
+      "catalog": "components/status/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "semantic status set"
+        },
+        {
+          "id": "dot",
+          "file": "self/dot.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "dot + label status"
+        }
+      ]
+    },
+    {
+      "id": "studio",
+      "title": "studio",
+      "description": "visueel afstellen zonder code",
+      "category": "systeem",
+      "manifest": "components/studio/catalog.json",
+      "catalog": "components/studio/index.html",
+      "active": [
+        "v3-flow"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "volledige visuele editor — open fullscreen voor echt gebruik"
+        },
+        {
+          "id": "v2-docs",
+          "file": "self/v2-docs.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "tabs afstellen/docs + vanaf-nul preset"
+        },
+        {
+          "id": "v3-flow",
+          "file": "self/v3-flow.html",
+          "status": "active",
+          "origin": "self",
+          "note": "natuurlijke flow, sticky topbar+controls, geen interne scroll"
+        }
+      ]
+    },
+    {
+      "id": "switch",
+      "title": "switch",
+      "description": "immediate on/off state with explicit checked semantics",
+      "category": "forms",
+      "manifest": "components/switch/catalog.json",
+      "catalog": "components/switch/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "state",
+          "note": "off and on examples"
+        },
+        {
+          "id": "labelled",
+          "file": "self/labelled.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "switch paired with copy"
+        },
+        {
+          "id": "disabled",
+          "file": "self/disabled.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "unavailable switch state"
+        }
+      ]
+    },
+    {
+      "id": "table",
+      "title": "table",
+      "description": "dashboard-tabellen met hairlines, hover, inline status badges",
+      "category": "bewijs",
+      "manifest": "components/table/catalog.json",
+      "catalog": "components/table/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "basis, hairline dividers, hover, status badges"
+        },
+        {
+          "id": "opensourceui-tasks-table",
+          "file": "external/opensourceui-tasks-table.html",
+          "status": "locked",
+          "origin": "external",
+          "note": "take: compact task/due structure + direct completion affordance; reject: avatar-first ownership and mutable demo state as product contract",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/table/tasks-table.tsx"
+        }
+      ]
+    },
+    {
+      "id": "tabs",
+      "title": "tabs",
+      "description": "switch between peer views without navigation",
+      "category": "navigation",
+      "manifest": "components/tabs/catalog.json",
+      "catalog": "components/tabs/index.html",
+      "active": [
+        "line"
+      ],
+      "variants": [
+        {
+          "id": "line",
+          "file": "self/line.html",
+          "status": "active",
+          "origin": "self",
+          "note": "line tabs"
+        },
+        {
+          "id": "segmented",
+          "file": "self/segmented.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "contained segmented tabs"
+        }
+      ]
+    },
+    {
+      "id": "textarea",
+      "title": "textarea",
+      "description": "multiline input for prose, notes and prompts",
+      "category": "forms",
+      "manifest": "components/textarea/catalog.json",
+      "catalog": "components/textarea/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "family": "text",
+          "note": "resizable multiline text"
+        },
+        {
+          "id": "prompt",
+          "file": "self/prompt.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "text",
+          "note": "larger prompt/composer-like text area"
+        },
+        {
+          "id": "invalid",
+          "file": "self/invalid.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "multiline error state"
+        },
+        {
+          "id": "readonly",
+          "file": "self/readonly.html",
+          "status": "locked",
+          "origin": "self",
+          "family": "state",
+          "note": "read-only multiline content"
+        }
+      ]
+    },
+    {
+      "id": "timeline",
+      "title": "timeline",
+      "description": "ordered events and execution history",
+      "category": "data",
+      "manifest": "components/timeline/catalog.json",
+      "catalog": "components/timeline/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "vertical event timeline"
+        },
+        {
+          "id": "compact",
+          "file": "self/compact.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "compact audit trail"
+        }
+      ]
+    },
+    {
+      "id": "toast",
+      "title": "toast",
+      "description": "transient acknowledgement and action feedback",
+      "category": "feedback",
+      "manifest": "components/toast/catalog.json",
+      "catalog": "components/toast/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "transient status toast"
+        },
+        {
+          "id": "action",
+          "file": "self/action.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "toast with undo action"
+        }
+      ]
+    },
+    {
+      "id": "tooltip",
+      "title": "tooltip",
+      "description": "short contextual labels for compact controls",
+      "category": "overlays",
+      "manifest": "components/tooltip/catalog.json",
+      "catalog": "components/tooltip/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "hover/focus tooltip"
+        },
+        {
+          "id": "shortcut",
+          "file": "self/shortcut.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "tooltip with shortcut"
+        }
+      ]
+    },
+    {
+      "id": "transcript",
+      "title": "transcript",
+      "description": "user-pill, prose, meta",
+      "category": "gesprek",
+      "manifest": "components/transcript/catalog.json",
+      "catalog": "components/transcript/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        }
+      ]
+    },
+    {
+      "id": "worked-row",
+      "title": "worked-row",
+      "description": "signatuur: activiteit zonder spinner",
+      "category": "gesprek",
+      "manifest": "components/worked-row/catalog.json",
+      "catalog": "components/worked-row/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+        },
+        {
+          "id": "opensourceui-deploy-notification",
+          "file": "external/opensourceui-deploy-notification.html",
+          "status": "locked",
+          "origin": "external",
+          "note": "take: compact result evidence hierarchy; reject: iOS toast shell, blur, generic success notification semantics",
+          "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/notifications/deploy-notification-banner.tsx"
+        }
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "expressive-motion",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md"
+    },
+    {
+      "id": "mobile-touch",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md"
+    },
+    {
+      "id": "operator-dense",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md"
+    },
+    {
+      "id": "public-editorial",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md"
+    }
+  ],
+  "patterns": [
+    {
+      "id": "command-surface",
+      "label": "Command surface",
+      "category": "workflow",
+      "optional": true,
+      "profiles": [
+        "operator-dense"
+      ],
+      "components": {
+        "input": [
+          "search"
+        ],
+        "menu": [
+          "default"
+        ],
+        "button": [
+          "command-ack",
+          "with-kbd"
+        ]
+      },
+      "example": "example.html"
+    },
+    {
+      "id": "data-inspector",
+      "label": "Data inspector",
+      "category": "data",
+      "optional": true,
+      "profiles": [
+        "operator-dense"
+      ],
+      "components": {
+        "key-value": [
+          "default"
+        ],
+        "status": [
+          "default"
+        ],
+        "code": [
+          "block"
+        ],
+        "timeline": [
+          "compact"
+        ],
+        "sheet": [
+          "right"
+        ]
+      },
+      "example": "example.html"
+    },
+    {
+      "id": "destructive-confirm",
+      "label": "Destructive confirm",
+      "category": "safety",
+      "optional": true,
+      "profiles": [
+        "operator-dense",
+        "mobile-touch"
+      ],
+      "components": {
+        "dialog": [
+          "destructive"
+        ],
+        "button": [
+          "hold-confirm",
+          "destructive"
+        ],
+        "alert": [
+          "warning"
+        ]
+      },
+      "example": "example.html"
+    },
+    {
+      "id": "empty-to-action",
+      "label": "Empty to action",
+      "category": "feedback",
+      "optional": true,
+      "profiles": [
+        "public-editorial",
+        "mobile-touch"
+      ],
+      "components": {
+        "empty-state": [
+          "action"
+        ],
+        "button": [
+          "primary"
+        ]
+      },
+      "example": "example.html"
+    },
+    {
+      "id": "mobile-sheet",
+      "label": "Mobile sheet workflow",
+      "category": "navigation",
+      "optional": true,
+      "profiles": [
+        "mobile-touch"
+      ],
+      "components": {
+        "sheet": [
+          "right"
+        ],
+        "breadcrumb": [
+          "collapsed"
+        ],
+        "button": [
+          "gbtn"
+        ],
+        "tabs": [
+          "line"
+        ]
+      },
+      "example": "example.html"
+    },
+    {
+      "id": "public-product-hero",
+      "label": "Public product hero",
+      "category": "public",
+      "optional": true,
+      "profiles": [
+        "public-editorial",
+        "expressive-motion"
+      ],
+      "components": {
+        "button": [
+          "beam-cta",
+          "sweep-cta"
+        ],
+        "motion": [
+          "beam"
+        ],
+        "status": [
+          "default"
+        ],
+        "artifact": [
+          "default"
+        ]
+      },
+      "example": "example.html"
+    },
+    {
+      "id": "search-results",
+      "label": "Search results",
+      "category": "navigation",
+      "optional": true,
+      "profiles": [
+        "operator-dense",
+        "mobile-touch"
+      ],
+      "components": {
+        "input": [
+          "search-beam"
+        ],
+        "status": [
+          "dot"
+        ],
+        "empty-state": [
+          "action"
+        ],
+        "pagination": [
+          "compact"
+        ]
+      },
+      "example": "example.html"
+    },
+    {
+      "id": "settings-section",
+      "label": "Settings section",
+      "category": "forms",
+      "optional": true,
+      "profiles": [
+        "operator-dense"
+      ],
+      "components": {
+        "field": [
+          "default"
+        ],
+        "switch": [
+          "labelled"
+        ],
+        "select": [
+          "default"
+        ],
+        "button": [
+          "primary"
+        ]
+      },
+      "example": "example.html"
+    }
+  ],
+  "extensions": [
+    {
+      "id": "chefgroep",
+      "label": "ChefGroep",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md",
+      "components": {
+        "button": {
+          "include": [
+            "default",
+            "standard",
+            "primary",
+            "with-kbd",
+            "gbtn"
+          ],
+          "preferred": "default"
+        },
+        "badge": {
+          "include": [
+            "default"
+          ],
+          "preferred": "default"
+        },
+        "worked-row": {
+          "include": [
+            "default"
+          ],
+          "preferred": "default"
+        }
+      }
+    },
+    {
+      "id": "dsh",
+      "label": "DSH operator surface",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md",
+      "components": {
+        "button": {
+          "include": [
+            "standard",
+            "primary",
+            "gbtn",
+            "with-kbd"
+          ],
+          "preferred": "standard"
+        },
+        "badge": {
+          "include": [
+            "default"
+          ],
+          "preferred": "default"
+        },
+        "settings": {
+          "include": [
+            "default"
+          ],
+          "preferred": "default"
+        }
+      }
+    }
+  ]
+}

@@ -2,13 +2,41 @@
   "name": "@signaal/react",
   "version": "0.1.0",
   "private": true,
+  "description": "Product-agnostic React primitives for the Signaal design system.",
+  "keywords": [
+    "design-system",
+    "react",
+    "components",
+    "signaal"
+  ],
   "type": "module",
-  "sideEffects": ["./styles.css"],
+  "sideEffects": [
+    "./styles.css"
+  ],
   "exports": {
-    ".": { "types": "./index.d.ts", "import": "./index.js" },
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
     "./styles.css": "./styles.css"
   },
-  "files": ["index.js", "index.d.ts", "styles.css"],
-  "peerDependencies": { "react": ">=18" },
-  "dependencies": { "@signaal/tokens": "0.1.0" }
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "styles.css"
+  ],
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "dependencies": {
+    "@signaal/tokens": "0.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GroepOnline/design-system.git",
+    "directory": "packages/react"
+  }
 }

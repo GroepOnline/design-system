@@ -12,3 +12,7 @@ The packages are private while the API is alpha. Version numbers describe softwa
 ## `@signaal/interactions`
 
 Optionele, zero-dependency interaction helpers. Geen component of product is ervan afhankelijk. Gebruik alleen het gedrag dat een specifieke control nodig heeft, bijvoorbeeld `attachPressRipple`, `attachHoldConfirm` of `attachCommandAck`.
+
+## Release contract
+
+`release.json` is the single version/package-set authority. `scripts/set-runtime-version.py` updates all runtime manifests atomically. `scripts/build-release-bundle.py` creates npm tarballs plus SHA-256 checksums; `scripts/smoke-runtime-bundle.py` imports those exact tarballs in an isolated consumer. Registry publishing remains disabled while the API is alpha.
