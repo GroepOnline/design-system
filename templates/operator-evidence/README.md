@@ -56,8 +56,13 @@ snapshot feedback, evidence vector, optional metrics/navigation and regions.
 Use the individual exports for established product layouts. Headings derive their
 unproven count from supplied layers. An empty list and unrecognized status fail
 closed. Supply every required layer, including missing ones with `unknown`; the
-template cannot discover an omitted backend requirement. Valid states are
+template cannot discover an omitted backend requirement. Evidence-layer states are
 `healthy`, `partial`, `degraded`, `down`, `drift`, `stale`, `waiting` and `unknown`.
+
+Snapshot states for `OperatorPage.snapshotState` and `SnapshotFrame.state` are
+`loading`, `current`, `stale`, `partial`, `refresh-error` and `unavailable`.
+They describe observation availability and freshness, independently of each
+evidence layer's state. `OperatorPage` defaults to `unavailable`.
 
 `SnapshotFrame` preserves supplied content for stale, partial and refresh-error
 states. Initial loading and unavailable states hide it. Snapshot freshness is
@@ -82,11 +87,14 @@ cancellation, snapshot acceptance and data preservation remain product concerns.
 
 ## Build and verify
 
+Run from the design-system checkout root. Replace `<evidence-directory>` with
+your chosen output directory outside the checkout.
+
 ```sh
 node scripts/build-operator-template.mjs
 node --test tests/operator-components.test.mjs
 node scripts/build-operator-template.mjs --check
-python3 scripts/verify-identity-template.py --template operator-evidence --out /home/joep/Code/GroepOnline/design-system/runtime/operator-proof
+python3 scripts/verify-identity-template.py --template operator-evidence --out "<evidence-directory>"
 python3 scripts/design-standard-check.py
 ```
 

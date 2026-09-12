@@ -37,6 +37,7 @@
   --attention: #8a5b0b;
   --danger: #c62828;
   --neutral: #6b6760;
+  --brand-dot: #ae4e32;
   --radius: 12px;
   --font-body: "General Sans", system-ui, sans-serif;
   --font-display: "Instrument Serif", Georgia, serif;
@@ -63,6 +64,7 @@
     --attention: #d9a441;
     --danger: #f0655a;
     --neutral: #a8a297;
+    --brand-dot: #dd947d;
   }
 }
 * {
@@ -409,7 +411,7 @@ th {
   height: 36px;
 }
 .brand-dot {
-  color: #ae4e32;
+  color: var(--brand-dot);
 }
 .observed {
   flex-shrink: 0;
@@ -530,9 +532,6 @@ th {
     background: #eaf1ec;
     border-radius: 6px;
   }
-  .brand-dot {
-    color: #dd947d;
-  }
 }
 @media (max-width: 700px) {
   .snapshot-feedback {
@@ -565,6 +564,9 @@ th {
   }
 }
 @media (forced-colors: active) {
+  :root {
+    --brand-dot: LinkText;
+  }
   .brand-mark {
     background: Canvas;
   }
@@ -575,9 +577,6 @@ th {
   }
   .retry:disabled {
     color: GrayText;
-  }
-  .brand-dot {
-    color: LinkText;
   }
 }
 .conclusion-states {

@@ -169,7 +169,11 @@ try {
           document.body.append(sample);
           const metaColor = getComputedStyle(sample).color;
           sample.remove();
-          return {matches:matches.length, metaColor, canvas:getComputedStyle(document.body).backgroundColor};
+          return {
+            matches:matches.length, metaColor, canvas:getComputedStyle(document.body).backgroundColor,
+            brandDotToken:getComputedStyle(document.documentElement).getPropertyValue('--brand-dot').trim(),
+            brandDot:getComputedStyle(document.querySelector('.brand-dot')).color
+          };
         })(),
         animations: document.getAnimations().map(a => ({state:a.playState,iterations:a.effect.getTiming().iterations,endTime:a.effect.getComputedTiming().endTime})),
         regions: [...document.querySelectorAll('.flow,.table-wrap')].every(r => r.tabIndex === 0 && r.getBoundingClientRect().right <= innerWidth),
@@ -202,6 +206,11 @@ try {
         facts.theme.matches === 1 &&
           facts.theme.metaColor === facts.theme.canvas,
         `theme-color must match the rendered canvas: ${JSON.stringify(facts.theme)}`,
+      );
+      assert.equal(facts.theme.brandDotToken, dark ? "#dd947d" : "#ae4e32");
+      assert.equal(
+        facts.theme.brandDot,
+        dark ? "rgb(221, 148, 125)" : "rgb(174, 78, 50)",
       );
       assert.ok(
         facts.animations.every(
