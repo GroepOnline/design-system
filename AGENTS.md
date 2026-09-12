@@ -239,3 +239,15 @@ SIGNAAL_PROFILE=operator-dense SIGNAAL_EXTENSION=dsh ./.agents/hooks/signaal-con
 Resolution is `base -> profile -> extension`. Profiles describe a generic surface class; extensions describe optional product/organization choices. Both are advisory and fail-open. Neither may become a runtime/build dependency of Signaal core.
 
 Use `./s.sh profiles`, `./s.sh patterns`, and `./s.sh pattern <id>` to discover reusable composition context before creating local UI from scratch.
+
+## ChefGroep default and auth reference
+
+For ChefGroep product design, `CHEFGROEP-STANDARD.md` and the ChefGroep extension
+are the default quality context. The user-approved identity-spatial surface may
+override generic palette, display-face and decorative-material preferences;
+accessibility and real domain/security contracts remain mandatory. Use
+`.agents/meta/chefgroep-design.md`, then only the applicable chain nodes.
+
+The source report, templates, adapters and `design-standard-check.py` belong here.
+Do not promote an unverified authenticated state or a model name into quality
+proof. Preserve concurrent work and existing locked catalog variants.

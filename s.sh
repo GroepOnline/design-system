@@ -29,6 +29,9 @@ case "$cmd" in
     exec "$ROOT/.agents/hooks/signaal-quality.sh"
     ;;
   context)
+    if [[ "$ext" == "chefgroep" ]]; then
+      printf 'standard=%s\nprocedure=%s\nchain=%s\n' "$ROOT/CHEFGROEP-STANDARD.md" "$ROOT/.agents/meta/chefgroep-design.md" "$ROOT/chains/chefgroep-design.json"
+    fi
     printf 'base_design=%s\nbase_taste=%s\n' "$ROOT/DESIGN.md" "$ROOT/taste/taste-rules.md"
     if [[ "$profile" != "base" ]]; then
       pdir="$PROFILE_ROOT/$profile"
