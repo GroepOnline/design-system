@@ -4,6 +4,13 @@ description: Maintains the ChefGroep design standard, profiles, reusable product
 owner: chefgroep
 domain: frontend-ui
 role: satellite
+ambient: true
+invocable-by:
+- user
+- agent
+- subagent
+disable-model-invocation: false
+context: {}
 ---
 
 # ChefGroep design system

@@ -4,6 +4,14 @@ description: Routes ChefGroep frontend work to its canonical design standard, sc
 owner: chefgroep
 domain: frontend-ui
 role: router
+ambient: true
+invocable-by:
+- user
+- agent
+- subagent
+disable-model-invocation: false
+context: {}
+satellites: []
 ---
 
 # Frontend routing
