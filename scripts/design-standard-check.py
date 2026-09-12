@@ -45,7 +45,7 @@ def main():
     for path in (ROOT / "reports").glob("*/report.json"):
         generated = path.with_name("index.html")
         packaged = renderer.package_figures(
-            json.loads(path.read_text()), path.parent, generated.parent, False
+            json.loads(path.read_text()), path.parent, generated.parent
         )
         if generated.read_text() != renderer.render(packaged):
             raise ValueError("Report render drift: " + str(path))

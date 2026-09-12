@@ -97,6 +97,26 @@ class DesignRunTests(unittest.TestCase):
             self.assertTrue((output_dir / emitted).is_file())
             self.assertEqual(data["figures"][0]["src"], "figure.png")
 
+    def test_report_rejects_figures_outside_source_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_dir = root / "source"
+            source_dir.mkdir()
+            outside = root / "outside.png"
+            outside.write_bytes(b"outside")
+            for src in ("../outside.png", str(outside)):
+                with self.assertRaisesRegex(ValueError, "inside the source directory"):
+                    report.package_figures(
+                        {"figures": [{"src": src}]}, source_dir, root / "report"
+                    )
+
+    def test_operator_snapshot_contract_includes_partial_state(self):
+        contracts = json.loads(
+            (ROOT / "templates/operator-evidence/component-contracts.json").read_text()
+        )
+        states = contracts["components"]["SnapshotFrame"]
+        self.assertEqual(states[:4], ["loading", "current", "stale", "partial"])
+
     def test_operator_template_local_assets_are_self_contained(self):
         template = ROOT / "templates/operator-evidence"
         html = (template / "index.html").read_text()

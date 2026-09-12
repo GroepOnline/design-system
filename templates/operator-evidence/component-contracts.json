@@ -9,6 +9,7 @@
       "loading",
       "current",
       "stale",
+      "partial",
       "refresh-error preserving last valid data",
       "unavailable"
     ],

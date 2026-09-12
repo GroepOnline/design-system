@@ -64,7 +64,10 @@ def package_figures(report, source_dir, output_dir, copy_files=True):
             continue
         if parsed.scheme or src.startswith('//'):
             raise ValueError('Report figure links must be relative or HTTPS')
+        source_root = source_dir.resolve(strict=True)
         source = (source_dir / src).resolve(strict=True)
+        if source_root not in source.parents:
+            raise ValueError('Report figure must stay inside the source directory: ' + src)
         if not source.is_file():
             raise ValueError('Report figure is not a file: ' + src)
         digest = hashlib.sha256(source.read_bytes()).hexdigest()[:12]
