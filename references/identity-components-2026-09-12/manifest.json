@@ -398,26 +398,26 @@
   ],
   "tasteChanges": [],
   "sourceFiles": {
-    "templates/identity-spatial/identity-mark.svg": "b07c37a378f54bd16e206b0c1800b90661b0daa81cd3accef32ed995d069b31e",
-    "templates/identity-spatial/README.md": "3712b89d8fdb1d1a70a9cbc06df730819cac6010fb0c37302242d2502e4e7660",
-    "templates/identity-spatial/account.mjs": "adf96621e336b58e85061d15a6f651244942a2212a252a9dcadbcbdf01fde231",
-    "templates/identity-spatial/component-contracts.json": "48c584af18c481379ea60434e13b43b0063eb64641c5550d5f4521673d83e696",
-    "templates/identity-spatial/interactions.mjs": "bd249be6707995c36daedd91c3d478f07bb06b94523bb4b66b6498224f1efaf3",
+    "scripts/verify-identity-browser.mjs": "6a7ba6545341c51ed5b60c8e8b024d6010725aef3d05b056044cebc54dacef86",
+    "scripts/verify-identity-template.py": "32a3b65572e34d4fab4d2e307936974317f35dd1d6c2940b63b22016325ae206",
+    "templates/identity-spatial/README.md": "a1079bb4664737cdc8a4a97433e92661f5d40ebbae59af0efa74802f9f684a71",
     "templates/identity-spatial/index.html": "7e8027eaf2852cf4e638b1661ab277e5a13449a4c452c94c8852fd273c756ca7",
     "templates/identity-spatial/states.html": "3d27307432db9995c360fd35b3dab9e797a98751bff62dcaae28a5f88bc449c3",
-    "templates/identity-spatial/components.mjs": "24adc41bf22d092aceb92a51220187eff95231d2a4fde3c8718f281a618c8777",
-    "templates/identity-spatial/states.mjs": "7a277a8fa5fed5b7fe9dbbcafca14e24f13075752bb39340c9593bf1cb3f87eb",
-    "templates/identity-spatial/tokens.css": "3f4f9bbcb39f84ce815770a7f6936bdcf8ff79a234b2ef93323f783e1e8dbea2",
-    "templates/identity-spatial/specimen.css": "d68e0f3b3906be6df1d857b4f700bd08b9c19bd6d73260cf45fdc6a8b17b0eff",
-    "templates/identity-spatial/product.css": "6b1874fad13f10436026f6a93f5a2007cab9778089eb3f3ddeb32951e7b79bcc",
     "templates/identity-spatial/account.html": "daa6b3f5d564c795c61b7f67384870ffb7d2da27c85b5cd5d300abfef84e90e2",
+    "templates/identity-spatial/component-contracts.json": "48c584af18c481379ea60434e13b43b0063eb64641c5550d5f4521673d83e696",
+    "templates/identity-spatial/components.mjs": "24adc41bf22d092aceb92a51220187eff95231d2a4fde3c8718f281a618c8777",
+    "templates/identity-spatial/interactions.mjs": "bd249be6707995c36daedd91c3d478f07bb06b94523bb4b66b6498224f1efaf3",
     "templates/identity-spatial/specimen.mjs": "dd96b18765cb3500b71617c2bb8f1a24ce59415416df10397c203adfdaf41c0c",
-    "templates/identity-spatial/fonts/INSTRUMENT-SANS-LICENSE": "c27a3c53c3beed7f5c26853afa15991478ff7145d3754a36b0382f84e10c0d03",
-    "templates/identity-spatial/fonts/BRICOLAGE-GROTESQUE-LICENSE": "923f4ddf0fd39f9b7794ab0df7332f3d95dc43e8ad7ec2289d6d9e8491177f51",
-    "templates/identity-spatial/fonts/instrument-sans-latin-wght-normal.woff2": "2ee17598a98d8a59e4df8152d015bec9ab8e4d5672cc0ab42bef806b568e3971",
+    "templates/identity-spatial/states.mjs": "7a277a8fa5fed5b7fe9dbbcafca14e24f13075752bb39340c9593bf1cb3f87eb",
+    "templates/identity-spatial/account.mjs": "adf96621e336b58e85061d15a6f651244942a2212a252a9dcadbcbdf01fde231",
+    "templates/identity-spatial/tokens.css": "3f4f9bbcb39f84ce815770a7f6936bdcf8ff79a234b2ef93323f783e1e8dbea2",
+    "templates/identity-spatial/product.css": "6b1874fad13f10436026f6a93f5a2007cab9778089eb3f3ddeb32951e7b79bcc",
+    "templates/identity-spatial/specimen.css": "d68e0f3b3906be6df1d857b4f700bd08b9c19bd6d73260cf45fdc6a8b17b0eff",
+    "templates/identity-spatial/identity-mark.svg": "b07c37a378f54bd16e206b0c1800b90661b0daa81cd3accef32ed995d069b31e",
     "templates/identity-spatial/fonts/bricolage-grotesque-latin-wght-normal.woff2": "a97804dc9fbe5fc972a08018c5eda4dab7ef2346f64c57e61419d05e6de4ea1c",
-    "scripts/verify-identity-browser.mjs": "5f468c172e18a5b31ef88ea40fea01b3ee7e006f5232444a83684d1b297d59cf",
-    "scripts/verify-identity-template.py": "32a3b65572e34d4fab4d2e307936974317f35dd1d6c2940b63b22016325ae206"
+    "templates/identity-spatial/fonts/instrument-sans-latin-wght-normal.woff2": "2ee17598a98d8a59e4df8152d015bec9ab8e4d5672cc0ab42bef806b568e3971",
+    "templates/identity-spatial/fonts/BRICOLAGE-GROTESQUE-LICENSE": "923f4ddf0fd39f9b7794ab0df7332f3d95dc43e8ad7ec2289d6d9e8491177f51",
+    "templates/identity-spatial/fonts/INSTRUMENT-SANS-LICENSE": "c27a3c53c3beed7f5c26853afa15991478ff7145d3754a36b0382f84e10c0d03"
   },
   "verification": [
     {
@@ -468,6 +468,13 @@
       "dirty": false,
       "exit": 0,
       "result": "9 browser cases passed; portable product CSS supplied exactly two font faces; source and runtime provenance recorded"
+    },
+    {
+      "command": "python3 scripts/verify-identity-template.py --out <evidence-directory>",
+      "head": "c28c26ff4f500fc6cdace0b6a0f3e48dc8abffbf",
+      "dirty": false,
+      "exit": 0,
+      "result": "9 browser cases passed; 20 loaded or governing files hashed; portable product CSS supplied exactly two font faces"
     }
   ],
   "limitations": [
@@ -498,7 +505,7 @@
     "SessionRow",
     "SiteShell"
   ],
-  "head": "0427cc71b891ab2a91be0af4c5b2ed194afecf6a",
+  "head": "c28c26ff4f500fc6cdace0b6a0f3e48dc8abffbf",
   "dirty": false,
   "runtimes": {
     "node": "v26.8.2",
