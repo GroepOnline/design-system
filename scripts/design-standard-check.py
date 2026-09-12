@@ -4,6 +4,7 @@
 import hashlib
 import importlib.util
 import json
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,16 @@ def load(name):
 
 def main():
     load("design-run").graph()
+    subprocess.run(
+        ["node", "scripts/build-identity-template.mjs", "--check"],
+        cwd=ROOT,
+        check=True,
+    )
+    subprocess.run(
+        ["node", "--test", "tests/identity-components.test.mjs"],
+        cwd=ROOT,
+        check=True,
+    )
     source = ROOT / "templates/design-report"
     provenance = json.loads((source / "provenance.json").read_text())
     for filename, key in [

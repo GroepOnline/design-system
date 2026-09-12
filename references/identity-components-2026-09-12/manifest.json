@@ -1,0 +1,256 @@
+{
+  "schema": 1,
+  "scope": "local template rendering, keyboard, motion and component behavior; no live identity/API proof",
+  "cases": [
+    {
+      "page": "index",
+      "viewport": "desktop",
+      "reduced": false,
+      "file": "index-desktop.png",
+      "sha256": "75cc8f7ffe5faa535c79ed85972482dd390658c76426cea81baa11799c108af1",
+      "width": 1440,
+      "scrollWidth": 1430,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 900
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1200
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 980
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1060
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1140.0000000000002
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1000
+        }
+      ],
+      "primary": {
+        "left": 72,
+        "right": 337,
+        "bottom": 682.609375
+      },
+      "keyboard": "passed",
+      "pendingButton": "passed"
+    },
+    {
+      "page": "index",
+      "viewport": "phone",
+      "reduced": false,
+      "file": "index-phone.png",
+      "sha256": "9d1ecbf732e9490dc25ac50895bbb8a544c20fcdab3d9d8488a52eaed4386b38",
+      "width": 390,
+      "scrollWidth": 380,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 900
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1200
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 980
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1060
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1140.0000000000002
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 1000
+        }
+      ],
+      "primary": {
+        "left": 23.390625,
+        "right": 288.390625,
+        "bottom": 534
+      },
+      "keyboard": "passed",
+      "pendingButton": "passed"
+    },
+    {
+      "page": "index",
+      "viewport": "reduced",
+      "reduced": true,
+      "file": "index-reduced.png",
+      "sha256": "37b1fd275ca3ac432d0d7912f733d5fead105ed012f42e222f9ccc00c8749f0c",
+      "width": 390,
+      "scrollWidth": 380,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [],
+      "primary": {
+        "left": 23.390625,
+        "right": 288.390625,
+        "bottom": 534
+      },
+      "keyboard": "passed",
+      "pendingButton": "passed"
+    },
+    {
+      "page": "states",
+      "viewport": "desktop",
+      "reduced": false,
+      "file": "states-desktop.png",
+      "sha256": "6e2e86a160a3390ba4f4df4da2141dca854272fe05a4236553f3fbe953a41e6b",
+      "width": 1440,
+      "scrollWidth": 1430,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [],
+      "primary": null,
+      "keyboard": "passed",
+      "pendingButton": "passed"
+    },
+    {
+      "page": "states",
+      "viewport": "phone",
+      "reduced": false,
+      "file": "states-phone.png",
+      "sha256": "8182c06fd974c5737c7dbf5c3ad396eabb1cc98553f307d45f385c792aab4b40",
+      "width": 390,
+      "scrollWidth": 380,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [],
+      "primary": null,
+      "keyboard": "passed",
+      "pendingButton": "passed"
+    },
+    {
+      "page": "states",
+      "viewport": "reduced",
+      "reduced": true,
+      "file": "states-reduced.png",
+      "sha256": "8182c06fd974c5737c7dbf5c3ad396eabb1cc98553f307d45f385c792aab4b40",
+      "width": 390,
+      "scrollWidth": 380,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [],
+      "primary": null,
+      "keyboard": "passed",
+      "pendingButton": "passed"
+    }
+  ],
+  "timestamp": "2026-09-12T02:26:10.704353+00:00",
+  "repository": "GroepOnline/design-system",
+  "branch": "feat/auth-shell-template-20260912",
+  "base": "2d5cc8a02b2e06450933089134eb6658e643e3bd",
+  "authSource": "GroepOnline/chefgroep-auth@f86512c9a7c617bc21c652b8fb4ae6de83c73659",
+  "brief": "Extract reusable auth-grade components from the approved identity template without creating a second design authority.",
+  "profile": "identity-spatial",
+  "extension": "chefgroep",
+  "surface": "surfaces/auth-landing.md",
+  "model": "not exposed",
+  "reasoningEffort": "not exposed",
+  "skills": [
+    ".agents/skills/design-system/SKILL.md",
+    ".agents/skills/locked-taste-design-run/SKILL.md",
+    ".agents/meta/chefgroep-design.md",
+    "frontend-design-premium@1.4.0 with frontend-design"
+  ],
+  "tasteChanges": [],
+  "sourceFiles": {
+    "templates/identity-spatial/identity-mark.svg": "b07c37a378f54bd16e206b0c1800b90661b0daa81cd3accef32ed995d069b31e",
+    "templates/identity-spatial/README.md": "9787697bb61062a89c4e7d26bc568131f97c2738a61fab4327da1d13e0dec5fd",
+    "templates/identity-spatial/component-contracts.json": "1784c1c419aece96302a447ff0f0dff2532bc3710abe9ee75858d1896f20d815",
+    "templates/identity-spatial/index.html": "b2a26e40f2c043dd0dc8a5b75ab069eb4fc6fca6bdbfcac069eb2872c193c89f",
+    "templates/identity-spatial/states.html": "0dea6d87cd795d629673b0e32d72843c09e20551f13dc533021a091281748e83",
+    "templates/identity-spatial/components.mjs": "48b788ee5f050e829818748273178ee847182bef7049d4f2b6104a974638a861",
+    "templates/identity-spatial/states.mjs": "7a277a8fa5fed5b7fe9dbbcafca14e24f13075752bb39340c9593bf1cb3f87eb",
+    "templates/identity-spatial/tokens.css": "3f4f9bbcb39f84ce815770a7f6936bdcf8ff79a234b2ef93323f783e1e8dbea2",
+    "templates/identity-spatial/specimen.css": "a7228e1b5d55486f854bc4e603d1068dbc456fe6799a4deccee6a558249a0493",
+    "templates/identity-spatial/product.css": "7e4152ac2acdfbaf1c69e04433a24d5ae3c9538118ef17afb84058cd599b654f",
+    "templates/identity-spatial/specimen.mjs": "13807f07362ed2d9f37790f9e8d11db6a702bba2a95e0f0d6a67b709c6dae0fb",
+    "templates/identity-spatial/fonts/INSTRUMENT-SANS-LICENSE": "c27a3c53c3beed7f5c26853afa15991478ff7145d3754a36b0382f84e10c0d03",
+    "templates/identity-spatial/fonts/BRICOLAGE-GROTESQUE-LICENSE": "923f4ddf0fd39f9b7794ab0df7332f3d95dc43e8ad7ec2289d6d9e8491177f51",
+    "templates/identity-spatial/fonts/instrument-sans-latin-wght-normal.woff2": "2ee17598a98d8a59e4df8152d015bec9ab8e4d5672cc0ab42bef806b568e3971",
+    "templates/identity-spatial/fonts/bricolage-grotesque-latin-wght-normal.woff2": "a97804dc9fbe5fc972a08018c5eda4dab7ef2346f64c57e61419d05e6de4ea1c"
+  },
+  "verification": [
+    {
+      "command": "node --test tests/identity-components.test.mjs",
+      "exit": 0,
+      "result": "8 passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_design_standard.py",
+      "exit": 0,
+      "result": "10 passed"
+    },
+    {
+      "command": "tsc --noEmit --allowJs --checkJs --target ES2022 --module nodenext templates/identity-spatial/components.mjs templates/identity-spatial/specimen.mjs templates/identity-spatial/states.mjs",
+      "version": "5.9.3",
+      "exit": 0
+    },
+    {
+      "command": "./scripts/lint.sh",
+      "exit": 0
+    },
+    {
+      "command": "./s.sh quality",
+      "exit": 0
+    },
+    {
+      "command": "python3 scripts/verify-identity-template.py --out <evidence-directory>",
+      "exit": 0,
+      "result": "6 browser cases passed"
+    },
+    {
+      "command": "python3 ds build",
+      "exit": 0
+    },
+    {
+      "command": "premium audit_project.py --mode strict with sourceRoots templates/identity-spatial",
+      "exit": 0,
+      "result": "0 findings"
+    }
+  ],
+  "limitations": [
+    "Light identity theme only; no dark-theme claim.",
+    "No live account, permission, OAuth or revocation verification.",
+    "Whole-repository premium audit found existing catalog/generated-page findings; this slice used a scoped audit and repository-owned gates.",
+    "Human taste approval and independent review are not claimed."
+  ]
+}

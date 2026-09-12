@@ -86,6 +86,37 @@
       "real timestamps",
       "localized dates",
       "no fabricated events"
+    ],
+    "ActionLink": [
+      "native navigation",
+      "product-owned destination",
+      "text escaping"
+    ],
+    "LandingHero": [
+      "one h1",
+      "one decorative signature",
+      "decision before signature on phone"
+    ],
+    "SiteShell": [
+      "named home link",
+      "explicit plane",
+      "focusable skip target",
+      "one main landmark",
+      "product-owned navigation"
     ]
-  }
+  },
+  "implementation": "components.mjs",
+  "implemented": [
+    "ActionLink",
+    "Brand",
+    "Button",
+    "Empty",
+    "Failure",
+    "LandingHero",
+    "Loading",
+    "Notice",
+    "PageTitle",
+    "Portal",
+    "SiteShell"
+  ]
 }

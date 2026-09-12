@@ -6,6 +6,9 @@
 ## [Unreleased]
 
 ### Added
+- Identity template renderers for the shell, brand, portal, landing, page title,
+  controls and feedback. Generated arrival/state examples share the existing
+  CSS; component and artifact checks run through the design quality hook.
 - **Operator evidence template**: a portable ChefGroep status/provenance
   composition with source-to-freshness vector, fail-closed state contracts,
   local fonts and a dedicated surface brief.
