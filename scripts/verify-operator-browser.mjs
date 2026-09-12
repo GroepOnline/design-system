@@ -156,6 +156,24 @@ try {
           }
           return [...document.styleSheets].flatMap(sheet => duplicates(sheet.cssRules, 'base'));
         })(),
+        tokenizedLayout: (() => {
+          const expected = {
+            '.masthead':['gap'], '.brand':['gap','min-height','row-gap'],
+            '.brand img':['width','height'], '.product':['padding-left'],
+            '.step':['min-width'], '.brand .product':['margin-left'],
+            '.retry':['min-height','padding','gap','border-radius']
+          };
+          function inspect(rules) {
+            return [...rules].flatMap(rule => {
+              if (rule.type !== CSSRule.STYLE_RULE) return rule.cssRules ? inspect(rule.cssRules) : [];
+              return (expected[rule.selectorText] || []).flatMap(property => {
+                const value = rule.style.getPropertyValue(property);
+                return value && !value.includes('var(--') ? [rule.selectorText + ':' + property + '=' + value] : [];
+              });
+            });
+          }
+          return [...document.styleSheets].flatMap(sheet => inspect(sheet.cssRules));
+        })(),
         geometry: {
           heading: document.querySelector('h1').getBoundingClientRect().toJSON(),
           headingFontSize: parseFloat(getComputedStyle(document.querySelector('h1')).fontSize),
@@ -201,6 +219,11 @@ try {
         facts.duplicateSelectors,
         [],
         "each CSS scope has one block per selector",
+      );
+      assert.deepEqual(
+        facts.tokenizedLayout,
+        [],
+        "shared layout dimensions resolve through canonical tokens",
       );
       assert.ok(
         facts.theme.matches === 1 &&

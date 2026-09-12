@@ -48,6 +48,9 @@ const bodyHtml = OperatorPage({
 
 `acceptedSnapshot` belongs to the product, not this template. Render `bodyHtml`
 inside a document that loads `tokens.css`. All fonts and the vector are local.
+Its `:root` block owns spacing, control targets, mark dimensions, evidence-step
+width and compact heading sizes. Components reference these tokens; responsive
+rules select tokens without adding a second dimension source.
 The marker has intrinsic dimensions and a pale backing in dark mode so its
 canonical colors remain legible. It never changes color to indicate health.
 
