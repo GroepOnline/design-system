@@ -1,0 +1,133 @@
+:root {
+  color-scheme: light;
+  --canvas: #eaf1ec;
+  --paper: #f8faf6;
+  --ink: #103d3b;
+  --muted: #566d67;
+  --brand: #176857;
+  --brand-hover: #104f43;
+  --copper: #ae4e32;
+  --line: #c5d3ca;
+  --danger: #a53432;
+  --danger-soft: #f7e7e1;
+  --font-display: "Bricolage Grotesque Variable", sans-serif;
+  --font-body: "Instrument Sans Variable", sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius: 14px;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--canvas);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-color: #8ba69a var(--canvas);
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input[type="checkbox"],
+input[type="radio"],
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+a,
+summary {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+textarea {
+  resize: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  color: inherit;
+}
+:focus-visible {
+  outline: 3px solid var(--copper);
+  outline-offset: 4px;
+}
+::selection {
+  background: #b5d8c4;
+  color: var(--ink);
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: #8ba69a;
+  border: 2px solid var(--canvas);
+  border-radius: 9px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #587a68;
+}
+::-webkit-scrollbar-thumb:active {
+  background: var(--brand);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: fixed;
+  left: 20px;
+  top: -100px;
+  z-index: 10;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.skip-link:focus {
+  top: 12px;
+}
+@media (forced-colors: active) {
+  :root {
+    scrollbar-color: auto;
+  }
+  button,
+  input,
+  .button,
+  .paper-panel,
+  .profile-card {
+    border: 1px solid CanvasText !important;
+  }
+  .portal {
+    display: none;
+  }
+}
+
+h1, h2, h3 { text-wrap: balance; scroll-margin-top: 24px; }
+.metadata-list dd, .permission-row > div { min-width: 0; overflow-wrap: anywhere; }

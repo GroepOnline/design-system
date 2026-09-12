@@ -114,3 +114,12 @@
 - Initiële design language "Stroom" (teal accent)
 - Eerste prototype (`prototype-v1-stroom.html`, `stroom-prototype.html`)
 - Basis tokens.css
+
+## 2026-09-12: ChefGroep Auth design standard
+
+- Preserve the accepted Auth spatial reference and its source screenshots.
+- Add ChefGroep default quality contract, identity template, full design report,
+  canonical design skills, dependency-checked run chain and structural hook/CI gate.
+- Retain the vendor Design Report DOCX and preview unchanged with hashes; author
+  an explicitly adapted ChefGroep HTML report and print layout.
+- Define finite layered arrival, a reusable SVG identity mark and evidence limits.

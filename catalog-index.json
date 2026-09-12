@@ -3,7 +3,7 @@
   "counts": {
     "components": 50,
     "variants": 139,
-    "profiles": 4,
+    "profiles": 5,
     "patterns": 8,
     "extensions": 2
   },
@@ -1699,6 +1699,12 @@
   "profiles": [
     {
       "id": "expressive-motion",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md"
+    },
+    {
+      "id": "identity-spatial",
       "optional": true,
       "design": "DESIGN.md",
       "taste": "TASTE.md"

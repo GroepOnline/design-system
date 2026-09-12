@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "components": {
+    "Brand": [
+      "accessible home link",
+      "decorative SVG",
+      "fixed intrinsic size"
+    ],
+    "Portal": [
+      "decorative only",
+      "finite arrival",
+      "reduced-motion still"
+    ],
+    "Button": [
+      "idle",
+      "pending with stable width",
+      "disabled",
+      "focus",
+      "error recovery"
+    ],
+    "Field": [
+      "label",
+      "autocomplete",
+      "validation",
+      "first invalid focus"
+    ],
+    "Notice": [
+      "status or alert",
+      "server-confirmed success"
+    ],
+    "Loading": [
+      "readable pending text",
+      "finite cue",
+      "no fake progress"
+    ],
+    "Empty": [
+      "honest absence",
+      "next action"
+    ],
+    "Failure": [
+      "cause in user language",
+      "retry"
+    ],
+    "Confirm": [
+      "safe initial focus",
+      "modal containment",
+      "Escape when safe",
+      "focus return"
+    ],
+    "PageTitle": [
+      "one h1",
+      "page job",
+      "optional real action"
+    ],
+    "Navigation": [
+      "real links",
+      "current route",
+      "skip link"
+    ],
+    "AccountChoice": [
+      "native radio",
+      "shared hit area",
+      "server membership"
+    ],
+    "PermissionChoice": [
+      "native checkbox",
+      "scope explanation",
+      "required state"
+    ],
+    "ConnectionRow": [
+      "active",
+      "expired",
+      "revoked",
+      "pending revoke"
+    ],
+    "SessionRow": [
+      "current device",
+      "other device",
+      "clear revoke consequence"
+    ],
+    "SecurityMethods": [
+      "real upstream methods",
+      "explicit unavailable state"
+    ],
+    "Audit": [
+      "real timestamps",
+      "localized dates",
+      "no fabricated events"
+    ]
+  }
+}
