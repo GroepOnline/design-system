@@ -57,3 +57,24 @@ fonts. Font registration now lives in `product.css`; every browser case counts
 the two font faces without `specimen.css`. Fresh evidence manifests also record
 the repository, head, dirty state, runtime versions and hashes for every source
 that influences the render, so a screenshot can be tied to the code it tested.
+
+## 2026-09-12: Operational reuse needs the same component gate as identity
+
+The operator template declared eleven components but shipped one static page.
+Its headline said three layers were unproven while seven rows were unknown.
+It now generates examples from twelve callable exports, including `OperatorPage`,
+and the existing design gate enforces the same contract/export equality used by
+identity. The product-template guide lists the exact files each consumer copies.
+
+Regression checks caught two distinctions beyond the count: a healthy leaf set
+must not upgrade a stale or partial snapshot, and JavaScript normalizes an invalid
+date such as February 30 unless the calendar representation is checked. Both
+cases now stay unproven. The first phone screenshots also exposed a long metadata
+label beyond the header. Browser overflow evidence now compares scroll width
+against client width, accounting for the scrollbar rather than the outer viewport.
+
+The operator template keeps its approved paper/serif register. Dark-mode mark
+backing preserves the canonical SVG colors. Finite row arrival communicates
+the observation sequence and settles within 420ms; reduced motion is static.
+This work proves reusable presentation and local behavior, not production status,
+OAuth, a backend's complete required-layer set or a new user taste acceptance.

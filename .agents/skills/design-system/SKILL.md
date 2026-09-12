@@ -24,7 +24,12 @@ rendered phone/desktop, motion, focus, pending geometry and recovery evidence.
 ChefGroep's default quality floor applies to every route;
 its literal portal is specific to identity. For operational proof surfaces use
 `operator-dense`, `surfaces/operator-evidence.md` and the portable
-`templates/operator-evidence/` specimen. Use `locked-taste-design-run` to build
+`templates/operator-evidence/components.mjs` renderers. `OperatorPage` composes
+the complete operational page; `interactions.mjs` owns retry UI. The shared entry
+guide is `templates/README.md`. Regenerate with `node scripts/build-operator-template.mjs`
+and verify with `python3 scripts/verify-identity-template.py --template operator-evidence --out <evidence-directory>`.
+The existing quality hook checks both templates' declared exports and generated
+specimens. Use `locked-taste-design-run` to build
 and `artifact-template-design-report` to evaluate and package a reference.
 
 The catalog and `tokens.css` own the generic core. Profiles/extensions own scoped

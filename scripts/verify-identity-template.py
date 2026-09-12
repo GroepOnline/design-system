@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify identity components using the existing lightweight headless renderer."""
+"""Verify product components using the existing lightweight headless renderer."""
 
 import argparse
 import importlib.util
@@ -27,6 +27,11 @@ class Handler(SimpleHTTPRequestHandler):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument(
+        "--template",
+        choices=["identity-spatial", "operator-evidence"],
+        default="identity-spatial",
+    )
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
@@ -36,7 +41,15 @@ def main():
         subprocess.run(
             [
                 "node",
-                str(ROOT / "scripts/verify-identity-browser.mjs"),
+                str(
+                    ROOT
+                    / "scripts"
+                    / (
+                        "verify-operator-browser.mjs"
+                        if args.template == "operator-evidence"
+                        else "verify-identity-browser.mjs"
+                    )
+                ),
                 str(capture.find_browser()),
                 f"http://127.0.0.1:{server.server_port}",
                 str(args.out.resolve()),

@@ -11,7 +11,11 @@ Identity component reuse comes from `templates/identity-spatial/components.mjs`;
 its generated arrival/state specimens share the existing template tokens and CSS.
 At the representative/visual-review nodes use
 `scripts/verify-identity-template.py --out <evidence-directory>` and retain its
-manifest. This command tests the template, not the consumer's auth behavior.
+manifest. For operator pages use `templates/operator-evidence/components.mjs`
+and its complete `OperatorPage` entry point, regenerate with
+`node scripts/build-operator-template.mjs`, and add `--template operator-evidence`
+to the same verifier. `templates/README.md` lists each portable file set.
+These commands test templates, not the consumer's auth or operational behavior.
 
 Resolve: current user decision → real product/security contract → product DESIGN
 and UX contract → surface → extension → profile → generic defaults. Read only the

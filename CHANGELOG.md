@@ -6,6 +6,12 @@
 ## [Unreleased]
 
 ### Added
+- Callable operator evidence components and `OperatorPage`, generated overview
+  and state examples, safe native retry behavior, and a shared product-template
+  entry guide. Both templates now enforce declared exports and reproducible
+  specimens through the existing design quality hook.
+- Operator browser evidence for desktop, phone, dark and reduced motion,
+  including keyboard overflow, pending geometry, focus and retry lifecycle.
 - Complete identity contracts: reusable navigation, fields, account/permission
   choices, native confirmation behavior, connection/session rows, security methods
   and localized audit presentation with an interactive account specimen.
@@ -58,6 +64,10 @@
 - `CHANGELOG.md` -- dit bestand
 
 ### Fixed
+- Operator summary derives its count from supplied layers and respects snapshot
+  freshness. Missing/malformed timestamps remain unknown; mixed states keep
+  separate labels. Brand legibility, heading tracking and mobile metadata were
+  refined without changing the approved operator palette or type families.
 - Design reports now copy local fonts and license notices beside their HTML, so
   standalone publication no longer depends on the design-system directory tree.
 - Brain-templates verplaatst `brain/signals/Templates/` → `brain/Templates/`

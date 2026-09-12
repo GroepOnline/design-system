@@ -29,6 +29,16 @@ def main():
         cwd=ROOT,
         check=True,
     )
+    subprocess.run(
+        ["node", "scripts/build-operator-template.mjs", "--check"],
+        cwd=ROOT,
+        check=True,
+    )
+    subprocess.run(
+        ["node", "--test", "tests/operator-components.test.mjs"],
+        cwd=ROOT,
+        check=True,
+    )
     source = ROOT / "templates/design-report"
     provenance = json.loads((source / "provenance.json").read_text())
     for filename, key in [
