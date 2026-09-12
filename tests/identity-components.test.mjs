@@ -51,6 +51,20 @@ test("all declared implemented components have callable exports", async () => {
     [...contract.implemented].sort(),
   );
 });
+test("portable product CSS owns the bundled font registrations", () => {
+  const product = readFileSync(
+    new URL("../templates/identity-spatial/product.css", import.meta.url),
+    "utf8",
+  );
+  const specimen = readFileSync(
+    new URL("../templates/identity-spatial/specimen.css", import.meta.url),
+    "utf8",
+  );
+  assert.equal((product.match(/@font-face/g) || []).length, 2);
+  assert.match(product, /fonts\/bricolage-grotesque-latin-wght-normal\.woff2/);
+  assert.match(product, /fonts\/instrument-sans-latin-wght-normal\.woff2/);
+  assert.doesNotMatch(specimen, /@font-face|\.woff2/);
+});
 test("product copy is escaped in headlines, notices, errors and controls", () => {
   const hostile = '<img src=x onerror="alert(1)">&';
   const pieces = [

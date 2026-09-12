@@ -1,12 +1,54 @@
 /** Bounded local artifact QA. Uses real time and native CDP keyboard events. */
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
+import { fileURLToPath } from "node:url";
 
 const [browser, origin, out] = process.argv.slice(2);
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const sourcePaths = [
+  "scripts/verify-identity-browser.mjs",
+  "scripts/verify-identity-template.py",
+  "templates/identity-spatial/component-contracts.json",
+  "templates/identity-spatial/components.mjs",
+  "templates/identity-spatial/interactions.mjs",
+  "templates/identity-spatial/specimen.mjs",
+  "templates/identity-spatial/tokens.css",
+  "templates/identity-spatial/product.css",
+  "templates/identity-spatial/specimen.css",
+  "templates/identity-spatial/identity-mark.svg",
+  "templates/identity-spatial/fonts/bricolage-grotesque-latin-wght-normal.woff2",
+  "templates/identity-spatial/fonts/instrument-sans-latin-wght-normal.woff2",
+  "templates/identity-spatial/fonts/BRICOLAGE-GROTESQUE-LICENSE",
+  "templates/identity-spatial/fonts/INSTRUMENT-SANS-LICENSE",
+];
+
+function output(command, args) {
+  return execFileSync(command, args, { cwd: root, encoding: "utf8" }).trim();
+}
+
+function provenance() {
+  const sourceFiles = Object.fromEntries(
+    sourcePaths.map((path) => [
+      path,
+      createHash("sha256").update(readFileSync(join(root, path))).digest("hex"),
+    ]),
+  );
+  return {
+    repository: output("git", ["config", "--get", "remote.origin.url"]),
+    head: output("git", ["rev-parse", "HEAD"]),
+    dirty: output("git", ["status", "--porcelain"]) !== "",
+    runtimes: {
+      node: process.version,
+      browser: output(browser, ["--version"]),
+    },
+    verifier: relative(root, fileURLToPath(import.meta.url)),
+    sourceFiles,
+  };
+}
 const child = spawn(
   browser,
   ["--no-sandbox", "--disable-gpu", "--remote-debugging-port=0"],
@@ -120,12 +162,16 @@ try {
         headingCount: document.querySelectorAll('h1').length,
         images: [...document.images].every(i => i.complete && i.naturalWidth > 0),
         fonts: document.fonts.status,
+        portableFontFaces: [...document.styleSheets]
+          .filter(sheet => !sheet.href?.endsWith('/specimen.css'))
+          .flatMap(sheet => [...sheet.cssRules])
+          .filter(rule => rule.type === CSSRule.FONT_FACE_RULE).length,
         animations: document.getAnimations().map(a => ({state: a.playState, iterations: a.effect.getTiming().iterations, endTime: a.effect.getComputedTiming().endTime})),
         primary: (() => {const a=document.querySelector('.hero-actions .button');if(!a)return null;const r=a.getBoundingClientRect();return {left:r.left,right:r.right,bottom:r.bottom};})()
       })`);
       assert.equal(facts.headingCount, 1);
       assert.ok(
-        facts.scrollWidth <= width && facts.images && facts.fonts === "loaded",
+        facts.scrollWidth <= width && facts.images && facts.fonts === "loaded" && facts.portableFontFaces === 2,
         JSON.stringify(facts),
       );
       assert.ok(
@@ -413,6 +459,7 @@ try {
         schema: 1,
         scope:
           "local template rendering, keyboard, motion and component behavior; no live identity/API proof",
+        ...provenance(),
         cases,
       },
       null,

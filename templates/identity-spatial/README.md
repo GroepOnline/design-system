@@ -63,7 +63,8 @@ output or product-owned templates, never API content or user-supplied HTML.
 ## Sources and boundaries
 
 - `tokens.css` owns the shipped palette, typography and focus tokens.
-- `product.css` owns the auth page/control styling and finite motion.
+- `product.css` owns the bundled font registrations, auth page/control styling
+  and finite motion. A consumer does not need specimen CSS to render the type system.
 - `components.mjs` owns reusable HTML; `specimen.css` only frames the examples.
 - `component-contracts.json` lists all product contracts and explicitly identifies
   the implemented exports. Every declared component has an implementation; the gate rejects any mismatch.

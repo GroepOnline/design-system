@@ -47,3 +47,13 @@ are implemented in the same template source. Native browser checks cover require
 scope serialization, ineligible account choices, validation focus, modal Tab
 containment, duplicate prevention, promise success/failure and trigger focus return.
 A synchronous callback cannot silently close a confirmation as a successful write.
+
+## 2026-09-12: Portable proof must exercise the portable layer
+
+Exact-head review found that the specimen stylesheet registered the bundled fonts
+even though consumers were told to copy only tokens and product CSS. The browser
+therefore proved the demo while a minimal consumer silently fell back to system
+fonts. Font registration now lives in `product.css`; every browser case counts
+the two font faces without `specimen.css`. Fresh evidence manifests also record
+the repository, head, dirty state, runtime versions and hashes for every source
+that influences the render, so a screenshot can be tied to the code it tested.

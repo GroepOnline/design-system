@@ -1,16 +1,4 @@
 /* Specimen framing only. Product styling remains in tokens.css/product.css. */
-@font-face {
-  font-family: "Bricolage Grotesque Variable";
-  src: url("fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Instrument Sans Variable";
-  src: url("fonts/instrument-sans-latin-wght-normal.woff2") format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
 .template-note {
   max-width: 900px;
   margin: 0 auto;
