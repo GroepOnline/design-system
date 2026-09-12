@@ -14,7 +14,14 @@ than assuming the deleted `~/design-system` directory exists.
 
 Read the repository AGENTS.md and `.agents/meta/chefgroep-design.md`, then resolve
 `./s.sh context chefgroep <profile>`. For identity use `identity-spatial` and
-`surfaces/auth-landing.md`. ChefGroep's default quality floor applies to every route;
+`surfaces/auth-landing.md`. Reuse the renderers in
+`templates/identity-spatial/components.mjs`; `specimen.mjs` composes arrival and
+state/account examples. `interactions.mjs` implements native dialog lifecycle and first-invalid-field focus; every declared component must have a callable export. Change component source, then run
+`node scripts/build-identity-template.mjs`. The design quality hook checks these
+artifacts and the component contracts. Before visual review run
+`python3 scripts/verify-identity-template.py --out <evidence-directory>` for
+rendered phone/desktop, motion, focus, pending geometry and recovery evidence.
+ChefGroep's default quality floor applies to every route;
 its literal portal is specific to identity. For operational proof surfaces use
 `operator-dense`, `surfaces/operator-evidence.md` and the portable
 `templates/operator-evidence/` specimen. Use `locked-taste-design-run` to build

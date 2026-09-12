@@ -1,3 +1,16 @@
+@font-face {
+  font-family: "Bricolage Grotesque Variable";
+  src: url("fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans Variable";
+  src: url("fonts/instrument-sans-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 .site-shell {
   overflow: clip;
 }
@@ -1269,6 +1282,8 @@ legend {
 }
 
 .confirm-dialog {
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
   border: 1px solid var(--line);
   padding: 32px;
   border-radius: 18px;
@@ -1685,4 +1700,20 @@ legend {
 .activity-pips i { display: block; width: 3px; height: 12px; border-radius: 2px; background: currentColor; opacity: .55; }
 @media (hover: hover) and (pointer: fine) {
   .button:not(:disabled):hover { transform: translateY(-1px); }
+}
+
+/* Reusable identity form/record composition; existing palette and controls apply. */
+.identity-field { margin: 24px 0; }
+.identity-field-error { color: var(--danger); font-size: 13px; }
+.identity-rows, .identity-methods { list-style: none; padding: 0; margin: 0; }
+.identity-record { align-items: flex-start; }
+.identity-record .loading-state { min-height: 0; padding: 16px 0; }
+.identity-record .notice { margin-top: 16px; }
+.identity-record p, .identity-record h2, .account-option span { overflow-wrap: anywhere; }
+.identity-methods p { margin: 6px 0 0; color: var(--muted); }
+.confirm-dialog [data-confirm-error] { color: var(--danger); }
+@media (max-width: 760px) {
+  .identity-record { flex-direction: column; padding: 24px 0; }
+  .identity-record > .button { margin-left: 0; }
+  .identity-record > .connection-name { min-width: 0; }
 }

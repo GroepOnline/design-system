@@ -21,3 +21,39 @@ reusable unit is a fail-closed evidence vector, complete snapshot states and a
 compact editorial register. The first generated report also exposed a portability
 bug: relative font paths passed inside the monorepo but failed when the artifact
 directory was served alone. Reports now ship their own fonts and license notices.
+
+## 2026-09-12: Identity reuse needs executable component contracts
+
+The identity template had product CSS and a behavior checklist but one hand-built
+landing. `components.mjs` now owns the reusable HTML, and its arrival/state
+specimens are generated and checked by the existing quality hook. This prevents
+copy examples from drifting away from the components consumers actually use.
+The SVG copy is checked against the canonical extension asset.
+
+The first motion probe used virtual time, which advanced timers independently of
+animation playback. The replacement uses real browser time and native CDP keys.
+Six rendered cases verify finite arrival, reduced motion, skip-link focus, radio
+navigation, error recovery and stable pending buttons. This evidence applies to
+the template, not live OAuth, permissions or revocation. The mobile review also
+moved the recovery action into the first viewport by reducing specimen spacing.
+
+## 2026-09-12: Declared reuse must match implemented exports
+
+Exact-head review of the first extraction found that nine named contracts still
+had no renderer. The component gate now requires equality between declared
+contracts and callable exports, plus exported interaction helpers. Navigation,
+fields, choices, confirmations, records, security methods and audit presentation
+are implemented in the same template source. Native browser checks cover required
+scope serialization, ineligible account choices, validation focus, modal Tab
+containment, duplicate prevention, promise success/failure and trigger focus return.
+A synchronous callback cannot silently close a confirmation as a successful write.
+
+## 2026-09-12: Portable proof must exercise the portable layer
+
+Exact-head review found that the specimen stylesheet registered the bundled fonts
+even though consumers were told to copy only tokens and product CSS. The browser
+therefore proved the demo while a minimal consumer silently fell back to system
+fonts. Font registration now lives in `product.css`; every browser case counts
+the two font faces without `specimen.css`. Fresh evidence manifests also record
+the repository, head, dirty state, runtime versions and hashes for every source
+that influences the render, so a screenshot can be tied to the code it tested.

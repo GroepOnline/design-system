@@ -7,6 +7,11 @@ profile; `identity-spatial` belongs to auth, invitation, consent and account ent
 For status, release, deployment and provenance views select `operator-dense`,
 `surfaces/operator-evidence.md` and `templates/operator-evidence/`.
 The generic Signaal core remains usable without the ChefGroep extension.
+Identity component reuse comes from `templates/identity-spatial/components.mjs`;
+its generated arrival/state specimens share the existing template tokens and CSS.
+At the representative/visual-review nodes use
+`scripts/verify-identity-template.py --out <evidence-directory>` and retain its
+manifest. This command tests the template, not the consumer's auth behavior.
 
 Resolve: current user decision → real product/security contract → product DESIGN
 and UX contract → surface → extension → profile → generic defaults. Read only the
