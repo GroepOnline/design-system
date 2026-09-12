@@ -1,6 +1,10 @@
 ---
 name: communicate-clearly
 description: Controls report length while preserving evidence and explains external sources without overstating them. Use when a user requests concise handoffs, set verbosity, or plain-language explanations of dense material.
+invocable-by:
+- user
+- agent
+- subagent
 ---
 
 # Communicate Clearly

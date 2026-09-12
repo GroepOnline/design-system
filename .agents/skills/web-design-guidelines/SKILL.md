@@ -4,6 +4,13 @@ description: Audits real UI code and rendered behavior against current Web Inter
 owner: chefgroep
 domain: frontend-ui
 role: satellite
+ambient: true
+invocable-by:
+- user
+- agent
+- subagent
+disable-model-invocation: false
+context: {}
 ---
 
 # Interface audit

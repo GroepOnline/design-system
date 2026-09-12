@@ -4,6 +4,13 @@ description: Creates a complete source-grounded ChefGroep design evaluation and 
 owner: chefgroep
 domain: frontend-ui
 role: satellite
+ambient: true
+invocable-by:
+- user
+- agent
+- subagent
+disable-model-invocation: false
+context: {}
 ---
 
 # ChefGroep Design Report

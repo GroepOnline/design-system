@@ -39,6 +39,12 @@ def main():
         cwd=ROOT,
         check=True,
     )
+    operator = ROOT / "templates/operator-evidence"
+    operator_provenance = json.loads((operator / "provenance.json").read_text())
+    for relative, recorded in operator_provenance["files"].items():
+        actual = hashlib.sha256((operator / relative).read_bytes()).hexdigest()
+        if actual != recorded:
+            raise ValueError("Operator template provenance drift: " + relative)
     source = ROOT / "templates/design-report"
     provenance = json.loads((source / "provenance.json").read_text())
     for filename, key in [

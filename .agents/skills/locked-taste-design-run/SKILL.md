@@ -1,6 +1,10 @@
 ---
 name: locked-taste-design-run
 description: Reproduce high-craft frontend work from a locked design-system taste by grounding the product, resolving context, writing durable contracts, implementing one representative route and inspecting real renders before expansion. Use when serious ChefGroep frontend creation or redesign requires visual authorship and reproducibility.
+invocable-by:
+- user
+- agent
+- subagent
 ---
 
 # Locked taste design run
