@@ -60,6 +60,9 @@ of automatic agent orchestration; the primary agent executes its nodes.
 
 Canonical skills: `.agents/skills/`; shared procedure: `.agents/meta/`; chain:
 `chains/`; assets and product rules: `extensions/chefgroep/`; templates: `templates/`.
+Start at `templates/README.md` to choose the page entry point and portable files.
+Both identity and operator contracts have executable renderers checked by the
+same quality hook. Their examples are generated from those renderers.
 Use `scripts/install-design-skills.py` for backed-up, hash-recorded adapters.
 Consumers retain shipped copies and source hashes, with no cross-repo runtime
 imports. Do not edit a vendor cache as the sole source of a design rule.

@@ -57,3 +57,36 @@ fonts. Font registration now lives in `product.css`; every browser case counts
 the two font faces without `specimen.css`. Fresh evidence manifests also record
 the repository, head, dirty state, runtime versions and hashes for every source
 that influences the render, so a screenshot can be tied to the code it tested.
+
+## 2026-09-12: Operational reuse needs the same component gate as identity
+
+The operator template declared eleven components but shipped one static page.
+Its headline said three layers were unproven while seven rows were unknown.
+It now generates examples from twelve callable exports, including `OperatorPage`,
+and the existing design gate enforces the same contract/export equality used by
+identity. The product-template guide lists the exact files each consumer copies.
+
+Regression checks caught two distinctions beyond the count: a healthy leaf set
+must not upgrade a stale or partial snapshot, and JavaScript normalizes an invalid
+date such as February 30 unless the calendar representation is checked. Both
+cases now stay unproven. The first phone screenshots also exposed a long metadata
+label beyond the header. Browser overflow evidence now compares scroll width
+against client width, accounting for the scrollbar rather than the outer viewport.
+
+The operator template keeps its approved paper/serif register. Dark-mode mark
+backing preserves the canonical SVG colors. Finite row arrival communicates
+the observation sequence and settles within 420ms; reduced motion is static.
+This work proves reusable presentation and local behavior, not production status,
+OAuth, a backend's complete required-layer set or a new user taste acceptance.
+
+The follow-up visual review found that the desktop hero still delayed the
+evidence vector to y=479px. Desktop-only typography and spacing changes move it
+to y=322px at 1440px width and y=315px at 1280px, while keeping phone layout.
+The browser regression now requires the vector to start within 350px and end
+within 520px, with a display heading of at least 44px. A separate rendered-color
+comparison catches missing or stale light/dark theme-color metadata.
+
+CodeFactor found seven duplicate base selectors after optical refinements had
+been appended to the portable stylesheet. Those declarations now live in their
+first selector blocks. The browser checks parsed CSS scopes for duplicate
+selectors while allowing deliberate light/dark and responsive overrides.

@@ -57,6 +57,39 @@
       "44px target",
       "pending state",
       "focus return to result announcement"
+    ],
+    "OperatorPage": [
+      "one main landmark",
+      "focusable skip target",
+      "named home link",
+      "one conclusion h1",
+      "consumer-supplied snapshot state"
+    ]
+  },
+  "implementation": "components.mjs",
+  "implemented": [
+    "BrandMark",
+    "DataTable",
+    "EvidenceRegion",
+    "EvidenceVector",
+    "FreshnessStamp",
+    "MetricStrip",
+    "OperationalConclusion",
+    "OperatorPage",
+    "RetryAction",
+    "SectionNav",
+    "SnapshotFrame",
+    "StatusPill"
+  ],
+  "interactions": {
+    "bindRetry": [
+      "native button",
+      "promise-based result",
+      "duplicate prevention",
+      "pending geometry",
+      "safe error message",
+      "focus return to result",
+      "cleanup"
     ]
   }
 }
