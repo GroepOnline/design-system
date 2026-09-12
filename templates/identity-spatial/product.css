@@ -1277,6 +1277,7 @@ legend {
   color: var(--ink);
   background: var(--paper);
   box-shadow: 0 25px 100px #143c3355;
+  overscroll-behavior: contain;
 }
 .confirm-dialog::backdrop {
   background: #103d3b66;
@@ -1682,7 +1683,6 @@ legend {
 .button-activity[data-busy="true"] { visibility: visible; }
 .activity-pips { display: inline-flex; gap: 3px; align-items: center; height: 18px; }
 .activity-pips i { display: block; width: 3px; height: 12px; border-radius: 2px; background: currentColor; opacity: .55; }
-.confirm-dialog { overscroll-behavior: contain; }
 @media (hover: hover) and (pointer: fine) {
   .button:not(:disabled):hover { transform: translateY(-1px); }
 }
