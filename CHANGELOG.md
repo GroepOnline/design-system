@@ -64,6 +64,9 @@
 - `CHANGELOG.md` -- dit bestand
 
 ### Fixed
+- Compact operator desktop composition brings the evidence vector into the upper
+  viewport, with geometry regression checks at desktop/laptop sizes. Light/dark
+  browser theme-color metadata now matches each rendered canvas.
 - Operator summary derives its count from supplied layers and respects snapshot
   freshness. Missing/malformed timestamps remain unknown; mixed states keep
   separate labels. Brand legibility, heading tracking and mobile metadata were

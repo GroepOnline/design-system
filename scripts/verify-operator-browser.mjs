@@ -77,6 +77,7 @@ try {
   for (const page of ["index", "states"]) {
     for (const [viewport, width, height, dark, reduced] of [
       ["desktop", 1440, 1000, false, false],
+      ["laptop", 1280, 800, false, false],
       ["phone", 390, 844, false, false],
       ["dark", 390, 844, true, false],
       ["reduced", 390, 844, false, true],
@@ -141,6 +142,21 @@ try {
         images: [...document.images].every(i => i.complete && i.naturalWidth > 0),
         fonts: document.fonts.status,
         fontFaces: [...document.fonts].length,
+        geometry: {
+          heading: document.querySelector('h1').getBoundingClientRect().toJSON(),
+          headingFontSize: parseFloat(getComputedStyle(document.querySelector('h1')).fontSize),
+          evidence: document.querySelector('.flow').getBoundingClientRect().toJSON()
+        },
+        theme: (() => {
+          const matches = [...document.querySelectorAll('meta[name="theme-color"]')]
+            .filter(meta => meta.media && matchMedia(meta.media).matches);
+          const sample = document.createElement('span');
+          sample.style.color = matches[0]?.content || 'transparent';
+          document.body.append(sample);
+          const metaColor = getComputedStyle(sample).color;
+          sample.remove();
+          return {matches:matches.length, metaColor, canvas:getComputedStyle(document.body).backgroundColor};
+        })(),
         animations: document.getAnimations().map(a => ({state:a.playState,iterations:a.effect.getTiming().iterations,endTime:a.effect.getComputedTiming().endTime})),
         regions: [...document.querySelectorAll('.flow,.table-wrap')].every(r => r.tabIndex === 0 && r.getBoundingClientRect().right <= innerWidth),
         states: [...document.querySelectorAll('[data-snapshot]')].map(e => e.dataset.snapshot)
@@ -153,6 +169,20 @@ try {
           facts.fontFaces === 4 &&
           facts.regions,
         JSON.stringify(facts),
+      );
+      if (width >= 1200) {
+        assert.ok(
+          facts.geometry.evidence.top <= 350 &&
+            facts.geometry.evidence.bottom <= 520 &&
+            facts.geometry.heading.bottom <= 260 &&
+            facts.geometry.headingFontSize >= 44,
+          `operator evidence must fit the upper desktop viewport: ${JSON.stringify(facts.geometry)}`,
+        );
+      }
+      assert.ok(
+        facts.theme.matches === 1 &&
+          facts.theme.metaColor === facts.theme.canvas,
+        `theme-color must match the rendered canvas: ${JSON.stringify(facts.theme)}`,
       );
       assert.ok(
         facts.animations.every(

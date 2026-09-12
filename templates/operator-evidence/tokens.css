@@ -612,3 +612,19 @@ th {
   gap: 6px;
   font: 400 12px/1.5 var(--font-mono);
 }
+@media (min-width: 701px) {
+  .hero {
+    padding: 36px 0 24px;
+    gap: 48px;
+  }
+  .hero h1 {
+    max-width: 22ch;
+    font-size: clamp(44px, 4vw, 58px);
+    line-height: 1.02;
+  }
+  .hero .intro {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}

@@ -78,3 +78,10 @@ backing preserves the canonical SVG colors. Finite row arrival communicates
 the observation sequence and settles within 420ms; reduced motion is static.
 This work proves reusable presentation and local behavior, not production status,
 OAuth, a backend's complete required-layer set or a new user taste acceptance.
+
+The follow-up visual review found that the desktop hero still delayed the
+evidence vector to y=479px. Desktop-only typography and spacing changes move it
+to y=322px at 1440px width and y=315px at 1280px, while keeping phone layout.
+The browser regression now requires the vector to start within 350px and end
+within 520px, with a display heading of at least 44px. A separate rendered-color
+comparison catches missing or stale light/dark theme-color metadata.

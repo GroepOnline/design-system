@@ -3,6 +3,10 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import * as components from "../templates/operator-evidence/components.mjs";
 import * as interactions from "../templates/operator-evidence/interactions.mjs";
+import {
+  landingDocument,
+  statesDocument,
+} from "../templates/operator-evidence/specimen.mjs";
 
 const contracts = JSON.parse(
   readFileSync(
@@ -12,6 +16,21 @@ const contracts = JSON.parse(
     ),
   ),
 );
+
+test("both specimen documents declare light and dark browser chrome colors", () => {
+  for (const render of [landingDocument, statesDocument]) {
+    const html = render();
+    assert.match(
+      html,
+      /<meta name="theme-color" content="#f7f6f5" media="\(prefers-color-scheme: light\)">/,
+    );
+    assert.match(
+      html,
+      /<meta name="theme-color" content="#161513" media="\(prefers-color-scheme: dark\)">/,
+    );
+    assert.equal((html.match(/name="theme-color"/g) || []).length, 2);
+  }
+});
 
 test("every operator contract has exactly one callable export", () => {
   assert.deepEqual(

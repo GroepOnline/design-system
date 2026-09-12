@@ -90,12 +90,19 @@ python3 scripts/verify-identity-template.py --template operator-evidence --out /
 python3 scripts/design-standard-check.py
 ```
 
-The browser verifier covers desktop, phone, dark and reduced-motion renders,
+The browser verifier covers desktop, laptop, phone, dark and reduced-motion renders,
 font loading, page overflow, keyboard scroll, skip focus, retry failure/success,
 duplicate prevention, stable pending geometry and teardown. It records source
 hashes, Git head/dirty state and runtime versions beside the screenshots. Inspect
 the rendered evidence separately; passing checks do not establish taste or live
 health. Both templates run through the existing design quality hook and CI gate.
+
+The reference desktop and laptop cases keep the evidence vector at or above
+y=350px and fully within y=520px. The conclusion keeps a display size of at least
+44px. These geometry checks prevent the compact operator page from drifting into
+a large landing hero. Phone layout keeps its own spacing. Theme-color metadata
+selects the light/dark canvas through media queries; browser checks compare the
+selected value with the actual rendered background.
 
 Edit `specimen.mjs`, the components or styles, then regenerate. The SVG is copied
 byte-for-byte from `extensions/chefgroep/assets/identity-mark.svg`. Do not edit
