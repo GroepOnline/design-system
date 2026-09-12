@@ -7,3 +7,6 @@ Use for workbenches, consoles and long-running technical workflows.
 - Tabular numerics, status and timestamps are first-class. Decorative empty space is not.
 - Motion acknowledges state changes only; no ambient loops.
 - Desktop may be dense, but all actions retain keyboard/focus semantics and 44px coarse-pointer targets.
+- For operational truth summaries, preserve source, CI, release, deployment,
+  runtime, route and freshness as separate evidence layers. Unknown never folds
+  into healthy. Start from `templates/operator-evidence/` when that job matches.

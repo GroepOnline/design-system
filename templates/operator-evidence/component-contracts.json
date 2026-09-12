@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "components": {
+    "BrandMark": [
+      "decorative SVG",
+      "never a health indicator"
+    ],
+    "SnapshotFrame": [
+      "loading",
+      "current",
+      "stale",
+      "partial",
+      "refresh-error preserving last valid data",
+      "unavailable"
+    ],
+    "FreshnessStamp": [
+      "relative age",
+      "machine-readable timestamp",
+      "invalid and future timestamp handling"
+    ],
+    "OperationalConclusion": [
+      "fail-closed summary",
+      "separate unknown, stale, degraded, drift and down",
+      "no optimistic fallback"
+    ],
+    "EvidenceVector": [
+      "ordered source-to-observation layers",
+      "independent state per layer",
+      "keyboard-scrollable on narrow viewports"
+    ],
+    "MetricStrip": [
+      "attention counts",
+      "tabular numerics",
+      "no unproven telemetry"
+    ],
+    "SectionNav": [
+      "ordinary anchors",
+      "visible focus",
+      "horizontal overflow"
+    ],
+    "EvidenceRegion": [
+      "semantic heading",
+      "short authority description",
+      "empty and unavailable states"
+    ],
+    "DataTable": [
+      "semantic headers",
+      "focusable overflow region",
+      "preserved column meaning"
+    ],
+    "StatusPill": [
+      "symbol, label and color",
+      "localized source state",
+      "no color-only meaning"
+    ],
+    "RetryAction": [
+      "44px target",
+      "pending state",
+      "focus return to result announcement"
+    ]
+  }
+}

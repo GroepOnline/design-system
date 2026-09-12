@@ -6,7 +6,7 @@
   "provenance": "Bron: deze sessie, chefgroep-auth 405e8aa, de bewaarde desktop- en telefoonrenders, DESIGN.md, UX-CONTRACT.md en actuele Web Interface Guidelines. Canonieke eigenaar: GroepOnline/design-system.",
   "figures": [
     {
-      "src": "../../references/auth-astra-2026-09-11/landing-desktop.png",
+      "src": "evidence/landing-desktop.png",
       "alt": "Geaccepteerde ChefGroep Auth-landing met mineraalgroen canvas, grote petrolkleurige typografie en een gelaagde koperen toegangspoort.",
       "width": 1440,
       "height": 1000,

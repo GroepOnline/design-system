@@ -87,6 +87,10 @@ Only after the representative route passes, expand sibling routes. Reuse the est
 
 If a new requirement genuinely conflicts with the lock, stop that aesthetic change and surface the conflict. Do not quietly fork the taste inside one screen.
 
+For status, release and deployment views, use `surfaces/operator-evidence.md` and
+`templates/operator-evidence/`. Preserve the evidence vector as a truth contract;
+do not transplant the Auth portal into an operator surface.
+
 ## Phase 7: verification
 
 Run project formatter/lint, typecheck, tests, build, premium static audit when configured, browser interaction checks, keyboard/focus checks, narrow viewport, reduced motion and relevant failure states. A successful build is not visual proof and a screenshot is not behavioral proof. Both are required.

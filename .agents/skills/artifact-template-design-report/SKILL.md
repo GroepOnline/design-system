@@ -20,6 +20,9 @@ conclusion, appendix, notes and sources. No lorem ipsum, invented approval,
 performance measurements, production claims or causal proof from model identity.
 
 Use `python3 scripts/render-design-report.py <report.json> --output <report.html>`.
+The renderer must copy its local font files and license notices beside the HTML;
+verify the report by serving its output directory directly, so hidden repo-root
+asset dependencies fail during review.
 Render in the supported browser and inspect desktop, phone and print. Keep source,
 reference hashes and verification alongside the artifact. Export PDF only with a
 real available renderer; do not relabel HTML or claim DOCX fidelity without a

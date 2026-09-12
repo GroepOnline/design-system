@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Render the source-owned ChefGroep design report; no network or third-party modules."""
 import argparse
+import copy
 import hashlib
 import html
 import json
+import shutil
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -11,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SECTIONS = ('executive-summary', 'at-a-glance', 'introduction', 'key-findings',
             'context-and-conditions', 'patterns-in-evidence', 'implications',
             'recommendations', 'conclusion', 'appendix', 'notes', 'sources')
+FONT_SOURCE = ROOT / 'templates/identity-spatial/fonts'
 
 def safe_link(value):
     parsed = urlsplit(value)
@@ -40,15 +43,52 @@ def render(report):
     css = (ROOT/'templates/design-report/report.css').read_text()
     return f'''<!doctype html><html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#eaf1ec"><title>{e(report['title'])}</title><style>{css}</style><a class="skip" href="#content">Naar rapport</a><header><span class="wordmark" translate="no">ChefGroep.</span><span>Design standard / {e(report['date'])}</span></header><main id="content"><div class="cover"><p class="eyebrow">Design Report</p><h1>{e(report['title'])}</h1><p class="subtitle">{e(report['subtitle'])}</p><p class="status">{e(report['status'])}</p></div><div class="report-layout"><nav aria-label="Inhoudsopgave">{nav}</nav><article>{figures}{''.join(body)}</article></div></main><footer>{e(report['provenance'])}</footer></html>'''
 
+
+def copy_assets(output_dir):
+    """Ship every report with its local fonts and their licenses."""
+    destination = output_dir / 'fonts'
+    destination.mkdir(parents=True, exist_ok=True)
+    for source in FONT_SOURCE.iterdir():
+        if source.is_file():
+            shutil.copy2(source, destination / source.name)
+
+
+def package_figures(report, source_dir, output_dir, copy_files=True):
+    """Rewrite local figures to deterministic files inside the report folder."""
+    packaged = copy.deepcopy(report)
+    destination = output_dir / 'assets'
+    for figure in packaged.get('figures', []):
+        src = figure['src']
+        parsed = urlsplit(src)
+        if parsed.scheme == 'https':
+            continue
+        if parsed.scheme or src.startswith('//'):
+            raise ValueError('Report figure links must be relative or HTTPS')
+        source_root = source_dir.resolve(strict=True)
+        source = (source_dir / src).resolve(strict=True)
+        if source_root not in source.parents:
+            raise ValueError('Report figure must stay inside the source directory: ' + src)
+        if not source.is_file():
+            raise ValueError('Report figure is not a file: ' + src)
+        digest = hashlib.sha256(source.read_bytes()).hexdigest()[:12]
+        filename = digest + '-' + source.name
+        if copy_files:
+            destination.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination / filename)
+        figure['src'] = 'assets/' + filename
+    return packaged
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('source', type=Path)
     p.add_argument('--output', type=Path, required=True)
     args = p.parse_args()
     report = json.loads(args.source.read_text())
-    output = render(report)
+    packaged = package_figures(report, args.source.parent, args.output.parent)
+    output = render(packaged)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(output)
-    print(json.dumps({'output':str(args.output),'source_sha256':hashlib.sha256(args.source.read_bytes()).hexdigest(),'html_sha256':hashlib.sha256(output.encode()).hexdigest()}))
+    copy_assets(args.output.parent)
+    print(json.dumps({'output':str(args.output),'assets':str(args.output.parent / 'fonts'),'source_sha256':hashlib.sha256(args.source.read_bytes()).hexdigest(),'html_sha256':hashlib.sha256(output.encode()).hexdigest()}))
 if __name__ == '__main__':
     main()

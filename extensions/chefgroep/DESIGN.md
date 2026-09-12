@@ -67,3 +67,11 @@ three planes are a brand mark, never a live system-status legend.
 Identity permits decorative material gradients inside its isolated portal.
 Controls remain readable, matte and semantically colored. This explicit surface
 choice supersedes the generic no-gradient/blue-only rules for the illustration.
+
+## Operator evidence surfaces
+
+Status, release and deployment surfaces combine this extension with
+`operator-dense` and `templates/operator-evidence/`. Their signature is an ordered
+evidence vector whose layers retain independent state. They reuse the Auth bar for
+authorship, complete states, typography care and verification. They do not reuse
+the identity portal, copper material or arrival motion.

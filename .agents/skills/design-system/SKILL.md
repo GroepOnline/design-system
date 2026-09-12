@@ -15,7 +15,9 @@ than assuming the deleted `~/design-system` directory exists.
 Read the repository AGENTS.md and `.agents/meta/chefgroep-design.md`, then resolve
 `./s.sh context chefgroep <profile>`. For identity use `identity-spatial` and
 `surfaces/auth-landing.md`. ChefGroep's default quality floor applies to every route;
-its literal portal is specific to identity. Use `locked-taste-design-run` to build
+its literal portal is specific to identity. For operational proof surfaces use
+`operator-dense`, `surfaces/operator-evidence.md` and the portable
+`templates/operator-evidence/` specimen. Use `locked-taste-design-run` to build
 and `artifact-template-design-report` to evaluate and package a reference.
 
 The catalog and `tokens.css` own the generic core. Profiles/extensions own scoped

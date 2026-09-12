@@ -44,12 +44,25 @@ def main():
     renderer = load("render-design-report")
     for path in (ROOT / "reports").glob("*/report.json"):
         generated = path.with_name("index.html")
-        if generated.read_text() != renderer.render(json.loads(path.read_text())):
+        packaged = renderer.package_figures(
+            json.loads(path.read_text()), path.parent, generated.parent
+        )
+        if generated.read_text() != renderer.render(packaged):
             raise ValueError("Report render drift: " + str(path))
+        for figure in packaged.get("figures", []):
+            if not figure["src"].startswith("https://") and not (
+                generated.parent / figure["src"]
+            ).is_file():
+                raise ValueError("Missing packaged report figure: " + figure["src"])
     for path in [
         "extensions/chefgroep/assets/identity-mark.svg",
         "templates/identity-spatial/index.html",
         "templates/identity-spatial/tokens.css",
+        "templates/operator-evidence/index.html",
+        "templates/operator-evidence/tokens.css",
+        "templates/operator-evidence/component-contracts.json",
+        "templates/operator-evidence/identity-mark.svg",
+        "surfaces/operator-evidence.md",
         ".agents/meta/chefgroep-design.md",
     ]:
         if not (ROOT / path).is_file():

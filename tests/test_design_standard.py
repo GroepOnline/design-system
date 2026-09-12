@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -66,6 +67,64 @@ class DesignRunTests(unittest.TestCase):
         output = report.render(data)
         self.assertNotIn("<script>bad()", output)
         self.assertIn("&lt;script&gt;", output)
+
+    def test_report_assets_are_portable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output_dir = Path(tmp)
+            report.copy_assets(output_dir)
+            css = (ROOT / "templates/design-report/report.css").read_text()
+            self.assertIn("url('fonts/", css)
+            self.assertNotIn("../../templates/", css)
+            for name in (
+                "instrument-sans-latin-wght-normal.woff2",
+                "bricolage-grotesque-latin-wght-normal.woff2",
+                "INSTRUMENT-SANS-LICENSE",
+                "BRICOLAGE-GROTESQUE-LICENSE",
+            ):
+                self.assertTrue((output_dir / "fonts" / name).is_file())
+
+    def test_report_local_figures_are_packaged(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_dir = root / "source"
+            output_dir = root / "report"
+            source_dir.mkdir()
+            (source_dir / "figure.png").write_bytes(b"figure")
+            data = {"figures": [{"src": "figure.png"}]}
+            packaged = report.package_figures(data, source_dir, output_dir)
+            emitted = packaged["figures"][0]["src"]
+            self.assertTrue(emitted.startswith("assets/"))
+            self.assertTrue((output_dir / emitted).is_file())
+            self.assertEqual(data["figures"][0]["src"], "figure.png")
+
+    def test_report_rejects_figures_outside_source_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_dir = root / "source"
+            source_dir.mkdir()
+            outside = root / "outside.png"
+            outside.write_bytes(b"outside")
+            for src in ("../outside.png", str(outside)):
+                with self.assertRaisesRegex(ValueError, "inside the source directory"):
+                    report.package_figures(
+                        {"figures": [{"src": src}]}, source_dir, root / "report"
+                    )
+
+    def test_operator_snapshot_contract_includes_partial_state(self):
+        contracts = json.loads(
+            (ROOT / "templates/operator-evidence/component-contracts.json").read_text()
+        )
+        states = contracts["components"]["SnapshotFrame"]
+        self.assertEqual(states[:4], ["loading", "current", "stale", "partial"])
+
+    def test_operator_template_local_assets_are_self_contained(self):
+        template = ROOT / "templates/operator-evidence"
+        html = (template / "index.html").read_text()
+        refs = re.findall(r'(?:src|href)="([^"]+)"', html)
+        local = [ref for ref in refs if not ref.startswith(("#", "https://"))]
+        self.assertGreaterEqual(len(local), 3)
+        for ref in local:
+            self.assertTrue((template / ref).is_file(), ref)
 
     def test_installed_skill_is_self_contained(self):
         source = ROOT / ".agents/skills/design-system/SKILL.md"
