@@ -108,6 +108,15 @@ test("page conclusion never upgrades stale or incomplete snapshots", () => {
   }
 });
 
+test("conclusion fails closed when its snapshot state is unknown", () => {
+  const html = components.OperationalConclusion({
+    layers: [{ state: "healthy" }],
+    snapshotState: "accepted-by-an-unrecognized-client",
+  });
+  assert.match(html, /De waarneming is onbekend/);
+  assert.doesNotMatch(html, /Alle lagen zijn bewezen/);
+});
+
 test("refresh failures preserve supplied evidence and disclose failure", () => {
   const html = components.SnapshotFrame({
     state: "refresh-error",

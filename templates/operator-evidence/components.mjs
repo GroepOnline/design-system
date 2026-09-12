@@ -35,6 +35,18 @@ function stateOf(value) {
   return Object.hasOwn(states, value) ? value : "unknown";
 }
 
+const snapshotStates = Object.freeze({
+  loading: true,
+  current: true,
+  stale: true,
+  partial: true,
+  "refresh-error": true,
+  unavailable: true,
+});
+function snapshotStateOf(value) {
+  return Object.hasOwn(snapshotStates, value) ? value : "unknown";
+}
+
 export function BrandMark({
   href = "/",
   markUrl = "identity-mark.svg",
@@ -97,6 +109,7 @@ export function OperationalConclusion({
   eyebrow = "Operationele bewijsvoering",
   description = "Elke laag houdt zijn eigen bewijs. Een geslaagde runtimeprobe bevestigt geen release of bereikbaarheid.",
 } = {}) {
+  const acceptedSnapshotState = snapshotStateOf(snapshotState);
   const unproven = layers.filter((layer) => stateOf(layer.state) !== "healthy");
   const layerTitle =
     layers.length === 0
@@ -109,10 +122,11 @@ export function OperationalConclusion({
     unavailable: "Nog geen bewijs beschikbaar.",
     stale: "Deze waarneming is verouderd.",
     "refresh-error": "Verversen is niet gelukt.",
+    unknown: "De waarneming is onbekend.",
   };
   const title =
-    contextTitles[snapshotState] ||
-    (snapshotState === "partial" && unproven.length === 0
+    contextTitles[acceptedSnapshotState] ||
+    (acceptedSnapshotState === "partial" && unproven.length === 0
       ? "De waarneming is nog onvolledig."
       : layerTitle);
   const groups = Object.keys(states)
