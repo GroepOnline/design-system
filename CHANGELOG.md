@@ -6,6 +6,9 @@
 ## [Unreleased]
 
 ### Added
+- Complete identity contracts: reusable navigation, fields, account/permission
+  choices, native confirmation behavior, connection/session rows, security methods
+  and localized audit presentation with an interactive account specimen.
 - Identity template renderers for the shell, brand, portal, landing, page title,
   controls and feedback. Generated arrival/state examples share the existing
   CSS; component and artifact checks run through the design quality hook.

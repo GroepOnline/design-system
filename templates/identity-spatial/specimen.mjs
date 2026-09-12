@@ -1,4 +1,13 @@
 import {
+  AccountChoice,
+  Audit,
+  Confirm,
+  ConnectionRow,
+  Field,
+  Navigation,
+  PermissionChoice,
+  SecurityMethods,
+  SessionRow,
   ActionLink,
   Brand,
   Button,
@@ -18,16 +27,17 @@ function document(title, body, script = "") {
 }
 
 function navigation(page) {
-  return `<nav aria-label="Voorbeelden">${[
-    ["index", "Aankomst"],
-    ["states", "Meldingen"],
-  ]
-    .map(
-      ([path, label]) =>
-        `<a href="${path}.html"${path === page ? ' aria-current="page" class="active"' : ""}>${label}</a>`,
-    )
-    .join("")}</nav>`;
+  return Navigation({
+    label: "Voorbeelden",
+    currentHref: `${page}.html`,
+    items: [
+      { href: "index.html", label: "Aankomst" },
+      { href: "states.html", label: "Meldingen" },
+      { href: "account.html", label: "Keuzes" },
+    ],
+  });
 }
+
 const footerHtml = `${Brand({ href: "index.html" })}<span>Ontwerptemplate. Geen gekoppeld account.</span>`;
 
 export function landingDocument() {
@@ -119,5 +129,133 @@ export function statesDocument() {
       homeHref: "index.html",
     }),
     '<script type="module" src="states.mjs"></script>',
+  );
+}
+
+export function accountDocument() {
+  const fields = Field({
+    id: "example-name",
+    name: "displayName",
+    label: "Voorbeeldnaam",
+    autocomplete: "nickname",
+    hint: "Gebruik alleen voorbeeldgegevens.",
+    required: true,
+    error: "Vul een voorbeeldnaam in om de validatiefocus te bekijken.",
+  });
+  const accounts = AccountChoice({
+    id: "accounts",
+    name: "account",
+    legend: "Kies een voorbeeldaccount",
+    selectedValue: "example-a",
+    options: [
+      {
+        value: "example-a",
+        label: "Voorbeeldaccount A",
+        description: "Kiesbaar volgens de aangeleverde voorbeeldstatus.",
+        membership: "eligible",
+      },
+      {
+        value: "example-b",
+        label: "Voorbeeldaccount B",
+        description: "Voorbeeld van ontbrekende toegang.",
+        membership: "ineligible",
+        unavailableReason:
+          "Dit voorbeeldaccount heeft geen toegang tot deze dienst.",
+      },
+    ],
+  });
+  const permissions = PermissionChoice({
+    id: "permissions",
+    name: "scope",
+    legend: "Gevraagde voorbeeldrechten",
+    permissions: [
+      {
+        value: "example:read",
+        label: "Voorbeeldprofiel bekijken",
+        description: "Een vereist recht blijft zichtbaar en geselecteerd.",
+        required: true,
+      },
+      {
+        value: "example:write",
+        label: "Voorbeeldprofiel wijzigen",
+        description: "Dit optionele recht kun je zelf selecteren.",
+        required: false,
+        checked: false,
+      },
+    ],
+  });
+  const connections = [
+    ConnectionRow({
+      id: "example-connection",
+      name: "Voorbeeldverbinding",
+      description:
+        "Alle rijen op deze pagina zijn ontwerpficties, geen live toegang.",
+      state: "active",
+      actionId: "connection-revoke",
+    }),
+    ConnectionRow({
+      id: "expired-connection",
+      name: "Verlopen voorbeeld",
+      description: "De aangeleverde status is verlopen.",
+      state: "expired",
+    }),
+    ConnectionRow({
+      id: "revoked-connection",
+      name: "Ingetrokken voorbeeld",
+      description: "De aangeleverde status is ingetrokken.",
+      state: "revoked",
+    }),
+    ConnectionRow({
+      id: "pending-connection",
+      name: "Voorbeeld tijdens intrekken",
+      description:
+        "De actieve status blijft staan tot de consumer een resultaat bevestigt.",
+      state: "active",
+      actionId: "pending-revoke",
+      pending: true,
+    }),
+    ConnectionRow({
+      id: "failed-connection",
+      name: "Voorbeeld na een fout",
+      description: "Een mislukte poging wordt geen geslaagde intrekking.",
+      state: "active",
+      error: "Voorbeeldfout: de intrekking is niet bevestigd.",
+    }),
+  ].join("");
+  const sessions = [
+    SessionRow({
+      id: "current-session",
+      name: "Voorbeeld van dit apparaat",
+      description: "De consumer levert de huidige-apparaatstatus aan.",
+      current: true,
+      consequence: "Beëindigen meldt dit voorbeeldapparaat af.",
+      actionId: "session-revoke",
+    }),
+    SessionRow({
+      id: "other-session",
+      name: "Voorbeeld van een ander apparaat",
+      description: "Geen apparaatgegevens worden uit de browser afgeleid.",
+      consequence: "Beëindigen meldt het andere apparaat af.",
+      pending: true,
+      actionId: "pending-session",
+    }),
+  ].join("");
+  const contentHtml = `<section class="template-note">${PageTitle({ eyebrow: "Ontwerptemplate", title: "Bewuste keuzes.", description: "Voorbeeldgegevens laten accountkeuze, rechten en herstel zien. Deze pagina heeft geen account, API of echte mutaties." })}
+    <form id="example-form" novalidate>${fields}${accounts}${permissions}${Button({ label: "Bekijk validatiefocus", id: "validate-example", intent: "neutral", disabled: true })}<p id="validation-result" role="status"></p></form>
+    <section class="identity-section"><h2>Voorbeeldverbindingen</h2><ul class="identity-rows">${connections.replace('id="connection-revoke"', 'id="connection-revoke" disabled')}</ul></section>
+    <section class="identity-section"><h2>Voorbeeldsessies</h2><ul class="identity-rows">${sessions.replace('id="session-revoke"', 'id="session-revoke" disabled')}</ul></section>
+    <section class="identity-section"><h2>Voorbeeld van aanmeldmethoden</h2>${SecurityMethods({ state: "ready", methods: [{ label: "Voorbeeldmethode", description: "Een consumer geeft hier de werkelijk ingestelde methode door." }] })}${SecurityMethods({ state: "unavailable", message: "Voorbeeld: de upstream kan geen methoden leveren." })}</section>
+    <section class="identity-section"><h2>Voorbeeld van een gebeurtenissenlijst</h2><p>De volgende gebeurtenis is een vaste ontwerpfictie.</p>${Audit({ events: [{ actor: "Voorbeeldgebruiker", action: "Voorbeeld van een gewijzigde verbinding", timestamp: "2026-09-11T12:00:00Z" }] })}</section>
+  </section>${Confirm({ id: "connection-confirm", title: "Voorbeeldverbinding intrekken?", message: "Dit voorbeeld simuleert een mislukte intrekking. Er wordt niets verstuurd of gewijzigd.", actionLabel: "Intrekken" })}${Confirm({ id: "session-confirm", title: "Voorbeeldsessie beëindigen?", message: "Dit voorbeeld simuleert een fout. In een product beëindigt deze actie de geselecteerde sessie.", actionLabel: "Sessie beëindigen" })}`;
+  return document(
+    "ChefGroep identity · keuzes",
+    SiteShell({
+      contentHtml,
+      plane: "Ontwerptemplate",
+      navigationHtml: navigation("account"),
+      footerHtml,
+      homeHref: "index.html",
+    }),
+    '<script type="module" src="account.mjs"></script>',
   );
 }

@@ -55,7 +55,7 @@ try {
     });
   }
   const cases = [];
-  for (const page of ["index", "states"]) {
+  for (const page of ["index", "states", "account"]) {
     for (const [viewport, width, height, reduced] of [
       ["desktop", 1440, 1000, false],
       ["phone", 390, 844, false],
@@ -199,6 +199,171 @@ try {
         );
         await key("ArrowLeft", "ArrowLeft", 37);
       }
+      let dialogEvidence = null;
+      let recordEvidence = null;
+      if (page === "account") {
+        await evaluate("document.querySelector('#validate-example').focus()");
+        await key("Enter", "Enter", 13);
+        assert.ok(
+          await evaluate(
+            "document.activeElement.id === 'example-name' && document.activeElement.getAttribute('aria-invalid') === 'true'",
+          ),
+          "first invalid field focus",
+        );
+        await evaluate(
+          "document.querySelector('#example-name').value = 'Voorbeeld'; document.querySelector('#validate-example').focus()",
+        );
+        await key("Enter", "Enter", 13);
+        assert.ok(
+          await evaluate(
+            "document.querySelector('#example-name').getAttribute('aria-describedby') === 'example-name-hint' && document.querySelector('#example-name-error').hidden",
+          ),
+          "corrected field clears accessible error",
+        );
+        assert.deepEqual(
+          await evaluate(
+            "[...new FormData(document.querySelector('#example-form')).getAll('scope')]",
+          ),
+          ["example:read"],
+        );
+        assert.ok(
+          await evaluate(
+            "document.querySelector('#permissions-0').click(); document.querySelector('#accounts-1').click(); document.querySelector('#permissions-0').checked && !document.querySelector('#accounts-1').checked",
+          ),
+          "required permission and ineligible account cannot change",
+        );
+        await evaluate("document.querySelector('#permissions-1').click()");
+        assert.deepEqual(
+          await evaluate(
+            "[...new FormData(document.querySelector('#example-form')).getAll('scope')]",
+          ),
+          ["example:read", "example:write"],
+        );
+        await evaluate("document.querySelector('#connection-revoke').focus()");
+        await key("Enter", "Enter", 13);
+        assert.ok(
+          await evaluate(
+            "document.querySelector('#connection-confirm').open && document.activeElement.dataset.action === 'cancel'",
+          ),
+          "modal starts on safe action",
+        );
+        await key("Tab", "Tab", 9);
+        assert.ok(
+          await evaluate("document.activeElement.dataset.action === 'confirm'"),
+          "modal keyboard order",
+        );
+        await key("Tab", "Tab", 9);
+        assert.ok(
+          await evaluate("document.activeElement.dataset.action === 'cancel'"),
+          "modal focus containment",
+        );
+        await key("Tab", "Tab", 9);
+        await key("Enter", "Enter", 13);
+        assert.ok(
+          await evaluate(
+            "document.querySelector('#connection-confirm [data-action=confirm]').disabled",
+          ),
+          "confirmation pending",
+        );
+        await key("Escape", "Escape", 27);
+        assert.ok(
+          await evaluate("document.querySelector('#connection-confirm').open"),
+          "pending Escape cannot dismiss",
+        );
+        await delay(300);
+        assert.ok(
+          await evaluate(
+            "document.querySelector('#connection-confirm').open && !document.querySelector('#connection-confirm [data-confirm-error]').hidden && document.activeElement.dataset.action === 'cancel'",
+          ),
+          "failed mutation stays open and restores safe focus",
+        );
+        const { data: dialogData } = await command("Page.captureScreenshot", {
+          format: "png",
+        });
+        const dialogBytes = Buffer.from(dialogData, "base64");
+        const dialogFile = `account-dialog-${viewport}.png`;
+        writeFileSync(join(out, dialogFile), dialogBytes);
+        dialogEvidence = {
+          file: dialogFile,
+          sha256: createHash("sha256").update(dialogBytes).digest("hex"),
+        };
+        await key("Escape", "Escape", 27);
+        await delay(30);
+        assert.ok(
+          await evaluate(
+            "!document.querySelector('#connection-confirm').open && document.activeElement.id === 'connection-revoke'",
+          ),
+          "cancel returns trigger focus",
+        );
+        await evaluate(`(async () => {
+          const { Confirm } = await import('/templates/identity-spatial/components.mjs');
+          const { bindConfirm } = await import('/templates/identity-spatial/interactions.mjs');
+          const host = document.createElement('div');
+          host.innerHTML = Confirm({id:'contract-confirm',title:'Test',message:'Isolated browser contract test',actionLabel:'Confirm'});
+          document.body.append(host);
+          window.__confirmTest = {calls:0, host};
+          window.__confirmTest.binding = bindConfirm(host.firstElementChild, {onConfirm: () => {
+            window.__confirmTest.calls++;
+            return new Promise(resolve => {window.__confirmTest.resolve = resolve;});
+          }});
+          window.__confirmTest.binding.open();
+        })()`);
+        await key("Tab", "Tab", 9);
+        await key("Enter", "Enter", 13);
+        assert.equal(
+          await evaluate(
+            "document.querySelector('#contract-confirm [data-action=confirm]').click(); window.__confirmTest.calls",
+          ),
+          1,
+          "duplicate confirmation blocked",
+        );
+        await evaluate("window.__confirmTest.resolve()");
+        await delay(30);
+        assert.ok(
+          await evaluate(
+            "!document.querySelector('#contract-confirm').open && document.activeElement.id === 'connection-revoke'",
+          ),
+          "confirmed promise closes and returns focus",
+        );
+        await evaluate(`(async () => {
+          const { bindConfirm } = await import('/templates/identity-spatial/interactions.mjs');
+          window.__confirmTest.binding.destroy();
+          window.__confirmTest.binding = bindConfirm(window.__confirmTest.host.firstElementChild, {onConfirm: () => undefined});
+          window.__confirmTest.binding.open();
+        })()`);
+        await key("Tab", "Tab", 9);
+        await key("Enter", "Enter", 13);
+        assert.ok(
+          await evaluate(
+            "document.querySelector('#contract-confirm').open && !document.querySelector('#contract-confirm [data-confirm-error]').hidden",
+          ),
+          "missing promise cannot confirm success",
+        );
+        await evaluate(
+          "window.__confirmTest.binding.destroy(); window.__confirmTest.host.remove(); delete window.__confirmTest",
+        );
+        assert.ok(
+          await evaluate(
+            "[...document.querySelectorAll('.identity-record .button')].every(b => {const r=b.getBoundingClientRect(); return r.left>=0 && r.right<=innerWidth;})",
+          ),
+          "record actions fit narrow viewport",
+        );
+      }
+      if (page === "account") {
+        await evaluate(
+          "document.querySelector('#pending-connection').scrollIntoView({block:'start'})",
+        );
+        const { data: recordData } = await command("Page.captureScreenshot", {
+          format: "png",
+        });
+        const recordBytes = Buffer.from(recordData, "base64");
+        const recordFile = `account-records-${viewport}.png`;
+        writeFileSync(join(out, recordFile), recordBytes);
+        recordEvidence = {
+          file: recordFile,
+          sha256: createHash("sha256").update(recordBytes).digest("hex"),
+        };
+      }
       assert.equal(errors.length, 0, JSON.stringify(errors));
       const buttonProof = await evaluate(`(async () => {
         const { Button } = await import('/templates/identity-spatial/components.mjs');
@@ -235,6 +400,8 @@ try {
         ...facts,
         keyboard: "passed",
         pendingButton: "passed",
+        dialogEvidence,
+        recordEvidence,
       });
       await send("Target.closeTarget", { targetId });
     }

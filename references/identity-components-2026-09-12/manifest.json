@@ -7,7 +7,7 @@
       "viewport": "desktop",
       "reduced": false,
       "file": "index-desktop.png",
-      "sha256": "75cc8f7ffe5faa535c79ed85972482dd390658c76426cea81baa11799c108af1",
+      "sha256": "cf877a6d960d0e7fc6193c7d31ea3bfc4d9db8abd2654d32ac796334943f9b3c",
       "width": 1440,
       "scrollWidth": 1430,
       "headingCount": 1,
@@ -51,14 +51,16 @@
         "bottom": 682.609375
       },
       "keyboard": "passed",
-      "pendingButton": "passed"
+      "pendingButton": "passed",
+      "dialogEvidence": null,
+      "recordEvidence": null
     },
     {
       "page": "index",
       "viewport": "phone",
       "reduced": false,
       "file": "index-phone.png",
-      "sha256": "9d1ecbf732e9490dc25ac50895bbb8a544c20fcdab3d9d8488a52eaed4386b38",
+      "sha256": "453f2fd50cc99881ad8f09b71b8b68fcaf021d2f14590206090df09e26509866",
       "width": 390,
       "scrollWidth": 380,
       "headingCount": 1,
@@ -102,14 +104,16 @@
         "bottom": 534
       },
       "keyboard": "passed",
-      "pendingButton": "passed"
+      "pendingButton": "passed",
+      "dialogEvidence": null,
+      "recordEvidence": null
     },
     {
       "page": "index",
       "viewport": "reduced",
       "reduced": true,
       "file": "index-reduced.png",
-      "sha256": "37b1fd275ca3ac432d0d7912f733d5fead105ed012f42e222f9ccc00c8749f0c",
+      "sha256": "fe1373fca87d3876e5f473c473781ad5ca578bbf3b5ffb472e2b16459364cb9e",
       "width": 390,
       "scrollWidth": 380,
       "headingCount": 1,
@@ -122,14 +126,16 @@
         "bottom": 534
       },
       "keyboard": "passed",
-      "pendingButton": "passed"
+      "pendingButton": "passed",
+      "dialogEvidence": null,
+      "recordEvidence": null
     },
     {
       "page": "states",
       "viewport": "desktop",
       "reduced": false,
       "file": "states-desktop.png",
-      "sha256": "6e2e86a160a3390ba4f4df4da2141dca854272fe05a4236553f3fbe953a41e6b",
+      "sha256": "cb38eea4ecba0fa7ca1dd30e95756208a012e3a2d79cddf59c3a8d0903ee3b90",
       "width": 1440,
       "scrollWidth": 1430,
       "headingCount": 1,
@@ -138,14 +144,16 @@
       "animations": [],
       "primary": null,
       "keyboard": "passed",
-      "pendingButton": "passed"
+      "pendingButton": "passed",
+      "dialogEvidence": null,
+      "recordEvidence": null
     },
     {
       "page": "states",
       "viewport": "phone",
       "reduced": false,
       "file": "states-phone.png",
-      "sha256": "8182c06fd974c5737c7dbf5c3ad396eabb1cc98553f307d45f385c792aab4b40",
+      "sha256": "150f80065d8fbac166bcf4798b351decd4e32add71a92e732606a83bee4be997",
       "width": 390,
       "scrollWidth": 380,
       "headingCount": 1,
@@ -154,14 +162,16 @@
       "animations": [],
       "primary": null,
       "keyboard": "passed",
-      "pendingButton": "passed"
+      "pendingButton": "passed",
+      "dialogEvidence": null,
+      "recordEvidence": null
     },
     {
       "page": "states",
       "viewport": "reduced",
       "reduced": true,
       "file": "states-reduced.png",
-      "sha256": "8182c06fd974c5737c7dbf5c3ad396eabb1cc98553f307d45f385c792aab4b40",
+      "sha256": "150f80065d8fbac166bcf4798b351decd4e32add71a92e732606a83bee4be997",
       "width": 390,
       "scrollWidth": 380,
       "headingCount": 1,
@@ -170,15 +180,211 @@
       "animations": [],
       "primary": null,
       "keyboard": "passed",
-      "pendingButton": "passed"
+      "pendingButton": "passed",
+      "dialogEvidence": null,
+      "recordEvidence": null
+    },
+    {
+      "page": "account",
+      "viewport": "desktop",
+      "reduced": false,
+      "file": "account-desktop.png",
+      "sha256": "d8965263cdfc28351ad69f6d705eacfc32be7bdc5271e8ab06497780c5755a02",
+      "width": 1440,
+      "scrollWidth": 1430,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        }
+      ],
+      "primary": null,
+      "keyboard": "passed",
+      "pendingButton": "passed",
+      "dialogEvidence": {
+        "file": "account-dialog-desktop.png",
+        "sha256": "f526b5e98046a44c2e3990f1a1d766ffdd72a34ee8963f0326d397e474413ed9"
+      },
+      "recordEvidence": {
+        "file": "account-records-desktop.png",
+        "sha256": "545be2a067517d186841f32cee78b05055d0cede3eb70bdb529030749cb67164"
+      }
+    },
+    {
+      "page": "account",
+      "viewport": "phone",
+      "reduced": false,
+      "file": "account-phone.png",
+      "sha256": "dc41e870a7da0b24f144f006a56f1fed9b07016f6f838d01b80e1b1c768c11bb",
+      "width": 390,
+      "scrollWidth": 380,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 600
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 720
+        },
+        {
+          "state": "finished",
+          "iterations": 1,
+          "endTime": 840
+        }
+      ],
+      "primary": null,
+      "keyboard": "passed",
+      "pendingButton": "passed",
+      "dialogEvidence": {
+        "file": "account-dialog-phone.png",
+        "sha256": "591a725a98dad24610ead05e0ac15347ab5735b236bf9f3bd5a717816adbc260"
+      },
+      "recordEvidence": {
+        "file": "account-records-phone.png",
+        "sha256": "64cc3f0577685110d5e13479f7f3d44ff4edae6c218ef6f24f627ac1e082b2d3"
+      }
+    },
+    {
+      "page": "account",
+      "viewport": "reduced",
+      "reduced": true,
+      "file": "account-reduced.png",
+      "sha256": "b02c80258848acf1f3e68349538f916ccbebe218df9d9ee430c7af2da967e826",
+      "width": 390,
+      "scrollWidth": 380,
+      "headingCount": 1,
+      "images": true,
+      "fonts": "loaded",
+      "animations": [],
+      "primary": null,
+      "keyboard": "passed",
+      "pendingButton": "passed",
+      "dialogEvidence": {
+        "file": "account-dialog-reduced.png",
+        "sha256": "c0b0dcbf9bee8c62ab7ab802e6c65b3d176ecce08bb9056950f5b017807d4e65"
+      },
+      "recordEvidence": {
+        "file": "account-records-reduced.png",
+        "sha256": "1795c972b8befe79db3fbdd3fc998583d4b1ff7bfaa90d4789d66fe7b31ead7a"
+      }
     }
   ],
-  "timestamp": "2026-09-12T02:26:10.704353+00:00",
+  "timestamp": "2026-09-12T02:45:21.017961+00:00",
   "repository": "GroepOnline/design-system",
   "branch": "feat/auth-shell-template-20260912",
-  "base": "2d5cc8a02b2e06450933089134eb6658e643e3bd",
+  "base": "cb0373bd3dea1f1ef122804e672c3b61626c4b71",
   "authSource": "GroepOnline/chefgroep-auth@f86512c9a7c617bc21c652b8fb4ae6de83c73659",
-  "brief": "Extract reusable auth-grade components from the approved identity template without creating a second design authority.",
+  "brief": "Implement every declared reusable identity contract, including navigation, fields, choices, confirmation lifecycle, records, security methods and audit presentation.",
   "profile": "identity-spatial",
   "extension": "chefgroep",
   "surface": "surfaces/auth-landing.md",
@@ -193,16 +399,19 @@
   "tasteChanges": [],
   "sourceFiles": {
     "templates/identity-spatial/identity-mark.svg": "b07c37a378f54bd16e206b0c1800b90661b0daa81cd3accef32ed995d069b31e",
-    "templates/identity-spatial/README.md": "9787697bb61062a89c4e7d26bc568131f97c2738a61fab4327da1d13e0dec5fd",
-    "templates/identity-spatial/component-contracts.json": "1784c1c419aece96302a447ff0f0dff2532bc3710abe9ee75858d1896f20d815",
-    "templates/identity-spatial/index.html": "b2a26e40f2c043dd0dc8a5b75ab069eb4fc6fca6bdbfcac069eb2872c193c89f",
-    "templates/identity-spatial/states.html": "0dea6d87cd795d629673b0e32d72843c09e20551f13dc533021a091281748e83",
-    "templates/identity-spatial/components.mjs": "48b788ee5f050e829818748273178ee847182bef7049d4f2b6104a974638a861",
+    "templates/identity-spatial/README.md": "3712b89d8fdb1d1a70a9cbc06df730819cac6010fb0c37302242d2502e4e7660",
+    "templates/identity-spatial/account.mjs": "adf96621e336b58e85061d15a6f651244942a2212a252a9dcadbcbdf01fde231",
+    "templates/identity-spatial/component-contracts.json": "48c584af18c481379ea60434e13b43b0063eb64641c5550d5f4521673d83e696",
+    "templates/identity-spatial/interactions.mjs": "bd249be6707995c36daedd91c3d478f07bb06b94523bb4b66b6498224f1efaf3",
+    "templates/identity-spatial/index.html": "7e8027eaf2852cf4e638b1661ab277e5a13449a4c452c94c8852fd273c756ca7",
+    "templates/identity-spatial/states.html": "3d27307432db9995c360fd35b3dab9e797a98751bff62dcaae28a5f88bc449c3",
+    "templates/identity-spatial/components.mjs": "24adc41bf22d092aceb92a51220187eff95231d2a4fde3c8718f281a618c8777",
     "templates/identity-spatial/states.mjs": "7a277a8fa5fed5b7fe9dbbcafca14e24f13075752bb39340c9593bf1cb3f87eb",
     "templates/identity-spatial/tokens.css": "3f4f9bbcb39f84ce815770a7f6936bdcf8ff79a234b2ef93323f783e1e8dbea2",
-    "templates/identity-spatial/specimen.css": "a7228e1b5d55486f854bc4e603d1068dbc456fe6799a4deccee6a558249a0493",
-    "templates/identity-spatial/product.css": "7e4152ac2acdfbaf1c69e04433a24d5ae3c9538118ef17afb84058cd599b654f",
-    "templates/identity-spatial/specimen.mjs": "13807f07362ed2d9f37790f9e8d11db6a702bba2a95e0f0d6a67b709c6dae0fb",
+    "templates/identity-spatial/specimen.css": "6605e98f84bbb5035ad8ca9d40c830e7441d59f9a372bbce2df31896cb3abcd8",
+    "templates/identity-spatial/product.css": "f65b093ae4291413e7338ef4f77074e4c25163773571d18b38739576b40dbf20",
+    "templates/identity-spatial/account.html": "daa6b3f5d564c795c61b7f67384870ffb7d2da27c85b5cd5d300abfef84e90e2",
+    "templates/identity-spatial/specimen.mjs": "dd96b18765cb3500b71617c2bb8f1a24ce59415416df10397c203adfdaf41c0c",
     "templates/identity-spatial/fonts/INSTRUMENT-SANS-LICENSE": "c27a3c53c3beed7f5c26853afa15991478ff7145d3754a36b0382f84e10c0d03",
     "templates/identity-spatial/fonts/BRICOLAGE-GROTESQUE-LICENSE": "923f4ddf0fd39f9b7794ab0df7332f3d95dc43e8ad7ec2289d6d9e8491177f51",
     "templates/identity-spatial/fonts/instrument-sans-latin-wght-normal.woff2": "2ee17598a98d8a59e4df8152d015bec9ab8e4d5672cc0ab42bef806b568e3971",
@@ -212,7 +421,7 @@
     {
       "command": "node --test tests/identity-components.test.mjs",
       "exit": 0,
-      "result": "8 passed"
+      "result": "17 passed"
     },
     {
       "command": "python3 -m unittest discover -s tests -p test_design_standard.py",
@@ -220,7 +429,7 @@
       "result": "10 passed"
     },
     {
-      "command": "tsc --noEmit --allowJs --checkJs --target ES2022 --module nodenext templates/identity-spatial/components.mjs templates/identity-spatial/specimen.mjs templates/identity-spatial/states.mjs",
+      "command": "tsc --noEmit --allowJs --checkJs --target ES2022 --module nodenext templates/identity-spatial/*.mjs",
       "version": "5.9.3",
       "exit": 0
     },
@@ -235,7 +444,7 @@
     {
       "command": "python3 scripts/verify-identity-template.py --out <evidence-directory>",
       "exit": 0,
-      "result": "6 browser cases passed"
+      "result": "9 browser cases passed; 15 retained screenshots including dialogs and record states"
     },
     {
       "command": "python3 ds build",
@@ -252,5 +461,27 @@
     "No live account, permission, OAuth or revocation verification.",
     "Whole-repository premium audit found existing catalog/generated-page findings; this slice used a scoped audit and repository-owned gates.",
     "Human taste approval and independent review are not claimed."
+  ],
+  "implemented": [
+    "AccountChoice",
+    "ActionLink",
+    "Audit",
+    "Brand",
+    "Button",
+    "Confirm",
+    "ConnectionRow",
+    "Empty",
+    "Failure",
+    "Field",
+    "LandingHero",
+    "Loading",
+    "Navigation",
+    "Notice",
+    "PageTitle",
+    "PermissionChoice",
+    "Portal",
+    "SecurityMethods",
+    "SessionRow",
+    "SiteShell"
   ]
 }

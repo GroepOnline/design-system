@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import {
+  accountDocument,
   landingDocument,
   statesDocument,
 } from "../templates/identity-spatial/specimen.mjs";
@@ -10,6 +11,7 @@ const root = new URL("../templates/identity-spatial/", import.meta.url);
 const artifacts = new Map([
   ["index.html", landingDocument()],
   ["states.html", statesDocument()],
+  ["account.html", accountDocument()],
   [
     "identity-mark.svg",
     readFileSync(

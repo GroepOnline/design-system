@@ -36,3 +36,14 @@ Six rendered cases verify finite arrival, reduced motion, skip-link focus, radio
 navigation, error recovery and stable pending buttons. This evidence applies to
 the template, not live OAuth, permissions or revocation. The mobile review also
 moved the recovery action into the first viewport by reducing specimen spacing.
+
+## 2026-09-12: Declared reuse must match implemented exports
+
+Exact-head review of the first extraction found that nine named contracts still
+had no renderer. The component gate now requires equality between declared
+contracts and callable exports, plus exported interaction helpers. Navigation,
+fields, choices, confirmations, records, security methods and audit presentation
+are implemented in the same template source. Native browser checks cover required
+scope serialization, ineligible account choices, validation focus, modal Tab
+containment, duplicate prevention, promise success/failure and trigger focus return.
+A synchronous callback cannot silently close a confirmation as a successful write.
