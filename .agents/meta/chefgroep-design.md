@@ -4,6 +4,8 @@ Owner: `GroepOnline/design-system`. This is the procedure behind the thin design
 
 For ChefGroep work, select `extensions/chefgroep/` by default. Select an applicable
 profile; `identity-spatial` belongs to auth, invitation, consent and account entry.
+For status, release, deployment and provenance views select `operator-dense`,
+`surfaces/operator-evidence.md` and `templates/operator-evidence/`.
 The generic Signaal core remains usable without the ChefGroep extension.
 
 Resolve: current user decision → real product/security contract → product DESIGN

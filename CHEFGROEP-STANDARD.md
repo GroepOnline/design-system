@@ -9,6 +9,9 @@ For ChefGroep products, use the ChefGroep extension by default. Match the surfac
 profile to the product's job. `identity-spatial` defines entry/consent/account
 surfaces. Other products inherit authorship, complete states, semantic precision,
 responsive care and verification; they do not inherit a mandatory literal portal.
+`operator-dense` surfaces that summarize operational truth start from
+`templates/operator-evidence/`; its evidence vector is a semantic provenance
+pattern, not decorative product branding.
 
 ## What the standard requires
 

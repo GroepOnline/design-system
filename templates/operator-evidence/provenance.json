@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "source": {
+    "repository": "GroepOnline/ChefFactory",
+    "branch": "feat/status-auth-standard-20260912",
+    "base": "e9eb2fa7a2b4c2067b2b0700fca4f83608bb00c9",
+    "designRun": "deploy/chef-control-az-01/status-wall/status-wall-modern/design-runs/auth-standard-20260912"
+  },
+  "adaptation": "Static reusable composition with no copied runtime data, deployment logic or product authority.",
+  "files": {
+    "README.md": "35dee6090fc880c1c8c70b4c9a0d9ed90dc359d3774c038a70a5aa86a192430d",
+    "component-contracts.json": "34d744d10310ae4563270a7cafc6a05e598c137d4d761475acd4e3e3d10afd84",
+    "fonts/LICENSES.md": "049a50c2f63aa04c3f3b4e73ad6eb020d059406a32875ce63ec8ce2f456c7775",
+    "fonts/general-sans-400.woff2": "3ec2be771caf168b077ca05af4df1dace77088e2b3a27da570036e61be58a039",
+    "fonts/general-sans-500.woff2": "c30377df1de8444d07161725c751f458beec07c28034df2fd275d1aa587a239f",
+    "fonts/ibm-plex-mono-400.woff2": "0e485d913ba350547af0dc3066dd835687869925700be4321e8c2cd8c77db498",
+    "fonts/instrument-serif-400.woff2": "5eb09b5ac0e28b67c2f041c8ba6d244604ca0c0980d65912ab2d47fed84ddc31",
+    "identity-mark.svg": "b07c37a378f54bd16e206b0c1800b90661b0daa81cd3accef32ed995d069b31e",
+    "index.html": "3ae909225b243639ed4af8cf7fb839f3fb0be443b734cf6f403d866c66abd94d",
+    "tokens.css": "c787fb7a63556331256969f5e50e36335f2f37a37b795e051fcebd423a2846f4"
+  }
+}

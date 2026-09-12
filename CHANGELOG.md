@@ -6,6 +6,9 @@
 ## [Unreleased]
 
 ### Added
+- **Operator evidence template**: a portable ChefGroep status/provenance
+  composition with source-to-freshness vector, fail-closed state contracts,
+  local fonts and a dedicated surface brief.
 - **Home-cohesie: doorsneden van één blad**: elke home-sectie krijgt een
   doorsnede-regel (sectie-index uit de REGSECS-volgorde + gemeten frac +
   hairline) die een nieuwe verticale maatlijn op de wrap-rand kruist; die
@@ -49,6 +52,8 @@
 - `CHANGELOG.md` -- dit bestand
 
 ### Fixed
+- Design reports now copy local fonts and license notices beside their HTML, so
+  standalone publication no longer depends on the design-system directory tree.
 - Brain-templates verplaatst `brain/signals/Templates/` → `brain/Templates/`
   (waar `ds brain new` en `.obsidian/templates.json` ze verwachten): de 6
   wikilink-warnings in `ds check` zijn weg en `ds brain new` werkt weer

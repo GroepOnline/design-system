@@ -7,6 +7,8 @@ the ChefGroep Auth design language, so `report.css` is the owned HTML/print styl
 
 The canonical example source is `reports/chefgroep-auth-2026-09-12/report.json`.
 Keep all twelve sections from `report.schema.json`, replace content from current
-sources, then run `scripts/render-design-report.py`. Inspect desktop, phone and
+sources, then run `scripts/render-design-report.py`. The renderer copies local
+fonts and their licenses beside the HTML so the report remains portable when its
+directory is published or archived. Inspect desktop, phone and
 print. PDF/DOCX exports need their own actual renderer and verification; HTML is
 never renamed to imply another file format.
