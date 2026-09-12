@@ -85,3 +85,8 @@ to y=322px at 1440px width and y=315px at 1280px, while keeping phone layout.
 The browser regression now requires the vector to start within 350px and end
 within 520px, with a display heading of at least 44px. A separate rendered-color
 comparison catches missing or stale light/dark theme-color metadata.
+
+CodeFactor found seven duplicate base selectors after optical refinements had
+been appended to the portable stylesheet. Those declarations now live in their
+first selector blocks. The browser checks parsed CSS scopes for duplicate
+selectors while allowing deliberate light/dark and responsive overrides.

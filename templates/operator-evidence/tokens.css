@@ -109,16 +109,24 @@ a {
   justify-content: space-between;
   min-height: 72px;
   border-bottom: 1px solid var(--line-strong);
+  gap: 20px;
 }
 .brand {
   display: flex;
   align-items: center;
   gap: 11px;
   font-weight: 500;
+  text-decoration: none;
+  min-width: 0;
+  min-height: 44px;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
 }
 .brand img {
-  width: 29px;
-  height: 29px;
+  width: 36px;
+  height: 36px;
 }
 .product,
 .observed,
@@ -129,6 +137,10 @@ a {
 }
 .product {
   font-size: 13px;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  border-left: 1px solid var(--line-strong);
+  padding-left: 11px;
 }
 .observed,
 .mono {
@@ -174,6 +186,7 @@ a {
 .aside .mono {
   color: var(--ink);
   font-size: 13px;
+  overflow-wrap: anywhere;
 }
 .flow {
   position: relative;
@@ -197,10 +210,12 @@ a {
 .step {
   position: relative;
   z-index: 1;
-  min-width: 126px;
+  min-width: 150px;
   padding: 18px 14px 16px;
   border-right: 1px solid var(--line);
   background: var(--surface);
+  animation: observation-arrival 360ms var(--ease-out) var(--layer-delay, 0ms)
+    both;
 }
 .step:last-child {
   border: 0;
@@ -225,7 +240,8 @@ a {
   margin-top: 3px;
   color: var(--muted);
   font: 400 10px/1.5 var(--font-mono);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .unknown {
   color: var(--neutral);
@@ -384,15 +400,6 @@ th {
 }
 
 /* Portable component behavior and brand optics. Tokens above remain canonical. */
-.brand {
-  text-decoration: none;
-  min-width: 0;
-  min-height: 44px;
-  flex-wrap: wrap;
-  row-gap: 4px;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-}
 .brand-mark {
   display: flex;
   align-items: center;
@@ -401,41 +408,16 @@ th {
   width: 36px;
   height: 36px;
 }
-.brand img {
-  width: 36px;
-  height: 36px;
-}
 .brand-dot {
   color: #ae4e32;
-}
-.product {
-  letter-spacing: 0;
-  overflow-wrap: anywhere;
-  border-left: 1px solid var(--line-strong);
-  padding-left: 11px;
-}
-.masthead {
-  gap: 20px;
 }
 .observed {
   flex-shrink: 0;
   overflow-wrap: anywhere;
 }
-.aside .mono {
-  overflow-wrap: anywhere;
-}
-.step {
-  min-width: 150px;
-  animation: observation-arrival 360ms var(--ease-out) var(--layer-delay, 0ms)
-    both;
-}
 .step .pill {
   margin-top: 9px;
   font-size: 10px;
-}
-.detail {
-  white-space: normal;
-  overflow-wrap: anywhere;
 }
 .region + .region {
   margin-top: 24px;

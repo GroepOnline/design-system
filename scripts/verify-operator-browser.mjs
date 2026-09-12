@@ -142,6 +142,20 @@ try {
         images: [...document.images].every(i => i.complete && i.naturalWidth > 0),
         fonts: document.fonts.status,
         fontFaces: [...document.fonts].length,
+        duplicateSelectors: (() => {
+          function duplicates(rules, scope) {
+            const seen = new Set();
+            return [...rules].flatMap(rule => {
+              if (rule.type === CSSRule.STYLE_RULE) {
+                const duplicate = seen.has(rule.selectorText);
+                seen.add(rule.selectorText);
+                return duplicate ? [scope + ': ' + rule.selectorText] : [];
+              }
+              return rule.cssRules ? duplicates(rule.cssRules, rule.conditionText || rule.name || scope) : [];
+            });
+          }
+          return [...document.styleSheets].flatMap(sheet => duplicates(sheet.cssRules, 'base'));
+        })(),
         geometry: {
           heading: document.querySelector('h1').getBoundingClientRect().toJSON(),
           headingFontSize: parseFloat(getComputedStyle(document.querySelector('h1')).fontSize),
@@ -179,6 +193,11 @@ try {
           `operator evidence must fit the upper desktop viewport: ${JSON.stringify(facts.geometry)}`,
         );
       }
+      assert.deepEqual(
+        facts.duplicateSelectors,
+        [],
+        "each CSS scope has one block per selector",
+      );
       assert.ok(
         facts.theme.matches === 1 &&
           facts.theme.metaColor === facts.theme.canvas,
