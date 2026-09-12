@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: Maintains the ChefGroep design standard, profiles, reusable product templates and verified design reports in GroepOnline/design-system. Use for ChefGroep UI creation, design-system changes and auth-quality reuse.
+description: Maintains the ChefGroep design standard, profiles, reusable product templates and verified design reports in GroepOnline/design-system. Use when creating ChefGroep UI, changing the design system or reusing the Auth quality reference.
 owner: chefgroep
 domain: frontend-ui
 role: satellite

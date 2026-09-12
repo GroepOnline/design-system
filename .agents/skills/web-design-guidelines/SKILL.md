@@ -1,6 +1,6 @@
 ---
 name: web-design-guidelines
-description: Audits real UI code and rendered behavior against current Web Interface Guidelines plus ChefGroep design contracts. Use for accessibility, UX, responsive, motion and visual-quality reviews.
+description: Audits real UI code and rendered behavior against current Web Interface Guidelines plus ChefGroep design contracts. Use when reviewing accessibility, UX, responsive behavior, motion or visual quality.
 owner: chefgroep
 domain: frontend-ui
 role: satellite

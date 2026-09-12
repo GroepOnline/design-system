@@ -1,6 +1,6 @@
 ---
 name: artifact-template-design-report
-description: Creates a complete source-grounded ChefGroep design evaluation and reusable template report in the design-system repo, preserving the retained vendor Design Report reference and explicit evidence limits.
+description: Creates a complete source-grounded ChefGroep design evaluation and reusable template report in the design-system repo. Use when evaluating a product design, packaging a reusable reference or preserving the retained vendor Design Report with explicit evidence limits.
 owner: chefgroep
 domain: frontend-ui
 role: satellite

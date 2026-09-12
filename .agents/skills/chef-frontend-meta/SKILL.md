@@ -1,6 +1,6 @@
 ---
 name: chef-frontend-meta
-description: Routes ChefGroep frontend work to its canonical design standard, scoped profile, product template or design audit. Use for frontend design, visual quality, typography, logo, motion and complete product UI.
+description: Routes ChefGroep frontend work to its canonical design standard, scoped profile, product template or design audit. Use when working on frontend design, visual quality, typography, logo, motion or complete product UI.
 owner: chefgroep
 domain: frontend-ui
 role: router

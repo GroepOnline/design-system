@@ -1,6 +1,6 @@
 ---
 name: locked-taste-design-run
-description: Reproduce high-craft frontend work from a locked design-system taste: ground the real product first, resolve base/profile/extension/surface context, write durable DESIGN and UX contracts, implement one representative route, inspect real desktop/mobile renders, then expand without taste drift. Use for serious ChefGroep frontend creation or redesign where visual authorship and reproducibility matter.
+description: Reproduce high-craft frontend work from a locked design-system taste by grounding the product, resolving context, writing durable contracts, implementing one representative route and inspecting real renders before expansion. Use when serious ChefGroep frontend creation or redesign requires visual authorship and reproducibility.
 ---
 
 # Locked taste design run
