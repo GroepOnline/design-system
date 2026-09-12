@@ -379,10 +379,10 @@
       }
     }
   ],
-  "timestamp": "2026-09-12T02:45:21.017961+00:00",
+  "timestamp": "2026-09-12T02:55:10.540742+00:00",
   "repository": "GroepOnline/design-system",
   "branch": "feat/auth-shell-template-20260912",
-  "base": "cb0373bd3dea1f1ef122804e672c3b61626c4b71",
+  "base": "f303e06f87f33aa77b593b94a2d9ac548cacff61",
   "authSource": "GroepOnline/chefgroep-auth@f86512c9a7c617bc21c652b8fb4ae6de83c73659",
   "brief": "Implement every declared reusable identity contract, including navigation, fields, choices, confirmation lifecycle, records, security methods and audit presentation.",
   "profile": "identity-spatial",
@@ -409,7 +409,7 @@
     "templates/identity-spatial/states.mjs": "7a277a8fa5fed5b7fe9dbbcafca14e24f13075752bb39340c9593bf1cb3f87eb",
     "templates/identity-spatial/tokens.css": "3f4f9bbcb39f84ce815770a7f6936bdcf8ff79a234b2ef93323f783e1e8dbea2",
     "templates/identity-spatial/specimen.css": "6605e98f84bbb5035ad8ca9d40c830e7441d59f9a372bbce2df31896cb3abcd8",
-    "templates/identity-spatial/product.css": "f65b093ae4291413e7338ef4f77074e4c25163773571d18b38739576b40dbf20",
+    "templates/identity-spatial/product.css": "29696b948ba817a18147832d696edff01d0a1cb265c88f542f72225ed0224b2a",
     "templates/identity-spatial/account.html": "daa6b3f5d564c795c61b7f67384870ffb7d2da27c85b5cd5d300abfef84e90e2",
     "templates/identity-spatial/specimen.mjs": "dd96b18765cb3500b71617c2bb8f1a24ce59415416df10397c203adfdaf41c0c",
     "templates/identity-spatial/fonts/INSTRUMENT-SANS-LICENSE": "c27a3c53c3beed7f5c26853afa15991478ff7145d3754a36b0382f84e10c0d03",
@@ -454,6 +454,11 @@
       "command": "premium audit_project.py --mode strict with sourceRoots templates/identity-spatial",
       "exit": 0,
       "result": "0 findings"
+    },
+    {
+      "command": "CSS consolidation browser comparison against f303e06",
+      "exit": 0,
+      "result": "12 comparisons across 9 page cases and 3 open dialogs: all computed CSS properties and element bounds identical; retained reference images preserved. 11 of 15 fresh screenshots byte-identical, with localized rasterization differences in the other four."
     }
   ],
   "limitations": [
