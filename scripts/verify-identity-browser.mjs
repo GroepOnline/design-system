@@ -127,6 +127,22 @@ try {
           throw new Error(JSON.stringify(result.exceptionDetails));
         return result.result.value;
       };
+      const waitForDocument = async (url) => {
+        const deadline = Date.now() + 5000;
+        let last;
+        while (Date.now() < deadline) {
+          const result = await command("Runtime.evaluate", {
+            expression: "({url: location.href, readyState: document.readyState})",
+            returnByValue: true,
+          });
+          if (!result.exceptionDetails) {
+            last = result.result.value;
+            if (last.url === url && last.readyState === "complete") return;
+          }
+          await delay(25);
+        }
+        throw new Error(`document did not reach ${url}: ${JSON.stringify(last)}`);
+      };
       const key = async (key, code, windowsVirtualKeyCode) => {
         await command("Input.dispatchKeyEvent", {
           type: "keyDown",
@@ -157,12 +173,51 @@ try {
           },
         ],
       });
-      await command("Page.navigate", {
-        url: `${origin}/templates/identity-spatial/${page}.html`,
-      });
-      // Real wall-clock time includes font loading and the <=1.2s arrival.
-      await delay(1600);
-      await evaluate("document.fonts.ready");
+      const url = `${origin}/templates/identity-spatial/${page}.html`;
+      await command("Page.navigate", { url });
+      await waitForDocument(url);
+      // Navigation acknowledgement is not an animation-clock origin. Wait until
+      // the document has loaded and fonts are available, then observe the finite
+      // arrival animations themselves. This keeps the 1.2s CSS contract separate
+      // from variable renderer and font-loading latency.
+      const motion = await evaluate(`(async () => {
+        if (document.readyState !== 'complete') {
+          await new Promise(resolve => addEventListener('load', resolve, {once: true}));
+        }
+        await document.fonts.ready;
+        // Two frames establish the CSS animation timeline after style and font
+        // work. A CDP navigation response alone has no such guarantee.
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const animations = document.getAnimations();
+        const timing = animations.map(animation => {
+          const effect = animation.effect.getTiming();
+          return {
+            currentTime: animation.currentTime,
+            iterations: effect.iterations,
+            endTime: animation.effect.getComputedTiming().endTime,
+          };
+        });
+        const maxEndTime = Math.max(0, ...timing.map(item => item.endTime));
+        if (!Number.isFinite(maxEndTime) || maxEndTime > 1200 || timing.some(item => item.iterations !== 1)) {
+          return {settled: false, timing};
+        }
+        const settled = await Promise.race([
+          Promise.all(animations.map(animation => animation.finished)).then(() => true),
+          new Promise(resolve => setTimeout(
+            () => resolve(false),
+            Math.ceil(Math.max(0, ...timing.map(item => item.endTime - item.currentTime)) + 250),
+          )),
+        ]);
+        return {
+          settled,
+          timing,
+          animations: animations.map(animation => ({
+            currentTime: animation.currentTime,
+            playState: animation.playState,
+          })),
+        };
+      })()`);
+      assert.ok(motion.settled, JSON.stringify(motion));
       const facts = await evaluate(`({
         width: innerWidth, scrollWidth: document.documentElement.scrollWidth,
         headingCount: document.querySelectorAll('h1').length,
