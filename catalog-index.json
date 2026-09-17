@@ -5,7 +5,7 @@
     "variants": 139,
     "profiles": 5,
     "patterns": 8,
-    "extensions": 2
+    "extensions": 3
   },
   "components": [
     {
@@ -1975,6 +1975,31 @@
           "preferred": "default"
         },
         "settings": {
+          "include": [
+            "default"
+          ],
+          "preferred": "default"
+        }
+      }
+    },
+    {
+      "id": "ocx",
+      "label": "OCX operator surface",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md",
+      "components": {
+        "button": {
+          "include": [
+            "standard",
+            "primary",
+            "ghost",
+            "gbtn",
+            "with-kbd"
+          ],
+          "preferred": "standard"
+        },
+        "badge": {
           "include": [
             "default"
           ],
