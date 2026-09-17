@@ -1,0 +1,40 @@
+{
+  "component": "cluster",
+  "title": "cluster",
+  "desc": "wrapping inline group for actions, tags and controls",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "wrapping action cluster"
+    },
+    {
+      "id": "between",
+      "file": "self/between.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "distributed cluster"
+    }
+  ],
+  "docs": {
+    "use": [
+      "compose layouts from semantic regions",
+      "keep product-specific behavior outside the primitive"
+    ],
+    "avoid": [
+      "baking product navigation or data semantics into layout",
+      "using layout primitives as decorative cards"
+    ],
+    "contract": [
+      "works at 390px and desktop",
+      "does not impose product colors or copy"
+    ]
+  },
+  "cat": "layout"
+}

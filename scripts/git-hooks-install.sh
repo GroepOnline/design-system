@@ -5,11 +5,11 @@
 
 set -e
 
-HOOK_DIR=".git/hooks"
+HOOK_DIR="$(git rev-parse --git-path hooks 2>/dev/null || true)"
 SRC_DIR="scripts/git-hooks"
 
-if [ ! -d "$HOOK_DIR" ]; then
-    echo "✗ Geen .git directory gevonden — ben je in de repo root?"
+if [ -z "$HOOK_DIR" ]; then
+    echo "✗ Geen geldige git-omgeving gevonden — ben je in de repo root/worktree?"
     exit 1
 fi
 

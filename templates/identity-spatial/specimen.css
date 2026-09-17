@@ -1,0 +1,47 @@
+/* Specimen framing only. Product styling remains in tokens.css/product.css. */
+.template-note {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  line-height: 1.7;
+}
+.template-note a:not(.button) {
+  text-decoration: underline;
+}
+.hero-copy {
+  min-width: 0;
+}
+.state-selector {
+  border: 0;
+  padding: 0;
+  margin: 32px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.state-selector legend {
+  margin-bottom: 12px;
+}
+.state-selector label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 8px;
+  cursor: pointer;
+}
+#state-example {
+  min-height: 280px;
+}
+
+.state-selector input {
+  accent-color: var(--brand);
+}
+#state-example .empty-state {
+  padding: 32px 0;
+}
+.identity-section {
+  margin: 56px 0;
+}
+.identity-section > h2 {
+  font-size: 26px;
+}

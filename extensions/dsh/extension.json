@@ -1,0 +1,21 @@
+{
+  "id": "dsh",
+  "label": "DSH operator surface",
+  "optional": true,
+  "design": "DESIGN.md",
+  "taste": "TASTE.md",
+  "components": {
+    "button": {
+      "include": ["standard", "primary", "gbtn", "with-kbd"],
+      "preferred": "standard"
+    },
+    "badge": {
+      "include": ["default"],
+      "preferred": "default"
+    },
+    "settings": {
+      "include": ["default"],
+      "preferred": "default"
+    }
+  }
+}

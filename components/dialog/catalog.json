@@ -1,0 +1,43 @@
+{
+  "component": "dialog",
+  "title": "dialog",
+  "desc": "modal decision and focused task surface",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "native modal dialog"
+    },
+    {
+      "id": "destructive",
+      "file": "self/destructive.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "destructive confirmation dialog"
+    }
+  ],
+  "docs": {
+    "use": [
+      "native browser semantics waar beschikbaar",
+      "Escape en focusgedrag behouden",
+      "één overlaylaag per lokale taak"
+    ],
+    "avoid": [
+      "overlay voor gewone inline content",
+      "nested modals",
+      "motion als vereiste voor begrip"
+    ],
+    "contract": [
+      "focus zichtbaar",
+      "Escape sluit modal/popup",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "overlays"
+}

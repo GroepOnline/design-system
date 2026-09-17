@@ -24,6 +24,9 @@
   <div class="row">
     <button class="btn">Standaard</button>
     <button class="btn primary">Primaire actie</button>
+    <button class="btn subtle">Subtiel</button>
+    <button class="btn ghost">Ghost</button>
+    <button class="btn destructive">Verwijderen</button>
     <button class="btn" disabled>Uitgeschakeld</button>
   </div>
 </div>
@@ -41,9 +44,9 @@
 <div class="group">
   <div class="lbl">laden</div>
   <div class="row">
-    <button class="btn loading">Opslaan</button>
-    <button class="btn primary loading">Verwerken</button>
-    <button class="btn sm loading">Even geduld</button>
+    <button class="btn loading" aria-busy="true">Opslaan</button>
+    <button class="btn primary loading" aria-busy="true">Verwerken</button>
+    <button class="btn sm loading" aria-busy="true">Even geduld</button>
   </div>
 </div>
 
@@ -76,10 +79,10 @@
 <div class="group">
   <div class="lbl">icoon-knoppen (.gbtn)</div>
   <div class="row">
-    <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-plus"/></svg></button>
-    <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-mic"/></svg></button>
-    <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-search"/></svg></button>
-    <button class="gbtn solid"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
+    <button class="gbtn" aria-label="Toevoegen"><svg class="ic"><use href="../../../components/icons.svg#i-plus"/></svg></button>
+    <button class="gbtn" aria-label="Microfoon"><svg class="ic"><use href="../../../components/icons.svg#i-mic"/></svg></button>
+    <button class="gbtn outline" aria-label="Zoeken"><svg class="ic"><use href="../../../components/icons.svg#i-search"/></svg></button>
+    <button class="gbtn solid" aria-label="Versturen"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
   </div>
 </div>
 
@@ -93,15 +96,16 @@
 </div>
 
 <!-- CONTRACT
-  .btn            h32 px13 r-md border--line-strong, hover bg--surface-sunk, active scale .97
-  .btn.primary    text<->bg omgekeerd, hover opacity .87
-  .btn.sm         h28 font-12
-  .btn.lg         h38 font-14
-  .btn.loading    spinner::after, color transparent
-  .btn-group      connected buttons, shared border-collapse
-  .gbtn           28px ghost, hover --hover wash, active scale .92
-  .gbtn.solid     send-acties
-  kbd             mono 10px, border currentColor 30%, r3, p1px 5px
+  .btn             h32 / optical px12 / r-md / hairline; coarse pointer min-h44
+  .btn.primary     inverse high emphasis; max one primary per local decision context
+  .btn.subtle      quiet filled action; .btn.ghost = containerless lower emphasis
+  .btn.destructive semantic red only for destructive actions
+  .btn.sm/.lg      h28/h38; same interaction physics
+  .btn.loading     static activity mark + aria-busy; never infinite spinner
+  .gbtn            30px visual; coarse pointer 44px; accessible name required
+  .gbtn.solid      high-emphasis icon action; .gbtn.outline = persistent boundary
+  :active          1px press + subtle scale; :focus-visible 2px accent outline
+  kbd              compact mono key hint with quiet inset surface
 -->
 </body>
 </html>

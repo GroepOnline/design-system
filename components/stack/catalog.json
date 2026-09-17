@@ -1,0 +1,40 @@
+{
+  "component": "stack",
+  "title": "vertical stack",
+  "desc": "vertical rhythm without screen-specific margins",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "regular vertical rhythm"
+    },
+    {
+      "id": "compact",
+      "file": "self/compact.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "dense vertical rhythm"
+    }
+  ],
+  "docs": {
+    "use": [
+      "compose layouts from semantic regions",
+      "keep product-specific behavior outside the primitive"
+    ],
+    "avoid": [
+      "baking product navigation or data semantics into layout",
+      "using layout primitives as decorative cards"
+    ],
+    "contract": [
+      "works at 390px and desktop",
+      "does not impose product colors or copy"
+    ]
+  },
+  "cat": "layout"
+}

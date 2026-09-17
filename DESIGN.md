@@ -1,8 +1,8 @@
-# DESIGN.md -- v3 "Signaal"
+# DESIGN.md -- "Signaal"
 
 > De design language. Standalone systeem, niet gekoppeld aan één product.
 > v1 was "Stroom" (teal). v2 mat de Devin-producttaal als kalibratie.
-> **v3 (2026-08-22): de taal heet Signaal en staat op eigen benen.** De
+> **Sinds 2026-08-22 heet de actieve taal Signaal en staat ze op eigen benen.** De
 > Devin-meting (§2) blijft staan als historische kalibratie, niet als doel:
 > we klonen geen stijl, we meten er onze eigen beslissingen aan. Alles wat
 > Signaal herkenbaar maakt is van ons: de meetlat/doorsnede-layout (§8), de
@@ -72,8 +72,8 @@ Baseline is shadcn/ui-denken: simpele variants, hairline borders, rustige hovers
 
 | Component | Contract |
 |---|---|---|
-| `.btn` | h-32px, px-13px, r-6px, border hairline-strong. `.primary` = text↔bg omgekeerd. `:active` scale 0.97, `:focus-visible` outline 2px accent |
-| `.gbtn` | 28px ghost icon-button, hover = `--hover` wash. `:focus-visible` outline 2px accent. `.solid` voor send-acties |
+| `.btn` | h-32px, optische px-12px, r-6px, hairline. Families: default, `.primary`, `.subtle`, `.ghost`, `.destructive`; sm 28 / lg 38. `:active` = 1px press + scale .985; focus = 2px accent. Coarse pointer min-h 44. |
+| `.gbtn` | 30px visual icon-button, 44px op coarse pointer. Ghost default, `.outline` en `.solid` beschikbaar. Altijd toegankelijke naam; focus = 2px accent. |
 | `.badge` | pill, 12px, `.green` voor Open/merged, `.outline` voor meta |
 | card | r-12px, border `--line`, hover → `--line-strong`. Geen shadow in product |
 | composer | r-12px, focus = accent border + 3px `--accent-soft` ring |
@@ -152,7 +152,7 @@ Motion-fysica: zie `motion-spec.md` (spring 180/26, ease-out cubic-bezier(0.22,1
 
 ## 12. Status
 
-**v3 actief** -- de taal heet **Signaal**. prototype-v2.html blijft de levende
+**Signaal actief** -- de taal heet **Signaal**. prototype-v2.html blijft de levende
 referentie voor product-feel; §15-§17 zijn de v3-lagen (motion-canon, wow-tier,
 brain-koppeling). Naamvraag uit v2 is gesloten.
 
@@ -168,23 +168,29 @@ Schaal via tokens, nooit losse px-waarden in componenten:
 | `--text-xs` | 11.5 | labels, kbd, captions |
 | `--text-sm` | 12.5 | beschrijvingen, secondair |
 | `--text-md` | 13.5 | **UI-standaard** |
-| `--text-lg` | 15 | prose, kleine titels |
+| `--text-lg` | 15 | kleine titels |
+| `--text-prose` | 16 | doorlees-prose |
 | `--text-xl` | 18 | sectie-headers |
 | `--text-2xl` | 24 | pagina-titels |
 
 Regels:
 - Rendering: `antialiased` + `optimizeLegibility` op html (staat in tokens.css)
 - Headings: `--leading-head` 1.2, tracking `−0.02em`, `text-wrap: balance`
-- Prose: `.prose` = 15px / 1.62 / max 65ch (measure-cap)
+- Prose: `.prose` = `--text-prose` (16px) / 1.62 / max 65ch (measure-cap; 15px was onder de 16px-vloer voor doorlezen; web-typography skill ri 1)
 - Data (timer, diff, counts): `.num` = tabular-nums
 - Sectie-labels: `.caps` = 10.5px / 600 / +0.07em / faint
 - `text-wrap: pretty` op paragrafen
 - Display (site/blad): `--font-display` = Instrument Serif, gewicht 400,
   tracking −0.015em, alleen voor hero + sectie-titels + pagina-headers
+- Font stacks: `--font-display` = `Instrument Serif, General Sans, Georgia, serif`; body gebruikt
+  `--font` = `General Sans, system-ui, -apple-system, Segoe UI, sans-serif`. Display-face
+  subsetten (Latijn) + `font-display: swap`; payload-budget <200KB totaal.
+- Zoom: schaal overleeft 200% (scrollcontainers nooit height-fixed zonder overflow)
+  Controleer dit bij elke render-check; hiërarchie moet bij squint blijven bestaan
 
 ## §12 Iconen (v2.1, icon-system skill)
 
-- Grid 24×24, stroke 2, round caps/joins -- Lucide-conventie, sprite `components/icons.svg`
+- Grid 24×24, stroke 1.75, round caps/joins -- Lucide-conventie, sprite `components/icons.svg`
 - Maten: `.ic` (15, standaard) · `.ic-13` (compact) · `.ic-18` (knoppen) · `.ic-24` (hero)
 - Elke svg die een sprite-symbol gebruikt MOET `fill:none;stroke:currentColor` hebben (via `.ic` of expliciet) -- symbols erven niets van de sprite-root
 - Icon-tiles in navigatie: 28px tile / 14px icon; pagina-headers 44px / 20px
@@ -300,3 +306,15 @@ Signaal is een lerend systeem; de lus is expliciet:
    mesh-drift-fix, geen designkeuze.
 5. Design-evolutie (nieuwe skin, motief, kleurshift) = taste-log eerst, dan
    Brain-ingest, dan pas tokens.
+
+## §18 Extension-contexten
+
+Signaal heeft één universele design authority en optionele context-overlays.
+
+1. Root `DESIGN.md` + `taste/taste-rules.md` gelden universeel.
+2. `extensions/<id>/DESIGN.md` en `TASTE.md` mogen alleen delta's voor die scope bevatten.
+3. Een extension selecteert catalogus-id's maar bevat geen gekopieerde componentimplementatie.
+4. De Signaal-core importeert nooit een extension. De dependency-richting blijft consumer → library.
+5. Een product mag Signaal volledig niet gebruiken en moet functioneel blijven; extensions zijn versnellers, geen lifecycle-dependency.
+
+Een componentfamilie mag honderden immutable varianten bevatten. `active` blijft alleen de universele default; extensions hebben hun eigen `preferred` keuze zonder de catalogusstatus te muteren.

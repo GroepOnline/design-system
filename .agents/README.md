@@ -36,13 +36,15 @@ Tool-onafhankelijke fase-definities. Elk heeft een vaste `skills_chain`, `gates`
 |---|---|---|
 | `guard-generated.sh` | `preToolUse` (Write) | weigert handmatige edits in gegenereerde output (incl. scorecard) |
 | `brain-build.sh` | `afterFileEdit` | herbouwt `brain-site/` na een vault-note edit |
+| `signaal-context.sh` | `preToolUse` (Write) | toont optionele DESIGN/TASTE-context via `SIGNAAL_EXTENSION`; advisory, fail-open |
 
-Beide falen open (exit 0) als iets onverwachts is, behalve de expliciete deny.
+De context-hook is altijd advisory en fail-open. De bestaande hooks falen open bij onverwachte situaties, behalve de expliciete generated-output deny.
 Test los met:
 
 ```bash
 echo '{"tool_name":"Write","tool_input":{"path":"docs/index.html"}}' | .agents/hooks/guard-generated.sh
 echo '{"file_path":"brain/Home.md"}' | .agents/hooks/brain-build.sh
+SIGNAAL_EXTENSION=dsh .agents/hooks/signaal-context.sh </dev/null
 ```
 
 ## Gedeelde agent-taste (consumer)
@@ -84,3 +86,7 @@ Deze bestanden zijn output, niet handmatig bewerken. Zie
 Scorecard: `brain/eval/scorecard.json` (gegenereerd). Nightly:
 `.github/workflows/brain-eval.yml`. Shared fleet runner leeft in
 kater-dev-tools `scripts/run-taste-brain-eval.sh`.
+
+## Signaal context
+
+`.agents/hooks/signaal-context.sh` is advisory en fail-open. `SIGNAAL_PROFILE` kiest een generiek design/taste-profiel; `SIGNAAL_EXTENSION` kiest optionele productcontext. Resolution order: base, profile, extension. Geen van beide mag runtime/build-dependency worden.

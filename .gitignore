@@ -52,3 +52,13 @@ Pods/
 .env
 .env.local
 .env.*.local
+
+# Python interpreter caches (parallel verification lanes)
+__pycache__/
+*.py[cod]
+
+# Runtime distribution packages are tracked; only the legacy root package.json stays ignored.
+!packages/**/package.json
+
+# Local release bundles are reproducible CI artifacts, not source.
+/dist/

@@ -11,6 +11,36 @@
       "status": "active",
       "added": "2026-07-31",
       "note": "basis, hairline dividers, hover, status badges"
+    },
+    {
+      "id": "opensourceui-tasks-table",
+      "file": "external/opensourceui-tasks-table.html",
+      "origin": "external",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/table/tasks-table.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "take: compact task/due structure + direct completion affordance; reject: avatar-first ownership and mutable demo state as product contract",
+      "upstream": "opensourceui",
+      "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+      "sourcePath": "components/table/tasks-table.tsx",
+      "license": "MIT",
+      "fidelity": "interaction-study",
+      "take": [
+        "compact task/due table structure",
+        "direct completion affordance",
+        "responsive column reduction"
+      ],
+      "reject": [
+        "avatar-first ownership",
+        "hard-coded mutable demo state",
+        "line-through as only completed-state signal"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "contract-only"
+      },
+      "h": 370
     }
   ],
   "docs": {

@@ -1,0 +1,32 @@
+{
+  "name": "@signaal/interactions",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zero-dependency optional interaction helpers for Signaal controls.",
+  "keywords": [
+    "design-system",
+    "interactions",
+    "ui",
+    "signaal"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GroepOnline/design-system.git",
+    "directory": "packages/interactions"
+  }
+}

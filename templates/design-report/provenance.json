@@ -1,0 +1,6 @@
+{
+  "source": "openai-templates:artifact-template-design-report@0.1.1",
+  "reference_sha256": "ba1e11258ff52659318a321462a5e598c7bed33cf991329eb91150788fcd1a7b",
+  "preview_sha256": "19cd1f36fbc8d7efbf27a674004f2c22145514e77bee3459fb8cc4a89caf870d",
+  "adaptation": "Repo-owned HTML report adopts the user-approved ChefGroep Auth visual language; the vendor DOCX reference is retained byte-for-byte, not replaced."
+}

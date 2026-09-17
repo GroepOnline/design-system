@@ -1,0 +1,43 @@
+{
+  "component": "menu",
+  "title": "menu",
+  "desc": "action and selection menus",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "vertical action menu"
+    },
+    {
+      "id": "selection",
+      "file": "self/selection.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "checked menu items"
+    }
+  ],
+  "docs": {
+    "use": [
+      "native browser semantics waar beschikbaar",
+      "Escape en focusgedrag behouden",
+      "één overlaylaag per lokale taak"
+    ],
+    "avoid": [
+      "overlay voor gewone inline content",
+      "nested modals",
+      "motion als vereiste voor begrip"
+    ],
+    "contract": [
+      "focus zichtbaar",
+      "Escape sluit modal/popup",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "overlays"
+}

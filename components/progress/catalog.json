@@ -1,0 +1,40 @@
+{
+  "component": "progress",
+  "title": "progress",
+  "desc": "determinate work progress",
+  "entries": [
+    {
+      "id": "bar",
+      "file": "self/bar.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "determinate progress bar"
+    },
+    {
+      "id": "steps",
+      "file": "self/steps.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "discrete step progress"
+    }
+  ],
+  "docs": {
+    "use": [
+      "feedback dicht bij de veroorzakende actie",
+      "live regions alleen voor relevante updates"
+    ],
+    "avoid": [
+      "toast voor permanente informatie",
+      "oneindige motion zonder actieve state"
+    ],
+    "contract": [
+      "status semantics expliciet",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "feedback"
+}

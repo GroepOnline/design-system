@@ -1,0 +1,21 @@
+{
+  "id": "chefgroep",
+  "label": "ChefGroep",
+  "optional": true,
+  "design": "DESIGN.md",
+  "taste": "TASTE.md",
+  "components": {
+    "button": {
+      "include": ["default", "standard", "primary", "with-kbd", "gbtn"],
+      "preferred": "default"
+    },
+    "badge": {
+      "include": ["default"],
+      "preferred": "default"
+    },
+    "worked-row": {
+      "include": ["default"],
+      "preferred": "default"
+    }
+  }
+}

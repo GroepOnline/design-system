@@ -1,0 +1,25 @@
+{
+  "id": "search-results",
+  "label": "Search results",
+  "category": "navigation",
+  "optional": true,
+  "profiles": [
+    "operator-dense",
+    "mobile-touch"
+  ],
+  "components": {
+    "input": [
+      "search-beam"
+    ],
+    "status": [
+      "dot"
+    ],
+    "empty-state": [
+      "action"
+    ],
+    "pagination": [
+      "compact"
+    ]
+  },
+  "example": "example.html"
+}

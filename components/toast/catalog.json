@@ -1,0 +1,40 @@
+{
+  "component": "toast",
+  "title": "toast",
+  "desc": "transient acknowledgement and action feedback",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "transient status toast"
+    },
+    {
+      "id": "action",
+      "file": "self/action.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "toast with undo action"
+    }
+  ],
+  "docs": {
+    "use": [
+      "feedback dicht bij de veroorzakende actie",
+      "live regions alleen voor relevante updates"
+    ],
+    "avoid": [
+      "toast voor permanente informatie",
+      "oneindige motion zonder actieve state"
+    ],
+    "contract": [
+      "status semantics expliciet",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "feedback"
+}

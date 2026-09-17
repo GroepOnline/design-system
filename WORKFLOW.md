@@ -185,7 +185,17 @@ Open vault: Obsidian → Open folder as vault → `brain/`.
 Zolang GitHub Actions minuten op private repos beperkt zijn, draai je lokaal:
 ```bash
 ./ds check && python3 ds build --check
+./s.sh quality
 ```
+
+### Quality gate
+
+`./s.sh quality` is de harde, deterministische poort: accessible names/labels,
+quality-manifestdekking en catalogusvalidatie moeten allemaal slagen. Taste wordt
+expliciet apart beoordeeld met `quality/taste-rubric.json`. Gebruik voor visueel
+bewijs `./s.sh quality visual`; dat maakt de representatieve matrix van 18 cases
+in phone/desktop en light/dark. Screenshots zijn review-evidence, geen automatische
+smaakscore en geen runtime dependency.
 
 ## Bestandskaart
 

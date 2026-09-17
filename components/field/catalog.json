@@ -1,0 +1,81 @@
+{
+  "component": "field",
+  "title": "field",
+  "desc": "form structure: label, help, required and error semantics",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "label + control + help",
+      "family": "structure",
+      "h": 180
+    },
+    {
+      "id": "required",
+      "file": "self/required.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "required marker without replacing native required",
+      "family": "structure",
+      "h": 180
+    },
+    {
+      "id": "error",
+      "file": "self/error.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "error message paired with invalid control",
+      "family": "state",
+      "h": 180
+    },
+    {
+      "id": "inline",
+      "file": "self/inline.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "desktop label/control alignment; stacks on small screens",
+      "family": "structure",
+      "h": 180
+    }
+  ],
+  "docs": {
+    "use": [
+      "koppel label via for/id",
+      "help of error direct bij het control",
+      "required marker is aanvullend op native required"
+    ],
+    "avoid": [
+      "placeholder als vervanging voor label",
+      "alleen kleur gebruiken voor errors",
+      "errortekst los van het relevante control"
+    ],
+    "contract": [
+      "stacked default",
+      "inline stacks onder 620px",
+      "error text + aria-invalid on control"
+    ]
+  },
+  "cat": "forms",
+  "families": [
+    {
+      "id": "structure",
+      "label": "Structure",
+      "desc": "Label, description en control-compositie."
+    },
+    {
+      "id": "state",
+      "label": "Validation state",
+      "desc": "Error- en required-feedback zonder layout drift."
+    }
+  ]
+}

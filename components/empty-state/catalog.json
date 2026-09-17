@@ -1,0 +1,40 @@
+{
+  "component": "empty-state",
+  "title": "empty state",
+  "desc": "zero-data and no-result state",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "quiet empty state"
+    },
+    {
+      "id": "action",
+      "file": "self/action.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "empty state with recovery action"
+    }
+  ],
+  "docs": {
+    "use": [
+      "feedback dicht bij de veroorzakende actie",
+      "live regions alleen voor relevante updates"
+    ],
+    "avoid": [
+      "toast voor permanente informatie",
+      "oneindige motion zonder actieve state"
+    ],
+    "contract": [
+      "status semantics expliciet",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "feedback"
+}

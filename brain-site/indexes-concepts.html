@@ -18,7 +18,7 @@
   .rail {
     width: 280px; flex-shrink: 0; border-right: 1px solid var(--line);
     display: flex; flex-direction: column; background: var(--bg);
-    overflow-y: auto; padding: 14px 12px 12px;
+    overflow-y: auto; padding: 14px 12px 12px; scrollbar-width: none;
   }
   .brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 14px; font-weight: 500; font-size: var(--text-lg); text-decoration: none; color: var(--text); border-radius: var(--r-md); }
   .brand .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: var(--text-xs); font-weight: 600; transition: background var(--dur-fast), color var(--dur-fast); }
@@ -65,10 +65,8 @@
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
   /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
-  .rail { scrollbar-width: none; }
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
-  .cell pre { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
   .cell pre::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; }
   .wrap { max-width: 1280px; margin: 0 auto; padding: 36px 40px 64px; }
@@ -126,9 +124,8 @@
   .doc.use .dt { color: var(--open-green); }
   .doc.avoid .dt { color: var(--red); }
   .doc.contract .dt { color: var(--accent-ink); }
-  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; }
+  .doc li { font-size: var(--text-md); color: var(--text-muted); line-height: 1.6; margin: 4px 0; }
   .doc ul { padding-left: 18px; margin: 0; }
-  .doc li { margin: 4px 0; }
   .doc li::marker { color: var(--text-faint); }
   .doc code { font-family: var(--mono); font-size: 0.86em; background: var(--surface-sunk); padding: 1.5px 6px; border-radius: 4px; white-space: normal; word-break: break-word; line-height: 1.5; display: inline-block; }
   /* contract-chips: geen <li>-bullet, strakke lijst */
@@ -136,6 +133,10 @@
   .doc.contract li { margin: 6px 0; }
   /* ---- variant grid ---- */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }
+  .family-head { grid-column: 1/-1; display:flex; align-items:baseline; gap:12px; margin:18px 2px -2px; padding-top:14px; border-top:1px solid var(--line); }
+  .family-head:first-child { margin-top:0; padding-top:0; border-top:0; }
+  .family-head .family-title { font-size:var(--text-lg); font-weight:500; letter-spacing:var(--h-tracking); }
+  .family-head .family-desc { color:var(--text-faint); font-size:var(--text-sm); }
   .cell { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); transition: border-color var(--dur-fast); }
   .cell:hover { border-color: var(--line-strong); }
   .cell.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
@@ -160,7 +161,7 @@
   .cell summary { padding: 8px 14px; font-size: var(--text-sm); color: var(--text-faint); cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 7px; transition: color var(--dur-fast); }
   .cell summary:hover { color: var(--text); }
   .cell summary .copy { margin-left: auto; }
-  .cell pre { max-height: 280px; overflow: auto; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
+  .cell pre { max-height: 280px; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; padding: 12px 14px; margin: 0; background: var(--bg); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.55; color: var(--text-muted); border-top: 1px solid var(--line); white-space: pre-wrap; word-break: break-word; }
   .gen { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   /* ---- blad-cadans in de shell: meetlat + modeline zoals de home ---- */
   .sruler { position: fixed; left: 280px; top: 0; bottom: 26px; width: 20px; z-index: 30; pointer-events: none;
@@ -260,7 +261,7 @@
   <div class="rail-links">
   <div class="lbl caps">Primitieven</div>
   <a class="it" href="../components/badge/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-tag"/></svg></span><span class="nm">badge<span class="ds">git-status + meta</span></span><span class="act"></span></a>
-  <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">btn + gbtn + kbd</span></span><span class="act"></span></a>
+  <a class="it" href="../components/button/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-click"/></svg></span><span class="nm">button<span class="ds">button library: semantic families plus independent interaction models</span></span><span class="act"></span></a>
   <div class="lbl caps">Gesprek</div>
   <a class="it" href="../components/approval/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-alert"/></svg></span><span class="nm">approval<span class="ds">wacht-op-jou, toetsen 1/2/3</span></span><span class="act"></span></a>
   <a class="it" href="../components/composer/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-pencil"/></svg></span><span class="nm">composer<span class="ds">invoer + wachtrij</span></span><span class="act"></span></a>
@@ -274,10 +275,56 @@
   <a class="it" href="../components/home-shell/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">home-shell<span class="ds">agent-home: sidebar + gecentreerde composer-hero</span></span><span class="act"></span></a>
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
+  <div class="lbl caps">Motion</div>
+  <a class="it" href="../components/motion/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <div class="lbl caps">Forms</div>
+  <a class="it" href="../components/checkbox/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">checkbox<span class="ds">independent multi-selection and boolean acknowledgement</span></span><span class="act"></span></a>
+  <a class="it" href="../components/field/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-info"/></svg></span><span class="nm">field<span class="ds">form structure: label, help, required and error semantics</span></span><span class="act"></span></a>
+  <a class="it" href="../components/input/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-square-pen"/></svg></span><span class="nm">input<span class="ds">single-line text and search controls with explicit states</span></span><span class="act"></span></a>
+  <a class="it" href="../components/radio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">radio<span class="ds">exclusive selection within a named group</span></span><span class="act"></span></a>
+  <a class="it" href="../components/select/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-chevrons-updown"/></svg></span><span class="nm">select<span class="ds">native single-select control with predictable keyboard semantics</span></span><span class="act"></span></a>
+  <a class="it" href="../components/switch/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sliders"/></svg></span><span class="nm">switch<span class="ds">immediate on/off state with explicit checked semantics</span></span><span class="act"></span></a>
+  <a class="it" href="../components/textarea/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">textarea<span class="ds">multiline input for prose, notes and prompts</span></span><span class="act"></span></a>
+  <div class="lbl caps">Overlays</div>
+  <a class="it" href="../components/dialog/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">dialog<span class="ds">modal decision and focused task surface</span></span><span class="act"></span></a>
+  <a class="it" href="../components/menu/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">menu<span class="ds">action and selection menus</span></span><span class="act"></span></a>
+  <a class="it" href="../components/popover/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">popover<span class="ds">anchored transient content using native popover</span></span><span class="act"></span></a>
+  <a class="it" href="../components/sheet/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">sheet<span class="ds">edge-attached secondary workspace</span></span><span class="act"></span></a>
+  <a class="it" href="../components/tooltip/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-info"/></svg></span><span class="nm">tooltip<span class="ds">short contextual labels for compact controls</span></span><span class="act"></span></a>
+  <div class="lbl caps">Navigation</div>
+  <a class="it" href="../components/breadcrumb/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-chevron"/></svg></span><span class="nm">breadcrumb<span class="ds">hierarchical location trail</span></span><span class="act"></span></a>
+  <a class="it" href="../components/pagination/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-chevrons-left"/></svg></span><span class="nm">pagination<span class="ds">bounded page navigation</span></span><span class="act"></span></a>
+  <a class="it" href="../components/tabs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">tabs<span class="ds">switch between peer views without navigation</span></span><span class="act"></span></a>
+  <div class="lbl caps">Feedback</div>
+  <a class="it" href="../components/alert/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-alert"/></svg></span><span class="nm">alert<span class="ds">persistent contextual feedback</span></span><span class="act"></span></a>
+  <a class="it" href="../components/empty-state/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">empty-state<span class="ds">zero-data and no-result state</span></span><span class="act"></span></a>
+  <a class="it" href="../components/progress/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-clock"/></svg></span><span class="nm">progress<span class="ds">determinate work progress</span></span><span class="act"></span></a>
+  <a class="it" href="../components/skeleton/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">skeleton<span class="ds">loading placeholders for known layout</span></span><span class="act"></span></a>
+  <a class="it" href="../components/toast/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-message"/></svg></span><span class="nm">toast<span class="ds">transient acknowledgement and action feedback</span></span><span class="act"></span></a>
+  <div class="lbl caps">Data display</div>
+  <a class="it" href="../components/avatar/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-bot"/></svg></span><span class="nm">avatar<span class="ds">identity image or deterministic fallback</span></span><span class="act"></span></a>
+  <a class="it" href="../components/avatar-stack/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-bot"/></svg></span><span class="nm">avatar-stack<span class="ds">compact overlapping participant group</span></span><span class="act"></span></a>
+  <a class="it" href="../components/code/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file-code"/></svg></span><span class="nm">code<span class="ds">inline and block code presentation</span></span><span class="act"></span></a>
+  <a class="it" href="../components/data-grid/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">data-grid<span class="ds">dense native table for comparable records</span></span><span class="act"></span></a>
+  <a class="it" href="../components/diff/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-git-branch"/></svg></span><span class="nm">diff<span class="ds">line-oriented code or text change display</span></span><span class="act"></span></a>
+  <a class="it" href="../components/key-value/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">key-value<span class="ds">definition-list facts and metadata</span></span><span class="act"></span></a>
+  <a class="it" href="../components/metric/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-zap"/></svg></span><span class="nm">metric<span class="ds">single value with label delta and context</span></span><span class="act"></span></a>
+  <a class="it" href="../components/status/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-info"/></svg></span><span class="nm">status<span class="ds">semantic state indicator with text</span></span><span class="act"></span></a>
+  <a class="it" href="../components/timeline/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-clock"/></svg></span><span class="nm">timeline<span class="ds">ordered events and execution history</span></span><span class="act"></span></a>
+  <div class="lbl caps">Layout</div>
+  <a class="it" href="../components/app-shell/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">app-shell<span class="ds">generic rail/content frame without product navigation semantics</span></span><span class="act"></span></a>
+  <a class="it" href="../components/cluster/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">cluster<span class="ds">wrapping inline group for actions, tags and controls</span></span><span class="act"></span></a>
+  <a class="it" href="../components/grid/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">grid<span class="ds">responsive repeatable layout without fixed breakpoints</span></span><span class="act"></span></a>
+  <a class="it" href="../components/page/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">page<span class="ds">readable page/container width and gutters</span></span><span class="act"></span></a>
+  <a class="it" href="../components/section/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">section<span class="ds">semantic section spacing and optional boundary</span></span><span class="act"></span></a>
+  <a class="it" href="../components/split-pane/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">split-pane<span class="ds">two-region composition that collapses intentionally</span></span><span class="act"></span></a>
+  <a class="it" href="../components/stack/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">stack<span class="ds">vertical rhythm without screen-specific margins</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../taste-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
+  <a class="it sys" href="../profiles/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sliders"/></svg></span><span class="nm">profiles</span><span class="n">design overlays</span></a>
+  <a class="it sys" href="../patterns/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span><span class="nm">patterns</span><span class="n">composities</span></a>
   <a class="it sys" href="../brain-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">brain</span><span class="n">context</span></a>
   <a class="it sys" href="../DESIGN.md"><span class="tile"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="nm">DESIGN.md</span><span class="n">taal</span></a>
   <a class="it sys" href="../WORKFLOW.md"><span class="tile"><svg><use href="../components/icons.svg#i-queue"/></svg></span><span class="nm">WORKFLOW.md</span><span class="n">proces</span></a>
@@ -309,7 +356,7 @@
 <li><a href="./home.html">Home</a></li>
 <li><a href="./indexes-components.html">Components</a></li>
 <li><a href="./indexes-decisions.html">Decisions</a></li>
-</ul></div><div class="gen">gegenereerd uit brain/Indexes/Concepts.md op 2026-08-31 · bewerk de .md, niet deze pagina</div>
+</ul></div><div class="gen">gegenereerd uit brain/Indexes/Concepts.md op 2026-09-12 · bewerk de .md, niet deze pagina</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
 <div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">brain</span> · REV D<br><span id="splateDate"></span></div>

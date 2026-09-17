@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opensource UI - Slide to Confirm reference</title><link rel="stylesheet" href="../../../tokens.css"><style>
+body{padding:42px 30px;background:#fafafa;color:#171717;font-family:var(--font)}
+.ref{font:11px var(--mono);color:#737373;margin-bottom:20px} .track{position:relative;width:288px;height:56px;padding:4px;border-radius:999px;background:#f5f5f5;box-shadow:inset 0 1px 2px #00000014,inset 0 -2px 3px #0000000f}
+.label{position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:500;color:#737373;pointer-events:none;transition:.18s}
+.knob{position:absolute;left:4px;top:4px;width:48px;height:48px;border:0;border-radius:999px;background:#fafafa;cursor:grab;touch-action:none;box-shadow:0 1px 1px #0002,0 2px 3px #0002,inset 0 1px #fff;transition:transform .25s cubic-bezier(.32,.72,0,1)}
+.knob:active{cursor:grabbing} .track.done{background:#059669} .track.done .label{color:white} .track.done .knob{cursor:default} .arrow{font-size:18px}
+</style></head><body>
+<div class="ref">external / Opensource UI / slide-to-confirm-button.tsx / MIT / pinned d239c3463c</div>
+<div class="track" id="track"><span class="label" id="label">Slide to confirm</span><button class="knob" id="knob" aria-label="Slide to confirm"><span class="arrow">→</span></button></div>
+<script>
+const t=document.querySelector('#track'),k=document.querySelector('#knob'),l=document.querySelector('#label');let down=false,x=0,done=false;
+const max=()=>t.clientWidth-k.offsetWidth-8;function pos(n,animate=false){x=Math.max(0,Math.min(n,max()));k.style.transition=animate?'transform .25s cubic-bezier(.32,.72,0,1)':'none';k.style.transform=`translateX(${x}px)`;l.style.opacity=done?1:Math.max(.05,1-(x/max())*1.4)}
+k.onpointerdown=e=>{if(done)return;down=true;k.setPointerCapture(e.pointerId)};k.onpointermove=e=>{if(!down||done)return;const r=t.getBoundingClientRect();pos(e.clientX-r.left-28)};
+k.onpointerup=k.onpointercancel=()=>{if(!down)return;down=false;if(x>=max()-6){done=true;pos(max(),true);t.classList.add('done');l.textContent='Confirmed';k.innerHTML='✓'}else pos(0,true)};
+</script></body></html>

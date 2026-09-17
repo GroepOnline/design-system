@@ -1,0 +1,81 @@
+{
+  "component": "checkbox",
+  "title": "checkbox",
+  "desc": "independent multi-selection and boolean acknowledgement",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "unchecked + checked examples",
+      "family": "selection",
+      "h": 180
+    },
+    {
+      "id": "description",
+      "file": "self/description.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "checkbox with supporting copy",
+      "family": "selection",
+      "h": 180
+    },
+    {
+      "id": "indeterminate",
+      "file": "self/indeterminate.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "mixed parent state",
+      "family": "state",
+      "h": 180
+    },
+    {
+      "id": "disabled",
+      "file": "self/disabled.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "disabled checkbox",
+      "family": "state",
+      "h": 180
+    }
+  ],
+  "docs": {
+    "use": [
+      "checkbox voor onafhankelijke booleans",
+      "label is volledige hit target",
+      "beschrijving bij complexe keuze"
+    ],
+    "avoid": [
+      "checkbox voor exclusieve keuze",
+      "los checkbox-vak zonder label",
+      "alleen kleur als checked state"
+    ],
+    "contract": [
+      "native input underneath",
+      "17px visual, 44px coarse row",
+      "indeterminate via data/state + native JS when applicable"
+    ]
+  },
+  "cat": "forms",
+  "families": [
+    {
+      "id": "selection",
+      "label": "Selection",
+      "desc": "Independent booleans en multi-select."
+    },
+    {
+      "id": "state",
+      "label": "States",
+      "desc": "Mixed en disabled."
+    }
+  ]
+}

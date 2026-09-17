@@ -1,0 +1,119 @@
+{
+  "component": "input",
+  "title": "input",
+  "desc": "single-line text and search controls with explicit states",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "single-line text input",
+      "family": "text",
+      "h": 180
+    },
+    {
+      "id": "search",
+      "file": "self/search.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "search input with leading icon",
+      "family": "search",
+      "h": 180
+    },
+    {
+      "id": "search-beam",
+      "file": "self/search-beam.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "search composed with optional motion beam",
+      "family": "search",
+      "h": 180
+    },
+    {
+      "id": "prefix-suffix",
+      "file": "self/prefix-suffix.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "prefix and suffix affordances",
+      "family": "text",
+      "h": 180
+    },
+    {
+      "id": "invalid",
+      "file": "self/invalid.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "aria-invalid error state",
+      "family": "state",
+      "h": 180
+    },
+    {
+      "id": "readonly",
+      "file": "self/readonly.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "read-only information",
+      "family": "state",
+      "h": 180
+    },
+    {
+      "id": "disabled",
+      "file": "self/disabled.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "disabled unavailable control",
+      "family": "state",
+      "h": 180
+    }
+  ],
+  "docs": {
+    "use": [
+      "altijd een zichtbaar label via Field of equivalent",
+      "type=search voor zoekvelden",
+      "motion alleen als optionele wrapper"
+    ],
+    "avoid": [
+      "placeholder-only forms",
+      "beam als vereiste focusindicator",
+      "disabled gebruiken waar readonly bedoeld is"
+    ],
+    "contract": [
+      "h32 desktop / min44 coarse pointer",
+      "focus-visible accent ring",
+      "aria-invalid voor foutstate"
+    ]
+  },
+  "cat": "forms",
+  "families": [
+    {
+      "id": "text",
+      "label": "Text",
+      "desc": "Algemene single-line invoer."
+    },
+    {
+      "id": "search",
+      "label": "Search",
+      "desc": "Search affordances; motion blijft optioneel."
+    },
+    {
+      "id": "state",
+      "label": "States",
+      "desc": "Invalid, readonly en disabled."
+    }
+  ]
+}

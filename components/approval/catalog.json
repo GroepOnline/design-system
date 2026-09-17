@@ -11,6 +11,67 @@
       "status": "active",
       "added": "2026-07-27",
       "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+    },
+    {
+      "id": "opensourceui-slide-confirm",
+      "file": "external/opensourceui-slide-confirm.html",
+      "origin": "external",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "take: deliberate drag-to-commit + pointer semantics; reject: pill-heavy chrome, deep shadows, decorative success green",
+      "upstream": "opensourceui",
+      "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+      "sourcePath": "components/buttons/slide-to-confirm-button.tsx",
+      "license": "MIT",
+      "fidelity": "interaction-study",
+      "take": [
+        "deliberate drag-to-commit interaction",
+        "pointer capture semantics",
+        "clear confirmed state"
+      ],
+      "reject": [
+        "fully rounded pill treatment",
+        "deep material shadows",
+        "success green as default ChefGroep action color"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "contract-only"
+      },
+      "h": 260
+    },
+    {
+      "id": "guarded-drag",
+      "file": "self/guarded-drag.html",
+      "origin": "self-modified",
+      "source": "https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx",
+      "status": "locked",
+      "added": "2026-09-06",
+      "note": "ChefGroep guarded drag: deliberate commit without pill/shadow treatment",
+      "derivedFrom": {
+        "entry": "opensourceui-slide-confirm",
+        "upstream": "opensourceui",
+        "sourceRef": "d239c3463c984a099dd2cb67817a41fc0bcc876f",
+        "sourcePath": "components/buttons/slide-to-confirm-button.tsx"
+      },
+      "take": [
+        "deliberate drag-to-commit interaction",
+        "exact action context stays visible",
+        "keyboard confirmation remains possible"
+      ],
+      "reject": [
+        "pill shell",
+        "decorative success green",
+        "material shadow stack"
+      ],
+      "renderer": {
+        "react-web": "candidate",
+        "mcp-apps": "candidate",
+        "gtk-native": "native-candidate"
+      },
+      "h": 260
     }
   ],
   "docs": {

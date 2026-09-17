@@ -1,0 +1,40 @@
+{
+  "component": "pagination",
+  "title": "pagination",
+  "desc": "bounded page navigation",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "numbered pagination"
+    },
+    {
+      "id": "compact",
+      "file": "self/compact.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "previous/next compact"
+    }
+  ],
+  "docs": {
+    "use": [
+      "huidige locatie/state programmatisch aangeven",
+      "keyboard-volgorde logisch houden"
+    ],
+    "avoid": [
+      "divs als links of tabs",
+      "kleur als enige selectie-indicator"
+    ],
+    "contract": [
+      "aria-current voor locatie",
+      "tablist/tab/tabpanel waar van toepassing"
+    ]
+  },
+  "cat": "navigation"
+}

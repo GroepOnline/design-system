@@ -1,7 +1,7 @@
 {
   "component": "button",
   "title": "button",
-  "desc": "btn + gbtn + kbd",
+  "desc": "button library: semantic families plus independent interaction models",
   "entries": [
     {
       "id": "default",
@@ -10,7 +10,8 @@
       "source": null,
       "status": "active",
       "added": "2026-07-27",
-      "note": "oorspronkelijke demo, gemigreerd naar catalogus"
+      "note": "oorspronkelijke demo, gemigreerd naar catalogus",
+      "family": "emphasis"
     },
     {
       "id": "standard",
@@ -19,7 +20,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "basis btn, hairline border"
+      "note": "basis btn, hairline border",
+      "family": "emphasis"
     },
     {
       "id": "primary",
@@ -28,7 +30,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "inverse text/bg"
+      "note": "inverse text/bg",
+      "family": "emphasis"
     },
     {
       "id": "with-kbd",
@@ -37,7 +40,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "approval-patroon met toets-hints"
+      "note": "approval-patroon met toets-hints",
+      "family": "shortcut"
     },
     {
       "id": "gbtn",
@@ -46,7 +50,8 @@
       "source": null,
       "status": "locked",
       "added": "2026-07-27",
-      "note": "ghost icon + solid send"
+      "note": "ghost icon + solid send",
+      "family": "utility"
     },
     {
       "id": "shadcn-default",
@@ -55,7 +60,8 @@
       "source": "https://ui.shadcn.com",
       "status": "locked",
       "added": "2026-07-27",
-      "note": "zinc-schaal, radius 6, shadow-xs, 36px hoog"
+      "note": "zinc-schaal, radius 6, shadow-xs, 36px hoog",
+      "family": "references"
     },
     {
       "id": "devin-square",
@@ -64,26 +70,189 @@
       "source": "https://devin.ai",
       "status": "locked",
       "added": "2026-07-27",
-      "note": "radius 0, marketing-site stijl"
+      "note": "radius 0, marketing-site stijl",
+      "family": "references"
+    },
+    {
+      "id": "subtle",
+      "file": "self/subtle.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "quiet filled action without primary emphasis",
+      "family": "emphasis"
+    },
+    {
+      "id": "ghost",
+      "file": "self/ghost.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "text action with no persistent container",
+      "family": "emphasis"
+    },
+    {
+      "id": "destructive",
+      "file": "self/destructive.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "destructive action using reserved red semantics",
+      "family": "risk"
+    },
+    {
+      "id": "pending",
+      "file": "self/pending.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "quiet pending acknowledgement without spinner",
+      "family": "utility"
+    },
+    {
+      "id": "icon-leading",
+      "file": "self/icon-leading.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "labelled action with leading Lucide icon",
+      "family": "utility"
+    },
+    {
+      "id": "icon-outline",
+      "file": "self/icon-outline.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "outlined icon-only action with accessible label",
+      "family": "utility"
+    },
+    {
+      "id": "beam-cta",
+      "file": "self/beam-cta.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "pill CTA with independent traveling edge beam",
+      "family": "emphasis",
+      "interaction": "beam"
+    },
+    {
+      "id": "sweep-cta",
+      "file": "self/sweep-cta.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "outlined action with one-shot directional hover sweep",
+      "family": "emphasis",
+      "interaction": "sweep"
+    },
+    {
+      "id": "ripple-press",
+      "file": "self/ripple-press.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "icon action with pointer-position press ripple",
+      "family": "utility",
+      "interaction": "ripple"
+    },
+    {
+      "id": "split-action",
+      "file": "self/split-action.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "primary action plus independent menu trigger",
+      "family": "utility",
+      "interaction": "menu"
+    },
+    {
+      "id": "hold-confirm",
+      "file": "self/hold-confirm.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "destructive action confirmed by finite press-and-hold",
+      "family": "risk",
+      "interaction": "hold"
+    },
+    {
+      "id": "command-ack",
+      "file": "self/command-ack.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "keyboard-oriented action with finite acknowledgement",
+      "family": "shortcut",
+      "interaction": "ack"
     }
   ],
   "docs": {
     "use": [
       "acties die de gebruiker bewust start",
-      "primary max 1x per context",
-      "gbtn voor icon-only acties in balken"
+      "primary maximaal één keer per lokale besliscontext",
+      "subtle en ghost voor lagere visuele nadruk",
+      "destructive alleen voor daadwerkelijk destructieve acties",
+      "icon-only alleen met toegankelijke naam",
+      "kies interaction per buttondoel; motion is nooit verplicht voor de hele familie"
     ],
     "avoid": [
-      "twee primary naast elkaar",
-      "knop als navigatie — gebruik een link",
-      "emoji in of naast de knop"
+      "meerdere primary-acties naast elkaar",
+      "knop als navigatie, gebruik daarvoor een link",
+      "kleur als enige betekenis",
+      "infinite spinner of ambient loading motion",
+      "emoji in of naast de knop",
+      "dezelfde motion op elk knoptype plakken"
     ],
     "contract": [
-      ".btn h32 px13 r8",
-      ".primary text↔bg inverse",
-      ".gbtn 28px ghost",
-      "kbd in knop voor toets-hints"
+      ".btn h32, sm h28, lg h38; coarse pointer min-h44",
+      ".primary inverse high emphasis",
+      ".subtle quiet filled, .ghost containerless, .destructive semantic red",
+      ".gbtn 30px visual / 44px coarse-pointer target",
+      "pending = static activity mark + aria-busy, nooit spinner",
+      "focus-visible = 2px accent outline",
+      "interaction helpers zijn optioneel via @signaal/interactions"
     ]
   },
-  "cat": "primitieven"
+  "cat": "primitieven",
+  "families": [
+    {
+      "id": "emphasis",
+      "label": "Emphasis",
+      "desc": "Primary, secondary en rustige nadruk voor beslissingen en journeys."
+    },
+    {
+      "id": "utility",
+      "label": "Utility",
+      "desc": "Compacte acties voor toolbars, menus en lokale bewerkingen."
+    },
+    {
+      "id": "risk",
+      "label": "Destructive / risk",
+      "desc": "Alleen voor destructieve of gevoelige acties."
+    },
+    {
+      "id": "shortcut",
+      "label": "Shortcut / command",
+      "desc": "Snelle acties voor power users en keyboard-first flows."
+    },
+    {
+      "id": "references",
+      "label": "References",
+      "desc": "Externe meetlatten, nooit automatisch runtime-authority."
+    }
+  ]
 }
