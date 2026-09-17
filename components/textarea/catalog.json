@@ -1,0 +1,81 @@
+{
+  "component": "textarea",
+  "title": "textarea",
+  "desc": "multiline input for prose, notes and prompts",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "resizable multiline text",
+      "family": "text",
+      "h": 210
+    },
+    {
+      "id": "prompt",
+      "file": "self/prompt.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "larger prompt/composer-like text area",
+      "family": "text",
+      "h": 240
+    },
+    {
+      "id": "invalid",
+      "file": "self/invalid.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "multiline error state",
+      "family": "state",
+      "h": 210
+    },
+    {
+      "id": "readonly",
+      "file": "self/readonly.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "read-only multiline content",
+      "family": "state",
+      "h": 210
+    }
+  ],
+  "docs": {
+    "use": [
+      "resize vertical als default",
+      "zichtbaar label behouden",
+      "gebruik monospace alleen voor code/data"
+    ],
+    "avoid": [
+      "autosize zonder max-height",
+      "textarea voor single-line waarden",
+      "placeholder als label"
+    ],
+    "contract": [
+      "min-height 96",
+      "vertical resize",
+      "aria-invalid support"
+    ]
+  },
+  "cat": "forms",
+  "families": [
+    {
+      "id": "text",
+      "label": "Text",
+      "desc": "Multiline invoer en langere inhoud."
+    },
+    {
+      "id": "state",
+      "label": "States",
+      "desc": "Validation en readonly."
+    }
+  ]
+}

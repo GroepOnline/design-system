@@ -1,0 +1,81 @@
+{
+  "component": "select",
+  "title": "select",
+  "desc": "native single-select control with predictable keyboard semantics",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "native select",
+      "family": "selection",
+      "h": 180
+    },
+    {
+      "id": "grouped",
+      "file": "self/grouped.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "optgroup structure",
+      "family": "selection",
+      "h": 180
+    },
+    {
+      "id": "invalid",
+      "file": "self/invalid.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "invalid selection state",
+      "family": "state",
+      "h": 180
+    },
+    {
+      "id": "disabled",
+      "file": "self/disabled.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "disabled unavailable select",
+      "family": "state",
+      "h": 180
+    }
+  ],
+  "docs": {
+    "use": [
+      "native select als eerste keuze",
+      "optgroup voor echte categorieën",
+      "label altijd zichtbaar"
+    ],
+    "avoid": [
+      "custom combobox bouwen zonder noodzaak",
+      "placeholder option als permanent label",
+      "disabled als verborgen permissiemodel"
+    ],
+    "contract": [
+      "native keyboard semantics",
+      "h32 / min44 coarse pointer",
+      "aria-invalid support"
+    ]
+  },
+  "cat": "forms",
+  "families": [
+    {
+      "id": "selection",
+      "label": "Selection",
+      "desc": "Native select en gegroepeerde opties."
+    },
+    {
+      "id": "state",
+      "label": "States",
+      "desc": "Invalid en disabled."
+    }
+  ]
+}

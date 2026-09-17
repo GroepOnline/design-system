@@ -1,0 +1,5 @@
+<!DOCTYPE html><html lang="nl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../../tokens.css"><style>body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}</style></head><body>
+<button id="hold" class="btn destructive btn-hold lg"><span id="label">Houd vast om te verwijderen</span></button>
+<span class="note">900ms hold</span>
+<script type="module">import {attachHoldConfirm} from "../../../packages/interactions/index.js"; const b=document.querySelector("#hold"),l=document.querySelector("#label"); attachHoldConfirm(b,{onConfirm(){l.textContent="Verwijderd"; setTimeout(()=>{b.removeAttribute("data-confirmed"); l.textContent="Houd vast om te verwijderen"},900)}});</script>
+</body></html>

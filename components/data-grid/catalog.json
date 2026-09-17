@@ -1,0 +1,40 @@
+{
+  "component": "data-grid",
+  "title": "data grid",
+  "desc": "dense native table for comparable records",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "dense sortable-looking table"
+    },
+    {
+      "id": "selection",
+      "file": "self/selection.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "row selection"
+    }
+  ],
+  "docs": {
+    "use": [
+      "informatie compact en scanbaar maken",
+      "native semantics behouden waar beschikbaar"
+    ],
+    "avoid": [
+      "decoratieve data zonder bron of betekenis",
+      "kleur als enige statusindicator"
+    ],
+    "contract": [
+      "responsive zonder informatieverlies",
+      "tekst blijft selecteerbaar en kopieerbaar"
+    ]
+  },
+  "cat": "data"
+}

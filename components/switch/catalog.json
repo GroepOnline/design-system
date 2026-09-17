@@ -1,0 +1,65 @@
+{
+  "component": "switch",
+  "title": "switch",
+  "desc": "immediate on/off state with explicit checked semantics",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "off and on examples",
+      "family": "state",
+      "h": 180
+    },
+    {
+      "id": "labelled",
+      "file": "self/labelled.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "switch paired with copy",
+      "family": "state",
+      "h": 180
+    },
+    {
+      "id": "disabled",
+      "file": "self/disabled.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "unavailable switch state",
+      "family": "state",
+      "h": 180
+    }
+  ],
+  "docs": {
+    "use": [
+      "switch voor direct toegepaste aan/uit state",
+      "aria-checked altijd aanwezig",
+      "tekstlabel naast icon-only switch"
+    ],
+    "avoid": [
+      "switch als vervanging voor Save/Submit",
+      "on/off alleen door kleur tonen",
+      "onduidelijke negatieve labels"
+    ],
+    "contract": [
+      "role=switch + aria-checked",
+      "36x20 visual / larger coarse target",
+      "state transition reduced-motion safe"
+    ]
+  },
+  "cat": "forms",
+  "families": [
+    {
+      "id": "state",
+      "label": "State",
+      "desc": "Directe aan/uit status; geen submit-keuze."
+    }
+  ]
+}

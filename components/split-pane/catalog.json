@@ -1,0 +1,40 @@
+{
+  "component": "split-pane",
+  "title": "split pane",
+  "desc": "two-region composition that collapses intentionally",
+  "entries": [
+    {
+      "id": "balanced",
+      "file": "self/balanced.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "balanced two-pane layout"
+    },
+    {
+      "id": "aside",
+      "file": "self/aside.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "main region plus narrow aside"
+    }
+  ],
+  "docs": {
+    "use": [
+      "compose layouts from semantic regions",
+      "keep product-specific behavior outside the primitive"
+    ],
+    "avoid": [
+      "baking product navigation or data semantics into layout",
+      "using layout primitives as decorative cards"
+    ],
+    "contract": [
+      "works at 390px and desktop",
+      "does not impose product colors or copy"
+    ]
+  },
+  "cat": "layout"
+}

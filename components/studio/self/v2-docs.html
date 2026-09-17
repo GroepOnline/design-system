@@ -153,21 +153,21 @@
     <div class="ctl">
       <div class="lb">Warmte van de achtergrond</div>
       <div class="ds">Koel grijs links, warm zand rechts.</div>
-      <input type="range" id="warmth" min="0" max="100" value="60">
+      <input type="range" id="warmth" min="0" max="100" value="60" aria-label="Warmte van de achtergrond">
       <div class="val"><span>koel</span><span id="warmthVal">60%</span><span>warm</span></div>
     </div>
 
     <div class="ctl">
       <div class="lb">Hoekronding</div>
       <div class="ds">Hoe rond knoppen en kaarten zijn. 0 = vierkant (Devin-marketing).</div>
-      <input type="range" id="radius" min="0" max="16" value="8">
+      <input type="range" id="radius" min="0" max="16" value="8" aria-label="Hoekronding">
       <div class="val"><span>vierkant</span><span id="radiusVal">8px</span><span>rond</span></div>
     </div>
 
     <div class="ctl">
       <div class="lb">Tekstgrootte</div>
       <div class="ds">Basis voor de hele interface. 15 is de referentie.</div>
-      <input type="range" id="fsize" min="13" max="17" value="15">
+      <input type="range" id="fsize" min="13" max="17" value="15" aria-label="Tekstgrootte">
       <div class="val"><span>13</span><span id="fsizeVal">15px</span><span>17</span></div>
     </div>
   </aside>
@@ -181,8 +181,8 @@
         <button class="btn primary">Primaire actie</button>
         <button class="btn">Standaard</button>
         <button class="btn">Met hint <kbd>2</kbd></button>
-        <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-plus"/></svg></button>
-        <button class="gbtn solid"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
+        <button class="gbtn" aria-label="Toevoegen"><svg class="ic"><use href="../../../components/icons.svg#i-plus"/></svg></button>
+        <button class="gbtn solid" aria-label="Versturen"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
       </div>
 
       <div class="cv-label">Gesprek</div>
@@ -223,13 +223,13 @@
 
       <div class="cv-label">Invoer</div>
       <div class="composer">
-        <textarea rows="1" placeholder="Vraag om features te bouwen, bugs te fixen, of aan je code te werken"></textarea>
+        <textarea rows="1" aria-label="Bericht" placeholder="Vraag om features te bouwen, bugs te fixen, of aan je code te werken"></textarea>
         <div class="composer-bar">
-          <button class="gbtn"><svg class="ic lg"><use href="../../../components/icons.svg#i-plus"/></svg></button>
+          <button class="gbtn" aria-label="Bijlage toevoegen"><svg class="ic lg"><use href="../../../components/icons.svg#i-plus"/></svg></button>
           <div class="right">
             <div class="model-chip">SWE 1.7 <svg class="ic sm"><use href="../../../components/icons.svg#i-chevrons-updown"/></svg></div>
-            <button class="gbtn"><svg class="ic"><use href="../../../components/icons.svg#i-mic"/></svg></button>
-            <button class="gbtn solid"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
+            <button class="gbtn" aria-label="Spraak invoeren"><svg class="ic"><use href="../../../components/icons.svg#i-mic"/></svg></button>
+            <button class="gbtn solid" aria-label="Versturen"><svg class="ic"><use href="../../../components/icons.svg#i-arrow-up"/></svg></button>
           </div>
         </div>
       </div>

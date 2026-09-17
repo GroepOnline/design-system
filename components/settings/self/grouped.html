@@ -66,6 +66,25 @@
     cursor: pointer; transition: transform 120ms var(--ease-out);
   }
   input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+  @media (max-width: 620px) {
+    .shell { display: block; min-width: 0; }
+    .sections {
+      width: 100%; max-width: 100%; box-sizing: border-box;
+      display: flex; align-items: center; gap: 2px; overflow-x: auto;
+      border-right: 0; border-bottom: 1px solid var(--line); padding: 8px;
+      scrollbar-width: none;
+    }
+    .sections::-webkit-scrollbar { display: none; }
+    .sections .back { flex: 0 0 auto; margin: 0 6px 0 0; }
+    .sec-item { flex: 0 0 auto; white-space: nowrap; }
+    .sec-item.active::before { left: 8px; right: 8px; top: auto; bottom: -8px; width: auto; height: 2px; }
+    .content { box-sizing: border-box; width: 100%; max-width: none; min-width: 0; padding: 18px 16px 30px; }
+    .content .sub, .font-preview { overflow-wrap: anywhere; }
+    .size-row { width: 100%; }
+    .size-row input[type="range"] { flex: 1 1 auto; min-width: 0; width: auto; }
+    .size-row .val { flex: 0 0 52px; }
+  }
   kbd.k {
     font-family: var(--mono); font-size: 11px;
     border: 1px solid var(--line-strong); border-radius: 5px;
@@ -120,7 +139,7 @@
           <div class="st-desc">Voor alle tekst in de app. Koppen altijd gewicht 500.</div>
         </div>
         <div class="st-control">
-          <select class="select" id="fontSel">
+          <select class="select" id="fontSel" aria-label="Interface-lettertype">
             <option>General Sans</option>
             <option>Systeemstandaard</option>
           </select>
@@ -132,7 +151,7 @@
           <div class="st-desc">Voor timers, diffs, commands en paden. Altijd tabular cijfers.</div>
         </div>
         <div class="st-control">
-          <select class="select" id="monoSel">
+          <select class="select" id="monoSel" aria-label="Data-lettertype">
             <option>JetBrains Mono</option>
             <option>Systeem-mono</option>
           </select>
@@ -146,7 +165,7 @@
         </div>
         <div class="st-control">
           <div class="size-row">
-            <input type="range" min="13" max="17" step="1" value="15" id="sizeRange">
+            <input type="range" min="13" max="17" step="1" value="15" id="sizeRange" aria-label="Tekstgrootte">
             <span class="val" id="sizeVal">15px</span>
           </div>
         </div>
@@ -172,7 +191,7 @@
           <div class="st-state" id="motionState">aan</div>
         </div>
         <div class="st-control">
-          <button class="switch" role="switch" aria-checked="true" id="motionSw"></button>
+          <button class="switch" role="switch" aria-checked="true" id="motionSw" aria-label="Animaties"></button>
         </div>
       </div>
       <div class="setting">
@@ -182,7 +201,7 @@
           <div class="st-state">aan</div>
         </div>
         <div class="st-control">
-          <button class="switch" role="switch" aria-checked="true" onclick="flip(this)"></button>
+          <button class="switch" role="switch" aria-checked="true" aria-label="Enter stuurt direct" onclick="flip(this)"></button>
         </div>
       </div>
     </div>

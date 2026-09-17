@@ -33,6 +33,7 @@ Extensions (optionele consumer-views):
   extensions/<id>/    subset + DESIGN/TASTE-overlay, nooit core dependency
   ./ds extension list|show <id>|check <id>
   ./ds <component> list --extension <id> [--query <tekst>] [--origin <origin>]
+  ./ds search <query> [--category <cat>] [--origin <origin>] [--extension <id>] [--pattern <id>] [--json]
 """
 import hashlib
 import html as htmlmod
@@ -58,6 +59,9 @@ BRAIN_SCORECARD = os.path.join(BRAIN, "eval", "scorecard.json")
 STYLES_JSON = os.path.join(ROOT, "styles.json")
 UPSTREAMS = os.path.join(ROOT, "upstreams")
 EXTENSIONS = os.path.join(ROOT, "extensions")
+PROFILES = os.path.join(ROOT, "profiles")
+PATTERNS = os.path.join(ROOT, "patterns")
+CATALOG_INDEX = os.path.join(ROOT, "catalog-index.json")
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|([^\]]+))?\]\]")
 
 def load_styles():
@@ -96,17 +100,34 @@ CATS = [
     ("bewijs", "Bewijs"),
     ("structuur", "Structuur"),
     ("motion", "Motion"),
+    ("forms", "Forms"),
+    ("overlays", "Overlays"),
+    ("navigation", "Navigation"),
+    ("feedback", "Feedback"),
+    ("data", "Data display"),
+    ("layout", "Layout"),
 ]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
     "button": "i-click", "composer": "i-pencil", "nav": "i-inbox",
+    "field": "i-info", "input": "i-square-pen", "textarea": "i-file", "select": "i-chevrons-updown",
+    "checkbox": "i-check", "radio": "i-list", "switch": "i-sliders",
     "pr-card": "i-git-pr", "settings": "i-settings", "transcript": "i-message",
     "worked-row": "i-clock", "studio": "i-sparkle", "motion": "i-sparkle",
+    "dialog": "i-panel", "sheet": "i-panel", "popover": "i-blocks", "menu": "i-list", "tooltip": "i-info",
+    "tabs": "i-list", "breadcrumb": "i-chevron", "pagination": "i-chevrons-left",
+    "alert": "i-alert", "toast": "i-message", "progress": "i-clock", "skeleton": "i-blocks", "empty-state": "i-inbox",
+    "avatar": "i-bot", "avatar-stack": "i-bot", "metric": "i-zap", "key-value": "i-list", "status": "i-info",
+    "code": "i-file-code", "diff": "i-git-branch", "timeline": "i-clock", "data-grid": "i-list",
+    "stack": "i-list", "cluster": "i-blocks", "grid": "i-blocks", "page": "i-file", "section": "i-panel",
+    "split-pane": "i-panel", "app-shell": "i-panel",
 }
 SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
     ("/docs/", "i-file", "docs", "alle .md"),
     ("/taste-site/", "i-check", "taste", "regels+log"),
+    ("/profiles/", "i-sliders", "profiles", "design overlays"),
+    ("/patterns/", "i-blocks", "patterns", "composities"),
     ("/brain-site/", "i-panel", "brain", "context"),
     ("/DESIGN.md", "i-book", "DESIGN.md", "taal"),
     ("/WORKFLOW.md", "i-queue", "WORKFLOW.md", "proces"),
@@ -348,6 +369,123 @@ def cmd_list():
     tot = sum(len(load_manifest(c)["entries"]) for c in components())
     print(dim("─" * 66))
     print(f"{len(components())} componenten, {tot} varianten " + dim("· ./ds <component> list voor detail"))
+
+def _pattern_manifest(pattern_id):
+    path = Path(PATTERNS, pattern_id, "pattern.json")
+    if not path.is_file():
+        err(f"onbekend pattern: {bold(pattern_id)}")
+    return json.loads(path.read_text())
+
+
+def _global_search_records(query="", category=None, origin=None, extension=None, pattern=None):
+    q = (query or "").lower().strip()
+    pattern_components = None
+    if pattern:
+        pattern_components = (_pattern_manifest(pattern).get("components") or {})
+    records = []
+    for c in components():
+        m = load_manifest(c)
+        cat = m.get("cat", "")
+        cat_label = next((label for cid, label in CATS if cid == cat), cat or "overig")
+        if category and category.lower() not in {cat.lower(), cat_label.lower()}:
+            continue
+        entries = list(m["entries"])
+        preferred = None
+        if extension:
+            cfg = extension_component(extension, c)
+            if not cfg:
+                continue
+            allowed = set(cfg.get("include") or [])
+            preferred = cfg.get("preferred")
+            entries = [e for e in entries if e["id"] in allowed]
+        if pattern_components is not None:
+            if c not in pattern_components:
+                continue
+            allowed = set(pattern_components.get(c) or [])
+            if allowed:
+                entries = [e for e in entries if e["id"] in allowed]
+        for e in entries:
+            if origin and e.get("origin") != origin:
+                continue
+            hay = " ".join([
+                c, m.get("title", ""), m.get("desc", ""), cat, cat_label,
+                e.get("id", ""), e.get("note", ""), e.get("family", ""), e.get("source") or "",
+            ]).lower()
+            if q and q not in hay:
+                continue
+            records.append({
+                "component": c,
+                "title": m.get("title", c),
+                "category": cat,
+                "variant": e.get("id"),
+                "status": e.get("status"),
+                "origin": e.get("origin"),
+                "family": e.get("family"),
+                "note": e.get("note", ""),
+                "file": f"components/{c}/{e.get('file', '')}",
+                "preferred": bool(preferred and e.get("id") == preferred),
+            })
+    return records
+
+
+def cmd_search(query="", category=None, origin=None, extension=None, pattern=None, json_output=False):
+    records = _global_search_records(query, category, origin, extension, pattern)
+    if json_output:
+        print(json.dumps(records, indent=2, ensure_ascii=False))
+        return
+    scope = []
+    if category: scope.append(f"category={category}")
+    if origin: scope.append(f"origin={origin}")
+    if extension: scope.append(f"extension={extension}")
+    if pattern: scope.append(f"pattern={pattern}")
+    print(f"{bold('search')} {dim('· ' + ', '.join(scope)) if scope else ''}")
+    print(dim(f"{'component':<18} {'variant':<22} {'cat':<13} {'origin':<14} note"))
+    for r in records:
+        mark = green("*") if r["preferred"] else " "
+        print(f"{mark} {r['component']:<16} {r['variant']:<22} {r['category']:<13} {r['origin']:<14} {r['note']}")
+    print(dim(f"{len(records)} resultaten"))
+
+
+def build_catalog_index():
+    component_rows = []
+    for c in components():
+        m = load_manifest(c)
+        component_rows.append({
+            "id": c,
+            "title": m.get("title", c),
+            "description": m.get("desc", ""),
+            "category": m.get("cat", ""),
+            "manifest": f"components/{c}/catalog.json",
+            "catalog": f"components/{c}/index.html",
+            "active": [e["id"] for e in m["entries"] if e.get("status") == "active"],
+            "variants": [{k: e.get(k) for k in ("id", "file", "status", "origin", "family", "note", "source") if e.get(k) is not None} for e in m["entries"]],
+        })
+    profiles = []
+    if Path(PROFILES).is_dir():
+        for path in sorted(Path(PROFILES).glob("*/profile.json")):
+            profiles.append(json.loads(path.read_text()))
+    patterns = []
+    if Path(PATTERNS).is_dir():
+        for path in sorted(Path(PATTERNS).glob("*/pattern.json")):
+            patterns.append(json.loads(path.read_text()))
+    extensions = [load_extension(eid) for eid in extension_ids()]
+    data = {
+        "schema": 1,
+        "counts": {
+            "components": len(component_rows),
+            "variants": sum(len(x["variants"]) for x in component_rows),
+            "profiles": len(profiles),
+            "patterns": len(patterns),
+            "extensions": len(extensions),
+        },
+        "components": component_rows,
+        "profiles": profiles,
+        "patterns": patterns,
+        "extensions": extensions,
+    }
+    Path(CATALOG_INDEX).write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+    print(f"  {_c('32','✓')} {bold('catalog-index'):<14} {data['counts']['components']} componenten · {data['counts']['variants']} varianten")
+
 
 def cmd_clist(c, extension=None, query=None, origin=None):
     m = load_manifest(c)
@@ -2080,14 +2218,44 @@ GALLERY_BODY = """<div class="pagehead" data-reg="kop">
   </div>
 </div>
 <div class="lede">Per component een catalogus met eigen ontwerpen (self) en externe referenties (external). Alles is vast tot een expliciete <code>select</code> of <code>remove</code> via de CLI.</div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0 18px">
+  <input class="input" id="componentFilter" type="search" placeholder="Zoek componenten…" aria-label="Zoek componenten" style="min-width:260px">
+  <select class="select" id="categoryFilter" aria-label="Filter categorie" style="width:auto;min-width:170px"><option value="">Alle categorieën</option>{catopts}</select>
+  <span id="componentCount" class="caps">{nc} zichtbaar</span>
+</div>
 {groups}
+<script>
+(() => {{
+  const q = document.getElementById("componentFilter");
+  const cat = document.getElementById("categoryFilter");
+  const count = document.getElementById("componentCount");
+  function apply() {{
+    const term = (q.value || "").trim().toLowerCase();
+    const wanted = cat.value;
+    let shown = 0;
+    document.querySelectorAll(".gallery-group").forEach(group => {{
+      const catOk = !wanted || group.dataset.cat === wanted;
+      let any = false;
+      group.querySelectorAll(".card").forEach(card => {{
+        const textOk = !term || card.textContent.toLowerCase().includes(term);
+        const visible = catOk && textOk;
+        card.hidden = !visible;
+        if (visible) {{ any = true; shown += 1; }}
+      }});
+      group.hidden = !any;
+    }});
+    count.textContent = shown + " zichtbaar";
+  }}
+  q.addEventListener("input", apply); cat.addEventListener("change", apply);
+}})();
+</script>
 <div class="gen" data-reg="colofon">gegenereerd door ds build op {today}</div>
 """
 
-GALLERY_GROUP = """<div class="caps" data-reg="{reg}" style="margin:22px 2px 10px">{cat}</div>
+GALLERY_GROUP = """<section class="gallery-group" data-cat="{reg}"><div class="caps" data-reg="{reg}" style="margin:22px 2px 10px">{cat}</div>
 <div class="cards">
 {items}
-</div>
+</div></section>
 """
 
 GALLERY_ITEM = """  <a class="card reveal" href="./{name}/index.html">
@@ -2216,27 +2384,41 @@ def build_catalog(c):
         f.write(page)
 
 def build_gallery():
+    all_components = components()
+    ncomp = len(all_components)
+    nvar = sum(len(load_manifest(c)["entries"]) for c in all_components)
     groups = []
-    ncomp = 0
-    nvar = 0
+    seen = set()
+
+    def item_for(c):
+        m = load_manifest(c)
+        ns, nx = counts(m)
+        acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
+        return GALLERY_ITEM.format(
+            name=c, title=m.get("title", c), desc=m.get("desc", ""),
+            icon=ICONS.get(c, "i-file"), nself=ns, nx=nx,
+            active="actief: " + ",".join(acts) if acts else "",
+        )
+
     for cat, label in CATS:
-        comps = [c for c in components() if load_manifest(c).get("cat") == cat]
+        comps = [c for c in all_components if load_manifest(c).get("cat") == cat]
         if not comps:
             continue
-        items = []
-        for c in comps:
-            m = load_manifest(c)
-            ns, nx = counts(m)
-            ncomp += 1
-            nvar += len(m["entries"])
-            acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
-            items.append(GALLERY_ITEM.format(
-                name=c, title=m.get("title", c), desc=m.get("desc", ""),
-                icon=ICONS.get(c, "i-file"), nself=ns, nx=nx,
-                active="actief: " + ",".join(acts) if acts else "",
-            ))
-        groups.append(GALLERY_GROUP.format(cat=label, reg=label.lower(), items="\n".join(items)))
-    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), today=_today())
+        seen.update(comps)
+        groups.append(GALLERY_GROUP.format(cat=label, reg=label.lower(), items="\n".join(item_for(c) for c in comps)))
+
+    rest = [c for c in all_components if c not in seen]
+    if rest:
+        groups.append(GALLERY_GROUP.format(cat="Overig", reg="overig", items="\n".join(item_for(c) for c in rest)))
+
+    catopts = "".join(
+        f'<option value="{label.lower()}">{label}</option>'
+        for cat, label in CATS
+        if any(load_manifest(c).get("cat") == cat for c in all_components)
+    )
+    if rest:
+        catopts += '<option value="overig">Overig</option>'
+    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), catopts=catopts, today=_today())
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{rel_root}", "..")
             .replace("{nav}", nav_html(rel_root=".."))
@@ -2423,6 +2605,57 @@ def build_docs():
     with open(os.path.join(ROOT, "docs", "index.html"), "w") as f:
         f.write(_shell("docs", body, plate="idx"))
     print(f"  {_c('32','✓')} {bold('docs'):<14} {nd} documenten {dim('(gerenderd uit .md)')}")
+
+def build_profiles_patterns():
+    profile_cards = []
+    if os.path.isdir(PROFILES):
+        for pid in sorted(os.listdir(PROFILES)):
+            d = os.path.join(PROFILES, pid)
+            manifest = os.path.join(d, "profile.json")
+            if not os.path.isfile(manifest):
+                continue
+            data = json.loads(Path(manifest).read_text())
+            design = Path(d, data.get("design", "DESIGN.md")).read_text() if Path(d, data.get("design", "DESIGN.md")).is_file() else ""
+            intro = next((ln.strip() for ln in design.splitlines() if ln.strip() and not ln.startswith("#")), "")
+            profile_cards.append(
+                f'<article class="card reveal"><span class="ct"><svg><use href="../components/icons.svg#i-sliders"/></svg></span>'
+                f'<span class="cn">{htmlmod.escape(pid)}</span><span class="cd">{htmlmod.escape(intro)}</span>'
+                f'<span class="cm">optional · DESIGN + TASTE</span></article>'
+            )
+    pbody = (f'<div class="pagehead" data-reg="kop"><span class="tile"><svg><use href="../components/icons.svg#i-sliders"/></svg></span>'
+             f'<div><div class="eyebrow">Context overlays</div><h1>Profiles</h1><div class="ph-sub">{len(profile_cards)} generieke designprofielen · base → profile → extension</div></div></div>'
+             f'<div class="lede">Profielen zijn optionele ontwerp- en taste-delta\'s voor een type surface. Ze zijn geen productskin en geen runtime dependency.</div>'
+             f'<div class="cards">{"".join(profile_cards)}</div>'
+             f'<div class="gen" data-reg="colofon">gegenereerd uit profiles/* op {_today()}</div>')
+    Path(PROFILES).mkdir(exist_ok=True)
+    Path(PROFILES, "index.html").write_text(_shell("profiles", pbody, plate="profiles"))
+
+    pattern_cards = []
+    if os.path.isdir(PATTERNS):
+        for pid in sorted(os.listdir(PATTERNS)):
+            d = os.path.join(PATTERNS, pid)
+            manifest = os.path.join(d, "pattern.json")
+            if not os.path.isfile(manifest):
+                continue
+            data = json.loads(Path(manifest).read_text())
+            comps = ", ".join(data.get("components", {}).keys())
+            profs = ", ".join(data.get("profiles", [])) or "base"
+            example = data.get("example")
+            href = f'./{pid}/{example}' if example else '#'
+            pattern_cards.append(
+                f'<a class="card reveal" href="{href}"><span class="ct"><svg><use href="../components/icons.svg#i-blocks"/></svg></span>'
+                f'<span class="cn">{htmlmod.escape(data.get("label", pid))}</span>'
+                f'<span class="cd">{htmlmod.escape(comps)}</span><span class="cm">{htmlmod.escape(data.get("category", "pattern"))} · {htmlmod.escape(profs)}</span></a>'
+            )
+    qbody = (f'<div class="pagehead" data-reg="kop"><span class="tile"><svg><use href="../components/icons.svg#i-blocks"/></svg></span>'
+             f'<div><div class="eyebrow">Composition recipes</div><h1>Patterns</h1><div class="ph-sub">{len(pattern_cards)} compositiepatronen · alleen catalogusreferenties</div></div></div>'
+             f'<div class="lede">Patterns combineren bestaande componenten. Ze kopiëren geen primitive code en veranderen de dependency-richting niet.</div>'
+             f'<div class="cards">{"".join(pattern_cards)}</div>'
+             f'<div class="gen" data-reg="colofon">gegenereerd uit patterns/*/pattern.json op {_today()}</div>')
+    Path(PATTERNS).mkdir(exist_ok=True)
+    Path(PATTERNS, "index.html").write_text(_shell("patterns", qbody, plate="patterns"))
+    print(f"  {_c('32','✓')} {bold('profiles'):<14} {len(profile_cards)} overlays")
+    print(f"  {_c('32','✓')} {bold('patterns'):<14} {len(pattern_cards)} composities")
 
 def build_taste():
     os.makedirs(os.path.join(ROOT, "taste-site"), exist_ok=True)
@@ -3146,7 +3379,7 @@ def _is_generated_html_output(path: str) -> bool:
     """Return whether path is an HTML artifact owned by ``ds build``."""
     p = Path(path)
     parts = p.parts
-    if p in {Path("index.html"), Path("components/index.html"), Path("taste-site/index.html")}:
+    if p in {Path("index.html"), Path("components/index.html"), Path("taste-site/index.html"), Path("profiles/index.html"), Path("patterns/index.html")}:
         return True
     if len(parts) == 3 and parts[0] == "components" and parts[2] == "index.html":
         return True
@@ -3234,9 +3467,11 @@ def cmd_build(only=None, check=False):
         ok(f"web bijgewerkt {dim('(' + only + ' + gallery)')}")
     else:
         build_docs()
+        build_profiles_patterns()
+        build_catalog_index()
         build_taste()
         build_brain()
-        ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery + docs + taste + brain)')}")
+        ok(f"web bijgewerkt {dim(f'({len(targets)} componenten + gallery + docs + profiles + patterns + taste + brain)')}")
     import subprocess
     runtime_builder = Path(ROOT, 'scripts', 'build-runtime-packages.py')
     if runtime_builder.is_file():
@@ -3386,6 +3621,20 @@ def main():
         cmd_upstream(args[1:])
     elif args[0] == "extension":
         cmd_extension(args[1:])
+    elif args[0] == "search":
+        query = args[1] if len(args) > 1 and not args[1].startswith("--") else ""
+        category = origin = extension = pattern = None
+        json_output = "--json" in args
+        rest = args[2:] if query else args[1:]
+        it = iter(rest)
+        for a in it:
+            if a == "--category": category = next(it)
+            elif a == "--origin": origin = next(it)
+            elif a == "--extension": extension = next(it)
+            elif a == "--pattern": pattern = next(it)
+            elif a == "--json": continue
+            else: err(f"onbekende search-optie: {a}")
+        cmd_search(query, category=category, origin=origin, extension=extension, pattern=pattern, json_output=json_output)
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
             cmd_style_list()

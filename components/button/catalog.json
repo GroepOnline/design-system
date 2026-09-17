@@ -1,7 +1,7 @@
 {
   "component": "button",
   "title": "button",
-  "desc": "button family: default, emphasis, quiet, destructive, icon, pending and keyboard states",
+  "desc": "button library: semantic families plus independent interaction models",
   "entries": [
     {
       "id": "default",
@@ -132,6 +132,72 @@
       "added": "2026-09-11",
       "note": "outlined icon-only action with accessible label",
       "family": "utility"
+    },
+    {
+      "id": "beam-cta",
+      "file": "self/beam-cta.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "pill CTA with independent traveling edge beam",
+      "family": "emphasis",
+      "interaction": "beam"
+    },
+    {
+      "id": "sweep-cta",
+      "file": "self/sweep-cta.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "outlined action with one-shot directional hover sweep",
+      "family": "emphasis",
+      "interaction": "sweep"
+    },
+    {
+      "id": "ripple-press",
+      "file": "self/ripple-press.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "icon action with pointer-position press ripple",
+      "family": "utility",
+      "interaction": "ripple"
+    },
+    {
+      "id": "split-action",
+      "file": "self/split-action.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "primary action plus independent menu trigger",
+      "family": "utility",
+      "interaction": "menu"
+    },
+    {
+      "id": "hold-confirm",
+      "file": "self/hold-confirm.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "destructive action confirmed by finite press-and-hold",
+      "family": "risk",
+      "interaction": "hold"
+    },
+    {
+      "id": "command-ack",
+      "file": "self/command-ack.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "keyboard-oriented action with finite acknowledgement",
+      "family": "shortcut",
+      "interaction": "ack"
     }
   ],
   "docs": {
@@ -140,14 +206,16 @@
       "primary maximaal één keer per lokale besliscontext",
       "subtle en ghost voor lagere visuele nadruk",
       "destructive alleen voor daadwerkelijk destructieve acties",
-      "icon-only alleen met toegankelijke naam"
+      "icon-only alleen met toegankelijke naam",
+      "kies interaction per buttondoel; motion is nooit verplicht voor de hele familie"
     ],
     "avoid": [
       "meerdere primary-acties naast elkaar",
       "knop als navigatie, gebruik daarvoor een link",
       "kleur als enige betekenis",
       "infinite spinner of ambient loading motion",
-      "emoji in of naast de knop"
+      "emoji in of naast de knop",
+      "dezelfde motion op elk knoptype plakken"
     ],
     "contract": [
       ".btn h32, sm h28, lg h38; coarse pointer min-h44",
@@ -155,7 +223,8 @@
       ".subtle quiet filled, .ghost containerless, .destructive semantic red",
       ".gbtn 30px visual / 44px coarse-pointer target",
       "pending = static activity mark + aria-busy, nooit spinner",
-      "focus-visible = 2px accent outline"
+      "focus-visible = 2px accent outline",
+      "interaction helpers zijn optioneel via @signaal/interactions"
     ]
   },
   "cat": "primitieven",

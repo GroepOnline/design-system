@@ -11,3 +11,9 @@ Elke extension heeft:
 - `TASTE.md`: scope-specifieke voorkeuren/observaties, niet universeel
 
 Een extension bevat geen gekopieerde componentcode. Component-id's verwijzen naar de immutable catalogus onder `components/`.
+
+## Profiles naast extensions
+
+Gebruik een generiek profile voor surface-karakter en een extension alleen voor product/organisatiekeuzes. Context resolveert in deze volgorde: `base -> profile -> extension`.
+
+Voorbeeld: `SIGNAAL_PROFILE=operator-dense SIGNAAL_EXTENSION=dsh ./.agents/hooks/signaal-context.sh`.

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "id": "chefgroep-product-design",
+  "owner": "GroepOnline/design-system",
+  "defaultExtension": "chefgroep",
+  "nodes": [
+    {"id":"ground","dependsOn":[],"owner":"primary","outcome":"real users, jobs, server states and constraints"},
+    {"id":"direction","dependsOn":["ground"],"owner":"primary","outcome":"one justified signature and durable DESIGN/UX contracts"},
+    {"id":"representative","dependsOn":["direction"],"owner":"primary","outcome":"one complete responsive route with real states"},
+    {"id":"visual-review","dependsOn":["representative"],"owner":"primary","outcome":"desktop, phone, reduced-motion and keyboard evidence"},
+    {"id":"expand","dependsOn":["visual-review"],"owner":"primary","outcome":"all sibling routes and loading/empty/error/success/recovery states"},
+    {"id":"verify","dependsOn":["expand"],"owner":"primary","outcome":"affected tests, accessibility and actual behavior"},
+    {"id":"report","dependsOn":["verify"],"owner":"primary","outcome":"complete source report, limitations, reusable template and provenance"}
+  ]
+}
