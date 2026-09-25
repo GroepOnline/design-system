@@ -251,3 +251,7 @@ accessibility and real domain/security contracts remain mandatory. Use
 The source report, templates, adapters and `design-standard-check.py` belong here.
 Do not promote an unverified authenticated state or a model name into quality
 proof. Preserve concurrent work and existing locked catalog variants.
+
+## Compound Engineering overlay
+
+`.compound-engineering/` (tracked `config.yaml`, gitignored `config.local.yaml`). Artifact root `.compound-engineering/artifacts/`. Portable skills `~/.agents/skills/ce-*`; native Cursor plugin is fallback only when this overlay is absent.
