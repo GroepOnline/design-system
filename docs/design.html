@@ -155,6 +155,10 @@
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .chips { display:flex; flex-wrap:wrap; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .cell .chips:empty { display:none; }
+  .cell .chip { font-family:var(--mono); font-size:10px; color:var(--text-muted); border:1px solid var(--line); background:var(--surface-sunk); border-radius:999px; padding:2px 7px; }
+  .cell .chip.engine { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 28%,var(--line)); background:var(--accent-soft); }
   .cell .cf { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
@@ -276,7 +280,9 @@
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
+  <a class="it" href="../components/border-beam/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
   <a class="it" href="../components/motion/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <a class="it" href="../components/motion-spring/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
   <div class="lbl caps">Forms</div>
   <a class="it" href="../components/checkbox/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">checkbox<span class="ds">independent multi-selection and boolean acknowledgement</span></span><span class="act"></span></a>
   <a class="it" href="../components/field/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-info"/></svg></span><span class="nm">field<span class="ds">form structure: label, help, required and error semantics</span></span><span class="act"></span></a>
@@ -319,7 +325,12 @@
   <a class="it" href="../components/section/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">section<span class="ds">semantic section spacing and optional boundary</span></span><span class="act"></span></a>
   <a class="it" href="../components/split-pane/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">split-pane<span class="ds">two-region composition that collapses intentionally</span></span><span class="act"></span></a>
   <a class="it" href="../components/stack/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">stack<span class="ds">vertical rhythm without screen-specific margins</span></span><span class="act"></span></a>
+  <div class="lbl caps">Systeem</div>
+  <a class="it" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio<span class="ds">visueel afstellen zonder code</span></span><span class="act"></span></a>
+  <div class="lbl caps">3D / WebGL</div>
+  <a class="it" href="../components/three-orbit/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">three-orbit<span class="ds">Three.js / WebGL scene specimens</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
+  <a class="it sys" href="../library/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-library"/></svg></span><span class="nm">specimens</span><span class="n">1,980+</span></a>
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../taste-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
@@ -360,7 +371,7 @@
 <p><strong>Een stil, warm, mat instrument dat toont wat de agent doet terwijl het gebeurt.</strong></p>
 <p>Drie pijlers:</p>
 <ol>
-<li><strong>Stil oppervlak.</strong> Warm off-white, hairlines, geen glow, geen gradients in UI.</li>
+<li><strong>Stil oppervlak.</strong> Warm off-white, hairlines, geen ambient glow of gradients in UI. Kleur is semantiek, geen sfeer.</li>
 <li><strong>Levende activiteit.</strong> Werk zie je als tijd + golfjes, nooit als spinner.</li>
 <li><strong>Bewijs in beeld.</strong> Diffs, PR-cards, before/after. De agent toont, niet vertelt.</li>
 </ol>
@@ -369,7 +380,7 @@
 <h2 data-reg="3-kleur">3. Kleur</h2>
 <p>Zie <code>tokens.css</code>. Regels:</p>
 <ul>
-<li><strong>Eén accent</strong>: blauw <code>#317CFF</code> (licht) / <code>#5C97FF</code> (donker). Niets anders mag schreeuwen.</li>
+<li><strong>Accent is functioneel, niet atmosferisch</strong>: gebruik een flat accent alleen voor focus, selectie, links en expliciete state. Nooit een blauw/paars “AI/tech” kleurveld bouwen rond gewone UI.</li>
 <li><strong>Groen is gereserveerd</strong> voor git/PR/toestemming (<code>#1F883D</code>). Nooit als decoratie.</li>
 <li><strong>Amber is gereserveerd</strong> voor hold/wacht-op-jou. Rood alleen voor diff-deletes en destructive.</li>
 <li>Neutraal is warm, nooit koudgrijs. Dark mode is basalt-warm, geen zuiver zwart.</li>
@@ -438,7 +449,7 @@
 <li>Geen spinners/loaders (ripple-systeem vervangt ze)</li>
 <li>Geen emoji als icoon of in copy</li>
 <li>Geen em-dashes</li>
-<li>Geen paarse gradients, glassmorphism, glow, bento-kaartjes</li>
+<li>Geen blauw-paarse/neon/aurora gradients, ambient glow, glassmorphism of generieke “AI-tech” kleurvelden. Uitzondering: een effect-specimen waarin kleur/beam zélf het onderzochte materiaal is.</li>
 <li>Geen cards-in-cards, geen geneste elevation</li>
 <li>Geen infinite ambient motion</li>
 <li>Geen marketing-witruimte in product (density 5–7)</li>
@@ -538,15 +549,14 @@
 <li><strong>Line-drawing SVG</strong> voor het merk/logo (stroke-dashoffset, 1.2-1.5s,</li>
 <p>ease-in-out), eenmalig bij binnenkomst.</p>
 <li><strong>Scramble/decode</strong> voor maximaal één stat- of statuslabel.</li>
-<li><strong>Spotlight/glow-cards</strong> (radial-gradient volgt pointer, opacity 0.06-0.08)</li>
-<p>voor de app-library tiles -- de enige gesanctioneerde &quot;glow&quot; in het systeem.</p>
+<li><strong>Pointer response via geometrie/material</strong>: border, displacement, mask of local contrast mag de pointer volgen. Geen gekleurde halo, spotlight-glow of ambient gradient.</li>
 <li><strong>View Transitions</strong> tussen auth-stappen (login → library): morph, geen</li>
 <p>harde swap. <code>@view-transition { navigation: auto; }</code> op MPA-flows.</p>
 <li>Scroll-driven reveals (<code>animation-timeline: view()</code>) op landing-secties,</li>
 <p>eenmalig, met <code>@supports</code>-gate.</p>
 <li>Budget: één hero-motion per beat; ondersteunende motion korter en subtieler.</li>
-<p>Ook hier: reduced-motion variant verplicht, geen paarse gradients, geen</p>
-<p>glassmorphism -- wow komt uit precisie en motief, niet uit effectstapeling.</p>
+<p>Ook hier: reduced-motion variant verplicht, geen ambient gradients, glow of</p>
+<p>glassmorphism. Wow komt uit precisie, materiaal, typografie en motion, niet uit effectstapeling.</p>
 </ul>
 <h2 data-reg="17-brain-en-taste">§17 Brain- en taste-koppeling (v3)</h2>
 <p>Signaal is een lerend systeem; de lus is expliciet:</p>
@@ -572,7 +582,7 @@
 <li>Een product mag Signaal volledig niet gebruiken en moet functioneel blijven; extensions zijn versnellers, geen lifecycle-dependency.</li>
 </ol>
 <p>Een componentfamilie mag honderden immutable varianten bevatten. <code>active</code> blijft alleen de universele default; extensions hebben hun eigen <code>preferred</code> keuze zonder de catalogusstatus te muteren.</p></div>
-<div class="gen" data-reg="colofon">gegenereerd uit DESIGN.md op 2026-09-12 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit DESIGN.md op 2026-10-06 · bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>

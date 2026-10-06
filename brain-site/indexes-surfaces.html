@@ -155,6 +155,10 @@
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .chips { display:flex; flex-wrap:wrap; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .cell .chips:empty { display:none; }
+  .cell .chip { font-family:var(--mono); font-size:10px; color:var(--text-muted); border:1px solid var(--line); background:var(--surface-sunk); border-radius:999px; padding:2px 7px; }
+  .cell .chip.engine { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 28%,var(--line)); background:var(--accent-soft); }
   .cell .cf { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
@@ -276,7 +280,9 @@
   <a class="it" href="../components/nav/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../components/settings/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
+  <a class="it" href="../components/border-beam/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
   <a class="it" href="../components/motion/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <a class="it" href="../components/motion-spring/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
   <div class="lbl caps">Forms</div>
   <a class="it" href="../components/checkbox/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">checkbox<span class="ds">independent multi-selection and boolean acknowledgement</span></span><span class="act"></span></a>
   <a class="it" href="../components/field/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-info"/></svg></span><span class="nm">field<span class="ds">form structure: label, help, required and error semantics</span></span><span class="act"></span></a>
@@ -319,7 +325,12 @@
   <a class="it" href="../components/section/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">section<span class="ds">semantic section spacing and optional boundary</span></span><span class="act"></span></a>
   <a class="it" href="../components/split-pane/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">split-pane<span class="ds">two-region composition that collapses intentionally</span></span><span class="act"></span></a>
   <a class="it" href="../components/stack/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-list"/></svg></span><span class="nm">stack<span class="ds">vertical rhythm without screen-specific margins</span></span><span class="act"></span></a>
+  <div class="lbl caps">Systeem</div>
+  <a class="it" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio<span class="ds">visueel afstellen zonder code</span></span><span class="act"></span></a>
+  <div class="lbl caps">3D / WebGL</div>
+  <a class="it" href="../components/three-orbit/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><span class="nm">three-orbit<span class="ds">Three.js / WebGL scene specimens</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
+  <a class="it sys" href="../library/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-library"/></svg></span><span class="nm">specimens</span><span class="n">1,980+</span></a>
   <a class="it sys" href="../components/studio/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../docs/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../taste-site/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
@@ -355,7 +366,7 @@
 <li><a href="./indexes-taste.html">Taste</a></li>
 <li><a href="./indexes-research.html">Research</a></li>
 <li><a href="./home.html">Home</a></li>
-</ul></div><div class="gen">gegenereerd uit brain/Indexes/Surfaces.md op 2026-09-12 · bewerk de .md, niet deze pagina</div>
+</ul></div><div class="gen">gegenereerd uit brain/Indexes/Surfaces.md op 2026-10-06 · bewerk de .md, niet deze pagina</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
 <div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">brain</span> · REV D<br><span id="splateDate"></span></div>

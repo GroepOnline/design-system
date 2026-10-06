@@ -2645,13 +2645,29 @@ def build_gallery():
     groups = []
     seen = set()
 
-    def item_for(c):
+    def item_for(c, cat):
         m = load_manifest(c)
         ns, nx = counts(m)
+        active_entry = next((e for e in m["entries"] if e["status"] == "active"), None)
+        preview_entry = active_entry or (m["entries"][0] if m["entries"] else None)
         acts = [e["id"] for e in m["entries"] if e["status"] == "active"]
+        all_tags = []
+        engines = []
+        kinds = []
+        for e in m["entries"]:
+            all_tags.extend(e.get("tags", []))
+            if e.get("engine"): engines.append(str(e["engine"]))
+            if e.get("kind"): kinds.append(str(e["kind"]))
+        all_tags.extend(m.get("tags", []))
+        seen = set()
+        tags = [x for x in all_tags if x and not (x in seen or seen.add(x))]
+        chip_text = " · ".join(tags[:4] + engines[:1] + kinds[:1])
+        search_text = " ".join([c, m.get("title", c), m.get("desc", ""), cat, *tags, *engines, *kinds]).lower()
+        preview = f"./{c}/{preview_entry['file']}" if preview_entry else "about:blank"
         return GALLERY_ITEM.format(
-            name=c, title=m.get("title", c), desc=m.get("desc", ""),
-            icon=ICONS.get(c, "i-file"), nself=ns, nx=nx,
+            name=c, title=htmlmod.escape(m.get("title", c)), desc=htmlmod.escape(m.get("desc", "")),
+            icon=ICONS.get(c, "i-file"), nself=ns, nx=nx, catid=cat,
+            search=htmlmod.escape(search_text, quote=True), tags=htmlmod.escape(chip_text), preview=preview,
             active="actief: " + ",".join(acts) if acts else "",
         )
 
@@ -2660,20 +2676,28 @@ def build_gallery():
         if not comps:
             continue
         seen.update(comps)
-        groups.append(GALLERY_GROUP.format(cat=label, reg=label.lower(), items="\n".join(item_for(c) for c in comps)))
+        groups.append(GALLERY_GROUP.format(cat=label, reg=cat, items="\n".join(item_for(c, cat) for c in comps)))
 
     rest = [c for c in all_components if c not in seen]
     if rest:
-        groups.append(GALLERY_GROUP.format(cat="Overig", reg="overig", items="\n".join(item_for(c) for c in rest)))
+        groups.append(GALLERY_GROUP.format(cat="Overig", reg="overig", items="\n".join(item_for(c, "overig") for c in rest)))
 
-    catopts = "".join(
-        f'<option value="{label.lower()}">{label}</option>'
+    filterbuttons = "".join(
+        f'<button class="library-filter" data-cat="{cat}">{label}</button>'
         for cat, label in CATS
         if any(load_manifest(c).get("cat") == cat for c in all_components)
     )
-    if rest:
-        catopts += '<option value="overig">Overig</option>'
-    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), catopts=catopts, today=_today())
+    sidebar_parts = [
+        '<div class="lbl caps">Library</div>',
+        '<a class="it on" href="./index.html"><span class="tile"><svg><use href="../components/icons.svg#i-library"/></svg></span><span class="nm">Components</span></a>',
+        '<a class="it" href="../inbox/index.html"><span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span><span class="nm">Inbox</span></a>',
+        '<div class="lbl caps">Browse</div>',
+    ]
+    for cat, label in CATS:
+        if any(load_manifest(c).get("cat") == cat for c in all_components):
+            icon = "i-zap" if cat == "motion" else ("i-globe" if cat == "3d" else "i-blocks")
+            sidebar_parts.append(f'<a class="it" href="#" data-sidebar-cat="{cat}" data-cat="{cat}"><span class="tile"><svg><use href="../components/icons.svg#{icon}"/></svg></span><span class="nm">{label}</span></a>')
+    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), filterbuttons=filterbuttons, today=_today())
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{rel_root}", "..")
             .replace("{nav}", "\n".join(sidebar_parts))
