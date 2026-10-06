@@ -78,8 +78,8 @@ class ExtensionsTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         context = dict(line.split("=", 1) for line in result.stdout.splitlines())
         self.assertEqual(context["extension"], "ocx")
-        self.assertEqual(Path(context["design"]), OCX_ROOT / "DESIGN.md")
-        self.assertEqual(Path(context["taste"]), OCX_ROOT / "TASTE.md")
+        self.assertEqual(Path(context["extension_design"]), OCX_ROOT / "DESIGN.md")
+        self.assertEqual(Path(context["extension_taste"]), OCX_ROOT / "TASTE.md")
         self.assertNotIn("warning", context)
 
     def test_component_list_scales_to_300_entries(self):

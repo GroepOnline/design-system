@@ -49,13 +49,13 @@
     <article class="spec"><div class="meta"><span>14 activity</span><span>no spinner</span></div><div class="preview"><button class="btn loading" aria-busy="true">Building</button></div></article>
   </div></section>
   <aside class="controls"><h2>Live tuning</h2>
-    <div class="ctl"><label>Theme</label><select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
-    <div class="ctl"><label>Skin</label><select id="skin"><option value="">Devin</option><option value="strak">Strak</option><option value="grok">Grok</option></select></div>
-    <div class="ctl"><label>Radius <output id="radiusO">6px</output></label><input id="radius" type="range" min="0" max="28" value="6"></div>
-    <div class="ctl"><label>Height <output id="heightO">32px</output></label><input id="height" type="range" min="26" max="52" value="32"></div>
-    <div class="ctl"><label>Weight <output id="weightO">500</output></label><input id="weight" type="range" min="400" max="700" step="50" value="500"></div>
-    <div class="ctl"><label>Tracking <output id="trackO">0.00em</output></label><input id="track" type="range" min="-4" max="10" step="1" value="0"></div>
-    <div class="ctl"><label>Motion</label><select id="motion"><option value="default">Default</option><option value="lift">Lift</option><option value="snap">Snap</option><option value="flat">Flat</option></select></div>
+    <div class="ctl"><label>Theme</label><select id="theme" aria-label="Theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+    <div class="ctl"><label>Skin</label><select id="skin" aria-label="Skin"><option value="">Devin</option><option value="strak">Strak</option><option value="grok">Grok</option></select></div>
+    <div class="ctl"><label>Radius <output id="radiusO">6px</output></label><input id="radius" aria-label="Radius" type="range" min="0" max="28" value="6"></div>
+    <div class="ctl"><label>Height <output id="heightO">32px</output></label><input id="height" aria-label="Height" type="range" min="26" max="52" value="32"></div>
+    <div class="ctl"><label>Weight <output id="weightO">500</output></label><input id="weight" aria-label="Weight" type="range" min="400" max="700" step="50" value="500"></div>
+    <div class="ctl"><label>Tracking <output id="trackO">0.00em</output></label><input id="track" aria-label="Tracking" type="range" min="-4" max="10" step="1" value="0"></div>
+    <div class="ctl"><label>Motion</label><select id="motion" aria-label="Motion"><option value="default">Default</option><option value="lift">Lift</option><option value="snap">Snap</option><option value="flat">Flat</option></select></div>
     <button class="btn copy" id="copy">Copy tuning</button>
   </aside>
 </main>
