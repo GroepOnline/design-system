@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" role="img" aria-label="ChefGroep">
+  <style>
+    .ink { fill: var(--text, #191919); }
+    .ghost { fill: var(--text, #191919); opacity: .10; }
+    .signal { fill: var(--accent, #317CFF); }
+    @media (prefers-color-scheme: dark) {
+      .ink, .ghost { fill: var(--text, #F0EEEB); }
+      .signal { fill: var(--accent, #5C97FF); }
+    }
+  </style>
+  <g class="ghost">
+    <circle cx="4" cy="4" r="3"/><circle cx="36" cy="4" r="3"/>
+    <circle cx="12" cy="12" r="3"/><circle cx="20" cy="12" r="3"/><circle cx="28" cy="12" r="3"/><circle cx="36" cy="12" r="3"/>
+    <circle cx="12" cy="20" r="3"/><circle cx="20" cy="20" r="3"/><circle cx="28" cy="20" r="3"/>
+    <circle cx="12" cy="28" r="3"/><circle cx="20" cy="28" r="3"/><circle cx="28" cy="28" r="3"/><circle cx="36" cy="28" r="3"/>
+    <circle cx="4" cy="36" r="3"/><circle cx="36" cy="36" r="3"/>
+  </g>
+  <g class="ink">
+    <circle cx="12" cy="4" r="3"/><circle cx="20" cy="4" r="3"/><circle cx="28" cy="4" r="3"/>
+    <circle cx="4" cy="12" r="3"/><circle cx="4" cy="20" r="3"/><circle cx="4" cy="28" r="3"/>
+    <circle cx="12" cy="36" r="3"/><circle cx="20" cy="36" r="3"/><circle cx="28" cy="36" r="3"/>
+  </g>
+  <circle class="signal" cx="36" cy="20" r="3"/>
+</svg>

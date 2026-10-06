@@ -1,0 +1,116 @@
+{
+  "component": "motion",
+  "title": "motion",
+  "desc": "opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse",
+  "cat": "motion",
+  "families": [
+    {
+      "id": "attention",
+      "label": "Attention / focus",
+      "desc": "Reageert op focus of hover zonder de inhoud te verplaatsen."
+    },
+    {
+      "id": "ack",
+      "label": "Acknowledgement",
+      "desc": "Bevestigt een bewuste input of actie."
+    },
+    {
+      "id": "state",
+      "label": "State transition",
+      "desc": "Maakt verandering tussen gerelateerde states leesbaar."
+    },
+    {
+      "id": "progress",
+      "label": "Progress / live",
+      "desc": "Alleen actief zolang er daadwerkelijk werk loopt."
+    }
+  ],
+  "entries": [
+    {
+      "id": "beam",
+      "file": "self/beam.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "family": "attention",
+      "added": "2026-09-11",
+      "note": "traveling beam along an active edge",
+      "h": 260
+    },
+    {
+      "id": "focus-halo",
+      "file": "self/focus-halo.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "family": "attention",
+      "added": "2026-09-11",
+      "note": "focus halo for context and attention",
+      "h": 260
+    },
+    {
+      "id": "hover-sweep",
+      "file": "self/hover-sweep.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "family": "attention",
+      "added": "2026-09-11",
+      "note": "one-shot directional hover sweep",
+      "h": 260
+    },
+    {
+      "id": "press-ripple",
+      "file": "self/press-ripple.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "family": "ack",
+      "added": "2026-09-11",
+      "note": "finite pointer-position press acknowledgement",
+      "h": 260
+    },
+    {
+      "id": "toggle-glide",
+      "file": "self/toggle-glide.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "family": "state",
+      "added": "2026-09-11",
+      "note": "gliding selected state for segmented controls",
+      "h": 260
+    },
+    {
+      "id": "status-pulse",
+      "file": "self/status-pulse.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "family": "progress",
+      "added": "2026-09-11",
+      "note": "moving active-work pulse; never ambient",
+      "h": 260
+    }
+  ],
+  "docs": {
+    "use": [
+      "motion is opt-in; component functioneert volledig zonder motion",
+      "kies één motion primitive per interaction beat",
+      "reduced-motion houdt state zichtbaar zonder verplaatsing"
+    ],
+    "avoid": [
+      "motion als verplichte dependency",
+      "meerdere effecten stapelen op één control",
+      "ambient loops zonder actieve user/system state",
+      "motion gebruiken om slechte hierarchy te maskeren"
+    ],
+    "contract": [
+      "beam = focus/active only",
+      "sweep = hover fine-pointer only",
+      "ripple = finite press acknowledgement",
+      "glide = state index transition",
+      "status = active-work only"
+    ]
+  }
+}

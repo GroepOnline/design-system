@@ -219,3 +219,11 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **signal**: the outer system must disappear into a quiet tool shell: small sidebar rows, thin dividers, plain white workspace, compact search/controls and sparse semantic blue only for selection/focus
 - **delta**: `/components` now has a dedicated app-shell, compact category sidebar, centered search, grid/list modes and 108px live previews; component detail routes use the same product shell with canvas left and sticky inspector right; technical drawing/modeline chrome is disabled on these routes
 - **rule**: library/tooling surfaces are product interfaces, never portfolio/showcase pages.
+
+## 2026-09-11 · Button family polish
+
+- **shown**: bestaande Signaal button family met default/primary/gbtn en de eerste algemene runtime-package
+- **reaction**: adjusted: de button moet flink verder gepolished en aangepast worden
+- **signal**: de primitive mag niet blijven steken op een generieke shadcn-baseline; herbruikbaarheid betekent ook dat states, nadruk, iconen en input-modality zorgvuldig uitgewerkt zijn
+- **delta**: button-contract aangescherpt met optische padding, subtielere press-fysica, coarse-pointer targets, expliciete focus, rustige pending-mark zonder spinner en aparte default/primary/subtle/ghost/destructive/icon varianten; HTML-catalogus en runtime-package gelijkgetrokken
+- **candidate rule**: primitives die breed hergebruikt worden moeten als volledige families worden ontworpen, niet als één default plus losse uitzonderingen. Eerste expliciete observatie, nog niet promoveren.

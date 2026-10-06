@@ -1,0 +1,40 @@
+{
+  "component": "skeleton",
+  "title": "skeleton",
+  "desc": "loading placeholders for known layout",
+  "entries": [
+    {
+      "id": "rows",
+      "file": "self/rows.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "text row skeleton"
+    },
+    {
+      "id": "card",
+      "file": "self/card.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "card skeleton"
+    }
+  ],
+  "docs": {
+    "use": [
+      "feedback dicht bij de veroorzakende actie",
+      "live regions alleen voor relevante updates"
+    ],
+    "avoid": [
+      "toast voor permanente informatie",
+      "oneindige motion zonder actieve state"
+    ],
+    "contract": [
+      "status semantics expliciet",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "feedback"
+}

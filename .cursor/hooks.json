@@ -3,6 +3,11 @@
   "hooks": {
     "preToolUse": [
       {
+        "command": ".agents/hooks/signaal-context.sh",
+        "matcher": "Write",
+        "timeout": 5
+      },
+      {
         "command": ".agents/hooks/guard-generated.sh",
         "matcher": "Write",
         "timeout": 10

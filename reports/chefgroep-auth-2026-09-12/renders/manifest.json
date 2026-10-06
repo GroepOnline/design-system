@@ -1,0 +1,400 @@
+{
+  "scope": "local artifact rendering; anonymous auth fixture only; no live account/OAuth proof",
+  "cases": [
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [],
+      "heading": "Een eigen plek. Een vaste ontwerpstandaard.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": "Geaccepteerde ChefGroep Auth-landing met mineraalgroen canvas, grote petrolkleurige typografie en een gelaagde koperen toegangspoort."
+        }
+      ],
+      "case": "report",
+      "viewport": "desktop",
+      "file": "report-desktop.png",
+      "sha256": "aafbb8605b52c21cefdd83c5cc39c56449058de71c19e65e1e08c6720948f00a"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 375,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [],
+      "heading": "Een eigen plek. Een vaste ontwerpstandaard.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": "Geaccepteerde ChefGroep Auth-landing met mineraalgroen canvas, grote petrolkleurige typografie en een gelaagde koperen toegangspoort."
+        }
+      ],
+      "case": "report",
+      "viewport": "phone",
+      "file": "report-phone.png",
+      "sha256": "3171edfd44b5942b963d3180e08a8d9a4b0f52136e33988d623aff9046540478"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 375,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": true,
+      "animations": [],
+      "heading": "Een eigen plek. Een vaste ontwerpstandaard.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": "Geaccepteerde ChefGroep Auth-landing met mineraalgroen canvas, grote petrolkleurige typografie en een gelaagde koperen toegangspoort."
+        }
+      ],
+      "case": "report",
+      "viewport": "reduced",
+      "file": "report-reduced.png",
+      "sha256": "3171edfd44b5942b963d3180e08a8d9a4b0f52136e33988d623aff9046540478"
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1430,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        }
+      ],
+      "heading": "Jouw plekbinnenChefGroep.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "template",
+      "viewport": "desktop",
+      "file": "template-desktop.png",
+      "sha256": "67d66e6b3aad201b5f394dd788a6c66e62354e6b3297844463092f8042ae7f5a"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 380,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        }
+      ],
+      "heading": "Jouw plekbinnenChefGroep.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "template",
+      "viewport": "phone",
+      "file": "template-phone.png",
+      "sha256": "c31db630b3a4b712bd7a6e462bb964e86b9ed5860c1ea6db5ee6ff5bcd0e414a"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 380,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": true,
+      "animations": [],
+      "heading": "Jouw plekbinnenChefGroep.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "template",
+      "viewport": "reduced",
+      "file": "template-reduced.png",
+      "sha256": "fc9b13a648248c61577887d93729396d87c192a2d3ba8fc4ebfc2550d6b61052"
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1430,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        }
+      ],
+      "heading": "Jouw plekbinnen ChefGroep.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        },
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "auth",
+      "viewport": "desktop",
+      "file": "auth-desktop.png",
+      "sha256": "7886e7da6d5e3b754c97879e2a512291ad53cc334d379ad0fa1dd9b7353df7ec"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 380,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        }
+      ],
+      "heading": "Jouw plekbinnen ChefGroep.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        },
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "auth",
+      "viewport": "phone",
+      "file": "auth-phone.png",
+      "sha256": "803e20d4c990adc33bd275806696164f493173c4de9238590898a4fad080b8c8"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 380,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": true,
+      "animations": [],
+      "heading": "Jouw plekbinnen ChefGroep.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        },
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "auth",
+      "viewport": "reduced",
+      "file": "auth-reduced.png",
+      "sha256": "fa9ba2529e329547f539c6c37a432dd6576a2270911754ba985ce77fc7810d6c"
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1430,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        }
+      ],
+      "heading": "Goed jeweer te zien.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        },
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "auth-signin",
+      "viewport": "desktop",
+      "file": "auth-signin-desktop.png",
+      "sha256": "3ca57d9318c7d256bb6e5d56875ee79159ac5b06e0b168c176b2a361038ca68f"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 380,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": false,
+      "animations": [
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        },
+        {
+          "state": "running",
+          "iterations": 1
+        }
+      ],
+      "heading": "Goed jeweer te zien.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        },
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "auth-signin",
+      "viewport": "phone",
+      "file": "auth-signin-phone.png",
+      "sha256": "bedab56563b2e515bf68ea0cbc1db3f83264f29ee5dd1d6f6245ce12f926b1c8"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 380,
+      "overflow": false,
+      "fonts": "loaded",
+      "reduced": true,
+      "animations": [],
+      "heading": "Goed jeweer te zien.",
+      "images": [
+        {
+          "loaded": true,
+          "alt": ""
+        },
+        {
+          "loaded": true,
+          "alt": ""
+        }
+      ],
+      "case": "auth-signin",
+      "viewport": "reduced",
+      "file": "auth-signin-reduced.png",
+      "sha256": "c9b57fa0e1a8e9197fb255497ba29aae358a5dfe5973711ae560b0d7584f1384"
+    }
+  ],
+  "pdf_sha256": "58c9fb901057c98c9714c8995ee4fa98fbb1bb1c4607e27b6752ee14387cac90"
+}

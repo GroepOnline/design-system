@@ -1,0 +1,24 @@
+{
+  "id": "mobile-sheet",
+  "label": "Mobile sheet workflow",
+  "category": "navigation",
+  "optional": true,
+  "profiles": [
+    "mobile-touch"
+  ],
+  "components": {
+    "sheet": [
+      "right"
+    ],
+    "breadcrumb": [
+      "collapsed"
+    ],
+    "button": [
+      "gbtn"
+    ],
+    "tabs": [
+      "line"
+    ]
+  },
+  "example": "example.html"
+}

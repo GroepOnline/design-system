@@ -6,6 +6,21 @@
 ## [Unreleased]
 
 ### Added
+- Callable operator evidence components and `OperatorPage`, generated overview
+  and state examples, safe native retry behavior, and a shared product-template
+  entry guide. Both templates now enforce declared exports and reproducible
+  specimens through the existing design quality hook.
+- Operator browser evidence for desktop, phone, dark and reduced motion,
+  including keyboard overflow, pending geometry, focus and retry lifecycle.
+- Complete identity contracts: reusable navigation, fields, account/permission
+  choices, native confirmation behavior, connection/session rows, security methods
+  and localized audit presentation with an interactive account specimen.
+- Identity template renderers for the shell, brand, portal, landing, page title,
+  controls and feedback. Generated arrival/state examples share the existing
+  CSS; component and artifact checks run through the design quality hook.
+- **Operator evidence template**: a portable ChefGroep status/provenance
+  composition with source-to-freshness vector, fail-closed state contracts,
+  local fonts and a dedicated surface brief.
 - **Home-cohesie: doorsneden van één blad**: elke home-sectie krijgt een
   doorsnede-regel (sectie-index uit de REGSECS-volgorde + gemeten frac +
   hairline) die een nieuwe verticale maatlijn op de wrap-rand kruist; die
@@ -49,6 +64,15 @@
 - `CHANGELOG.md` -- dit bestand
 
 ### Fixed
+- Compact operator desktop composition brings the evidence vector into the upper
+  viewport, with geometry regression checks at desktop/laptop sizes. Light/dark
+  browser theme-color metadata now matches each rendered canvas.
+- Operator summary derives its count from supplied layers and respects snapshot
+  freshness. Missing/malformed timestamps remain unknown; mixed states keep
+  separate labels. Brand legibility, heading tracking and mobile metadata were
+  refined without changing the approved operator palette or type families.
+- Design reports now copy local fonts and license notices beside their HTML, so
+  standalone publication no longer depends on the design-system directory tree.
 - Brain-templates verplaatst `brain/signals/Templates/` → `brain/Templates/`
   (waar `ds brain new` en `.obsidian/templates.json` ze verwachten): de 6
   wikilink-warnings in `ds check` zijn weg en `ds brain new` werkt weer
@@ -114,3 +138,12 @@
 - Initiële design language "Stroom" (teal accent)
 - Eerste prototype (`prototype-v1-stroom.html`, `stroom-prototype.html`)
 - Basis tokens.css
+
+## 2026-09-12: ChefGroep Auth design standard
+
+- Preserve the accepted Auth spatial reference and its source screenshots.
+- Add ChefGroep default quality contract, identity template, full design report,
+  canonical design skills, dependency-checked run chain and structural hook/CI gate.
+- Retain the vendor Design Report DOCX and preview unchanged with hashes; author
+  an explicitly adapted ChefGroep HTML report and print layout.
+- Define finite layered arrival, a reusable SVG identity mark and evidence limits.

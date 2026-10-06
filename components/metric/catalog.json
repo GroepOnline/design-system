@@ -1,0 +1,40 @@
+{
+  "component": "metric",
+  "title": "metric",
+  "desc": "single value with label delta and context",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "value + supporting label"
+    },
+    {
+      "id": "compact",
+      "file": "self/compact.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "compact inline metric"
+    }
+  ],
+  "docs": {
+    "use": [
+      "informatie compact en scanbaar maken",
+      "native semantics behouden waar beschikbaar"
+    ],
+    "avoid": [
+      "decoratieve data zonder bron of betekenis",
+      "kleur als enige statusindicator"
+    ],
+    "contract": [
+      "responsive zonder informatieverlies",
+      "tekst blijft selecteerbaar en kopieerbaar"
+    ]
+  },
+  "cat": "data"
+}

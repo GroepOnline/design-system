@@ -1,0 +1,23 @@
+{
+  "id": "destructive-confirm",
+  "label": "Destructive confirm",
+  "category": "safety",
+  "optional": true,
+  "profiles": [
+    "operator-dense",
+    "mobile-touch"
+  ],
+  "components": {
+    "dialog": [
+      "destructive"
+    ],
+    "button": [
+      "hold-confirm",
+      "destructive"
+    ],
+    "alert": [
+      "warning"
+    ]
+  },
+  "example": "example.html"
+}

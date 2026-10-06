@@ -1,0 +1,26 @@
+{
+  "id": "public-product-hero",
+  "label": "Public product hero",
+  "category": "public",
+  "optional": true,
+  "profiles": [
+    "public-editorial",
+    "expressive-motion"
+  ],
+  "components": {
+    "button": [
+      "beam-cta",
+      "sweep-cta"
+    ],
+    "motion": [
+      "beam"
+    ],
+    "status": [
+      "default"
+    ],
+    "artifact": [
+      "default"
+    ]
+  },
+  "example": "example.html"
+}

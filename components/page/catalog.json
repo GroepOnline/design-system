@@ -1,0 +1,40 @@
+{
+  "component": "page",
+  "title": "page",
+  "desc": "readable page/container width and gutters",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "balanced application page width"
+    },
+    {
+      "id": "wide",
+      "file": "self/wide.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "wide data/workbench page"
+    }
+  ],
+  "docs": {
+    "use": [
+      "compose layouts from semantic regions",
+      "keep product-specific behavior outside the primitive"
+    ],
+    "avoid": [
+      "baking product navigation or data semantics into layout",
+      "using layout primitives as decorative cards"
+    ],
+    "contract": [
+      "works at 390px and desktop",
+      "does not impose product colors or copy"
+    ]
+  },
+  "cat": "layout"
+}

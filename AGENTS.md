@@ -6,9 +6,11 @@
 
 ## Wat dit is
 
-Design-system v3 ("Signaal") voor agent-producten. Standalone, geen
-npm-package: kopieermodel (shadcn-achtig). Bron van waarheid per component:
-`components/<naam>/catalog.json`. Tokens + primitives: `tokens.css`.
+Design-system ("Signaal") voor productinterfaces. De catalogus blijft het
+shadcn-achtige kopieermodel en de ontwerp-authority. `packages/` is de tweede,
+versioneerbare distributievorm voor bewezen generieke runtime-contracten.
+Bron van waarheid per cataloguscomponent: `components/<naam>/catalog.json`.
+Tokens + primitives: `tokens.css`; `@signaal/tokens` wordt daaruit gegenereerd.
 Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 
 ## Invarianten (nooit breken)
@@ -36,6 +38,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 8. **Afgeleiden bewaren lineage.** `self-modified` varianten uit een gecureerde
    bron hebben `derivedFrom` met entry/upstream/ref/path en behouden dezelfde
    `source` URL. Pas zo mag GTK van `contract-only` naar `native-candidate`.
+9. **Quality split.** Deterministische kwaliteit is blocking: accessibility,
+   catalog/runtime-contracten, responsive coverage en reduced-motion. Taste is
+   review-evidence via `quality/taste-rubric.json`; geen automatische smaakscore.
 
 ## Commando's
 
@@ -61,6 +66,9 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 ./ds upstream list                         # gepinde externe UI-bronnen
 ./ds upstream show <id>                    # provenance + rendererbeleid + kandidaten
 ./ds upstream check [id]                   # valideer immutable pins + adapters
+./s.sh context [extension] [profile]        # resolve base → profile → extension ontwerpcontext
+./s.sh quality                              # blocking a11y + quality-contract + ds check
+./s.sh quality visual [--out <pad>]         # 18 cases × phone/desktop × light/dark screenshots
 ```
 
 Elke `add`/`select`/`remove`/`style add` mutatie herbouwt web automatisch.
@@ -75,7 +83,7 @@ CLI en web lezen hetzelfde manifest; er bestaat geen tweede bron.
 
 Nieuwe component-familie: map + `catalog.json` aanmaken (bestaand manifest als
 template), dan `./ds build`. Elke component krijgt verplicht een `cat`:
-primitieven · gesprek · bewijs · structuur (rail/gallery groeperen erop).
+primitieven · gesprek · bewijs · structuur · motion · forms · overlays · navigation · feedback · data · layout (rail/gallery groeperen erop).
 
 ## Taste-propagatie (verplicht, zelfde commit)
 
@@ -146,6 +154,7 @@ orkestreert Fase 1-3 in volgorde met gates. Nooit een tweede bron aanmaken.
 | --- | --- | --- |
 | `.agents/hooks/guard-generated.sh` | `preToolUse` (Write) | weigert edits in gegenereerde output (invariant 3) |
 | `.agents/hooks/brain-build.sh` | `afterFileEdit` | herbouwt `brain-site/` na een vault-note edit |
+| `.agents/hooks/signaal-quality.sh` | quality gate | a11y + quality-contract + `ds check`; fail hard op structurele regressies |
 
 Agent-gedrag-taste (canonieke `taste.yaml` met per-tool generators) staat
 **buiten dit repo** (besluit 2026-07-30, zie
@@ -165,7 +174,7 @@ Nooit de gegenereerde overlays handmatig bewerken.
 | `ds` | CLI + web-generator (python3 stdlib, geen deps) |
 | `tokens.css` | tokens + primitives (btn, gbtn, badge, switch, seg, input, select, setting) |
 | `styles.json` | skins (devin, strak, ...) -- schakel via `data-style` |
-| `components/` | 12 families, elk catalog.json + self/ + external/; plus icons.svg + lib.js |
+| `components/` | 43 families / 125 varianten; elk catalog.json + self/ + external/; plus icons.svg + lib.js |
 | `components/icons.svg` | Lucide-sprite (`<use href="...#i-*">`) |
 | `components/lib.js` | `?theme=` deep-link + gallery-postMessage op standalone varianten |
 | `prototype-v2.html` | volledige referentie-app (3-pane sessie) |
@@ -175,12 +184,12 @@ Nooit de gegenereerde overlays handmatig bewerken.
 | `brain/` | Obsidian Second Brain (niet-bindende context) |
 | `brain-site/` | gegenereerde leeslaag uit `brain/` (`ds brain build`) |
 | `.agents/` | canonieke agent-skills + subagents + hooks (`.cursor/` is overlay) |
+| `packages/` | optionele runtime-distributie (`@signaal/tokens`, `@signaal/interactions`, `@signaal/react`) |
 | `new-project.sh` | scaffold nieuw product vanuit dit systeem |
 
 ## Build, check, serve (elke agent/CI)
 
-Geen package manager of third-party deps nodig voor de kern: `ds` is pure
-Python 3.12 stdlib. Een runtime-check is `python3 --version`. Er is geen
+Geen package manager of third-party deps nodig voor de kern of voor het genereren van runtime-artifacts: `ds` en de package-generator gebruiken Python 3.12 stdlib. Een runtime-check is `python3 --version`. Er is geen
 setup-script en geen environment-config nodig.
 Remote: `https://github.com/GroepOnline/design-system.git` (org: GroepOnline).
 CI: `.github/workflows/validate.yml` (build + check + brain gate) en
@@ -218,3 +227,31 @@ CI: `.github/workflows/validate.yml` (build + check + brain gate) en
 Regel: raakt je commit `.github/workflows/` → push met `git push origin-ssh <branch>`.
 Kom je dat pas achter bij een geweigerde push → zelfde branch opnieuw pushen naar
 `origin-ssh`, geen force-push nodig.
+
+## Design context overlays
+
+For design work, resolve optional context before inventing product-specific rules:
+
+```sh
+SIGNAAL_PROFILE=operator-dense SIGNAAL_EXTENSION=dsh ./.agents/hooks/signaal-context.sh
+```
+
+Resolution is `base -> profile -> extension`. Profiles describe a generic surface class; extensions describe optional product/organization choices. Both are advisory and fail-open. Neither may become a runtime/build dependency of Signaal core.
+
+Use `./s.sh profiles`, `./s.sh patterns`, and `./s.sh pattern <id>` to discover reusable composition context before creating local UI from scratch.
+
+## ChefGroep default and auth reference
+
+For ChefGroep product design, `CHEFGROEP-STANDARD.md` and the ChefGroep extension
+are the default quality context. The user-approved identity-spatial surface may
+override generic palette, display-face and decorative-material preferences;
+accessibility and real domain/security contracts remain mandatory. Use
+`.agents/meta/chefgroep-design.md`, then only the applicable chain nodes.
+
+The source report, templates, adapters and `design-standard-check.py` belong here.
+Do not promote an unverified authenticated state or a model name into quality
+proof. Preserve concurrent work and existing locked catalog variants.
+
+## Compound Engineering overlay
+
+`.compound-engineering/` (tracked `config.yaml`, gitignored `config.local.yaml`). Artifact root `.compound-engineering/artifacts/`. Portable skills `~/.agents/skills/ce-*`; native Cursor plugin is fallback only when this overlay is absent.

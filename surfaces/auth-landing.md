@@ -1,86 +1,127 @@
-# Surface-brief: auth-landing + app-library (auth.chefgroep.online)
+# Surface-brief: ChefGroep Auth identity product
 
-> v3-spec, 2026-08-22. Wow-tier surface (§16): zeldzaam bezocht, eerste indruk,
-> mag groots. Auteur: primair model. Implementatie: worker volgens deze spec —
-> geen eigen visuele keuzes buiten de hier gegeven waardes.
+> v4 locked, 2026-09-11. Explicitly approved visual direction from the live `chefgroep-auth` design run. Supersedes the v3 dot-matrix / Instrument Serif / centered Authentik-card brief. Do not revive v3 without an explicit new decision.
 
-## Doel
+## Scope
 
-Het inlogmoment en de app-library zijn de voordeur van ChefGroep. Nu: default
-Authentik-template (generic). Straks: onmiskenbaar Signaal — stil, warm, mat,
-met één gecontroleerd wow-moment. Geen Devin-look, geen SaaS-template-look.
+Applies to the shared `GroepOnline/chefgroep-auth` product and both identity planes:
 
-## Opbouw login (flow-pagina)
+- `auth.chefgroep.nl`: public identity plane.
+- `auth.chefgroep.online`: internal ChefGroep identity plane.
 
-```
-┌──────────────────────────────────────────────┐
-│  maatlijn links (hairline + frac, §8)        │
-│                                              │
-│   [dot-matrix bloom 5×5]  ← merk-moment      │
-│   ChefGroep                ← Instrument Serif │
-│   "Meld je aan."           ← split-text reveal│
-│                                              │
-│   [auth-card: Authentik flow, restyled]      │
-│                                              │
-│   modeline onderaan: SHEET-id · REV · status │
-└──────────────────────────────────────────────┘
-```
+The codebase may be shared. Security domains and authorization remain separate. Visual sameness never implies permission inheritance.
 
-- **Achtergrond**: warm off-white `rgb(247,246,245)` licht / basalt-warm donker.
-  Geen gradient, geen foto, geen mesh-blob.
-- **Merk-moment**: één 5×5 dot-matrix die bij load een **ripple-bloom** doet
-  (sv-matrix `dmx-center-origin-ripple`-orde, 900ms, ease-out, eenmalig — dan
-  statisch raster op `--line-strong`). Dots 4px, gap 6px, accentblauw tijdens
-  de bloom, daarna neutraal. Reduced-motion: statisch raster, geen bloom.
-- **Hero-tekst**: Instrument Serif 400, 32-40px, split-text reveal per woord
-  (translateY 110%→0, 80ms stagger, 700ms, ease-out). Eén italic accent-regel
-  max. Copy: warm NL — "Meld je aan." / subregel "Eén account voor alle
-  ChefGroep-oppervlakken."
-- **Auth-card**: Signaal-card (r-12, hairline `--line`, geen shadow, geen
-  glass). Inputs volgens §6 (h-28/13px/r-6, focus = accent border + 3px
-  accent-soft ring). Knop `.btn.primary`. Enter vanaf scale 0.97 + opacity 0,
-  200ms ease-out, 80ms ná de hero (stagger, niet blokkerend).
-- **Fout-staat**: shake verboden op deze frequentie? Nee — login-fout is
-  laagfrequent: één subtiele 2×4px x-shake (240ms) + amber hold-tekst in
-  copy-stem ("Dat wachtwoord klopt niet. Probeer opnieuw.").
-- **Succes → library**: View Transition (morph, 300ms). De dot-matrix doet
-  één snelle **snake-sweep** (400ms) als bevestiging. Geen confetti.
+Resolve design context as:
 
-## App-library (/if/user/#/library)
+`base -> identity-spatial profile -> chefgroep extension -> this surface brief -> product DESIGN.md / UX-CONTRACT.md`
 
-- **Grid**: app-tiles als Signaal-cards, r-12, hairline, hover → border
-  `--line-strong` + **spotlight** (radial-gradient volgt pointer, wit 0.07,
-  300px, opacity-transition 300ms). Geen lift-shadow, geen scale-hover.
-- **Tile-inhoud**: app-icoon in 28px tile (Lucide-stijl of app-eigen SVG,
-  géén emoji), naam 13.5px/500, groep-label `.caps` (10.5/600/+0.07em).
-- **Entrance**: eenmalige stagger 50ms/tile (max 6 gestaggerd, rest direct),
-  translateY 8px + opacity, 300ms ease-out. Bij her-bezoek in dezelfde
-  sessie: geen entrance (sessionStorage-flag).
-- **Sectie-koppen**: doorsnede-regels met index + frac (§8-maatvoering) —
-  dit is wat het géén generic portal maakt.
-- **Leeg/geen apps**: delight-budget — dot-matrix drift-loop (traag, 2s
-  interval, subtiel) + copy "Nog geen apps voor jouw rol. Vraag Joep."
+The product repo owns runtime tokens, implementation and deployment. This design-system repo owns the reusable visual/taste contract and calibration evidence.
 
-## Implementatie-route
+## North Star
 
-1. Authentik branding: custom CSS + flow-background via de Authentik
-   branding-instellingen; assets versioned in ChefFactory (deploy/authentik/
-   of chefgroep-infra — volg de inventory-worker output voor het juiste pad).
-   Blueprint-gedreven (zoals #225), nooit click-ops zonder export.
-2. Custom CSS injectie voor /if/flow/ én /if/user/#/library (Authentik
-   ondersteunt custom.css tenant-breed). De SPA-library restyled via CSS-
-   variabelen + attribuutselectors; geen fork van de Authentik frontend.
-3. Fonts: General Sans + Instrument Serif als woff2, subset latin,
-   `font-display: swap`, totaal < 200KB, preload op de flow-pagina.
-4. Alle waardes uit dit document; tokens uit `design-system/tokens.css`
-   spiegelen in de custom.css (kopie met bronverwijzing, geen import van
-   buitenaf — auth mag geen externe origins laden).
-5. Smoke: Lightpanda-screenshot vóór/na; NB: Lightpanda kan de library-SPA
-   niet snapshotten (bekende beperking) — flow-pagina wel; library via
-   Playwright/Chromium op de fleet of handmatige check door Joep.
+**A well-designed place to arrive.** Auth is not a form card with branding around it. The page should make the user feel that they are crossing a deliberate boundary into ChefGroep, while remaining precise about identity, account, client and permission.
 
-## Verboden op deze surface
+The accepted signature is a sculptural **access portal**: translucent/mineral planes around a warm copper core. It represents entry and separation. It is decorative, not a health, trust or verification indicator.
 
-Paarse gradients, glassmorphism, mesh-blobs, foto-achtergronden, confetti,
-infinite ambient motion (behalve de lege-staat drift), spinners, emoji,
-em-dashes, Engels waar NL hoort.
+Calibration evidence: `references/auth-astra-2026-09-11/landing-desktop.png` and `landing-mobile.png`.
+
+## Locked visual language
+
+- Canvas `#EAF1EC`; paper `#F8FAF6`; ink `#103D3B`; muted `#566D67`; brand `#176857`; copper `#AE4E32`; line `#C5D3CA`.
+- Display type: **Bricolage Grotesque Variable**.
+- Body/product type: **Instrument Sans Variable**.
+- One signature object per arrival viewport. No secondary illustration competition.
+- Asymmetric desktop composition with generous negative space.
+- Copper is sparse and expressive. It is not the danger/success semantic color.
+- Use tinted surfaces rather than pure white/black.
+- Controls stay visually stable during loading.
+- Decorative portal geometry is outside the accessibility tree.
+
+These values may only change through an explicit ChefGroep auth taste/design update, not because a later implementation agent prefers another aesthetic.
+
+## Sign-in composition
+
+Desktop/laptop:
+
+1. Sparse ChefGroep header with plane context and one clear top-level action if needed.
+2. Left visual field: access portal plus one short human sentence about identity/access.
+3. Right decision field: environment eyebrow, direct headline, concise explanation, real access/security note, one dominant sign-in action, one quiet explanation/link.
+4. Footer remains low-noise and product-like.
+
+Do not wrap the whole decision in a floating centered card. The page itself is the identity surface.
+
+Internal copy should make the internal boundary explicit without turning the page into an infrastructure console. Public copy should not expose internal architecture names.
+
+## Connect / consent
+
+Use the same spatial/material world, but the decision owns the screen. Surface real data only:
+
+- client identity;
+- MCP/resource identity;
+- selected ChefGroep account;
+- requested scopes with clear meaning;
+- expiry when relevant;
+- allow and refuse actions.
+
+Never fabricate “verified”, “trusted”, “safe” or green success language. If the server knows verification state, label it precisely. A required permission cannot be silently deselected. Expired and already-used links have distinct recovery states.
+
+## Authenticated product routes
+
+`/account`, `/connections`, `/sessions`, `/security` and audit/history surfaces remain visibly part of the same identity product but change register:
+
+- calm paper surfaces instead of cinematic hero staging;
+- editorial page headings;
+- strong grouping and separators;
+- compact but comfortable rows;
+- explicit loading, empty, error, partial and success states;
+- destructive/revoke actions visually separated from safe primary actions;
+- account and permission facts come from server contracts, never inferred from email/domain alone.
+
+Do not repeat the portal as a giant hero on every internal route. The signature establishes the world once; operational UI earns restraint.
+
+## Motion
+
+Arrival motion may reveal the portal's depth with transform/opacity only. It is finite. Hover/focus feedback may be subtle. All primary actions are immediately available.
+
+`prefers-reduced-motion` produces a static portal and immediate content. No auth decision waits for animation. No infinite ambient motion around consent or security controls.
+
+## Responsive
+
+At narrow widths, collapse to one column. The decision and primary action remain early in the page. The portal may become smaller, shallower or a backdrop, but must never force horizontal scrolling or consume most of the first viewport.
+
+Verify at minimum one small phone width and one laptop/desktop width. Check 200% zoom when the product accessibility contract requires it.
+
+## Behavior contract
+
+The surface must be implemented with a product `UX-CONTRACT.md` or maintained equivalent. At minimum it defines:
+
+- server-owned identity/membership/permission decisions;
+- sign-in return-path policy;
+- account-choice behavior;
+- consent state machine;
+- revoke semantics;
+- CSRF/same-origin requirements for writes;
+- failure/retry behavior;
+- Dutch locale/date/time policy where applicable;
+- WCAG 2.2 AA, focus and keyboard behavior;
+- loading/empty/error/success states.
+
+The visual direction may never weaken these behaviors.
+
+## Explicit anti-references
+
+Forbidden as a new direction for this surface unless Joep explicitly unlocks the taste:
+
+- v3 5×5 dot-matrix bloom as the auth brand anchor;
+- Instrument Serif as the auth headline face;
+- generic Authentik restyle as the final product architecture;
+- centered OAuth card on an otherwise empty page;
+- AI-purple or blue mesh gradients;
+- generic glassmorphism, neon networks, bento-card landing blocks;
+- fake trust badges, fake user counts, fabricated testimonials or sample account status;
+- more than one major hero gimmick;
+- decorative motion loops competing with the identity decision.
+
+## Implementation process
+
+Use `.agents/skills/locked-taste-design-run/SKILL.md`. The first representative route must be rendered and reviewed against the locked references before the agent expands the rest of the surface. Every serious run records model/effort, skills, references, input brief, screenshots and commit in its provenance manifest.

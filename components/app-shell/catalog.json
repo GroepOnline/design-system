@@ -1,0 +1,40 @@
+{
+  "component": "app-shell",
+  "title": "app shell",
+  "desc": "generic rail/content frame without product navigation semantics",
+  "entries": [
+    {
+      "id": "rail",
+      "file": "self/rail.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "persistent rail plus content"
+    },
+    {
+      "id": "responsive",
+      "file": "self/responsive.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "rail collapses to top strip on narrow viewports"
+    }
+  ],
+  "docs": {
+    "use": [
+      "compose layouts from semantic regions",
+      "keep product-specific behavior outside the primitive"
+    ],
+    "avoid": [
+      "baking product navigation or data semantics into layout",
+      "using layout primitives as decorative cards"
+    ],
+    "contract": [
+      "works at 390px and desktop",
+      "does not impose product colors or copy"
+    ]
+  },
+  "cat": "layout"
+}

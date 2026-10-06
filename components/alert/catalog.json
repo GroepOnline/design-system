@@ -1,0 +1,58 @@
+{
+  "component": "alert",
+  "title": "alert",
+  "desc": "persistent contextual feedback",
+  "entries": [
+    {
+      "id": "neutral",
+      "file": "self/neutral.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "neutral information"
+    },
+    {
+      "id": "success",
+      "file": "self/success.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "success state"
+    },
+    {
+      "id": "warning",
+      "file": "self/warning.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "warning state"
+    },
+    {
+      "id": "danger",
+      "file": "self/danger.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "danger state"
+    }
+  ],
+  "docs": {
+    "use": [
+      "feedback dicht bij de veroorzakende actie",
+      "live regions alleen voor relevante updates"
+    ],
+    "avoid": [
+      "toast voor permanente informatie",
+      "oneindige motion zonder actieve state"
+    ],
+    "contract": [
+      "status semantics expliciet",
+      "reduced-motion veilig"
+    ]
+  },
+  "cat": "feedback"
+}

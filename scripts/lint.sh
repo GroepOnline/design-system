@@ -39,4 +39,6 @@ if ! python3 scripts/check-frontend.py >/dev/null 2>&1; then
     exit 1
 fi
 
+python3 scripts/design-standard-check.py
+
 printf '%s\n' 'lint: applicable linters passed'

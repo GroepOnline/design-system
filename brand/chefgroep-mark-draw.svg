@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" role="img" aria-label="ChefGroep">
+  <style>
+    .ghost { fill: var(--text, #191919); opacity: .10; }
+    .ink { fill: var(--text, #191919); }
+    .stroke { fill: none; stroke: var(--text, #191919); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+    .signal { fill: var(--accent, #317CFF); transform-origin: 36px 20px; }
+    @media (prefers-color-scheme: dark) {
+      .ghost, .ink { fill: var(--text, #F0EEEB); }
+      .stroke { stroke: var(--text, #F0EEEB); }
+      .signal { fill: var(--accent, #5C97FF); }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .stroke { stroke-dasharray: 80; stroke-dashoffset: 80; animation: draw 1.3s cubic-bezier(0.65, 0, 0.35, 1) forwards, settle 280ms cubic-bezier(0.22, 1, 0.36, 1) 1.3s forwards; }
+      .ink { opacity: 0; animation: reveal 280ms cubic-bezier(0.22, 1, 0.36, 1) 1.3s forwards; }
+      .signal { transform: scale(0); animation: signal 280ms cubic-bezier(0.22, 1, 0.36, 1) 1.45s forwards; }
+    }
+    @media (prefers-reduced-motion: reduce) { .stroke { display: none; } }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes settle { to { opacity: 0; } }
+    @keyframes reveal { to { opacity: 1; } }
+    @keyframes signal { to { transform: scale(1); } }
+  </style>
+  <g class="ghost">
+    <circle cx="4" cy="4" r="3"/><circle cx="36" cy="4" r="3"/>
+    <circle cx="12" cy="12" r="3"/><circle cx="20" cy="12" r="3"/><circle cx="28" cy="12" r="3"/><circle cx="36" cy="12" r="3"/>
+    <circle cx="12" cy="20" r="3"/><circle cx="20" cy="20" r="3"/><circle cx="28" cy="20" r="3"/>
+    <circle cx="12" cy="28" r="3"/><circle cx="20" cy="28" r="3"/><circle cx="28" cy="28" r="3"/><circle cx="36" cy="28" r="3"/>
+    <circle cx="4" cy="36" r="3"/><circle cx="36" cy="36" r="3"/>
+  </g>
+  <path class="stroke" d="M28 4 H12 Q4 4 4 12 V28 Q4 36 12 36 H28"/>
+  <g class="ink">
+    <circle cx="12" cy="4" r="3"/><circle cx="20" cy="4" r="3"/><circle cx="28" cy="4" r="3"/>
+    <circle cx="4" cy="12" r="3"/><circle cx="4" cy="20" r="3"/><circle cx="4" cy="28" r="3"/>
+    <circle cx="12" cy="36" r="3"/><circle cx="20" cy="36" r="3"/><circle cx="28" cy="36" r="3"/>
+  </g>
+  <circle class="signal" cx="36" cy="20" r="3"/>
+</svg>

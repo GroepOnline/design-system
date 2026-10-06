@@ -1,0 +1,40 @@
+{
+  "component": "avatar",
+  "title": "avatar",
+  "desc": "identity image or deterministic fallback",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "image + fallback examples"
+    },
+    {
+      "id": "sizes",
+      "file": "self/sizes.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "avatar size scale"
+    }
+  ],
+  "docs": {
+    "use": [
+      "informatie compact en scanbaar maken",
+      "native semantics behouden waar beschikbaar"
+    ],
+    "avoid": [
+      "decoratieve data zonder bron of betekenis",
+      "kleur als enige statusindicator"
+    ],
+    "contract": [
+      "responsive zonder informatieverlies",
+      "tekst blijft selecteerbaar en kopieerbaar"
+    ]
+  },
+  "cat": "data"
+}
