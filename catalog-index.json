@@ -1,40 +1,13 @@
 {
   "schema": 1,
   "counts": {
-    "components": 57,
-    "variants": 155,
-    "profiles": 4,
+    "components": 50,
+    "variants": 139,
+    "profiles": 5,
     "patterns": 8,
-    "extensions": 2
+    "extensions": 3
   },
   "components": [
-    {
-      "id": "accordion",
-      "title": "accordion",
-      "description": "collapsible groups built on native disclosure semantics",
-      "category": "interaction",
-      "manifest": "components/accordion/catalog.json",
-      "catalog": "components/accordion/index.html",
-      "active": [
-        "default"
-      ],
-      "variants": [
-        {
-          "id": "default",
-          "file": "self/default.html",
-          "status": "active",
-          "origin": "self",
-          "note": "multi-open native accordion"
-        },
-        {
-          "id": "single",
-          "file": "self/single.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "single-open accordion behavior"
-        }
-      ]
-    },
     {
       "id": "alert",
       "title": "alert",
@@ -489,40 +462,6 @@
       ]
     },
     {
-      "id": "chip",
-      "title": "chip",
-      "description": "compact filter or selection action",
-      "category": "interaction",
-      "manifest": "components/chip/catalog.json",
-      "catalog": "components/chip/index.html",
-      "active": [
-        "filter"
-      ],
-      "variants": [
-        {
-          "id": "filter",
-          "file": "self/filter.html",
-          "status": "active",
-          "origin": "self",
-          "note": "filter chips with pressed state"
-        },
-        {
-          "id": "selected",
-          "file": "self/selected.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "selected chip state"
-        },
-        {
-          "id": "removable",
-          "file": "self/removable.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "single-action removable chip"
-        }
-      ]
-    },
-    {
       "id": "cluster",
       "title": "cluster",
       "description": "wrapping inline group for actions, tags and controls",
@@ -573,60 +512,6 @@
           "status": "locked",
           "origin": "self",
           "note": "inline code tokens"
-        }
-      ]
-    },
-    {
-      "id": "combobox",
-      "title": "combobox",
-      "description": "searchable option selection with explicit listbox semantics",
-      "category": "interaction",
-      "manifest": "components/combobox/catalog.json",
-      "catalog": "components/combobox/index.html",
-      "active": [
-        "default"
-      ],
-      "variants": [
-        {
-          "id": "default",
-          "file": "self/default.html",
-          "status": "active",
-          "origin": "self",
-          "note": "filtering combobox with visible options"
-        },
-        {
-          "id": "empty",
-          "file": "self/empty.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "combobox empty-result state"
-        }
-      ]
-    },
-    {
-      "id": "command-palette",
-      "title": "command palette",
-      "description": "keyboard-oriented command chooser composed from dialog input and options",
-      "category": "interaction",
-      "manifest": "components/command-palette/catalog.json",
-      "catalog": "components/command-palette/index.html",
-      "active": [
-        "default"
-      ],
-      "variants": [
-        {
-          "id": "default",
-          "file": "self/default.html",
-          "status": "active",
-          "origin": "self",
-          "note": "native dialog command palette"
-        },
-        {
-          "id": "compact",
-          "file": "self/compact.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "compact embedded command chooser"
         }
       ]
     },
@@ -744,33 +629,6 @@
           "status": "locked",
           "origin": "self",
           "note": "before / after columns"
-        }
-      ]
-    },
-    {
-      "id": "disclosure",
-      "title": "disclosure",
-      "description": "small reveal control for secondary detail",
-      "category": "interaction",
-      "manifest": "components/disclosure/catalog.json",
-      "catalog": "components/disclosure/index.html",
-      "active": [
-        "default"
-      ],
-      "variants": [
-        {
-          "id": "default",
-          "file": "self/default.html",
-          "status": "active",
-          "origin": "self",
-          "note": "native details disclosure"
-        },
-        {
-          "id": "inline",
-          "file": "self/inline.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "compact inline disclosure"
         }
       ]
     },
@@ -1457,40 +1315,6 @@
       ]
     },
     {
-      "id": "slider",
-      "title": "slider",
-      "description": "native range input for bounded numeric choice",
-      "category": "interaction",
-      "manifest": "components/slider/catalog.json",
-      "catalog": "components/slider/index.html",
-      "active": [
-        "default"
-      ],
-      "variants": [
-        {
-          "id": "default",
-          "file": "self/default.html",
-          "status": "active",
-          "origin": "self",
-          "note": "continuous labelled range"
-        },
-        {
-          "id": "stepped",
-          "file": "self/stepped.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "stepped range with live output"
-        },
-        {
-          "id": "disabled",
-          "file": "self/disabled.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "disabled range state"
-        }
-      ]
-    },
-    {
       "id": "split-pane",
       "title": "split pane",
       "description": "two-region composition that collapses intentionally",
@@ -1797,33 +1621,6 @@
       ]
     },
     {
-      "id": "toggle-group",
-      "title": "toggle group",
-      "description": "one or many pressed-state choices",
-      "category": "interaction",
-      "manifest": "components/toggle-group/catalog.json",
-      "catalog": "components/toggle-group/index.html",
-      "active": [
-        "single"
-      ],
-      "variants": [
-        {
-          "id": "single",
-          "file": "self/single.html",
-          "status": "active",
-          "origin": "self",
-          "note": "single selection group"
-        },
-        {
-          "id": "multiple",
-          "file": "self/multiple.html",
-          "status": "locked",
-          "origin": "self",
-          "note": "multiple pressed-state group"
-        }
-      ]
-    },
-    {
       "id": "tooltip",
       "title": "tooltip",
       "description": "short contextual labels for compact controls",
@@ -1902,6 +1699,12 @@
   "profiles": [
     {
       "id": "expressive-motion",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md"
+    },
+    {
+      "id": "identity-spatial",
       "optional": true,
       "design": "DESIGN.md",
       "taste": "TASTE.md"
@@ -2172,6 +1975,31 @@
           "preferred": "default"
         },
         "settings": {
+          "include": [
+            "default"
+          ],
+          "preferred": "default"
+        }
+      }
+    },
+    {
+      "id": "ocx",
+      "label": "OCX operator surface",
+      "optional": true,
+      "design": "DESIGN.md",
+      "taste": "TASTE.md",
+      "components": {
+        "button": {
+          "include": [
+            "standard",
+            "primary",
+            "ghost",
+            "gbtn",
+            "with-kbd"
+          ],
+          "preferred": "standard"
+        },
+        "badge": {
           "include": [
             "default"
           ],

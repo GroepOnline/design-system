@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "components": {
+    "Brand": [
+      "accessible home link",
+      "decorative SVG",
+      "fixed intrinsic size"
+    ],
+    "Portal": [
+      "decorative only",
+      "finite arrival",
+      "reduced-motion still"
+    ],
+    "Button": [
+      "idle",
+      "pending with stable width",
+      "disabled",
+      "focus",
+      "error recovery"
+    ],
+    "Field": [
+      "label",
+      "autocomplete",
+      "validation",
+      "first invalid focus"
+    ],
+    "Notice": [
+      "status or alert",
+      "server-confirmed success"
+    ],
+    "Loading": [
+      "readable pending text",
+      "finite cue",
+      "no fake progress"
+    ],
+    "Empty": [
+      "honest absence",
+      "next action"
+    ],
+    "Failure": [
+      "cause in user language",
+      "retry"
+    ],
+    "Confirm": [
+      "safe initial focus",
+      "modal containment",
+      "Escape when safe",
+      "focus return"
+    ],
+    "PageTitle": [
+      "one h1",
+      "page job",
+      "optional real action"
+    ],
+    "Navigation": [
+      "named landmark",
+      "real links",
+      "current route; skip link owned by SiteShell"
+    ],
+    "AccountChoice": [
+      "native radio",
+      "shared hit area",
+      "server membership"
+    ],
+    "PermissionChoice": [
+      "native checkbox",
+      "scope explanation",
+      "required state"
+    ],
+    "ConnectionRow": [
+      "active",
+      "expired",
+      "revoked",
+      "pending revoke"
+    ],
+    "SessionRow": [
+      "current device",
+      "other device",
+      "clear revoke consequence"
+    ],
+    "SecurityMethods": [
+      "real upstream methods",
+      "explicit unavailable state"
+    ],
+    "Audit": [
+      "real timestamps",
+      "localized dates",
+      "no fabricated events"
+    ],
+    "ActionLink": [
+      "native navigation",
+      "product-owned destination",
+      "text escaping"
+    ],
+    "LandingHero": [
+      "one h1",
+      "one decorative signature",
+      "decision before signature on phone"
+    ],
+    "SiteShell": [
+      "named home link",
+      "explicit plane",
+      "focusable skip target",
+      "one main landmark",
+      "product-owned navigation"
+    ]
+  },
+  "implementation": "components.mjs",
+  "implemented": [
+    "AccountChoice",
+    "ActionLink",
+    "Audit",
+    "Brand",
+    "Button",
+    "Confirm",
+    "ConnectionRow",
+    "Empty",
+    "Failure",
+    "Field",
+    "LandingHero",
+    "Loading",
+    "Navigation",
+    "Notice",
+    "PageTitle",
+    "PermissionChoice",
+    "Portal",
+    "SecurityMethods",
+    "SessionRow",
+    "SiteShell"
+  ],
+  "interactions": {
+    "bindConfirm": [
+      "native modal containment",
+      "safe focus",
+      "pending escape guard",
+      "promise-based success",
+      "readable rejection",
+      "focus return",
+      "cleanup"
+    ],
+    "focusFirstInvalid": [
+      "first enabled invalid field",
+      "focus only; product owns validation"
+    ]
+  }
+}

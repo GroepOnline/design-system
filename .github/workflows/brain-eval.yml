@@ -49,7 +49,7 @@ jobs:
           path: |
             brain/eval/scorecard.json
             brain/signals/signals.yaml
-          retention-days: 30
+          retention-days: 7
 
       - name: Open issue on gate failure
         if: failure() && github.event_name == 'schedule'

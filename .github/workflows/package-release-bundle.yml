@@ -24,4 +24,4 @@ jobs:
         with:
           name: signaal-runtime-${{ github.sha }}
           path: dist/runtime-packages/
-          retention-days: 30
+          retention-days: 7
