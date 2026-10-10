@@ -41,13 +41,13 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 
 def _today() -> str:
     """Local date for generated-page colophons."""
-    return datetime.now().date().isoformat()  # noqa: DTZ005
+    return datetime.now().date().isoformat()
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 COMP = os.path.join(ROOT, "components")
@@ -3072,14 +3072,14 @@ def days_since_score_refresh(entries):
         if dt and (latest is None or dt > latest):
             latest = dt
     if latest is None and os.path.exists(BRAIN_SCORECARD):
-        latest = datetime.fromtimestamp(os.path.getmtime(BRAIN_SCORECARD), tz=timezone.utc)
+        latest = datetime.fromtimestamp(os.path.getmtime(BRAIN_SCORECARD), tz=UTC)
         # scorecard mtime alone does not count as refresh signal; only warn path uses None
         return None
     if latest is None:
         return None
     if latest.tzinfo is None:
-        latest = latest.replace(tzinfo=timezone.utc)
-    return (datetime.now(timezone.utc) - latest).total_seconds() / 86400.0
+        latest = latest.replace(tzinfo=UTC)
+    return (datetime.now(UTC) - latest).total_seconds() / 86400.0
 
 def taste_log_stats():
     """Return (days_since_last_entry, open_candidate_rules)."""
@@ -3091,8 +3091,8 @@ def taste_log_stats():
     days = None
     if dates:
         try:
-            last = datetime.strptime(max(dates), "%Y-%m-%d").replace(tzinfo=timezone.utc)
-            days = (datetime.now(timezone.utc) - last).total_seconds() / 86400.0
+            last = datetime.strptime(max(dates), "%Y-%m-%d").replace(tzinfo=UTC)
+            days = (datetime.now(UTC) - last).total_seconds() / 86400.0
         except ValueError:
             days = None
     open_cand = 0
@@ -3213,7 +3213,7 @@ def brain_eval(*, enforce_freshness=False, write_refresh=False):
     elif agent_st == "skipped":
         warnings.append("agent_taste_check=skipped (kater-dev-tools not available)")
 
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     card = {
         "ts": now,
         "pass": len(failures) == 0,
@@ -3240,7 +3240,7 @@ def brain_eval(*, enforce_freshness=False, write_refresh=False):
     if write_refresh and card["pass"]:
         data = load_signals_yaml()
         data.setdefault("entries", [])
-        ts = datetime.now(timezone.utc)
+        ts = datetime.now(UTC)
         data["entries"].append({
             "id": ts.strftime("%Y-%m-%dT%H-%M-%SZ") + "-score-refresh",
             "ts": ts.strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -3311,7 +3311,7 @@ def cmd_brain_signal(args):
         err(f"source moet een van {_SIGNAL_SOURCES} zijn")
     if status not in _SIGNAL_STATUSES:
         err(f"status moet een van {_SIGNAL_STATUSES} zijn")
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", signal.lower()).strip("-")[:40] or "signal"
     entry = {
         "id": now.strftime("%Y-%m-%dT%H-%M-%SZ") + "-" + slug,
