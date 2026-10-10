@@ -513,6 +513,7 @@
 <p>Regel: raakt je commit <code>.github/workflows/</code> → push met <code>git push origin-ssh &lt;branch&gt;</code>.</p>
 <p>Kom je dat pas achter bij een geweigerde push → zelfde branch opnieuw pushen naar</p>
 <p><code>origin-ssh</code>, geen force-push nodig.</p>
+<p>Compound Engineering overlay: <code>.compound-engineering/</code> (tracked <code>config.yaml</code>, gitignored <code>config.local.yaml</code>). Artifact root <code>.compound-engineering/artifacts/</code>. Portable skills <code>~/.agents/skills/ce-*</code>; native Cursor plugin is fallback only when this overlay is absent.</p>
 <h2 data-reg="design-context-overlays">Design context overlays</h2>
 <p>For design work, resolve optional context before inventing product-specific rules:</p>
 <pre><code>SIGNAAL_PROFILE=operator-dense SIGNAAL_EXTENSION=dsh ./.agents/hooks/signaal-context.sh</code></pre>
