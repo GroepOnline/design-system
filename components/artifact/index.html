@@ -155,6 +155,10 @@
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .chips { display:flex; flex-wrap:wrap; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .cell .chips:empty { display:none; }
+  .cell .chip { font-family:var(--mono); font-size:10px; color:var(--text-muted); border:1px solid var(--line); background:var(--surface-sunk); border-radius:999px; padding:2px 7px; }
+  .cell .chip.engine { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 28%,var(--line)); background:var(--accent-soft); }
   .cell .cf { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
@@ -229,9 +233,62 @@
     .card:active { transform: none; }
     .cell, .cell .ch, .rail a.it, .brand .logo { transition: none; }
   }
+<style>
+body.component-shell { --library-accent:#4f7cff; background:#fff; color:#202124; }
+body.component-shell .sruler, body.component-shell .splate, body.component-shell .smodeline { display:none !important; }
+body.component-shell .rail { width:244px; padding:8px 9px 10px; background:#fbfbfb; border-right:1px solid #e8e8e8; }
+body.component-shell .brand { height:34px; padding:0 8px; gap:7px; font-size:13px; border-radius:6px; }
+body.component-shell .brand .logo { width:18px; height:18px; border-radius:4px; font-size:10px; background:#ececec; color:#555; }
+body.component-shell .brand:hover .logo { background:#e5e5e5; color:#222; }
+body.component-shell .rail .lbl { margin:13px 8px 4px; font-size:10px; color:#8a8a8a; }
+body.component-shell .rail a.it { min-height:30px; padding:4px 7px; gap:7px; border-radius:6px; }
+body.component-shell .rail a.it.on { background:#f3f5f8; border-color:#d9dde5; }
+body.component-shell .rail a.it.on::before { width:2px; height:16px; background:var(--library-accent); }
+body.component-shell .rail .tile { width:20px; height:20px; border:0; background:transparent; border-radius:4px; }
+body.component-shell .rail .tile svg { width:13px; height:13px; color:#5f6368; }
+body.component-shell .rail .nm { font-size:12px; font-weight:450; color:#303236; }
+body.component-shell .rail .nm .ds, body.component-shell .rail .n, body.component-shell .rail .act { display:none; }
+body.component-shell .rail .foot { border-top:0; padding-top:8px; }
+body.component-shell .main { background:#fff; }
+body.component-shell .wrap { max-width:none; padding:0 28px 48px; }
+body.component-shell .pagehead { min-height:56px; align-items:center; gap:10px; margin:0 -28px 20px; padding:0 28px; border-bottom:1px solid #ececec; animation:none; }
+body.component-shell .pagehead .tile { width:28px; height:28px; border-radius:6px; background:#f7f7f7; border-color:#e7e7e7; }
+body.component-shell .pagehead .tile svg { width:14px; height:14px; }
+body.component-shell .pagehead .eyebrow { display:none; }
+body.component-shell .pagehead h1 { font-family:var(--font); font-size:15px; font-weight:550; letter-spacing:-.01em; }
+body.component-shell .pagehead .ph-sub { font-size:11px; margin-top:1px; color:#8a8a8a; }
+body.component-shell .pagehead .meta { font-size:9.5px; line-height:1.4; color:#9a9a9a; }
+body.component-shell .lede, body.component-shell .legend { display:none; }
+body.component-shell .wrap { display:grid; grid-template-columns:minmax(0,1fr) 294px; column-gap:24px; align-items:start; }
+body.component-shell .pagehead, body.component-shell .gen { grid-column:1/-1; }
+body.component-shell .use-now { grid-column:1; margin:0 0 12px; min-height:34px; padding:6px 9px; border:1px solid #e5e5e5; background:#fafafa; border-radius:7px; font-size:11px; }
+body.component-shell .use-now .lbl2 { color:#555; }
+body.component-shell .use-now code { font-size:9.5px; border-color:#e8e8e8; background:#fff; }
+body.component-shell .docs { grid-column:2; grid-row:2 / span 2; position:sticky; top:16px; display:grid; grid-template-columns:1fr; gap:8px; margin:0; }
+body.component-shell .doc { border:1px solid #e8e8e8; border-radius:7px; padding:10px 11px; background:#fff; }
+body.component-shell .doc .dt { margin-bottom:6px; font-size:9px; color:#777 !important; }
+body.component-shell .doc li { font-size:11px; line-height:1.45; color:#5f6368; margin:2px 0; }
+body.component-shell .doc code { font-size:9.5px; background:#f6f6f6; }
+body.component-shell .grid { grid-column:1; display:grid; grid-template-columns:1fr; gap:10px; }
+body.component-shell .cell { border:1px solid #e5e5e5; border-radius:7px; background:#fff; }
+body.component-shell .cell:hover { border-color:#d6d6d6; }
+body.component-shell .cell.active { border-color:#cfd6e3; box-shadow:none; }
+body.component-shell .cell .ch { min-height:34px; padding:6px 9px; background:#fafafa; border-color:#ececec; font-size:11px; }
+body.component-shell .cell .ch .note { font-size:10px; }
+body.component-shell .cell .chips { gap:4px; padding:5px 9px; background:#fff; border-color:#eee; }
+body.component-shell .cell .chip { font-size:8.5px; padding:1px 5px; border-radius:4px; background:#f7f7f7; color:#777; }
+body.component-shell .cell .chip.engine { color:#555; border-color:#ddd; background:#f7f7f7; }
+body.component-shell .cell .cf, body.component-shell .cell summary { font-size:9.5px; padding:6px 9px; }
+body.component-shell .cell pre { font-size:10px; background:#fbfbfb; }
+body.component-shell .st { font-size:8.5px; padding:2px 5px; border-radius:4px; }
+body.component-shell .st.active { background:#f0f4fb; color:#4d6695; }
+body.component-shell .org { font-size:8.5px; padding:2px 5px; border-radius:4px; background:#f5f5f5; color:#777; }
+body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
+@media(max-width:980px){ body.component-shell .wrap{display:block;padding:0 18px 40px} body.component-shell .pagehead{margin:0 -18px 16px;padding:0 18px} body.component-shell .docs{position:static;margin-bottom:12px} }
+</style>
 </style>
 </head>
-<body>
+<body class="component-shell">
 <aside class="rail">
   <a class="brand" href="../../index.html"><span class="logo">d</span>design-system</a>
   <div class="rail-links">
@@ -252,7 +309,9 @@
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/border-beam/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
   <a class="it" href="../../components/motion/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/motion-spring/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
   <div class="lbl caps">Forms</div>
   <a class="it" href="../../components/checkbox/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-check"/></svg></span><span class="nm">checkbox<span class="ds">independent multi-selection and boolean acknowledgement</span></span><span class="act"></span></a>
   <a class="it" href="../../components/field/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-info"/></svg></span><span class="nm">field<span class="ds">form structure: label, help, required and error semantics</span></span><span class="act"></span></a>
@@ -295,7 +354,12 @@
   <a class="it" href="../../components/section/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">section<span class="ds">semantic section spacing and optional boundary</span></span><span class="act"></span></a>
   <a class="it" href="../../components/split-pane/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">split-pane<span class="ds">two-region composition that collapses intentionally</span></span><span class="act"></span></a>
   <a class="it" href="../../components/stack/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-list"/></svg></span><span class="nm">stack<span class="ds">vertical rhythm without screen-specific margins</span></span><span class="act"></span></a>
+  <div class="lbl caps">Systeem</div>
+  <a class="it" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio<span class="ds">visueel afstellen zonder code</span></span><span class="act"></span></a>
+  <div class="lbl caps">3D / WebGL</div>
+  <a class="it" href="../../components/three-orbit/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">three-orbit<span class="ds">Three.js / WebGL scene specimens</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
+  <a class="it sys" href="../../library/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-library"/></svg></span><span class="nm">specimens</span><span class="n">1,980+</span></a>
   <a class="it sys" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../../docs/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../../taste-site/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
@@ -320,7 +384,7 @@
     <h1>artifact</h1>
     <div class="ph-sub">before/after bewijs</div>
   </div>
-  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 04/50</div>
+  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 04/53</div>
 </div>
 <div class="lede">manifest: <code>components/artifact/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
@@ -354,6 +418,7 @@
         <span class="st active">ACTIEF</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
@@ -607,6 +672,7 @@ function copyText(btn) {
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"><span class="chip ">MIT</span></div>
     <iframe src="external/opensourceui-terminal-log.html" style="min-height:330px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>external/opensourceui-terminal-log.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-terminal-log.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
@@ -626,6 +692,7 @@ body{padding:34px 30px;background:#f5f5f5;font-family:var(--font)} .ref{font:11p
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/terminal-evidence.html" style="min-height:330px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/terminal-evidence.html</span><span>toegevoegd 2026-09-06</span><a href="self/terminal-evidence.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
@@ -663,11 +730,11 @@ body{padding:40px 32px;max-width:680px}.head{font:11px var(--mono);color:var(--t
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-12 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-06 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">04/50</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">04/53</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

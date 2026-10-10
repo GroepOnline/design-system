@@ -46,9 +46,11 @@ export const light = Object.freeze({
   "dur-fast": "140ms",
   "dur-expand": "420ms",
   "dur-pulse-cycle": "2400ms",
-  "glow-live": "0 0 0 1px color-mix(in srgb, var(--open-green) 40%, transparent),\n               0 0 12px 2px color-mix(in srgb, var(--open-green) 35%, transparent)",
+  "live-outline": "color-mix(in srgb, var(--open-green) 56%, var(--line-strong))",
   "dur-med": "280ms",
-  "dur-slow": "420ms"
+  "dur-slow": "420ms",
+  "control-shadow": "0 1px 1px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.05)",
+  "control-shadow-hover": "0 3px 10px rgba(0,0,0,0.08)"
 });
 export const dark = Object.freeze({
   "bg": "#121111",

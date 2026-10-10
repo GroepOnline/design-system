@@ -196,6 +196,30 @@ Regel-kandidaten: (1) de pagina is een technische tekening — chrome (rulers, c
 - **delta**: home-shell krijgt een tweede variant `menus` met de gemeten popover-patronen (mode-picker, plus-menu, split-send, credits-banner, sessie-rij met werkstatus); DSH-plugin-pad wordt verkend (dsh-ui-frontend)
 - **candidate rule**: composer-menu's zijn onderdeel van de shell-structuur, niet losse componenten — één popover-idioom (surface, r-md, hairline, icoon 16 + label) voor alle drie (plus, mode, env). *1e observatie, watch.*
 
+## 2026-09-07 · vNext specimen colors: AI-slop reject
+
+- **shown**: vNext live specimen explorer met blauw accent, paars/blauw gradients, glow-button, radial spring field en blauwe Three.js points
+- **reaction**: rejected, behalve Border Beam
+- **signal**: kleuren lezen als generieke AI-demo in plaats van ontworpen materiaal
+- **delta**: kleur is voortaan semantiek of expliciet specimen-inhoud, nooit om een surface automatisch “tech/AI” te laten voelen. Button/motion/3D labs worden monochroom en materiaalgedreven; Border Beam behoudt kleur omdat kleur daar het onderzochte effect zelf is.
+- **rule**: **DON'T** blauw-paars/neon/aurora/glow inzetten als ambient/default stijl. **DO** neutrale materialen, contrast, typografie, geometrie en motion gebruiken voor karakter. Flat accent alleen voor focus, selectie, links of expliciete semantiek.
+
+## 2026-09-07 · Library density: Kinetics as interaction-library reference
+
+- **shown**: button specimen grid after neutral color pass, with one small button centered inside ~120px rounded cards
+- **reaction**: rejected as too coarse; Kinetics/Colorion library given as the quality reference
+- **signal**: the library should feel like a dense collection of live interactions, not a gallery of oversized demo cards
+- **delta**: button workbench now uses a compact top toolbar, 3-column specimen grid, ~88px rows, r-md surfaces and no outer stage card; global library previews shrink to ~126px with 250px minimum columns and no hover elevation
+- **rule**: specimen is the content. Chrome must collapse around it. Large empty card area around a tiny primitive is an anti-pattern.
+
+## 2026-09-07 · Library shell: product UI, not showcase
+
+- **shown**: compact neutral specimen pass after Kinetics-inspired density correction
+- **reaction**: still rejected as visually coarse; clean review-app screenshot supplied as target direction
+- **signal**: the outer system must disappear into a quiet tool shell: small sidebar rows, thin dividers, plain white workspace, compact search/controls and sparse semantic blue only for selection/focus
+- **delta**: `/components` now has a dedicated app-shell, compact category sidebar, centered search, grid/list modes and 108px live previews; component detail routes use the same product shell with canvas left and sticky inspector right; technical drawing/modeline chrome is disabled on these routes
+- **rule**: library/tooling surfaces are product interfaces, never portfolio/showcase pages.
+
 ## 2026-09-11 · Button family polish
 
 - **shown**: bestaande Signaal button family met default/primary/gbtn en de eerste algemene runtime-package

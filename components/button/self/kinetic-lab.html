@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Button kinetic lab</title>
+<link rel="stylesheet" href="../../../tokens.css">
+<style>
+  *{box-sizing:border-box} body{margin:0;padding:18px;background:var(--bg);color:var(--text)}
+  .lab{display:grid;grid-template-columns:1fr;gap:12px;max-width:1180px;margin:auto}
+  .head{display:flex;align-items:end;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);padding:0 2px 12px}
+  .head h1{margin:0;font-size:20px;font-weight:500}.head p{margin:3px 0 0;color:var(--text-muted);max-width:68ch;font-size:12.5px}.kicker{font:9px var(--mono);color:var(--text-faint);letter-spacing:.08em;text-transform:uppercase}
+  .stage{background:transparent;min-height:0}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .spec{min-height:88px;border:1px solid var(--line);border-radius:var(--r-md);padding:9px 10px;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:border-color var(--dur-fast),background var(--dur-fast)}.spec:hover{border-color:var(--line-strong);background:color-mix(in srgb,var(--surface) 96%,var(--text) 4%)}
+  .spec .meta{display:flex;justify-content:space-between;gap:8px;font:9px var(--mono);line-height:1;color:var(--text-faint)}
+  .preview{display:flex;min-height:50px;align-items:center;justify-content:center;position:relative}
+  .controls{order:-1;display:grid;grid-template-columns:auto repeat(7,minmax(90px,1fr));gap:8px;align-items:end;border-bottom:1px solid var(--line);padding:0 2px 12px;background:transparent}
+  .controls h2{font-size:11px;margin:0 8px 7px 0;white-space:nowrap}.ctl{display:grid;gap:4px;margin:0}.ctl label{font-size:9.5px;color:var(--text-muted);display:flex;justify-content:space-between;gap:6px}.ctl output{font-family:var(--mono);color:var(--text);font-size:9px}
+  select,input[type=range]{width:100%} select{height:27px;border:1px solid var(--line-strong);border-radius:var(--r-md);background:var(--surface);color:var(--text);padding:0 7px;font-size:11px}
+  input[type=range]{accent-color:var(--text-muted);height:16px}.copy{height:27px;padding:0 8px;font-size:10px;align-self:end}
+  .preview .btn{--lab-r:var(--r-md);--lab-h:32px;--lab-w:500;--lab-track:0em;height:var(--lab-h);border-radius:var(--lab-r);font-weight:var(--lab-w);letter-spacing:var(--lab-track)}
+  .raised .btn{box-shadow:0 1px 1px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.07);border-color:var(--line-strong)}
+  .kinetic{overflow:hidden}.kinetic::after{content:"";position:absolute;width:54px;height:54px;border:1px solid var(--line-strong);border-radius:50%;left:var(--px,50%);top:var(--py,50%);transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:opacity 140ms}.kinetic:hover::after{opacity:.55}
+  .underline-btn{border-color:transparent;border-radius:0;border-bottom:1px solid var(--text);background:transparent;padding-inline:2px}
+  .split-btn{padding-right:5px}.split-btn .split-mark{margin-left:7px;border-left:1px solid var(--line-strong);padding:2px 5px 2px 9px;font-family:var(--mono);font-size:10px}
+  .lift .btn:hover{transform:translateY(-3px) scale(1.015)}.snap .btn:hover{transform:translateY(-1px) scale(1.035)}
+  .flat .btn:hover{transform:none}.mono .btn{font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.08em}
+  @media(max-width:980px){.controls{grid-template-columns:repeat(4,minmax(100px,1fr))}.controls h2{grid-column:1/-1}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){body{padding:12px}.head{display:block}.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.spec{min-height:82px}}
+</style>
+</head>
+<body>
+<main class="lab" id="lab">
+  <header class="head"><div><div class="kicker">specimen / interaction lab</div><h1>Button workbench</h1><p>Geen één “juiste” knop: productievarianten, externe ideeën en random vondsten mogen naast elkaar bestaan. Controls wijzigen alle specimens live.</p></div></header>
+  <section class="stage" id="stage"><div class="grid">
+    <article class="spec"><div class="meta"><span>01 standard</span><span>production</span></div><div class="preview"><button class="btn">Open project</button></div></article>
+    <article class="spec"><div class="meta"><span>02 primary</span><span>production</span></div><div class="preview"><button class="btn primary">Deploy agent</button></div></article>
+    <article class="spec"><div class="meta"><span>03 subtle</span><span>quiet</span></div><div class="preview"><button class="btn" style="background:var(--surface-sunk);border-color:transparent">View details</button></div></article>
+    <article class="spec"><div class="meta"><span>04 ghost</span><span>toolbar</span></div><div class="preview"><button class="btn ghost">Cancel</button></div></article>
+    <article class="spec raised"><div class="meta"><span>05 raised</span><span>material</span></div><div class="preview"><button class="btn">Start session</button></div></article>
+    <article class="spec"><div class="meta"><span>06 danger</span><span>semantic</span></div><div class="preview"><button class="btn destructive">Delete run</button></div></article>
+    <article class="spec"><div class="meta"><span>07 pill</span><span>marketing-ish</span></div><div class="preview"><button class="btn primary pill">Try playground</button></div></article>
+    <article class="spec mono"><div class="meta"><span>08 mono</span><span>technical</span></div><div class="preview"><button class="btn">run build</button></div></article>
+    <article class="spec kinetic" data-kinetic><div class="meta"><span>09 kinetic</span><span>pointer geometry</span></div><div class="preview"><button class="btn pill">Magnetic-ish</button></div></article>
+    <article class="spec lift"><div class="meta"><span>10 lift</span><span>motion</span></div><div class="preview"><button class="btn">Hover me</button></div></article>
+    <article class="spec snap"><div class="meta"><span>11 snap</span><span>motion</span></div><div class="preview"><button class="btn">Quick action</button></div></article>
+    <article class="spec"><div class="meta"><span>12 split</span><span>compound action</span></div><div class="preview"><button class="btn split-btn">Generate <span class="split-mark">⌄</span></button></div></article>
+    <article class="spec"><div class="meta"><span>13 shortcut</span><span>approval</span></div><div class="preview"><button class="btn primary">Approve <kbd>1</kbd></button></div></article>
+    <article class="spec"><div class="meta"><span>14 activity</span><span>no spinner</span></div><div class="preview"><button class="btn loading" aria-busy="true">Building</button></div></article>
+  </div></section>
+  <aside class="controls"><h2>Live tuning</h2>
+    <div class="ctl"><label>Theme</label><select id="theme" aria-label="Theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+    <div class="ctl"><label>Skin</label><select id="skin" aria-label="Skin"><option value="">Devin</option><option value="strak">Strak</option><option value="grok">Grok</option></select></div>
+    <div class="ctl"><label>Radius <output id="radiusO">6px</output></label><input id="radius" aria-label="Radius" type="range" min="0" max="28" value="6"></div>
+    <div class="ctl"><label>Height <output id="heightO">32px</output></label><input id="height" aria-label="Height" type="range" min="26" max="52" value="32"></div>
+    <div class="ctl"><label>Weight <output id="weightO">500</output></label><input id="weight" aria-label="Weight" type="range" min="400" max="700" step="50" value="500"></div>
+    <div class="ctl"><label>Tracking <output id="trackO">0.00em</output></label><input id="track" aria-label="Tracking" type="range" min="-4" max="10" step="1" value="0"></div>
+    <div class="ctl"><label>Motion</label><select id="motion" aria-label="Motion"><option value="default">Default</option><option value="lift">Lift</option><option value="snap">Snap</option><option value="flat">Flat</option></select></div>
+    <button class="btn copy" id="copy">Copy tuning</button>
+  </aside>
+</main>
+<script>
+  const root=document.documentElement,stage=document.querySelector('#stage');
+  const set=(name,val)=>document.querySelectorAll('.preview .btn').forEach(b=>b.style.setProperty(name,val));
+  const bind=(id,varName,fmt)=>{const el=document.querySelector('#'+id),out=document.querySelector('#'+id+'O');el.addEventListener('input',()=>{const v=fmt(el.value);set(varName,v);if(out)out.textContent=v});};
+  bind('radius','--lab-r',v=>v+'px'); bind('height','--lab-h',v=>v+'px'); bind('weight','--lab-w',v=>v); bind('track','--lab-track',v=>(Number(v)/100).toFixed(2)+'em');
+  document.querySelector('#theme').addEventListener('change',e=>root.dataset.theme=e.target.value==='dark'?'dark':'light');
+  document.querySelector('#skin').addEventListener('change',e=>{if(e.target.value)root.dataset.style=e.target.value;else delete root.dataset.style});
+  document.querySelector('#motion').addEventListener('change',e=>{stage.classList.remove('lift','snap','flat');if(e.target.value!=='default')stage.classList.add(e.target.value)});
+  document.querySelectorAll('[data-kinetic]').forEach(card=>card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();card.style.setProperty('--px',((e.clientX-r.left)/r.width*100)+'%');card.style.setProperty('--py',((e.clientY-r.top)/r.height*100)+'%')}));
+  document.querySelector('#copy').addEventListener('click',async()=>{const text=`radius=${radius.value}px; height=${height.value}px; weight=${weight.value}; tracking=${(track.value/100).toFixed(2)}em; motion=${motion.value}; theme=${theme.value}; skin=${skin.value||'devin'}`;await navigator.clipboard?.writeText(text);document.querySelector('#copy').textContent='Copied';setTimeout(()=>document.querySelector('#copy').textContent='Copy tuning',900)});
+</script>
+</body></html>

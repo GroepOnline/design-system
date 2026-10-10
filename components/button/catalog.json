@@ -74,6 +74,38 @@
       "family": "references"
     },
     {
+      "id": "kinetic-lab",
+      "file": "self/kinetic-lab.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-07",
+      "note": "interactive specimen workbench: 14 button recipes + live tuning",
+      "kind": "workbench",
+      "engine": "css + pointer-js",
+      "license": "ChefGroep",
+      "tags": [
+        "buttons",
+        "variants",
+        "live-controls",
+        "random-library",
+        "material",
+        "monochrome",
+        "pointer-geometry"
+      ],
+      "controls": [
+        "theme",
+        "skin",
+        "radius",
+        "height",
+        "weight",
+        "tracking",
+        "motion"
+      ],
+      "wide": true,
+      "h": 760
+    },
+    {
       "id": "subtle",
       "file": "self/subtle.html",
       "origin": "self",

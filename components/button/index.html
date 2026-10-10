@@ -155,6 +155,10 @@
   .org { font-size: var(--text-2xs); padding: 2.5px 9px; border-radius: 6px; background: var(--surface-sunk); color: var(--text-muted); }
   .org.external { color: var(--accent-ink); }
   .cell iframe { width: 100%; border: none; display: block; background: var(--bg); }
+  .cell .chips { display:flex; flex-wrap:wrap; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .cell .chips:empty { display:none; }
+  .cell .chip { font-family:var(--mono); font-size:10px; color:var(--text-muted); border:1px solid var(--line); background:var(--surface-sunk); border-radius:999px; padding:2px 7px; }
+  .cell .chip.engine { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 28%,var(--line)); background:var(--accent-soft); }
   .cell .cf { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: var(--text-2xs); color: var(--text-faint); }
   .cell .cf a { color: var(--accent-ink); text-decoration: none; }
   .cell details { border-top: 1px solid var(--line); }
@@ -229,9 +233,62 @@
     .card:active { transform: none; }
     .cell, .cell .ch, .rail a.it, .brand .logo { transition: none; }
   }
+<style>
+body.component-shell { --library-accent:#4f7cff; background:#fff; color:#202124; }
+body.component-shell .sruler, body.component-shell .splate, body.component-shell .smodeline { display:none !important; }
+body.component-shell .rail { width:244px; padding:8px 9px 10px; background:#fbfbfb; border-right:1px solid #e8e8e8; }
+body.component-shell .brand { height:34px; padding:0 8px; gap:7px; font-size:13px; border-radius:6px; }
+body.component-shell .brand .logo { width:18px; height:18px; border-radius:4px; font-size:10px; background:#ececec; color:#555; }
+body.component-shell .brand:hover .logo { background:#e5e5e5; color:#222; }
+body.component-shell .rail .lbl { margin:13px 8px 4px; font-size:10px; color:#8a8a8a; }
+body.component-shell .rail a.it { min-height:30px; padding:4px 7px; gap:7px; border-radius:6px; }
+body.component-shell .rail a.it.on { background:#f3f5f8; border-color:#d9dde5; }
+body.component-shell .rail a.it.on::before { width:2px; height:16px; background:var(--library-accent); }
+body.component-shell .rail .tile { width:20px; height:20px; border:0; background:transparent; border-radius:4px; }
+body.component-shell .rail .tile svg { width:13px; height:13px; color:#5f6368; }
+body.component-shell .rail .nm { font-size:12px; font-weight:450; color:#303236; }
+body.component-shell .rail .nm .ds, body.component-shell .rail .n, body.component-shell .rail .act { display:none; }
+body.component-shell .rail .foot { border-top:0; padding-top:8px; }
+body.component-shell .main { background:#fff; }
+body.component-shell .wrap { max-width:none; padding:0 28px 48px; }
+body.component-shell .pagehead { min-height:56px; align-items:center; gap:10px; margin:0 -28px 20px; padding:0 28px; border-bottom:1px solid #ececec; animation:none; }
+body.component-shell .pagehead .tile { width:28px; height:28px; border-radius:6px; background:#f7f7f7; border-color:#e7e7e7; }
+body.component-shell .pagehead .tile svg { width:14px; height:14px; }
+body.component-shell .pagehead .eyebrow { display:none; }
+body.component-shell .pagehead h1 { font-family:var(--font); font-size:15px; font-weight:550; letter-spacing:-.01em; }
+body.component-shell .pagehead .ph-sub { font-size:11px; margin-top:1px; color:#8a8a8a; }
+body.component-shell .pagehead .meta { font-size:9.5px; line-height:1.4; color:#9a9a9a; }
+body.component-shell .lede, body.component-shell .legend { display:none; }
+body.component-shell .wrap { display:grid; grid-template-columns:minmax(0,1fr) 294px; column-gap:24px; align-items:start; }
+body.component-shell .pagehead, body.component-shell .gen { grid-column:1/-1; }
+body.component-shell .use-now { grid-column:1; margin:0 0 12px; min-height:34px; padding:6px 9px; border:1px solid #e5e5e5; background:#fafafa; border-radius:7px; font-size:11px; }
+body.component-shell .use-now .lbl2 { color:#555; }
+body.component-shell .use-now code { font-size:9.5px; border-color:#e8e8e8; background:#fff; }
+body.component-shell .docs { grid-column:2; grid-row:2 / span 2; position:sticky; top:16px; display:grid; grid-template-columns:1fr; gap:8px; margin:0; }
+body.component-shell .doc { border:1px solid #e8e8e8; border-radius:7px; padding:10px 11px; background:#fff; }
+body.component-shell .doc .dt { margin-bottom:6px; font-size:9px; color:#777 !important; }
+body.component-shell .doc li { font-size:11px; line-height:1.45; color:#5f6368; margin:2px 0; }
+body.component-shell .doc code { font-size:9.5px; background:#f6f6f6; }
+body.component-shell .grid { grid-column:1; display:grid; grid-template-columns:1fr; gap:10px; }
+body.component-shell .cell { border:1px solid #e5e5e5; border-radius:7px; background:#fff; }
+body.component-shell .cell:hover { border-color:#d6d6d6; }
+body.component-shell .cell.active { border-color:#cfd6e3; box-shadow:none; }
+body.component-shell .cell .ch { min-height:34px; padding:6px 9px; background:#fafafa; border-color:#ececec; font-size:11px; }
+body.component-shell .cell .ch .note { font-size:10px; }
+body.component-shell .cell .chips { gap:4px; padding:5px 9px; background:#fff; border-color:#eee; }
+body.component-shell .cell .chip { font-size:8.5px; padding:1px 5px; border-radius:4px; background:#f7f7f7; color:#777; }
+body.component-shell .cell .chip.engine { color:#555; border-color:#ddd; background:#f7f7f7; }
+body.component-shell .cell .cf, body.component-shell .cell summary { font-size:9.5px; padding:6px 9px; }
+body.component-shell .cell pre { font-size:10px; background:#fbfbfb; }
+body.component-shell .st { font-size:8.5px; padding:2px 5px; border-radius:4px; }
+body.component-shell .st.active { background:#f0f4fb; color:#4d6695; }
+body.component-shell .org { font-size:8.5px; padding:2px 5px; border-radius:4px; background:#f5f5f5; color:#777; }
+body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
+@media(max-width:980px){ body.component-shell .wrap{display:block;padding:0 18px 40px} body.component-shell .pagehead{margin:0 -18px 16px;padding:0 18px} body.component-shell .docs{position:static;margin-bottom:12px} }
+</style>
 </style>
 </head>
-<body>
+<body class="component-shell">
 <aside class="rail">
   <a class="brand" href="../../index.html"><span class="logo">d</span>design-system</a>
   <div class="rail-links">
@@ -252,7 +309,9 @@
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/border-beam/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
   <a class="it" href="../../components/motion/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/motion-spring/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-play"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
   <div class="lbl caps">Forms</div>
   <a class="it" href="../../components/checkbox/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-check"/></svg></span><span class="nm">checkbox<span class="ds">independent multi-selection and boolean acknowledgement</span></span><span class="act"></span></a>
   <a class="it" href="../../components/field/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-info"/></svg></span><span class="nm">field<span class="ds">form structure: label, help, required and error semantics</span></span><span class="act"></span></a>
@@ -295,7 +354,12 @@
   <a class="it" href="../../components/section/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">section<span class="ds">semantic section spacing and optional boundary</span></span><span class="act"></span></a>
   <a class="it" href="../../components/split-pane/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">split-pane<span class="ds">two-region composition that collapses intentionally</span></span><span class="act"></span></a>
   <a class="it" href="../../components/stack/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-list"/></svg></span><span class="nm">stack<span class="ds">vertical rhythm without screen-specific margins</span></span><span class="act"></span></a>
+  <div class="lbl caps">Systeem</div>
+  <a class="it" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio<span class="ds">visueel afstellen zonder code</span></span><span class="act"></span></a>
+  <div class="lbl caps">3D / WebGL</div>
+  <a class="it" href="../../components/three-orbit/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-panel"/></svg></span><span class="nm">three-orbit<span class="ds">Three.js / WebGL scene specimens</span></span><span class="act"></span></a>
     <div class="lbl caps">Systeem</div>
+  <a class="it sys" href="../../library/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-library"/></svg></span><span class="nm">specimens</span><span class="n">1,980+</span></a>
   <a class="it sys" href="../../components/studio/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">studio</span><span class="n">visueel</span></a>
   <a class="it sys" href="../../docs/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">docs</span><span class="n">alle .md</span></a>
   <a class="it sys" href="../../taste-site/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-check"/></svg></span><span class="nm">taste</span><span class="n">regels+log</span></a>
@@ -320,12 +384,12 @@
     <h1>button</h1>
     <div class="ph-sub">button library: semantic families plus independent interaction models</div>
   </div>
-  <div class="meta">19 varianten<br>17 zelf · 2 extern<br>blad 09/50</div>
+  <div class="meta">20 varianten<br>18 zelf · 2 extern<br>blad 10/53</div>
 </div>
 <div class="lede">manifest: <code>components/button/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
   <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
-  <span id="catalogCount" class="caps">19 zichtbaar</span>
+  <span id="catalogCount" class="caps">20 zichtbaar</span>
 </div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
@@ -355,6 +419,7 @@
         <span class="st active">ACTIEF</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
@@ -427,6 +492,17 @@
 &lt;/div&gt;
 
 &lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;toon / nadruk&lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;button class=&quot;btn subtle&quot;&gt;Zacht&lt;/button&gt;
+    &lt;button class=&quot;btn ghost&quot;&gt;Ghost&lt;/button&gt;
+    &lt;button class=&quot;btn accent&quot;&gt;Accent&lt;/button&gt;
+    &lt;button class=&quot;btn primary pill&quot;&gt;Pill primary&lt;/button&gt;
+    &lt;button class=&quot;btn destructive&quot;&gt;Verwijderen&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;group&quot;&gt;
   &lt;div class=&quot;lbl&quot;&gt;met toetsenbord-hint (approval-patroon)&lt;/div&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;button class=&quot;btn primary&quot;&gt;Een keer &lt;kbd&gt;1&lt;/kbd&gt;&lt;/button&gt;
@@ -459,6 +535,8 @@
   .btn.primary     inverse high emphasis; max one primary per local decision context
   .btn.subtle      quiet filled action; .btn.ghost = containerless lower emphasis
   .btn.destructive semantic red only for destructive actions
+  .btn.accent      brand-accent emphasis; reserved, never ambient
+  .btn.pill        radius variant on any emphasis level
   .btn.sm/.lg      h28/h38; same interaction physics
   .btn.loading     static activity mark + aria-busy; never infinite spinner
   .gbtn            30px visual; coarse pointer 44px; accessible name required
@@ -480,6 +558,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/standard.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/standard.html</span><span>toegevoegd 2026-07-27</span><a href="self/standard.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -497,6 +576,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/primary.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/primary.html</span><span>toegevoegd 2026-07-27</span><a href="self/primary.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -514,6 +594,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/subtle.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/subtle.html</span><span>toegevoegd 2026-09-11</span><a href="self/subtle.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -531,6 +612,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/ghost.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/ghost.html</span><span>toegevoegd 2026-09-11</span><a href="self/ghost.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -548,6 +630,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/beam-cta.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/beam-cta.html</span><span>toegevoegd 2026-09-11</span><a href="self/beam-cta.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -566,6 +649,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/sweep-cta.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/sweep-cta.html</span><span>toegevoegd 2026-09-11</span><a href="self/sweep-cta.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -585,6 +669,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/gbtn.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/gbtn.html</span><span>toegevoegd 2026-07-27</span><a href="self/gbtn.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -603,6 +688,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/pending.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/pending.html</span><span>toegevoegd 2026-09-11</span><a href="self/pending.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -620,6 +706,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/icon-leading.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/icon-leading.html</span><span>toegevoegd 2026-09-11</span><a href="self/icon-leading.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -637,6 +724,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/icon-outline.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/icon-outline.html</span><span>toegevoegd 2026-09-11</span><a href="self/icon-outline.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -654,6 +742,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/ripple-press.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/ripple-press.html</span><span>toegevoegd 2026-09-11</span><a href="self/ripple-press.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -673,6 +762,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/split-action.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/split-action.html</span><span>toegevoegd 2026-09-11</span><a href="self/split-action.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -696,6 +786,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/destructive.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/destructive.html</span><span>toegevoegd 2026-09-11</span><a href="self/destructive.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--bg)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -713,6 +804,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/hold-confirm.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/hold-confirm.html</span><span>toegevoegd 2026-09-11</span><a href="self/hold-confirm.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -733,6 +825,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/with-kbd.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/with-kbd.html</span><span>toegevoegd 2026-07-27</span><a href="self/with-kbd.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -751,6 +844,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="self/command-ack.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>self/command-ack.html</span><span>toegevoegd 2026-09-11</span><a href="self/command-ack.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:38px 32px;min-height:130px;display:flex;align-items:center;justify-content:center;gap:12px}.note{font:11px var(--mono);color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -771,6 +865,7 @@
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="external/shadcn-default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>external/shadcn-default.html</span><span>toegevoegd 2026-07-27</span><a href="external/shadcn-default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
@@ -801,6 +896,7 @@ body{padding:34px 30px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
+    <div class="chips"></div>
     <iframe src="external/devin-square.html" style="min-height:240px" data-fit loading="lazy"></iframe>
     <div class="cf"><span>external/devin-square.html</span><span>toegevoegd 2026-07-27</span><a href="external/devin-square.html" target="_blank" style="margin-left:auto">open ↗</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;link href=&quot;https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
@@ -812,6 +908,95 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
 &lt;button class=&quot;dv-btn dv-primary&quot;&gt;Try Devin&lt;/button&gt;
 &lt;button class=&quot;dv-btn dv-ghost&quot;&gt;Contact sales&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+</pre></details>
+  </div>
+<div class="family-head" data-family="other"><span class="family-title">Overig</span><span class="family-desc"></span></div>
+  <div class="cell" style="grid-column:1/-1">
+    <div class="ch">
+      <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      <span class="id">kinetic-lab</span>
+      <span class="note">interactive specimen workbench: 14 button recipes + live tuning</span>
+      <span class="right">
+        <span class="org ">zelf</span>
+        <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
+      </span>
+    </div>
+    <div class="chips"><span class="chip ">workbench</span><span class="chip engine">css + pointer-js</span><span class="chip ">ChefGroep</span><span class="chip ">buttons</span><span class="chip ">variants</span><span class="chip ">live-controls</span><span class="chip ">random-library</span><span class="chip ">material</span><span class="chip ">monochrome</span></div>
+    <iframe src="self/kinetic-lab.html" style="min-height:760px" data-fit loading="lazy"></iframe>
+    <div class="cf"><span>self/kinetic-lab.html</span><span>toegevoegd 2026-09-07</span><a href="self/kinetic-lab.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nl&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;Button kinetic lab&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;
+&lt;style&gt;
+  *{box-sizing:border-box} body{margin:0;padding:18px;background:var(--bg);color:var(--text)}
+  .lab{display:grid;grid-template-columns:1fr;gap:12px;max-width:1180px;margin:auto}
+  .head{display:flex;align-items:end;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);padding:0 2px 12px}
+  .head h1{margin:0;font-size:20px;font-weight:500}.head p{margin:3px 0 0;color:var(--text-muted);max-width:68ch;font-size:12.5px}.kicker{font:9px var(--mono);color:var(--text-faint);letter-spacing:.08em;text-transform:uppercase}
+  .stage{background:transparent;min-height:0}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .spec{min-height:88px;border:1px solid var(--line);border-radius:var(--r-md);padding:9px 10px;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:border-color var(--dur-fast),background var(--dur-fast)}.spec:hover{border-color:var(--line-strong);background:color-mix(in srgb,var(--surface) 96%,var(--text) 4%)}
+  .spec .meta{display:flex;justify-content:space-between;gap:8px;font:9px var(--mono);line-height:1;color:var(--text-faint)}
+  .preview{display:flex;min-height:50px;align-items:center;justify-content:center;position:relative}
+  .controls{order:-1;display:grid;grid-template-columns:auto repeat(7,minmax(90px,1fr));gap:8px;align-items:end;border-bottom:1px solid var(--line);padding:0 2px 12px;background:transparent}
+  .controls h2{font-size:11px;margin:0 8px 7px 0;white-space:nowrap}.ctl{display:grid;gap:4px;margin:0}.ctl label{font-size:9.5px;color:var(--text-muted);display:flex;justify-content:space-between;gap:6px}.ctl output{font-family:var(--mono);color:var(--text);font-size:9px}
+  select,input[type=range]{width:100%} select{height:27px;border:1px solid var(--line-strong);border-radius:var(--r-md);background:var(--surface);color:var(--text);padding:0 7px;font-size:11px}
+  input[type=range]{accent-color:var(--text-muted);height:16px}.copy{height:27px;padding:0 8px;font-size:10px;align-self:end}
+  .preview .btn{--lab-r:var(--r-md);--lab-h:32px;--lab-w:500;--lab-track:0em;height:var(--lab-h);border-radius:var(--lab-r);font-weight:var(--lab-w);letter-spacing:var(--lab-track)}
+  .raised .btn{box-shadow:0 1px 1px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.07);border-color:var(--line-strong)}
+  .kinetic{overflow:hidden}.kinetic::after{content:&quot;&quot;;position:absolute;width:54px;height:54px;border:1px solid var(--line-strong);border-radius:50%;left:var(--px,50%);top:var(--py,50%);transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:opacity 140ms}.kinetic:hover::after{opacity:.55}
+  .underline-btn{border-color:transparent;border-radius:0;border-bottom:1px solid var(--text);background:transparent;padding-inline:2px}
+  .split-btn{padding-right:5px}.split-btn .split-mark{margin-left:7px;border-left:1px solid var(--line-strong);padding:2px 5px 2px 9px;font-family:var(--mono);font-size:10px}
+  .lift .btn:hover{transform:translateY(-3px) scale(1.015)}.snap .btn:hover{transform:translateY(-1px) scale(1.035)}
+  .flat .btn:hover{transform:none}.mono .btn{font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:.08em}
+  @media(max-width:980px){.controls{grid-template-columns:repeat(4,minmax(100px,1fr))}.controls h2{grid-column:1/-1}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){body{padding:12px}.head{display:block}.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.spec{min-height:82px}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main class=&quot;lab&quot; id=&quot;lab&quot;&gt;
+  &lt;header class=&quot;head&quot;&gt;&lt;div&gt;&lt;div class=&quot;kicker&quot;&gt;specimen / interaction lab&lt;/div&gt;&lt;h1&gt;Button workbench&lt;/h1&gt;&lt;p&gt;Geen één “juiste” knop: productievarianten, externe ideeën en random vondsten mogen naast elkaar bestaan. Controls wijzigen alle specimens live.&lt;/p&gt;&lt;/div&gt;&lt;/header&gt;
+  &lt;section class=&quot;stage&quot; id=&quot;stage&quot;&gt;&lt;div class=&quot;grid&quot;&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;01 standard&lt;/span&gt;&lt;span&gt;production&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;Open project&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;02 primary&lt;/span&gt;&lt;span&gt;production&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn primary&quot;&gt;Deploy agent&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;03 subtle&lt;/span&gt;&lt;span&gt;quiet&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot; style=&quot;background:var(--surface-sunk);border-color:transparent&quot;&gt;View details&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;04 ghost&lt;/span&gt;&lt;span&gt;toolbar&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn ghost&quot;&gt;Cancel&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec raised&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;05 raised&lt;/span&gt;&lt;span&gt;material&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;Start session&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;06 danger&lt;/span&gt;&lt;span&gt;semantic&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn destructive&quot;&gt;Delete run&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;07 pill&lt;/span&gt;&lt;span&gt;marketing-ish&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn primary pill&quot;&gt;Try playground&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec mono&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;08 mono&lt;/span&gt;&lt;span&gt;technical&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;run build&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec kinetic&quot; data-kinetic&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;09 kinetic&lt;/span&gt;&lt;span&gt;pointer geometry&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn pill&quot;&gt;Magnetic-ish&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec lift&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;10 lift&lt;/span&gt;&lt;span&gt;motion&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;Hover me&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec snap&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;11 snap&lt;/span&gt;&lt;span&gt;motion&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn&quot;&gt;Quick action&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;12 split&lt;/span&gt;&lt;span&gt;compound action&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn split-btn&quot;&gt;Generate &lt;span class=&quot;split-mark&quot;&gt;⌄&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;13 shortcut&lt;/span&gt;&lt;span&gt;approval&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn primary&quot;&gt;Approve &lt;kbd&gt;1&lt;/kbd&gt;&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;article class=&quot;spec&quot;&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;14 activity&lt;/span&gt;&lt;span&gt;no spinner&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;preview&quot;&gt;&lt;button class=&quot;btn loading&quot; aria-busy=&quot;true&quot;&gt;Building&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;
+  &lt;/div&gt;&lt;/section&gt;
+  &lt;aside class=&quot;controls&quot;&gt;&lt;h2&gt;Live tuning&lt;/h2&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Theme&lt;/label&gt;&lt;select id=&quot;theme&quot; aria-label=&quot;Theme&quot;&gt;&lt;option value=&quot;light&quot;&gt;Light&lt;/option&gt;&lt;option value=&quot;dark&quot;&gt;Dark&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Skin&lt;/label&gt;&lt;select id=&quot;skin&quot; aria-label=&quot;Skin&quot;&gt;&lt;option value=&quot;&quot;&gt;Devin&lt;/option&gt;&lt;option value=&quot;strak&quot;&gt;Strak&lt;/option&gt;&lt;option value=&quot;grok&quot;&gt;Grok&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Radius &lt;output id=&quot;radiusO&quot;&gt;6px&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;radius&quot; aria-label=&quot;Radius&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;28&quot; value=&quot;6&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Height &lt;output id=&quot;heightO&quot;&gt;32px&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;height&quot; aria-label=&quot;Height&quot; type=&quot;range&quot; min=&quot;26&quot; max=&quot;52&quot; value=&quot;32&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Weight &lt;output id=&quot;weightO&quot;&gt;500&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;weight&quot; aria-label=&quot;Weight&quot; type=&quot;range&quot; min=&quot;400&quot; max=&quot;700&quot; step=&quot;50&quot; value=&quot;500&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Tracking &lt;output id=&quot;trackO&quot;&gt;0.00em&lt;/output&gt;&lt;/label&gt;&lt;input id=&quot;track&quot; aria-label=&quot;Tracking&quot; type=&quot;range&quot; min=&quot;-4&quot; max=&quot;10&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;Motion&lt;/label&gt;&lt;select id=&quot;motion&quot; aria-label=&quot;Motion&quot;&gt;&lt;option value=&quot;default&quot;&gt;Default&lt;/option&gt;&lt;option value=&quot;lift&quot;&gt;Lift&lt;/option&gt;&lt;option value=&quot;snap&quot;&gt;Snap&lt;/option&gt;&lt;option value=&quot;flat&quot;&gt;Flat&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+    &lt;button class=&quot;btn copy&quot; id=&quot;copy&quot;&gt;Copy tuning&lt;/button&gt;
+  &lt;/aside&gt;
+&lt;/main&gt;
+&lt;script&gt;
+  const root=document.documentElement,stage=document.querySelector(&#x27;#stage&#x27;);
+  const set=(name,val)=&gt;document.querySelectorAll(&#x27;.preview .btn&#x27;).forEach(b=&gt;b.style.setProperty(name,val));
+  const bind=(id,varName,fmt)=&gt;{const el=document.querySelector(&#x27;#&#x27;+id),out=document.querySelector(&#x27;#&#x27;+id+&#x27;O&#x27;);el.addEventListener(&#x27;input&#x27;,()=&gt;{const v=fmt(el.value);set(varName,v);if(out)out.textContent=v});};
+  bind(&#x27;radius&#x27;,&#x27;--lab-r&#x27;,v=&gt;v+&#x27;px&#x27;); bind(&#x27;height&#x27;,&#x27;--lab-h&#x27;,v=&gt;v+&#x27;px&#x27;); bind(&#x27;weight&#x27;,&#x27;--lab-w&#x27;,v=&gt;v); bind(&#x27;track&#x27;,&#x27;--lab-track&#x27;,v=&gt;(Number(v)/100).toFixed(2)+&#x27;em&#x27;);
+  document.querySelector(&#x27;#theme&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;root.dataset.theme=e.target.value===&#x27;dark&#x27;?&#x27;dark&#x27;:&#x27;light&#x27;);
+  document.querySelector(&#x27;#skin&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{if(e.target.value)root.dataset.style=e.target.value;else delete root.dataset.style});
+  document.querySelector(&#x27;#motion&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{stage.classList.remove(&#x27;lift&#x27;,&#x27;snap&#x27;,&#x27;flat&#x27;);if(e.target.value!==&#x27;default&#x27;)stage.classList.add(e.target.value)});
+  document.querySelectorAll(&#x27;[data-kinetic]&#x27;).forEach(card=&gt;card.addEventListener(&#x27;pointermove&#x27;,e=&gt;{const r=card.getBoundingClientRect();card.style.setProperty(&#x27;--px&#x27;,((e.clientX-r.left)/r.width*100)+&#x27;%&#x27;);card.style.setProperty(&#x27;--py&#x27;,((e.clientY-r.top)/r.height*100)+&#x27;%&#x27;)}));
+  document.querySelector(&#x27;#copy&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{const text=`radius=${radius.value}px; height=${height.value}px; weight=${weight.value}; tracking=${(track.value/100).toFixed(2)}em; motion=${motion.value}; theme=${theme.value}; skin=${skin.value||&#x27;devin&#x27;}`;await navigator.clipboard?.writeText(text);document.querySelector(&#x27;#copy&#x27;).textContent=&#x27;Copied&#x27;;setTimeout(()=&gt;document.querySelector(&#x27;#copy&#x27;).textContent=&#x27;Copy tuning&#x27;,900)});
+&lt;/script&gt;
 &lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -842,11 +1027,11 @@ body{padding:34px 30px;display:flex;gap:14px;align-items:center;background:#F7F6
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-12 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-06 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">09/50</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">10/53</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

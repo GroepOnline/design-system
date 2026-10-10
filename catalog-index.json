@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "counts": {
-    "components": 50,
-    "variants": 139,
+    "components": 53,
+    "variants": 143,
     "profiles": 5,
     "patterns": 8,
     "extensions": 3
@@ -223,6 +223,27 @@
       ]
     },
     {
+      "id": "border-beam",
+      "title": "border beam",
+      "description": "animated border / glow material",
+      "category": "motion",
+      "manifest": "components/border-beam/catalog.json",
+      "catalog": "components/border-beam/index.html",
+      "active": [
+        "playground"
+      ],
+      "variants": [
+        {
+          "id": "playground",
+          "file": "self/playground.html",
+          "status": "active",
+          "origin": "self",
+          "note": "ChefGroep compact derivative with live controls",
+          "source": "https://libraries.dev/beam.html"
+        }
+      ]
+    },
+    {
       "id": "breadcrumb",
       "title": "breadcrumb",
       "description": "hierarchical location trail",
@@ -317,6 +338,13 @@
           "family": "references",
           "note": "radius 0, marketing-site stijl",
           "source": "https://devin.ai"
+        },
+        {
+          "id": "kinetic-lab",
+          "file": "self/kinetic-lab.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "interactive specimen workbench: 14 button recipes + live tuning"
         },
         {
           "id": "subtle",
@@ -977,6 +1005,26 @@
       ]
     },
     {
+      "id": "motion-spring",
+      "title": "spring physics",
+      "description": "tunable damped spring interaction",
+      "category": "motion",
+      "manifest": "components/motion-spring/catalog.json",
+      "catalog": "components/motion-spring/index.html",
+      "active": [
+        "pointer-spring"
+      ],
+      "variants": [
+        {
+          "id": "pointer-spring",
+          "file": "self/pointer-spring.html",
+          "status": "active",
+          "origin": "self",
+          "note": "interactive physics specimen with stiffness/damping/mass"
+        }
+      ]
+    },
+    {
       "id": "nav",
       "title": "nav",
       "description": "sidebar-onderdelen",
@@ -1563,6 +1611,27 @@
           "origin": "self",
           "family": "state",
           "note": "read-only multiline content"
+        }
+      ]
+    },
+    {
+      "id": "three-orbit",
+      "title": "three orbit",
+      "description": "Three.js / WebGL scene specimens",
+      "category": "3d",
+      "manifest": "components/three-orbit/catalog.json",
+      "catalog": "components/three-orbit/index.html",
+      "active": [
+        "orbit-field"
+      ],
+      "variants": [
+        {
+          "id": "orbit-field",
+          "file": "self/orbit-field.html",
+          "status": "active",
+          "origin": "self",
+          "note": "first WebGL specimen with live scene controls",
+          "source": "https://threejs.org"
         }
       ]
     },
