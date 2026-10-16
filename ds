@@ -334,8 +334,10 @@ def cmd_upstream(args):
             e, w = validate_upstream(uid, data)
             errors.extend(e)
             warnings.extend(w)
-        for e in errors: errp(e)
-        for w in warnings: wrn(w)
+        for e in errors:
+            errp(e)
+        for w in warnings:
+            wrn(w)
         if errors:
             err(f"{len(errors)} upstream errors, {len(warnings)} warnings")
         ok(f"{len(ids)} upstream(s) valide {dim(f'— {len(warnings)} warnings')}")
@@ -434,10 +436,14 @@ def cmd_search(query="", category=None, origin=None, extension=None, pattern=Non
         print(json.dumps(records, indent=2, ensure_ascii=False))
         return
     scope = []
-    if category: scope.append(f"category={category}")
-    if origin: scope.append(f"origin={origin}")
-    if extension: scope.append(f"extension={extension}")
-    if pattern: scope.append(f"pattern={pattern}")
+    if category:
+        scope.append(f"category={category}")
+    if origin:
+        scope.append(f"origin={origin}")
+    if extension:
+        scope.append(f"extension={extension}")
+    if pattern:
+        scope.append(f"pattern={pattern}")
     print(f"{bold('search')} {dim('· ' + ', '.join(scope)) if scope else ''}")
     print(dim(f"{'component':<18} {'variant':<22} {'cat':<13} {'origin':<14} note"))
     for r in records:
@@ -3628,12 +3634,18 @@ def main():
         rest = args[2:] if query else args[1:]
         it = iter(rest)
         for a in it:
-            if a == "--category": category = next(it)
-            elif a == "--origin": origin = next(it)
-            elif a == "--extension": extension = next(it)
-            elif a == "--pattern": pattern = next(it)
-            elif a == "--json": continue
-            else: err(f"onbekende search-optie: {a}")
+            if a == "--category":
+                category = next(it)
+            elif a == "--origin":
+                origin = next(it)
+            elif a == "--extension":
+                extension = next(it)
+            elif a == "--pattern":
+                pattern = next(it)
+            elif a == "--json":
+                continue
+            else:
+                err(f"onbekende search-optie: {a}")
         cmd_search(query, category=category, origin=origin, extension=extension, pattern=pattern, json_output=json_output)
     elif args[0] == "style":
         if len(args) > 1 and args[1] == "list":
