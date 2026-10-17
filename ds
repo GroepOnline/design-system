@@ -2931,7 +2931,7 @@ def load_signals_yaml(path=None):
             data.setdefault("version", 1)
             data.setdefault("entries", [])
             return data
-    except Exception:
+    except Exception:  # noqa: BLE001,S110 — yaml optional; manual parse below
         pass
     entries = []
     cur = None
@@ -3002,7 +3002,7 @@ def load_thresholds_yaml(path=None):
         if isinstance(data, dict):
             defaults.update({k: v for k, v in data.items() if k in defaults or k == "version"})
             return {**defaults, **{k: data[k] for k in defaults if k in data}}
-    except Exception:
+    except Exception:  # noqa: BLE001,S110 — yaml optional; manual parse below
         pass
     for raw in text.splitlines():
         line = raw.split("#", 1)[0].rstrip()
