@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WORKFLOW — design-system</title>
+<title>WORKFLOW â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -355,7 +355,7 @@
     <h1>WORKFLOW</h1>
     <div class="ph-sub">bron: WORKFLOW.md</div>
   </div>
-  <div class="meta"><a href="../docs/index.html" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
+  <div class="meta"><a href="../docs/index.html" style="color:var(--accent-ink);text-decoration:none">â alle docs</a></div>
 </div>
 <div class="md"><h1>WORKFLOW.md -- hoe je dit systeem gebruikt</h1>
 <blockquote>Compleet circuit: van nieuw product (X) naar gebouwde surface (Y) naar</blockquote>
@@ -500,15 +500,15 @@
 <p>smaakscore en geen runtime dependency.</p>
 <h2 data-reg="bestandskaart">Bestandskaart</h2>
 <table><thead><tr><th>Pad</th><th>Rol</th><th>Wanneer aanraken</th></tr></thead><tbody><tr><td><code>DESIGN.md</code></td><td>gelockte taal</td><td>taste-loop of Joep-beslissing</td></tr><tr><td><code>tokens.css</code></td><td>tokens + primitives</td><td>elke token/primitieve-wijziging</td></tr><tr><td><code>styles.json</code></td><td>stijl-registratie</td><td>nieuwe skin toevoegen (ds style add)</td></tr><tr><td><code>components/</code></td><td>standalone componenten + catalogus</td><td>nieuw patroon of propagatie</td></tr><tr><td><code>motion-spec.md</code></td><td>fysica</td><td>zelden -- gelockt</td></tr><tr><td><code>surfaces/</code></td><td>per-surface briefs</td><td>nieuwe surfaces</td></tr><tr><td><code>prototype-v2.html</code></td><td>referentie-app</td><td>meerdere componenten tegelijk</td></tr><tr><td><code>references/</code></td><td>meetlat-screenshots</td><td>twijfel over &quot;hoe ziet goed eruit&quot;</td></tr><tr><td><code>taste/</code></td><td>lerend UI-systeem</td><td>continu</td></tr><tr><td><code>brain/</code></td><td>Second Brain (Obsidian)</td><td>research / decisions / concepts</td></tr><tr><td><code>brain-site/</code></td><td>gegenereerde brain-leeslaag</td><td>via <code>ds brain build</code> / <code>ds build</code></td></tr><tr><td><code>.agents/</code></td><td>agent-skills + hooks (canoniek)</td><td>agent-gedrag rond brain en output</td></tr><tr><td><code>new-project.sh</code> + <code>templates/</code></td><td>X-scaffolder</td><td>scaffold-verbeteringen</td></tr><tr><td><code>playground/</code></td><td>experimenteerzone</td><td>elke oefensessie</td></tr><tr><td><code>.github/workflows/</code></td><td>CI</td><td>validatie-automatisering</td></tr></tbody></table></div>
-<div class="gen" data-reg="colofon">gegenereerd uit WORKFLOW.md op 2026-10-06 · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit WORKFLOW.md op 2026-10-17 Â· bewerk de .md, niet deze pagina</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">doc</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">doc</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -604,10 +604,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -637,7 +637,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>composer — design-system</title>
+<title>composer â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -384,17 +384,17 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     <h1>composer</h1>
     <div class="ph-sub">invoer + wachtrij</div>
   </div>
-  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 14/53</div>
+  <div class="meta">3 varianten<br>2 zelf Â· 1 extern<br>blad 14/53</div>
 </div>
 <div class="lede">manifest: <code>components/composer/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
-  <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
+  <input class="input" id="catalogFilter" type="search" placeholder="Filter variantenâ¦" aria-label="Filter varianten" style="min-width:240px">
   <span id="catalogCount" class="caps">3 zichtbaar</span>
 </div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds composer select|remove</code> · experimenten in <code>playground/</code></span>
+  <span>wijzigt alleen via <code>ds composer select|remove</code> Â· experimenten in <code>playground/</code></span>
 </div>
 <div class="use-now" data-reg="gebruik">
   <span class="lbl2">Gebruik nu</span>
@@ -404,7 +404,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>alle agent-invoer</li><li>autogrow tot 140px</li><li>wachtrij-chip erboven tijdens run</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>send-knop buiten de composer</li><li>marketing-placeholders</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>focus = accent border + 3px soft ring</code></li><li><code>send = .gbtn.solid</code></li><li><code>model-chip is select, geen knop</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">â gebruik</div><ul><li>alle agent-invoer</li><li>autogrow tot 140px</li><li>wachtrij-chip erboven tijdens run</li></ul></div><div class="doc avoid"><div class="dt caps">â vermijd</div><ul><li>send-knop buiten de composer</li><li>marketing-placeholders</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>focus = accent border + 3px soft ring</code></li><li><code>send = .gbtn.solid</code></li><li><code>model-chip is select, geen knop</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -420,7 +420,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;nl&quot;&gt;
 &lt;head&gt;
@@ -523,13 +523,13 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
       <span class="id">opensourceui-spotlight-bar</span>
       <span class="note">take: query + keyboard suggestion model; reject: glassmorphism, blur, floating shadow shell</span>
       <span class="right">
-        <span class="org external">extern · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx</span>
+        <span class="org external">extern Â· https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx</span>
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
     <div class="chips"><span class="chip ">MIT</span></div>
     <iframe src="external/opensourceui-spotlight-bar.html" style="min-height:330px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>external/opensourceui-spotlight-bar.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-spotlight-bar.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>external/opensourceui-spotlight-bar.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-spotlight-bar.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;Opensource UI - Spotlight reference&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
 body{padding:38px 30px;background:#ededed;color:#171717;font-family:var(--font)} .ref{font:11px var(--mono);color:#737373;margin-bottom:18px} .wrap{width:min(390px,100%);position:relative}
@@ -552,13 +552,13 @@ q.oninput=()=&gt;{active=0;draw()};q.onkeydown=e=&gt;{if(e.key===&#x27;ArrowDown
       <span class="id">command-suggest</span>
       <span class="note">ChefGroep command suggestions: keyboard model without glass chrome</span>
       <span class="right">
-        <span class="org ">zelf (aangepast) · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx</span>
+        <span class="org ">zelf (aangepast) Â· https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/docks/spotlight-bar.tsx</span>
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
     <div class="chips"></div>
     <iframe src="self/command-suggest.html" style="min-height:330px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/command-suggest.html</span><span>toegevoegd 2026-09-06</span><a href="self/command-suggest.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/command-suggest.html</span><span>toegevoegd 2026-09-06</span><a href="self/command-suggest.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;composer: command suggest&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
 body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--text-faint);margin-bottom:20px}.shell{max-width:620px}.composer{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-lg);padding:10px;transition:border-color var(--dur-fast),box-shadow var(--dur-fast)}.composer:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}.row{display:flex;align-items:center;gap:8px}.row svg{color:var(--text-faint)}input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--text);font:14px var(--font)}input::placeholder{color:var(--text-faint)}.kbd{font:10px var(--mono);color:var(--text-faint);border:1px solid var(--line);border-radius:4px;padding:2px 5px}.suggest{margin-top:7px;border-top:1px solid var(--line);padding-top:6px}.item{width:100%;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:0;background:transparent;color:var(--text-muted);padding:8px 7px;border-radius:var(--r-md);text-align:left;font:12.5px var(--font);cursor:pointer}.item:hover,.item.active{background:var(--hover);color:var(--text)}.meta{font:10px var(--mono);color:var(--text-faint)}.empty{padding:8px;font-size:12px;color:var(--text-faint)}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -595,15 +595,15 @@ body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--t
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-06 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-17 Â· catalog.json is de bron Â· dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">14/53</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">14/53</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -699,10 +699,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -732,7 +732,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

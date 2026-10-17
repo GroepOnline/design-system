@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026-07-30 Agent-laag in punt-agents — design-system</title>
+<title>2026-07-30 Agent-laag in punt-agents â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -348,7 +348,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class="pagehead" data-reg="kop"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>2026-07-30 Agent-laag in punt-agents</h1><div class="cat caps">brain · bron: brain/Decisions/2026-07-30 Agent-laag in punt-agents.md</div></div><div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div><div class="md"><h1>Decision - Agent-laag in .agents</h1>
+<div class="pagehead" data-reg="kop"><span class="tile"><svg><use href="../components/icons.svg#i-panel"/></svg></span><div><h1>2026-07-30 Agent-laag in punt-agents</h1><div class="cat caps">brain Â· bron: brain/Decisions/2026-07-30 Agent-laag in punt-agents.md</div></div><div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">â brain</a></div></div><div class="md"><h1>Decision - Agent-laag in .agents</h1>
 <ul>
 <li><strong>Datum</strong>: 2026-07-30</li>
 <li><strong>Context</strong>: Brain-kennis en de invariant &quot;raak gegenereerde bestanden niet aan&quot; zaten alleen in prozadocs. Elke agent moest dat opnieuw uit <code>AGENTS.md</code> opdiepen, en niets hield het tegen.</li>
@@ -366,14 +366,14 @@
 <li><a href="./home.html">Home</a></li>
 <li><a href="./concepts-gegenereerde-bestanden.html">Gegenereerde bestanden</a></li>
 <li><a href="./decisions-2026-07-30-brain-als-vijfde-tool.html">2026-07-30 Brain als vijfde tool</a></li>
-</ul></div><div class="gen">gegenereerd uit brain/Decisions/2026-07-30 Agent-laag in punt-agents.md op 2026-10-06 · bewerk de .md, niet deze pagina</div>
+</ul></div><div class="gen">gegenereerd uit brain/Decisions/2026-07-30 Agent-laag in punt-agents.md op 2026-10-17 Â· bewerk de .md, niet deze pagina</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">brain</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">brain</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -469,10 +469,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -502,7 +502,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

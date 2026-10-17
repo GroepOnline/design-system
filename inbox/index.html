@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>inbox — design-system</title>
+<title>inbox â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -327,20 +327,20 @@
 <div class="pagehead" data-reg="kop">
   <span class="tile"><svg><use href="../components/icons.svg#i-inbox"/></svg></span>
   <div class="ph-text"><div class="eyebrow">Research capture</div><h1>Inbox</h1>
-  <div class="ph-sub">2 vondsten · capture first, curate later</div></div>
+  <div class="ph-sub">2 vondsten Â· capture first, curate later</div></div>
 </div>
 <div class="lede">Random UI, motion, 3D en interaction references mogen hier landen zonder directe productkoppeling. Promotie naar de locked componentcatalogus blijft expliciet.</div>
-<div class="cards"><a class="card reveal" href="https://kinetics.colorion.co/#physics" target="_blank" rel="noreferrer"><span class="ct"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="cn" style="font-size:var(--text-md);min-width:150px">Kinetics Physics</span><span class="cd">Physics-specific interactive controls; source inspiration for motion-spring and future transition labs.</span><span class="cmeta"><span class="cnt">physics-lab · new</span><span class="act">spring · physics · motion · interactive · reference</span></span></a>
-<a class="card reveal" href="https://kinetics.colorion.co/#library" target="_blank" rel="noreferrer"><span class="ct"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="cn" style="font-size:var(--text-md);min-width:150px">Kinetics Library</span><span class="cd">Interactive parameterized specimens; strong reference for live tuning and recipe pages.</span><span class="cmeta"><span class="cnt">interaction-library · new</span><span class="act">motion · interaction · physics · controls · reference</span></span></a></div>
-<div class="gen" data-reg="colofon">bron: inbox/items.jsonl · gegenereerd door ds build op 2026-10-06</div>
+<div class="cards"><a class="card reveal" href="https://kinetics.colorion.co/#physics" target="_blank" rel="noreferrer"><span class="ct"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="cn" style="font-size:var(--text-md);min-width:150px">Kinetics Physics</span><span class="cd">Physics-specific interactive controls; source inspiration for motion-spring and future transition labs.</span><span class="cmeta"><span class="cnt">physics-lab Â· new</span><span class="act">spring Â· physics Â· motion Â· interactive Â· reference</span></span></a>
+<a class="card reveal" href="https://kinetics.colorion.co/#library" target="_blank" rel="noreferrer"><span class="ct"><svg><use href="../components/icons.svg#i-external"/></svg></span><span class="cn" style="font-size:var(--text-md);min-width:150px">Kinetics Library</span><span class="cd">Interactive parameterized specimens; strong reference for live tuning and recipe pages.</span><span class="cmeta"><span class="cnt">interaction-library Â· new</span><span class="act">motion Â· interaction Â· physics Â· controls Â· reference</span></span></a></div>
+<div class="gen" data-reg="colofon">bron: inbox/items.jsonl Â· gegenereerd door ds build op 2026-10-17</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">inbox</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">inbox</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -436,10 +436,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -469,7 +469,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

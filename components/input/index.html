@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>input — design-system</title>
+<title>input â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -384,17 +384,17 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     <h1>input</h1>
     <div class="ph-sub">single-line text and search controls with explicit states</div>
   </div>
-  <div class="meta">7 varianten<br>7 zelf · 0 extern<br>blad 22/53</div>
+  <div class="meta">7 varianten<br>7 zelf Â· 0 extern<br>blad 22/53</div>
 </div>
 <div class="lede">manifest: <code>components/input/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
-  <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
+  <input class="input" id="catalogFilter" type="search" placeholder="Filter variantenâ¦" aria-label="Filter varianten" style="min-width:240px">
   <span id="catalogCount" class="caps">7 zichtbaar</span>
 </div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds input select|remove</code> · experimenten in <code>playground/</code></span>
+  <span>wijzigt alleen via <code>ds input select|remove</code> Â· experimenten in <code>playground/</code></span>
 </div>
 <div class="use-now" data-reg="gebruik">
   <span class="lbl2">Gebruik nu</span>
@@ -404,7 +404,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>altijd een zichtbaar label via Field of equivalent</li><li>type=search voor zoekvelden</li><li>motion alleen als optionele wrapper</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>placeholder-only forms</li><li>beam als vereiste focusindicator</li><li>disabled gebruiken waar readonly bedoeld is</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>h32 desktop / min44 coarse pointer</code></li><li><code>focus-visible accent ring</code></li><li><code>aria-invalid voor foutstate</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">â gebruik</div><ul><li>altijd een zichtbaar label via Field of equivalent</li><li>type=search voor zoekvelden</li><li>motion alleen als optionele wrapper</li></ul></div><div class="doc avoid"><div class="dt caps">â vermijd</div><ul><li>placeholder-only forms</li><li>beam als vereiste focusindicator</li><li>disabled gebruiken waar readonly bedoeld is</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>h32 desktop / min44 coarse pointer</code></li><li><code>focus-visible accent ring</code></li><li><code>aria-invalid voor foutstate</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -421,7 +421,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/default.html" style="min-height:180px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-09-11</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-09-11</span><a href="self/default.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px}.demo{max-width:520px}.stack{display:grid;gap:12px}.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field-label&quot; for=&quot;title&quot;&gt;Titel&lt;/label&gt;&lt;input id=&quot;title&quot; class=&quot;input&quot; placeholder=&quot;Nieuwe titel&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -437,7 +437,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/prefix-suffix.html" style="min-height:180px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/prefix-suffix.html</span><span>toegevoegd 2026-09-11</span><a href="self/prefix-suffix.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/prefix-suffix.html</span><span>toegevoegd 2026-09-11</span><a href="self/prefix-suffix.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px}.demo{max-width:520px}.stack{display:grid;gap:12px}.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field-label&quot; for=&quot;site&quot;&gt;Website&lt;/label&gt;&lt;div class=&quot;input-group&quot;&gt;&lt;span class=&quot;input-affix&quot;&gt;https://&lt;/span&gt;&lt;input id=&quot;site&quot; class=&quot;input&quot; value=&quot;voorbeeld.nl&quot;&gt;&lt;span class=&quot;input-affix&quot;&gt;↗&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -454,7 +454,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/search.html" style="min-height:180px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/search.html</span><span>toegevoegd 2026-09-11</span><a href="self/search.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/search.html</span><span>toegevoegd 2026-09-11</span><a href="self/search.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px}.demo{max-width:520px}.stack{display:grid;gap:12px}.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field-label&quot; for=&quot;q&quot;&gt;Zoeken&lt;/label&gt;&lt;div class=&quot;input-wrap&quot;&gt;&lt;svg class=&quot;ic&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;../../icons.svg#i-search&quot;/&gt;&lt;/svg&gt;&lt;input id=&quot;q&quot; class=&quot;input&quot; type=&quot;search&quot; placeholder=&quot;Zoek componenten...&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -470,7 +470,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/search-beam.html" style="min-height:180px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/search-beam.html</span><span>toegevoegd 2026-09-11</span><a href="self/search-beam.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/search-beam.html</span><span>toegevoegd 2026-09-11</span><a href="self/search-beam.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px}.demo{max-width:520px}.stack{display:grid;gap:12px}.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field-label&quot; for=&quot;qb&quot;&gt;Zoeken met motion&lt;/label&gt;&lt;div class=&quot;sg-motion-beam&quot;&gt;&lt;div class=&quot;input-wrap&quot;&gt;&lt;svg class=&quot;ic&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;../../icons.svg#i-search&quot;/&gt;&lt;/svg&gt;&lt;input id=&quot;qb&quot; class=&quot;input&quot; type=&quot;search&quot; placeholder=&quot;Focus mij...&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field-help&quot;&gt;Beam is composition, niet dependency van input.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -487,7 +487,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/invalid.html" style="min-height:180px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/invalid.html</span><span>toegevoegd 2026-09-11</span><a href="self/invalid.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/invalid.html</span><span>toegevoegd 2026-09-11</span><a href="self/invalid.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px}.demo{max-width:520px}.stack{display:grid;gap:12px}.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field-label&quot; for=&quot;bad&quot;&gt;Projectcode&lt;/label&gt;&lt;input id=&quot;bad&quot; class=&quot;input&quot; aria-invalid=&quot;true&quot; value=&quot;A B C&quot;&gt;&lt;div class=&quot;field-error&quot;&gt;Spaties zijn niet toegestaan.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -503,7 +503,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/readonly.html" style="min-height:180px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/readonly.html</span><span>toegevoegd 2026-09-11</span><a href="self/readonly.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/readonly.html</span><span>toegevoegd 2026-09-11</span><a href="self/readonly.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px}.demo{max-width:520px}.stack{display:grid;gap:12px}.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field-label&quot; for=&quot;rid&quot;&gt;Resource ID&lt;/label&gt;&lt;input id=&quot;rid&quot; class=&quot;input&quot; readonly value=&quot;res_01HZX8&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -519,7 +519,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/disabled.html" style="min-height:180px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/disabled.html</span><span>toegevoegd 2026-09-11</span><a href="self/disabled.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/disabled.html</span><span>toegevoegd 2026-09-11</span><a href="self/disabled.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:34px 30px}.demo{max-width:520px}.stack{display:grid;gap:12px}.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;demo&quot;&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field-label&quot; for=&quot;off&quot;&gt;Niet beschikbaar&lt;/label&gt;&lt;input id=&quot;off&quot; class=&quot;input&quot; disabled value=&quot;Beheerd door policy&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
 </pre></details>
   </div>
@@ -550,15 +550,15 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-06 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-17 Â· catalog.json is de bron Â· dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">22/53</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">22/53</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -654,10 +654,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -687,7 +687,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

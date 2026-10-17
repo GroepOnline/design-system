@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>docs — design-system</title>
+<title>docs â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -329,7 +329,7 @@
   <div class="ph-text">
     <div class="eyebrow">Leeslaag</div>
     <h1>Docs</h1>
-    <div class="ph-sub">13 documenten · gerenderd uit de bron-.md's</div>
+    <div class="ph-sub">13 documenten Â· gerenderd uit de bron-.md's</div>
   </div>
 </div>
 <div class="lede">Alle .md-documenten van het systeem, gerenderd en doorzoekbaar gemaakt uit de bron. De .md zelf blijft de waarheid; deze pagina's zijn een lees-laag.</div>
@@ -338,15 +338,15 @@
 <div class="caps" data-reg="proces" style="margin:22px 2px 10px">proces</div><div class="cards">  <a class="card reveal" href="./workflow.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">WORKFLOW</span><span class="cd">nieuw project scaffolden, component-discipline, taste-loop</span><span class="cm">.md</span></a></div>
 <div class="caps" data-reg="voor ai" style="margin:22px 2px 10px">voor ai</div><div class="cards">  <a class="card reveal" href="./agents.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">AGENTS</span><span class="cd">invarianten en commando's voor AI-agents</span><span class="cm">.md</span></a></div>
 <div class="caps" data-reg="surface" style="margin:22px 2px 10px">surface</div><div class="cards">  <a class="card reveal" href="./surface-session.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">session</span><span class="cd">sessie-surface brief</span><span class="cm">.md</span></a>  <a class="card reveal" href="./surface-composer.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">composer</span><span class="cd">composer-surface brief</span><span class="cm">.md</span></a>  <a class="card reveal" href="./surface-palette.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">palette</span><span class="cd">command-palette brief</span><span class="cm">.md</span></a>  <a class="card reveal" href="./surface-settings.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">settings</span><span class="cd">settings-surface brief</span><span class="cm">.md</span></a>  <a class="card reveal" href="./surface-approvals.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">approvals</span><span class="cd">approvals-surface brief</span><span class="cm">.md</span></a>  <a class="card reveal" href="./surface-states.html"><span class="ct"><svg><use href="../components/icons.svg#i-book"/></svg></span><span class="cn">states</span><span class="cd">states-surface brief</span><span class="cm">.md</span></a></div>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-06 · bron: de .md-bestanden in de repo-root</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-17 Â· bron: de .md-bestanden in de repo-root</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">idx</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">idx</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -442,10 +442,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -475,7 +475,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

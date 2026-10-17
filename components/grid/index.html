@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>grid — design-system</title>
+<title>grid â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -384,17 +384,17 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     <h1>grid</h1>
     <div class="ph-sub">responsive repeatable layout without fixed breakpoints</div>
   </div>
-  <div class="meta">2 varianten<br>2 zelf · 0 extern<br>blad 20/53</div>
+  <div class="meta">2 varianten<br>2 zelf Â· 0 extern<br>blad 20/53</div>
 </div>
 <div class="lede">manifest: <code>components/grid/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
-  <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
+  <input class="input" id="catalogFilter" type="search" placeholder="Filter variantenâ¦" aria-label="Filter varianten" style="min-width:240px">
   <span id="catalogCount" class="caps">2 zichtbaar</span>
 </div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds grid select|remove</code> · experimenten in <code>playground/</code></span>
+  <span>wijzigt alleen via <code>ds grid select|remove</code> Â· experimenten in <code>playground/</code></span>
 </div>
 <div class="use-now" data-reg="gebruik">
   <span class="lbl2">Gebruik nu</span>
@@ -404,7 +404,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>compose layouts from semantic regions</li><li>keep product-specific behavior outside the primitive</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>baking product navigation or data semantics into layout</li><li>using layout primitives as decorative cards</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>works at 390px and desktop</code></li><li><code>does not impose product colors or copy</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">â gebruik</div><ul><li>compose layouts from semantic regions</li><li>keep product-specific behavior outside the primitive</li></ul></div><div class="doc avoid"><div class="dt caps">â vermijd</div><ul><li>baking product navigation or data semantics into layout</li><li>using layout primitives as decorative cards</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>works at 390px and desktop</code></li><li><code>does not impose product colors or copy</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -420,7 +420,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/auto.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/auto.html</span><span>toegevoegd 2026-09-11</span><a href="self/auto.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/auto.html</span><span>toegevoegd 2026-09-11</span><a href="self/auto.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:28px}.layout-demo{min-height:52px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:14px}.layout-demo.tall{min-height:180px}.muted{color:var(--text-muted)}h1,h2,p{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;layout-grid&quot;&gt;&lt;div class=&quot;layout-demo&quot;&gt;A&lt;/div&gt;&lt;div class=&quot;layout-demo&quot;&gt;B&lt;/div&gt;&lt;div class=&quot;layout-demo&quot;&gt;C&lt;/div&gt;&lt;div class=&quot;layout-demo&quot;&gt;D&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
   </div>
   <div class="cell">
@@ -435,7 +435,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/fixed.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/fixed.html</span><span>toegevoegd 2026-09-11</span><a href="self/fixed.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/fixed.html</span><span>toegevoegd 2026-09-11</span><a href="self/fixed.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;body{padding:28px}.layout-demo{min-height:52px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:14px}.layout-demo.tall{min-height:180px}.muted{color:var(--text-muted)}h1,h2,p{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;layout-grid fixed&quot;&gt;&lt;div class=&quot;layout-demo&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;layout-demo&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;layout-demo&quot;&gt;3&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre></details>
   </div>
 </div>
@@ -465,15 +465,15 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-06 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-17 Â· catalog.json is de bron Â· dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">20/53</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">20/53</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -569,10 +569,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -602,7 +602,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

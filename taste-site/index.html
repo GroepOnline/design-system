@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>taste — design-system</title>
+<title>taste â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -348,7 +348,7 @@
   </div>
 </aside>
 <main class="main"><div class="wrap">
-<div class='pagehead' data-reg='kop'><span class='tile'><svg><use href='../components/icons.svg#i-check'/></svg></span><div><h1>Taste</h1><div class='cat caps'>onderhoudssysteem · apart van studio · gekoppeld</div></div></div><div class='sub'>Het lerende smaak-systeem: regels zijn binding voor elke surface, de log is het bewijs. Studio stelt visueel af; taste beslist wat mag.</div><div class='use-now' style='margin-bottom:26px'><span class='lbl2'>Koppeling</span><span>taste-log → (2+ observaties) → regel hier → propagatie naar <code>DESIGN.md</code> + <code>tokens.css</code> + <code>components/</code> in dezelfde commit. Onderhoud via de <code>joep-design-taste</code> skill, niet handmatig op deze pagina.</span></div><div class='md'><h2 data-reg='regels'>Regels (binding)</h2><h1>Taste Rules — learned from Joep&#x27;s reactions</h1>
+<div class='pagehead' data-reg='kop'><span class='tile'><svg><use href='../components/icons.svg#i-check'/></svg></span><div><h1>Taste</h1><div class='cat caps'>onderhoudssysteem Â· apart van studio Â· gekoppeld</div></div></div><div class='sub'>Het lerende smaak-systeem: regels zijn binding voor elke surface, de log is het bewijs. Studio stelt visueel af; taste beslist wat mag.</div><div class='use-now' style='margin-bottom:26px'><span class='lbl2'>Koppeling</span><span>taste-log â (2+ observaties) â regel hier â propagatie naar <code>DESIGN.md</code> + <code>tokens.css</code> + <code>components/</code> in dezelfde commit. Onderhoud via de <code>joep-design-taste</code> skill, niet handmatig op deze pagina.</span></div><div class='md'><h2 data-reg='regels'>Regels (binding)</h2><h1>Taste Rules — learned from Joep&#x27;s reactions</h1>
 <blockquote>Distilled from <code>taste-log.md</code>. Binding for new work. Two observations minimum per rule.</blockquote>
 <blockquote>Last distilled: 2026-07-26 (seed rules from established preferences)</blockquote>
 <h2 data-reg="seed-rules">Seed rules (from AGENTS.md + Signaal DESIGN.md + this session&#x27;s briefs)</h2>
@@ -632,14 +632,14 @@
 <li><strong>signal</strong>: de primitive mag niet blijven steken op een generieke shadcn-baseline; herbruikbaarheid betekent ook dat states, nadruk, iconen en input-modality zorgvuldig uitgewerkt zijn</li>
 <li><strong>delta</strong>: button-contract aangescherpt met optische padding, subtielere press-fysica, coarse-pointer targets, expliciete focus, rustige pending-mark zonder spinner en aparte default/primary/subtle/ghost/destructive/icon varianten; HTML-catalogus en runtime-package gelijkgetrokken</li>
 <li><strong>candidate rule</strong>: primitives die breed hergebruikt worden moeten als volledige families worden ontworpen, niet als één default plus losse uitzonderingen. Eerste expliciete observatie, nog niet promoveren.</li>
-</ul></div><div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op 2026-10-06</div>
+</ul></div><div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op 2026-10-17</div>
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">taste</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">taste</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -735,10 +735,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -768,7 +768,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;

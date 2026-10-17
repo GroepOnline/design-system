@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>approval — design-system</title>
+<title>approval â design-system</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../tokens.css">
@@ -64,7 +64,7 @@
   .main::-webkit-scrollbar { width: 10px; }
   .main::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; border: 3px solid var(--bg); }
   .main::-webkit-scrollbar-track { background: transparent; }
-  /* rail scrollt onzichtbaar — nooit twee zichtbare scrollbars naast elkaar */
+  /* rail scrollt onzichtbaar â nooit twee zichtbare scrollbars naast elkaar */
   .rail::-webkit-scrollbar { display: none; }
   /* code-blokken ook dun */
   .cell pre::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -384,17 +384,17 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     <h1>approval</h1>
     <div class="ph-sub">wacht-op-jou, toetsen 1/2/3</div>
   </div>
-  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 03/53</div>
+  <div class="meta">3 varianten<br>2 zelf Â· 1 extern<br>blad 03/53</div>
 </div>
 <div class="lede">manifest: <code>components/approval/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
-  <input class="input" id="catalogFilter" type="search" placeholder="Filter varianten…" aria-label="Filter varianten" style="min-width:240px">
+  <input class="input" id="catalogFilter" type="search" placeholder="Filter variantenâ¦" aria-label="Filter varianten" style="min-width:240px">
   <span id="catalogCount" class="caps">3 zichtbaar</span>
 </div>
 <div class="legend">
   <span class="st active">ACTIEF</span> geselecteerd voor gebruik
   <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span> in de catalogus
-  <span>wijzigt alleen via <code>ds approval select|remove</code> · experimenten in <code>playground/</code></span>
+  <span>wijzigt alleen via <code>ds approval select|remove</code> Â· experimenten in <code>playground/</code></span>
 </div>
 <div class="use-now" data-reg="gebruik">
   <span class="lbl2">Gebruik nu</span>
@@ -404,7 +404,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>inline in transcript bij externe of destructieve acties</li><li>altijd exact command tonen</li><li>toetsen 1/2/3</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>modal of popup</li><li>vage omschrijving van wat er gaat gebeuren</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>amber = wachten, rood = destructief</code></li><li><code>cmd mono op sunk</code></li><li><code>primary btn = eerste optie</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">â gebruik</div><ul><li>inline in transcript bij externe of destructieve acties</li><li>altijd exact command tonen</li><li>toetsen 1/2/3</li></ul></div><div class="doc avoid"><div class="dt caps">â vermijd</div><ul><li>modal of popup</li><li>vage omschrijving van wat er gaat gebeuren</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>amber = wachten, rood = destructief</code></li><li><code>cmd mono op sunk</code></li><li><code>primary btn = eerste optie</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -420,7 +420,7 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
     </div>
     <div class="chips"></div>
     <iframe src="self/default.html" style="min-height:240px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/default.html</span><span>toegevoegd 2026-07-27</span><a href="self/default.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;nl&quot;&gt;
 &lt;head&gt;
@@ -502,13 +502,13 @@ body.component-shell .gen { margin-top:20px; font-size:9px; color:#aaa; }
       <span class="id">opensourceui-slide-confirm</span>
       <span class="note">take: deliberate drag-to-commit + pointer semantics; reject: pill-heavy chrome, deep shadows, decorative success green</span>
       <span class="right">
-        <span class="org external">extern · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx</span>
+        <span class="org external">extern Â· https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx</span>
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
     <div class="chips"><span class="chip ">MIT</span></div>
     <iframe src="external/opensourceui-slide-confirm.html" style="min-height:260px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>external/opensourceui-slide-confirm.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-slide-confirm.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>external/opensourceui-slide-confirm.html</span><span>toegevoegd 2026-09-06</span><a href="external/opensourceui-slide-confirm.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
 &lt;title&gt;Opensource UI - Slide to Confirm reference&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
@@ -534,13 +534,13 @@ k.onpointerup=k.onpointercancel=()=&gt;{if(!down)return;down=false;if(x&gt;=max(
       <span class="id">guarded-drag</span>
       <span class="note">ChefGroep guarded drag: deliberate commit without pill/shadow treatment</span>
       <span class="right">
-        <span class="org ">zelf (aangepast) · https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx</span>
+        <span class="org ">zelf (aangepast) Â· https://github.com/bidyut10/opensourceui/blob/d239c3463c984a099dd2cb67817a41fc0bcc876f/components/buttons/slide-to-confirm-button.tsx</span>
         <span class="st locked"><svg style="width:10px;height:10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>vast</span>
       </span>
     </div>
     <div class="chips"></div>
     <iframe src="self/guarded-drag.html" style="min-height:260px" data-fit loading="lazy"></iframe>
-    <div class="cf"><span>self/guarded-drag.html</span><span>toegevoegd 2026-09-06</span><a href="self/guarded-drag.html" target="_blank" style="margin-left:auto">open ↗</a></div>
+    <div class="cf"><span>self/guarded-drag.html</span><span>toegevoegd 2026-09-06</span><a href="self/guarded-drag.html" target="_blank" style="margin-left:auto">open â</a></div>
     <details><summary><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>broncode<span class="copy gbtn" data-copy style="width:auto;height:auto;padding:3px 10px;font-size:11px">kopieer</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;nl&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;approval: guarded drag&lt;/title&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;../../../tokens.css&quot;&gt;&lt;style&gt;
 body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--text-faint);margin-bottom:20px}.approval{border:1px solid var(--hold-line);border-radius:var(--r-lg);background:var(--surface);padding:13px 15px}.kind{display:flex;gap:7px;align-items:center;color:var(--amber);font-size:12px;font-weight:500}.cmd{font:12px/1.5 var(--mono);background:var(--surface-sunk);border-radius:var(--r-md);padding:8px 10px;margin:9px 0 11px;overflow:auto}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.guard{position:relative;width:260px;height:34px;border:1px solid var(--line-strong);border-radius:var(--r-md);background:var(--bg);overflow:hidden;touch-action:none}.fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent-soft)}.guard-label{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:var(--text-muted);pointer-events:none}.handle{position:absolute;left:3px;top:3px;width:42px;height:26px;border:1px solid var(--hold-line);border-radius:5px;background:var(--surface);color:var(--amber);font:600 14px var(--font);cursor:grab}.handle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.guard.done{border-color:var(--accent)}.guard.done .guard-label{color:var(--accent-ink);font-weight:500}.deny{height:34px}.hint{font:10px var(--mono);color:var(--text-faint);margin-top:8px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
@@ -577,15 +577,15 @@ body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--t
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-06 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-10-17 Â· catalog.json is de bron Â· dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">03/53</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 Â· UNITS PX<br>SHEET <span class="b">03/53</span> Â· REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-sec" id="smlPage">§</span>
+  <span class="ml-sec" id="smlPage">Â§</span>
   <span class="ml-right">
     <span class="ml-opt" id="smlY">y 0000/0000</span>
     <span class="ml-opt">rev d</span>
@@ -681,10 +681,10 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
   var sY = document.getElementById("smlY");
   var sPage = document.getElementById("smlPage");
   var sr = document.getElementById("srulerY");
-  var pageTitle = document.title.split(" — ")[0] || "pagina";
-  if (sPage) sPage.textContent = "§ " + pageTitle;
+  var pageTitle = document.title.split(" â ")[0] || "pagina";
+  if (sPage) sPage.textContent = "Â§ " + pageTitle;
   var sd = document.getElementById("splateDate");
-  if (sd) sd.textContent = "design-system v2 · " + new Date().toISOString().slice(0, 10);
+  if (sd) sd.textContent = "design-system v2 Â· " + new Date().toISOString().slice(0, 10);
   function tickSClock() {
     if (!sClock) return;
     var d = new Date();
@@ -714,7 +714,7 @@ document.querySelectorAll("[data-copy]").forEach(btn => {
       if (r.top <= line) active = o;
     });
     sregs.forEach(function (o) { o.rg.classList.toggle("on", o === active); });
-    if (sPage) sPage.textContent = "§ " + (active ? active.label : pageTitle);
+    if (sPage) sPage.textContent = "Â§ " + (active ? active.label : pageTitle);
   }
   function buildSRegister() {
     if (!sr) return;
