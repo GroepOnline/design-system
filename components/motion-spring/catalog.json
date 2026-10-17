@@ -1,0 +1,45 @@
+{
+  "component": "motion-spring",
+  "title": "spring physics",
+  "desc": "tunable damped spring interaction",
+  "entries": [
+    {
+      "id": "pointer-spring",
+      "file": "self/pointer-spring.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-07",
+      "note": "interactive physics specimen with stiffness/damping/mass",
+      "kind": "physics",
+      "engine": "requestAnimationFrame",
+      "license": "ChefGroep",
+      "tags": [
+        "spring",
+        "physics",
+        "pointer",
+        "drag",
+        "motion",
+        "tunable"
+      ],
+      "h": 500,
+      "wide": true
+    }
+  ],
+  "docs": {
+    "use": [
+      "motion research and interaction tuning",
+      "derive reusable spring presets from measured behavior"
+    ],
+    "avoid": [
+      "using spring motion without reduced-motion fallback",
+      "copying arbitrary parameters into production without context"
+    ],
+    "contract": [
+      "physics controls stay explicit",
+      "delta time is clamped",
+      "interaction remains pointer/touch friendly"
+    ]
+  },
+  "cat": "motion"
+}
