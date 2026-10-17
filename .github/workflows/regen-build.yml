@@ -1,0 +1,30 @@
+name: regen-build
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/specimen-library-vnext
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: build
+        run: python3 ds build
+      - name: commit and push
+        run: |
+          git config user.name "MisterWanted"
+          git config user.email "misterwanted@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "chore(build): regenerate web output after import fix"
+          git push origin HEAD:feat/specimen-library-vnext
