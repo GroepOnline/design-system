@@ -1,5 +1,7 @@
 name: regen-build
 on:
+  push:
+    branches: [feat/specimen-library-vnext]
   workflow_dispatch:
 permissions:
   contents: write
