@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Verify PR visual evidence
-        uses: actions/github-script@f28eb0e427b963cf55da1b062df8c78e596b8340 # v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
             const owner = context.repo.owner;
