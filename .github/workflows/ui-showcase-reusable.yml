@@ -2,6 +2,11 @@ name: UI showcase (reusable)
 
 on:
   workflow_call:
+    inputs:
+      runner_label:
+        type: string
+        required: false
+        default: ubuntu-latest
 
 # Read-only. Never checkout/execute PR code.
 permissions:
@@ -11,7 +16,7 @@ permissions:
 jobs:
   visual-evidence:
     name: UI showcase evidence
-    runs-on: chefgroep-ci-oci
+    runs-on: ${{ inputs.runner_label }}
     timeout-minutes: 5
     steps:
       - name: Verify PR visual evidence
