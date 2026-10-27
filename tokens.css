@@ -73,10 +73,11 @@
   --dur-fast: 140ms;
   --dur-expand: 420ms;
   --dur-pulse-cycle: 2400ms;
-  --glow-live: 0 0 0 1px color-mix(in srgb, var(--open-green) 40%, transparent),
-               0 0 12px 2px color-mix(in srgb, var(--open-green) 35%, transparent);
+  --live-outline: color-mix(in srgb, var(--open-green) 56%, var(--line-strong));
   --dur-med: 280ms;
   --dur-slow: 420ms;
+  --control-shadow: 0 1px 1px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.05);
+  --control-shadow-hover: 0 3px 10px rgba(0,0,0,0.08);
 }
 
 [data-theme="dark"] {
@@ -127,10 +128,11 @@ body {
   background: var(--btn-bg); color: var(--btn-fg);
   cursor: pointer; white-space: nowrap; user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color var(--dur-fast), border-color var(--dur-fast),
-              color var(--dur-fast), opacity var(--dur-fast), transform 100ms var(--ease-out);
+  box-shadow: var(--control-shadow);
+  transition: background-color var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast),
+              box-shadow var(--dur-fast), opacity var(--dur-fast), transform 120ms var(--ease-out);
 }
-.btn:hover { --btn-bg: var(--surface-sunk); --btn-border: color-mix(in srgb, var(--text) 32%, var(--line-strong)); }
+.btn:hover { --btn-bg: var(--surface-sunk); --btn-border: color-mix(in srgb, var(--text) 32%, var(--line-strong)); box-shadow: var(--control-shadow-hover); transform: translateY(-1px); }
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .btn:active:not(:disabled):not([aria-disabled="true"]) { transform: translateY(1px) scale(0.985); }
 .btn:disabled, .btn[aria-disabled="true"] { opacity: 0.42; cursor: not-allowed; pointer-events: none; }
@@ -142,6 +144,9 @@ body {
 .btn.ghost:hover { --btn-bg: var(--hover); --btn-border: transparent; color: var(--text); }
 .btn.destructive { --btn-bg: transparent; --btn-fg: var(--red); --btn-border: color-mix(in srgb, var(--red) 32%, transparent); }
 .btn.destructive:hover { --btn-bg: color-mix(in srgb, var(--red) 8%, transparent); --btn-border: color-mix(in srgb, var(--red) 48%, transparent); }
+.btn.accent { --btn-bg: var(--accent); --btn-fg: #fff; --btn-border: var(--accent); box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 24%, transparent); }
+.btn.accent:hover { --btn-bg: color-mix(in srgb, var(--accent) 88%, #000); --btn-border: transparent; box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent); }
+.btn.pill { border-radius: var(--r-pill); padding-inline: 15px; }
 .btn kbd {
   min-width: 18px; height: 18px; padding: 0 5px;
   display: inline-grid; place-items: center;
@@ -265,6 +270,11 @@ body {
 }
 .badge.green { background: var(--open-green-bg); color: var(--open-green); }
 .badge.outline { border-color: var(--line-strong); color: var(--text-muted); background: transparent; }
+.badge.neutral { background: var(--surface-sunk); color: var(--text-muted); }
+.badge.accent { background: var(--accent-soft); color: var(--accent-ink); }
+.badge.amber { background: var(--hold-bg); color: var(--amber); border-color: color-mix(in srgb, var(--amber) 24%, transparent); }
+.badge.red { background: color-mix(in srgb, var(--red) 9%, transparent); color: var(--red); }
+.badge.dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 12%, transparent); }
 
 /* lucide icon sizing contract */
 .ic {
