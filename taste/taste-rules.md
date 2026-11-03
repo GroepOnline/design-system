@@ -6,7 +6,7 @@
 ## Seed rules (from AGENTS.md + Signaal DESIGN.md + this session's briefs)
 
 ### color
-- **DO** tint neutrals warm; one accent max. **DON'T** purple gradients, AI-glow, acid-on-black. *(seed: workspace AGENTS.md, Signaal bans)*
+- **DO** tint neutrals warm; color is semantic, not atmosphere. Flat accent is limited to focus, selection, links and explicit state. **DON'T** purple/blue gradients, neon/aurora, AI-glow, colored ambient backgrounds or “tech” color washes. Border/effect specimens may use color only when color is the subject being explored. *(seed strengthened 2026-09-07 after vNext specimen reject)*
 - **DO** light theme as first-class default. **DON'T** dark-only product surfaces. *(seed: Signaal "licht is standaard")*
 
 ### type
@@ -19,6 +19,7 @@
 
 ### density
 - **DO** compact, information-dense tool surfaces (density 5–7). **DON'T** marketing-hero whitespace inside product. *(seed: Signaal density 7)*
+- **DO** treat a library specimen as the content, not as a small object floating inside a large card. Preview-first grids use tight chrome, 3+ columns on desktop where viable, small labels, and only the padding the interaction needs. **DON'T** spend 100+ vertical pixels of empty card space to display a 28–36px control, wrap every specimen in oversized r14/r18 panels, or stack card-within-stage-within-card. *(2026-08-05 catalog-card corrections + 2026-09-07 Kinetics density reject)*
 
 ### voice
 - **DO** warm, direct, human Dutch on Joep-facing surfaces. **DON'T** em-dashes, buzzwords, lifecycle-jargon, fake metrics. *(seed: AGENTS.md)*
@@ -44,6 +45,9 @@
 - **DO** shadcn/ui component conventions as baseline (button variants, badge pill, card border + hairline, ghost icon buttons). Devin's product UI is shadcn-shaped; Joep recognizes and prefers it. *(2026-07-27: "shadcn of soortgelijk gebruiken voor components van hun")*
 - **DO** compose dashboard views from primitives (Sidebar + Card + Table + Chart), never hand-rolled. Data tables use zebra striping for scanability and inline color-coded badges for status. *(2026-07-31: dashboard table + shadcn skill install)*
 - **DO** treat mobile (390px) as a first-class viewport: test every generated page at 390px next to light and dark before commit. **DON'T** let rails/navs collapse into unstructured wraps — mobile nav is a horizontal scroll-strip or a deliberate pattern, never an accidental flex-wrap jumble. *(2026-08-05: Joep "bovenin 1 zooi" op iPhone + Fase C responsive-eis)*
+
+### library / tooling surfaces
+- **DO** render component libraries, review tools and internal workbenches as quiet product interfaces: compact sidebar, small controls, restrained borders, white/neutral workspace and search-first navigation. **DON'T** use editorial/showcase chrome, giant specimen cards, decorative page furniture or oversized whitespace around small controls. The specimen or task is the content. *(2026-09-07: Kinetics density reference + clean review-app screenshot direction)*
 
 ### direction
 - **WIP (1 observation)**: Devin's visual language beats own new signatures — teal Stroom redirected toward Devin warm-neutral + blue. Watch: does De Stroom line/motion system survive as element, or fully absorbed into Devin-style rows? *(2026-07-27)*

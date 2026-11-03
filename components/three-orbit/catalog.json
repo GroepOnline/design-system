@@ -1,0 +1,45 @@
+{
+  "component": "three-orbit",
+  "title": "three orbit",
+  "desc": "Three.js / WebGL scene specimens",
+  "entries": [
+    {
+      "id": "orbit-field",
+      "file": "self/orbit-field.html",
+      "origin": "self",
+      "source": "https://threejs.org",
+      "status": "active",
+      "added": "2026-09-07",
+      "note": "first WebGL specimen with live scene controls",
+      "kind": "3d-scene",
+      "engine": "three.js 0.180",
+      "license": "MIT engine / ChefGroep specimen",
+      "tags": [
+        "threejs",
+        "webgl",
+        "particles",
+        "orbit",
+        "scene",
+        "tunable"
+      ],
+      "h": 510,
+      "wide": true
+    }
+  ],
+  "docs": {
+    "use": [
+      "3D research, backgrounds, data worlds and visual storytelling",
+      "keep engine dependency explicit per specimen"
+    ],
+    "avoid": [
+      "3D where flat UI communicates better",
+      "shipping heavy scenes without performance budget"
+    ],
+    "contract": [
+      "canvas resizes with its container",
+      "pixel ratio is capped",
+      "scene has a visible fallback"
+    ]
+  },
+  "cat": "3d"
+}
