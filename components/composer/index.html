@@ -252,7 +252,9 @@
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/border-beam/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
   <a class="it" href="../../components/motion/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/motion-spring/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
   <div class="lbl caps">Forms</div>
   <a class="it" href="../../components/checkbox/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-check"/></svg></span><span class="nm">checkbox<span class="ds">independent multi-selection and boolean acknowledgement</span></span><span class="act"></span></a>
   <a class="it" href="../../components/field/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-info"/></svg></span><span class="nm">field<span class="ds">form structure: label, help, required and error semantics</span></span><span class="act"></span></a>
@@ -320,7 +322,7 @@
     <h1>composer</h1>
     <div class="ph-sub">invoer + wachtrij</div>
   </div>
-  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 13/50</div>
+  <div class="meta">3 varianten<br>2 zelf · 1 extern<br>blad 14/53</div>
 </div>
 <div class="lede">manifest: <code>components/composer/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
@@ -391,12 +393,15 @@
   .composer-bar { display: flex; align-items: center; gap: 4px; margin-top: 7px; }
   .composer-bar .right { margin-left: auto; display: flex; gap: 4px; align-items: center; }
   .model-chip {
-    font-size: 12px; color: var(--text-muted);
-    padding: 4px 9px; border-radius: var(--r-md);
-    cursor: pointer; display: flex; gap: 5px; align-items: center;
-    transition: background 0.15s;
+    appearance: none; border: 0; outline: none; font-family: var(--font);
+    font-size: 12px; color: var(--text-muted); background: transparent;
+    padding: 5px 22px 5px 9px; border-radius: var(--r-md); cursor: pointer;
+    background-image: linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+    background-position: calc(100% - 12px) 50%,calc(100% - 8px) 50%; background-size:4px 4px; background-repeat:no-repeat;
+    transition: background-color var(--dur-fast), color var(--dur-fast);
   }
-  .model-chip:hover { background: var(--hover); }
+  .model-chip:hover { background-color: var(--hover); color:var(--text); }
+  .model-chip:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
   .queued-chip {
     display: flex; align-items: center; gap: 8px;
     background: var(--accent-soft); color: var(--accent-ink);
@@ -416,7 +421,7 @@
     &lt;div class=&quot;composer-bar&quot;&gt;
       &lt;button class=&quot;gbtn&quot; aria-label=&quot;Bijlage toevoegen&quot; title=&quot;Bijlage&quot;&gt;&lt;svg class=&quot;ic lg&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-plus&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
       &lt;div class=&quot;right&quot;&gt;
-        &lt;div class=&quot;model-chip&quot;&gt;SWE 1.7 &lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-chevrons-updown&quot;/&gt;&lt;/svg&gt;&lt;/div&gt;
+        &lt;select class=&quot;model-chip&quot; aria-label=&quot;Model&quot;&gt;&lt;option&gt;Default model&lt;/option&gt;&lt;option&gt;Reasoning&lt;/option&gt;&lt;option&gt;Fast&lt;/option&gt;&lt;/select&gt;
         &lt;button class=&quot;gbtn&quot; aria-label=&quot;Spraak invoeren&quot; title=&quot;Spraak&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-mic&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
         &lt;button class=&quot;gbtn solid&quot; aria-label=&quot;Versturen&quot; title=&quot;Stuur&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-arrow-up&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
       &lt;/div&gt;
@@ -432,7 +437,7 @@
     &lt;div class=&quot;composer-bar&quot;&gt;
       &lt;button class=&quot;gbtn&quot; aria-label=&quot;Bijlage toevoegen&quot;&gt;&lt;svg class=&quot;ic lg&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-plus&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
       &lt;div class=&quot;right&quot;&gt;
-        &lt;div class=&quot;model-chip&quot;&gt;SWE 1.7 &lt;svg class=&quot;ic sm&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-chevrons-updown&quot;/&gt;&lt;/svg&gt;&lt;/div&gt;
+        &lt;select class=&quot;model-chip&quot; aria-label=&quot;Model&quot;&gt;&lt;option&gt;Default model&lt;/option&gt;&lt;option&gt;Reasoning&lt;/option&gt;&lt;option&gt;Fast&lt;/option&gt;&lt;/select&gt;
         &lt;button class=&quot;gbtn&quot; aria-label=&quot;Spraak invoeren&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-mic&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
         &lt;button class=&quot;gbtn solid&quot; aria-label=&quot;Versturen&quot;&gt;&lt;svg class=&quot;ic&quot;&gt;&lt;use href=&quot;../../../components/icons.svg#i-arrow-up&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
       &lt;/div&gt;
@@ -525,11 +530,11 @@ body{padding:40px 32px;max-width:760px}.head{font:11px var(--mono);color:var(--t
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-17 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-11-03 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">13/50</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">14/53</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>

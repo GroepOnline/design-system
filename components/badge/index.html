@@ -252,7 +252,9 @@
   <a class="it" href="../../components/nav/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-inbox"/></svg></span><span class="nm">nav<span class="ds">sidebar-onderdelen</span></span><span class="act"></span></a>
   <a class="it" href="../../components/settings/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-settings"/></svg></span><span class="nm">settings<span class="ds">volledige instellingen-surface</span></span><span class="act"></span></a>
   <div class="lbl caps">Motion</div>
+  <a class="it" href="../../components/border-beam/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">border-beam<span class="ds">animated border / glow material</span></span><span class="act"></span></a>
   <a class="it" href="../../components/motion/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-sparkle"/></svg></span><span class="nm">motion<span class="ds">opt-in interaction primitives: beam, halo, sweep, ripple, glide and status pulse</span></span><span class="act"></span></a>
+  <a class="it" href="../../components/motion-spring/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-file"/></svg></span><span class="nm">motion-spring<span class="ds">tunable damped spring interaction</span></span><span class="act"></span></a>
   <div class="lbl caps">Forms</div>
   <a class="it" href="../../components/checkbox/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-check"/></svg></span><span class="nm">checkbox<span class="ds">independent multi-selection and boolean acknowledgement</span></span><span class="act"></span></a>
   <a class="it" href="../../components/field/index.html"><span class="tile"><svg><use href="../../components/icons.svg#i-info"/></svg></span><span class="nm">field<span class="ds">form structure: label, help, required and error semantics</span></span><span class="act"></span></a>
@@ -320,7 +322,7 @@
     <h1>badge</h1>
     <div class="ph-sub">git-status + meta</div>
   </div>
-  <div class="meta">1 varianten<br>1 zelf · 0 extern<br>blad 07/50</div>
+  <div class="meta">1 varianten<br>1 zelf · 0 extern<br>blad 07/53</div>
 </div>
 <div class="lede">manifest: <code>components/badge/catalog.json</code></div>
 <div style="display:flex;gap:10px;align-items:center;margin:14px 0">
@@ -340,7 +342,7 @@
 </div>
 
 <div class="docs" data-reg="contract">
-  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>git-status (Open / merged)</li><li>korte meta-labels via outline</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>groen als decoratie — gereserveerd voor git</li><li>zinnen in een badge</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>pill r200, 12px/500</code></li><li><code>.green alleen git-status</code></li><li><code>.outline voor meta</code></li></ul></div>
+  <div class="doc use"><div class="dt caps">✓ gebruik</div><ul><li>git-status (Open / merged)</li><li>korte meta-labels via outline</li></ul></div><div class="doc avoid"><div class="dt caps">✕ vermijd</div><ul><li>groen als decoratie — gereserveerd voor git</li><li>zinnen in een badge</li></ul></div><div class="doc contract"><div class="dt caps">contract</div><ul><li><code>pill r200, compact 12px/500</code></li><li><code>green blijft exclusief git-success/open</code></li><li><code>accent/amber/red alleen voor echte state; outline/neutral voor meta</code></li></ul></div>
 </div>
 
 <div class="grid" data-reg="varianten">
@@ -394,6 +396,17 @@
   &lt;/div&gt;
 &lt;/div&gt;
 
+&lt;div class=&quot;group&quot;&gt;
+  &lt;div class=&quot;lbl&quot;&gt;status / context&lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;span class=&quot;badge neutral&quot;&gt;Draft&lt;/span&gt;
+    &lt;span class=&quot;badge accent dot&quot;&gt;Running&lt;/span&gt;
+    &lt;span class=&quot;badge amber dot&quot;&gt;Needs review&lt;/span&gt;
+    &lt;span class=&quot;badge red dot&quot;&gt;Failed&lt;/span&gt;
+    &lt;span class=&quot;badge outline mono&quot;&gt;three.js&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
 &lt;!-- CONTRACT
   .badge         pill r200, 12px/500, pad 2.5px 10px
   .badge.green   git-status only (open/merged) — nooit decoratief
@@ -430,11 +443,11 @@
   });
 })();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-09-17 · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build op 2026-11-03 · catalog.json is de bron · dit bestand niet bewerken</div>
 
 </div></main>
 <div class="sruler" id="srulerY" aria-hidden="true"></div>
-<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">07/50</span> · REV D<br><span id="splateDate"></span></div>
+<div class="splate" id="splate">SCALE 1:1 · UNITS PX<br>SHEET <span class="b">07/53</span> · REV D<br><span id="splateDate"></span></div>
 <div class="smodeline">
   <span class="ml-dot"></span>
   <span>live</span>
