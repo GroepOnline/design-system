@@ -537,7 +537,7 @@ def cmd_search(query="", category=None, origin=None, extension=None, pattern=Non
         scope.append(f"extension={extension}")
     if pattern:
         scope.append(f"pattern={pattern}")
-    print(f"{bold('search')} {dim('Â· ' + ', '.join(scope)) if scope else ''}")
+    print(f"{bold('search')} {dim('· ' + ', '.join(scope)) if scope else ''}")
     print(dim(f"{'component':<18} {'variant':<22} {'cat':<13} {'origin':<14} note"))
     for r in records:
         mark = green("*") if r["preferred"] else " "
