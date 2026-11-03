@@ -9,7 +9,10 @@ Every visible or interactive semantic element MUST be a named component. Bare `d
 This does not mean every component belongs in generic Signaal core. The split is:
 
 1. **Signaal generic components** — reusable across products.
-2. **OCX composites** — product-specific compositions built from generic Signaal components.
+2. **OCX composites** — product-specific compositions built from generic components
+   (Signaal implementations when available, otherwise OCX-owned equivalents that
+   satisfy the same generic component contract; Signaal itself stays optional per
+   DESIGN.md and extension.json, and OCX must never take a hard dependency on it).
 3. **Page composition** — layout + data only; no bespoke visual controls.
 
 ## Signaal generic component families required by OCX
@@ -87,7 +90,8 @@ These stay product-specific and must not become Signaal core:
 - `RequestInspector`
 - `ProviderInspector`
 
-Each OCX composite must be composed only from generic components plus data formatting helpers.
+Each OCX composite must be composed only from generic components (Signaal-provided
+or OCX-owned equivalents per the contract above) plus data formatting helpers.
 
 ## Overview page target
 

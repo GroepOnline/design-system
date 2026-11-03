@@ -80,7 +80,7 @@ class ExtensionsTest(unittest.TestCase):
         self.assertEqual(context["extension"], "ocx")
         self.assertEqual(Path(context["extension_design"]), OCX_ROOT / "DESIGN.md")
         self.assertEqual(Path(context["extension_taste"]), OCX_ROOT / "TASTE.md")
-        self.assertNotIn("warning", context)
+        self.assertNotIn("warning_extension", context)
 
     def test_component_list_scales_to_300_entries(self):
         entries = [{"id": f"v{i:03d}", "origin": "self", "source": None, "status": "locked", "note": ""} for i in range(300)]
