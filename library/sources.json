@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {"id":"kinetics-colorion","name":"Kinetics","url":"https://kinetics.colorion.co/#library","kind":"interactive-reference","priority":"high","ingest":"research"},
+    {"id":"shadcn-registry-directory","name":"shadcn Registry Directory","url":"https://shadcnregistry.com/","kind":"registry-directory","priority":"high","reported_registries":236},
+    {"id":"animate-ui","name":"animate-ui","directory_handle":"@animate-ui","kind":"shadcn-registry","reported_items":500,"priority":"high"},
+    {"id":"aceternity","name":"Aceternity UI","directory_handle":"@aceternity","kind":"shadcn-registry","reported_items":277,"priority":"high"},
+    {"id":"smoothui","name":"SmoothUI","directory_handle":"@smoothui","kind":"shadcn-registry","reported_items":178,"priority":"high"},
+    {"id":"unlumen-ui","name":"Unlumen UI","directory_handle":"@unlumen-ui","kind":"shadcn-registry","reported_items":235,"priority":"high"},
+    {"id":"soralabs","name":"Sora Labs","directory_handle":"@soralabs","kind":"shadcn-registry","reported_items":137,"priority":"high"},
+    {"id":"seamui","name":"Seam UI","directory_handle":"@seamui","kind":"shadcn-registry","reported_items":305,"priority":"high"},
+    {"id":"scrollxui","name":"ScrollX UI","directory_handle":"@scrollxui","kind":"shadcn-registry","reported_items":180,"priority":"high"},
+    {"id":"canvas-ui","name":"Canvas UI","directory_handle":"@canvas-ui","kind":"shadcn-registry","reported_items":420,"priority":"medium"},
+    {"id":"mozaika","name":"Mozaika","directory_handle":"@mozaika","kind":"shadcn-registry","reported_items":548,"priority":"medium"},
+    {"id":"ai2","name":"AI2","directory_handle":"@ai2","kind":"shadcn-registry","reported_items":414,"priority":"medium"},
+    {"id":"aicanvas","name":"AI Canvas","directory_handle":"@aicanvas","kind":"shadcn-registry","reported_items":126,"priority":"medium"},
+    {"id":"shadcn-space","name":"Shadcn Space","directory_handle":"@shadcn-space","kind":"shadcn-registry","reported_items":881,"priority":"medium"},
+    {"id":"shadcnblocks","name":"Shadcnblocks","directory_handle":"@shadcnblocks","kind":"shadcn-registry","reported_items":4171,"priority":"medium"},
+    {"id":"shadcn-ui-blocks","name":"Shadcn UI Blocks","directory_handle":"@shadcn-ui-blocks","kind":"shadcn-registry","reported_items":4002,"priority":"medium"},
+    {"id":"shadcnuikit","name":"Shadcn UI Kit","directory_handle":"@shadcnuikit","kind":"shadcn-registry","reported_items":923,"priority":"medium"},
+    {"id":"shadcnmaps","name":"Shadcn Maps","directory_handle":"@shadcnmaps","kind":"shadcn-registry","reported_items":361,"priority":"medium"},
+    {"id":"nusaiba","name":"Nusaiba","directory_handle":"@nusaiba","kind":"shadcn-registry","reported_items":119,"priority":"medium"},
+    {"id":"paceui-gsap","name":"PaceUI GSAP","directory_handle":"@paceui-gsap","kind":"shadcn-registry","reported_items":29,"priority":"medium"}
+  ]
+}

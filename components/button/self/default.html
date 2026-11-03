@@ -68,6 +68,17 @@
 </div>
 
 <div class="group">
+  <div class="lbl">toon / nadruk</div>
+  <div class="row">
+    <button class="btn subtle">Zacht</button>
+    <button class="btn ghost">Ghost</button>
+    <button class="btn accent">Accent</button>
+    <button class="btn primary pill">Pill primary</button>
+    <button class="btn destructive">Verwijderen</button>
+  </div>
+</div>
+
+<div class="group">
   <div class="lbl">met toetsenbord-hint (approval-patroon)</div>
   <div class="row">
     <button class="btn primary">Een keer <kbd>1</kbd></button>
@@ -100,6 +111,8 @@
   .btn.primary     inverse high emphasis; max one primary per local decision context
   .btn.subtle      quiet filled action; .btn.ghost = containerless lower emphasis
   .btn.destructive semantic red only for destructive actions
+  .btn.accent      brand-accent emphasis; reserved, never ambient
+  .btn.pill        radius variant on any emphasis level
   .btn.sm/.lg      h28/h38; same interaction physics
   .btn.loading     static activity mark + aria-busy; never infinite spinner
   .gbtn            30px visual; coarse pointer 44px; accessible name required

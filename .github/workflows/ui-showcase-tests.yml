@@ -1,0 +1,19 @@
+name: UI showcase policy tests
+on:
+  pull_request:
+    paths:
+      - .github/workflows/ui-showcase-reusable.yml
+      - .github/workflows/ui-showcase-tests.yml
+      - .github/scripts/tests/test-ui-showcase.cjs
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - run: node --test .github/scripts/tests/test-ui-showcase.cjs
