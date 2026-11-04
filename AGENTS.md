@@ -228,6 +228,7 @@ Regel: raakt je commit `.github/workflows/` → push met `git push origin-ssh <b
 Kom je dat pas achter bij een geweigerde push → zelfde branch opnieuw pushen naar
 `origin-ssh`, geen force-push nodig.
 
+<<<<<<< HEAD
 ## Design context overlays
 
 For design work, resolve optional context before inventing product-specific rules:
@@ -255,3 +256,7 @@ proof. Preserve concurrent work and existing locked catalog variants.
 ## Compound Engineering overlay
 
 `.compound-engineering/` (tracked `config.yaml`, gitignored `config.local.yaml`). Artifact root `.compound-engineering/artifacts/`. Portable skills `~/.agents/skills/ce-*`; native Cursor plugin is fallback only when this overlay is absent.
+||||||| parent of 7f64b75 (Configure Compound Engineering overlay so repo config beats the native Cursor plugin.)
+=======
+Compound Engineering overlay: `.compound-engineering/` (tracked `config.yaml`, gitignored `config.local.yaml`). Artifact root `.compound-engineering/artifacts/`. Portable skills `~/.agents/skills/ce-*`; native Cursor plugin is fallback only when this overlay is absent.
+>>>>>>> 7f64b75 (Configure Compound Engineering overlay so repo config beats the native Cursor plugin.)
