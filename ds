@@ -1554,7 +1554,7 @@ HOME_BODY = """<div class="topbar">
 <div class="cropmark tl" aria-hidden="true"></div><div class="cropmark tr" aria-hidden="true"></div>
 <div class="cropmark bl" aria-hidden="true"></div><div class="cropmark br" aria-hidden="true"></div>
 
-<div class="titelblok" aria-hidden="true">SCALE <b>1:1</b> · UNITS <b>PX</b><br>SHEET <b>01/01</b> · REV <b>D</b><br>design-system <b>v2</b> · {today}</div>
+<div class="titelblok" aria-hidden="true">SCALE <b>1:1</b> · UNITS <b>PX</b><br>SHEET <b>01/01</b> · REV <b>D</b><br>design-system <b>v2</b></div>
 
 <div class="hero" id="sec-hero">
   <div class="grid-bg"></div>
@@ -1690,7 +1690,7 @@ HOME_BODY = """<div class="topbar">
 <div class="footer">
   <div class="wrap">
     <div class="coord-row" aria-hidden="true"><span>0.00</span><span>· 0.26</span><span>· 0.41</span><span>· 0.58</span><span>· 0.72</span><span>1.00</span></div>
-    <span>gegenereerd door ds build op {today}</span>
+    <span>gegenereerd door ds build</span>
     <span>·</span>
     <span>design-system v2</span>
     <span>·</span>
@@ -1701,7 +1701,7 @@ HOME_BODY = """<div class="topbar">
 <div class="modeline">
   <span class="ml-dot"></span>
   <span>live</span>
-  <span class="ml-opt">ds build {today}</span>
+  <span class="ml-opt">ds build</span>
   <span class="ml-sec" id="mlSec">§ hero</span>
   <span class="ml-right">
     <span class="ml-opt" id="mlY">y 0000/0000</span>
@@ -2178,7 +2178,7 @@ CATALOG_BODY = """<div class="pagehead" data-reg="kop">
   }});
 }})();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op {today} · catalog.json is de bron · dit bestand niet bewerken</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build · catalog.json is de bron · dit bestand niet bewerken</div>
 """
 
 USENOW = """<div class="use-now" data-reg="gebruik">
@@ -2249,7 +2249,7 @@ GALLERY_BODY = """<div class="pagehead" data-reg="kop">
   q.addEventListener("input", apply); cat.addEventListener("change", apply);
 }})();
 </script>
-<div class="gen" data-reg="colofon">gegenereerd door ds build op {today}</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build</div>
 """
 
 GALLERY_GROUP = """<section class="gallery-group" data-cat="{reg}"><div class="caps" data-reg="{reg}" style="margin:22px 2px 10px">{cat}</div>
@@ -2371,7 +2371,7 @@ def build_catalog(c):
         title=m.get("title", c), name=c, desc=m.get("desc", ""),
         icon=ICONS.get(c, "i-file"), cat=m.get("cat", "?"),
         n=len(m["entries"]), nself=ns, next=nx, blad=blad,
-        usenow=usenow, docs=docs_html(m), cells="\n".join(cells), today=_today(),
+        usenow=usenow, docs=docs_html(m), cells="\n".join(cells),
     )
     page = (SHELL_HEAD.replace("{title}", m.get("title", c))
             .replace("{rel_root}", "../..")
@@ -2418,7 +2418,7 @@ def build_gallery():
     )
     if rest:
         catopts += '<option value="overig">Overig</option>'
-    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), catopts=catopts, today=_today())
+    body = GALLERY_BODY.format(nc=ncomp, nv=nvar, groups="\n".join(groups), catopts=catopts)
     page = (SHELL_HEAD.replace("{title}", "components")
             .replace("{rel_root}", "..")
             .replace("{nav}", nav_html(rel_root=".."))
@@ -2523,7 +2523,7 @@ def build_home():
     body = HOME_BODY.format(
         nc=nc, nv=nv, nskins=nskins, nself=nself_tot, next_ex=next_tot,
         nicons=nicons, worked_src=worked_src, worked_v=worked_v,
-        cats_html=cats_html, skins_html=skins_html, today=_today(),
+        cats_html=cats_html, skins_html=skins_html,
     )
     page = HOME_HEAD + body + HOME_FOOT
     page = page.replace("{rel_root}", ".")
@@ -2541,7 +2541,7 @@ DOCS_INDEX_BODY = """<div class="pagehead" data-reg="kop">
 </div>
 <div class="lede">Alle .md-documenten van het systeem, gerenderd en doorzoekbaar gemaakt uit de bron. De .md zelf blijft de waarheid; deze pagina's zijn een lees-laag.</div>
 {groups}
-<div class="gen" data-reg="colofon">gegenereerd door ds build op {today} · bron: de .md-bestanden in de repo-root</div>
+<div class="gen" data-reg="colofon">gegenereerd door ds build · bron: de .md-bestanden in de repo-root</div>
 """
 
 DOC_PAGE_BODY = """<div class="pagehead" data-reg="kop">
@@ -2554,7 +2554,7 @@ DOC_PAGE_BODY = """<div class="pagehead" data-reg="kop">
   <div class="meta"><a href="../docs/index.html" style="color:var(--accent-ink);text-decoration:none">← alle docs</a></div>
 </div>
 <div class="md">{content}</div>
-<div class="gen" data-reg="colofon">gegenereerd uit {src} op {today} · bewerk de .md, niet deze pagina</div>
+<div class="gen" data-reg="colofon">gegenereerd uit {src} · bewerk de .md, niet deze pagina</div>
 """
 
 def styleseg_html():
@@ -2584,7 +2584,7 @@ def build_docs():
             md = f.read()
         title = re.sub(r"\.md$", "", os.path.basename(src))
         content = md_to_html(md)
-        body = DOC_PAGE_BODY.format(title=title, cat=cat, src=src, content=content, today=_today())
+        body = DOC_PAGE_BODY.format(title=title, cat=cat, src=src, content=content)
         with open(os.path.join(ROOT, "docs", slug + ".html"), "w") as f:
             f.write(_shell(title, body, MD_CSS))
         cats.setdefault(cat, []).append((slug, title, desc))
@@ -2601,7 +2601,7 @@ def build_docs():
             for slug, title, desc in cats[cat])
         groups.append(f'<div class="caps" data-reg="{cat}" style="margin:22px 2px 10px">{cat}</div><div class="cards">{items}</div>')
     nd = sum(len(v) for v in cats.values())
-    body = DOCS_INDEX_BODY.format(nd=nd, groups="\n".join(groups), today=_today())
+    body = DOCS_INDEX_BODY.format(nd=nd, groups="\n".join(groups))
     with open(os.path.join(ROOT, "docs", "index.html"), "w") as f:
         f.write(_shell("docs", body, plate="idx"))
     print(f"  {_c('32','✓')} {bold('docs'):<14} {nd} documenten {dim('(gerenderd uit .md)')}")
@@ -2626,7 +2626,7 @@ def build_profiles_patterns():
              f'<div><div class="eyebrow">Context overlays</div><h1>Profiles</h1><div class="ph-sub">{len(profile_cards)} generieke designprofielen · base → profile → extension</div></div></div>'
              f'<div class="lede">Profielen zijn optionele ontwerp- en taste-delta\'s voor een type surface. Ze zijn geen productskin en geen runtime dependency.</div>'
              f'<div class="cards">{"".join(profile_cards)}</div>'
-             f'<div class="gen" data-reg="colofon">gegenereerd uit profiles/* op {_today()}</div>')
+             f'<div class="gen" data-reg="colofon">gegenereerd uit profiles/*</div>')
     Path(PROFILES).mkdir(exist_ok=True)
     Path(PROFILES, "index.html").write_text(_shell("profiles", pbody, plate="profiles"))
 
@@ -2651,7 +2651,7 @@ def build_profiles_patterns():
              f'<div><div class="eyebrow">Composition recipes</div><h1>Patterns</h1><div class="ph-sub">{len(pattern_cards)} compositiepatronen · alleen catalogusreferenties</div></div></div>'
              f'<div class="lede">Patterns combineren bestaande componenten. Ze kopiëren geen primitive code en veranderen de dependency-richting niet.</div>'
              f'<div class="cards">{"".join(pattern_cards)}</div>'
-             f'<div class="gen" data-reg="colofon">gegenereerd uit patterns/*/pattern.json op {_today()}</div>')
+             f'<div class="gen" data-reg="colofon">gegenereerd uit patterns/*/pattern.json</div>')
     Path(PATTERNS).mkdir(exist_ok=True)
     Path(PATTERNS, "index.html").write_text(_shell("patterns", qbody, plate="patterns"))
     print(f"  {_c('32','✓')} {bold('profiles'):<14} {len(profile_cards)} overlays")
@@ -2677,7 +2677,7 @@ def build_taste():
             + coupling
             + "<div class='md'><h2 data-reg='regels'>Regels (binding)</h2>" + rules
             + "<h2 data-reg='log'>Log (observaties)</h2>" + log + "</div>"
-            + f"<div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md op {_today()}</div>")
+            + f"<div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md</div>")
     with open(os.path.join(ROOT, "taste-site", "index.html"), "w") as f:
         f.write(_shell("taste", body, MD_CSS, plate="taste"))
     # /taste/ is bezet door de .md-map; serveer via taste-site en link daarheen
@@ -2765,7 +2765,7 @@ def build_brain():
             f'<div class="cat caps">brain · bron: brain/{htmlmod.escape(rel)}</div></div>'
             f'<div class="meta"><a href="../brain-site/index.html" style="color:var(--accent-ink);text-decoration:none">← brain</a></div></div>'
             f'<div class="md">{content}</div>'
-            f'<div class="gen">gegenereerd uit brain/{htmlmod.escape(rel)} op {_today()} · bewerk de .md, niet deze pagina</div>'
+            f'<div class="gen">gegenereerd uit brain/{htmlmod.escape(rel)} · bewerk de .md, niet deze pagina</div>'
         )
         with open(os.path.join(BRAIN_SITE, slug + ".html"), "w", encoding="utf-8") as f:
             f.write(_shell(title, page, MD_CSS, plate="brain"))
@@ -2797,7 +2797,7 @@ def build_brain():
         f'<div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. '
         f'Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div>'
         + "\n".join(sections)
-        + f'<div class="gen">gegenereerd door ds brain build op {_today()} · bron: brain/**/*.md</div>'
+        + f'<div class="gen">gegenereerd door ds brain build · bron: brain/**/*.md</div>'
     )
     with open(os.path.join(BRAIN_SITE, "index.html"), "w", encoding="utf-8") as f:
         f.write(_shell("brain", index_body, MD_CSS, plate="brain"))
@@ -3523,6 +3523,17 @@ def cmd_style_add(name, css_file, desc=None):
     save_styles(st)
     ok(f"skin '{name}' toegevoegd ({len(lines)} declaraties) — tokens.css + styles.json bijgewerkt")
 
+def _visual_antislop_reasons(text: str):
+    """Taste evidence for colored atmosphere; flat focus and neutral materials stay valid."""
+    slop_hues = r"#(?:8b5cf6|7c3aed|a855f7|c084fc|d946ef|22d3ee|06b6d4)"
+    checks = (
+        (rf"(?:linear|radial|conic)-gradient\([^;}}]{{0,900}}{slop_hues}", "purple/cyan ambient gradient"),
+        (r"(?:linear|radial|conic)-gradient\([^;}]{0,900}var\(--accent(?:-soft)?\)", "accent used as atmospheric gradient"),
+        (r"box-shadow\s*:[^;]{0,500}color-mix\([^)]*var\(--accent", "accent glow shadow"),
+    )
+    return [reason for pattern, reason in checks if re.search(pattern, text, re.IGNORECASE | re.DOTALL)]
+
+
 def cmd_check():
     """Valideer catalogus-structuur, sprite-referenties, em-dash in copy."""
     errors = []
@@ -3547,6 +3558,9 @@ def cmd_check():
             fname = os.path.join(COMP, c, entry_dir, e["id"] + ".html")
             if not os.path.exists(fname):
                 errors.append(f"{c}/{e['id']}: bestand niet gevonden ({fname})")
+            elif entry_dir == "self" and m.get("visualPolicy", {}).get("colorEffect") != "explicit":
+                # Taste is review evidence; catalog and accessibility remain the blocking gates.
+                warnings.extend(f"{c}/{e['id']}: {reason}" for reason in _visual_antislop_reasons(Path(fname).read_text()))
             src = e.get("source", "")
             if src and not src.startswith("http"):
                 warnings.append(f"{c}/{e['id']}: source '{src}' is geen URL")
