@@ -3596,13 +3596,26 @@ def cmd_check():
 
 
 def cmd_library(args):
+    import subprocess
+
     sub = args[0] if args else "stats"
     if sub == "build":
+        build_specimen_library()
+        return
+    if sub == "import":
+        rest = args[1:]
+        script_name = "import-kinetics-library.py" if rest[:1] == ["kinetics"] else "import-shadcn-library.py"
+        forwarded = [] if rest[:1] == ["kinetics"] else rest
+        script = os.path.join(ROOT, "scripts", script_name)
+        proc = subprocess.run([sys.executable, script, *forwarded], cwd=ROOT, check=False)
+        if proc.returncode:
+            err(f"library import failed ({proc.returncode})")
         build_specimen_library()
         return
     if not os.path.exists(LIBRARY_REGISTRY):
         err("library registry ontbreekt; draai ./ds library build")
     data = json.loads(Path(LIBRARY_REGISTRY).read_text(encoding="utf-8"))
+    rows = data.get("items", [])
     if sub == "stats":
         ok(f"library {data.get('count', 0):,} specimens")
         print(f"  generated: {data.get('generated_count', data.get('count', 0)):,}")
@@ -3615,13 +3628,55 @@ def cmd_library(args):
         if not src.exists():
             err("library/sources.json ontbreekt")
         payload = json.loads(src.read_text(encoding="utf-8"))
-        rows = payload.get("sources", [])
-        ok(f"sources {len(rows)}")
-        for row in rows:
-            count = row.get("reported_items", row.get("reported_registries", ""))
-            print(f"  {row.get('id', '?'):<24} {count!s:>6}  {row.get('kind', '')}")
+        actual = {}
+        for item in rows:
+            source = str(item.get("source", ""))
+            if source.startswith("shadcn:"):
+                sid = source.removeprefix("shadcn:")
+                actual[sid] = actual.get(sid, 0) + 1
+            elif source.startswith("reference:"):
+                sid = source.removeprefix("reference:")
+                actual[sid] = actual.get(sid, 0) + 1
+        source_rows = payload.get("sources", [])
+        ok(f"sources {len(source_rows)}")
+        for row in source_rows:
+            reported = row.get("reported_items", row.get("reported_registries", ""))
+            imported = actual.get(str(row.get("id", "")), 0)
+            print(f"  {row.get('id', '?'):<24} imported={imported:<5} reported={reported!s:<5} {row.get('kind', '')}")
         return
-    err("gebruik: ds library build|stats|sources")
+    if sub == "search":
+        if len(args) < 2:
+            err("gebruik: ds library search <query>")
+        needle = " ".join(args[1:]).lower()
+        found = []
+        for item in rows:
+            hay = " ".join(str(x) for x in [item.get("title", ""), item.get("description", ""), item.get("domain", ""), item.get("family", ""), item.get("style", ""), item.get("motion", ""), item.get("source", ""), *item.get("tags", [])]).lower()
+            if needle in hay:
+                found.append(item)
+        ok(f"{len(found):,} matches")
+        for item in found[:40]:
+            print(f"  {item.get('id','?'):<48} {item.get('domain',''):<12} {item.get('title','')}")
+        if len(found) > 40:
+            print(f"  ... {len(found)-40:,} meer")
+        return
+    if sub == "view":
+        if len(args) < 2:
+            err("gebruik: ds library view <id|@registry/item>")
+        needle = args[1]
+        item = next((row for row in rows if row.get("id") == needle or row.get("provenance", {}).get("argument") == needle), None)
+        if not item:
+            err(f"library item niet gevonden: {needle}")
+        provenance = item.get("provenance", {})
+        argument = provenance.get("argument")
+        if argument:
+            print(json.dumps({k: item.get(k) for k in ("id", "title", "domain", "family", "source", "license_status")}, indent=2, ensure_ascii=False), flush=True)
+            proc = subprocess.run(["npx", "-y", "shadcn@latest", "view", str(argument)], cwd=ROOT, check=False)
+            if proc.returncode:
+                err(f"shadcn view failed ({proc.returncode})")
+        else:
+            print(json.dumps(item, indent=2, ensure_ascii=False))
+        return
+    err("gebruik: ds library build|import [kinetics|--source ...]|stats|sources|search|view")
 
 
 def cmd_serve(port=8085):
