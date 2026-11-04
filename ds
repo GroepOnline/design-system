@@ -2677,7 +2677,7 @@ def build_taste():
             + coupling
             + "<div class='md'><h2 data-reg='regels'>Regels (binding)</h2>" + rules
             + "<h2 data-reg='log'>Log (observaties)</h2>" + log + "</div>"
-            + f"<div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md</div>")
+            + "<div class='gen' data-reg='colofon'>gegenereerd uit taste/*.md</div>")
     with open(os.path.join(ROOT, "taste-site", "index.html"), "w") as f:
         f.write(_shell("taste", body, MD_CSS, plate="taste"))
     # /taste/ is bezet door de .md-map; serveer via taste-site en link daarheen
@@ -2797,7 +2797,7 @@ def build_brain():
         f'<div class="sub">Second Brain voor dit design-system: research, decisions, concept-graph. '
         f'Product-waarheid blijft in DESIGN.md / taste / catalogus. Bron: <code>brain/</code> (Obsidian).</div>'
         + "\n".join(sections)
-        + f'<div class="gen">gegenereerd door ds brain build · bron: brain/**/*.md</div>'
+        + '<div class="gen">gegenereerd door ds brain build · bron: brain/**/*.md</div>'
     )
     with open(os.path.join(BRAIN_SITE, "index.html"), "w", encoding="utf-8") as f:
         f.write(_shell("brain", index_body, MD_CSS, plate="brain"))
