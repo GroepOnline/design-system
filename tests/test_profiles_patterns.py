@@ -53,9 +53,12 @@ class ProfilesPatternsTest(unittest.TestCase):
         total_components = len(catalogs)
         total_variants = sum(len(json.loads(p.read_text())["entries"]) for p in catalogs)
         html = (ROOT / "components/index.html").read_text()
-        self.assertIn(f"{total_components} components, {total_variants} variants", html)
-        self.assertIn('id="gallery-q"', html)
-        self.assertIn(f'data-search=', html)
+        self.assertIn(f"{total_components} componenten · {total_variants} varianten", html)
+        self.assertIn('id="componentFilter"', html)
+        self.assertIn('id="categoryFilter"', html)
+        self.assertEqual(html.count('<a class="card reveal"'), total_components)
+        for catalog in catalogs:
+            self.assertIn(f'href="./{catalog.parent.name}/index.html"', html)
         self.assertIn('./studio/index.html', html)
 
 if __name__ == "__main__":
