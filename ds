@@ -46,7 +46,7 @@ from pathlib import Path
 
 
 def _today() -> str:
-    """Local date for generated-page colophons."""
+    """UTC date for explicit catalog/brain source mutations."""
     return datetime.now(UTC).date().isoformat()
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -3162,7 +3162,7 @@ def collect_check_errors_only():
                 errors.append(f"{c}/{e['id']}: bestand niet gevonden ({fname})")
     return errors
 
-def brain_eval(*, enforce_freshness=False, write_refresh=False):
+def brain_eval(*, enforce_freshness=False, write_refresh=False, write_score=True):
     thr = load_thresholds_yaml()
     sig = load_signals_yaml()
     entries = sig.get("entries") or []
@@ -3232,10 +3232,11 @@ def brain_eval(*, enforce_freshness=False, write_refresh=False):
         "failures": failures,
         "warnings": warnings,
     }
-    os.makedirs(os.path.dirname(BRAIN_SCORECARD), exist_ok=True)
-    with open(BRAIN_SCORECARD, "w", encoding="utf-8") as f:
-        json.dump(card, f, indent=2, ensure_ascii=False)
-        f.write("\n")
+    if write_score:
+        os.makedirs(os.path.dirname(BRAIN_SCORECARD), exist_ok=True)
+        with open(BRAIN_SCORECARD, "w", encoding="utf-8") as f:
+            json.dump(card, f, indent=2, ensure_ascii=False)
+            f.write("\n")
 
     if write_refresh and card["pass"]:
         data = load_signals_yaml()
@@ -3362,7 +3363,7 @@ def cmd_brain(args):
             ok("scorecard geschreven (fail)")
     elif args[0] == "gate":
         enforce = "--enforce-freshness" in args
-        card = brain_eval(enforce_freshness=enforce, write_refresh=False)
+        card = brain_eval(enforce_freshness=enforce, write_refresh=False, write_score=False)
         print(json.dumps(card, indent=2, ensure_ascii=False))
         if not card["pass"]:
             for f in card["failures"]:
