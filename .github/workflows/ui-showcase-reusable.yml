@@ -42,8 +42,9 @@ jobs:
               const p = path.replace(/\\/g, '/').toLowerCase();
               if (/(^|\/)(test|tests|__tests__|fixtures|vendor|node_modules|dist|build|coverage|snapshots)(\/|$)/.test(p)) return false;
               if (/(^|\/)(screenshots?|visual-evidence|visual-showcase)(\/|$)/.test(p)) return false;
+              if (/\.svg$/.test(p)) return true;
               if (/^(docs?|\.github)\//.test(p)) return false;
-              if (/\.(css|scss|sass|less|html?|vue|svelte|astro|jsx|tsx|xib|storyboard|svg)$/.test(p)) return true;
+              if (/\.(css|scss|sass|less|html?|vue|svelte|astro|jsx|tsx|xib|storyboard)$/.test(p)) return true;
               if (/(^|\/)(ui|gui|frontend|client|web|pages|components|screens|views|widgets|themes|icons|logos|branding|images)(\/|$)/.test(p) && /\.(js|ts|svg|png|jpe?g|webp|avif|gif|swift|kt|dart|xml|qml)$/.test(p)) return true;
               if (/(^|\/)(public|assets|static)\/(.*\/)?[^/]+\.(svg|png|jpe?g|webp|avif|gif)$/.test(p)) return true;
               return false;
@@ -53,7 +54,8 @@ jobs:
               core.info('No user-visible UI files changed. No screenshot required.');
               return;
             }
-            const body = pr.body || '';
+            // HTML comments are not rendered, so a commented-out image or heading is not evidence.
+            const body = (pr.body || '').replace(/<!--[\s\S]*?(?:-->|$)/g, ' ');
             const heading = /^##\s+(?:UI|Visual) showcase\s*$/im.exec(body);
             if (!heading) {
               core.setFailed('UI changed, but the PR is missing a "## UI showcase" section with at least one embedded screenshot.');

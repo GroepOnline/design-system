@@ -5,6 +5,7 @@ Applies to every active GroepOnline/ChefGroep repository and every pull request 
 ## Author contract
 
 - Embed at least one actual screenshot in a section named ## UI showcase in the PR body, using Markdown image syntax or an HTML img element. A gallery HTML link, unrendered SVG, code path, checkbox or CI artifact alone is not a screenshot.
+- The section and its images must be visible when GitHub renders the body. Images or headings inside `<!-- -->` comments do not count.
 - Show before/after for changes to existing interfaces when useful, a final screenshot for new features and a rendered contact sheet for icon sets. Show light/dark and narrow/wide viewports when relevant.
 - Capture a real running app, device/simulator, or browser-rendered static preview. No fabricated or AI-generated mockups presented as runtime screenshots. State the route, viewport, command and commit/build used.
 - Embed a GitHub screenshot attachment or actual PNG/WebP file committed in the PR; redact secrets, personal and customer data. Avoid huge binaries.
@@ -14,6 +15,8 @@ Applies to every active GroepOnline/ChefGroep repository and every pull request 
 ## Enforceable check
 
 Use the read-only reusable workflow at GroepOnline/design-system/.github/workflows/ui-showcase-reusable.yml@main. Caller repos opt in via their own workflow; an organization-wide required-workflow ruleset can enforce it across all repos once verified. It inspects changed file paths and requires an embedded image in the correct section for UI changes, without checking out untrusted code. Non-UI changes pass.
+
+SVG changes count wherever the file sits outside test, fixture, generated and screenshot directories, including `docs/` and `.github/`, because a brand or icon asset is a visible surface. Generated docs HTML stays exempt: only its sources are gated.
 
 Reviewers verify screenshots truly represent the code and states being changed. A presence check cannot prove authenticity.
 
