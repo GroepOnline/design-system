@@ -1,0 +1,49 @@
+{
+  "component": "slider",
+  "title": "slider",
+  "desc": "native range input for bounded numeric choice",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "continuous labelled range"
+    },
+    {
+      "id": "stepped",
+      "file": "self/stepped.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "stepped range with live output"
+    },
+    {
+      "id": "disabled",
+      "file": "self/disabled.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "disabled range state"
+    }
+  ],
+  "docs": {
+    "use": [
+      "make state and available choices explicit",
+      "prefer native semantics and keyboard behavior"
+    ],
+    "avoid": [
+      "hiding required actions behind unexplained motion",
+      "coupling selection behavior to product state"
+    ],
+    "contract": [
+      "keyboard and accessible-name semantics are first-class",
+      "interaction meaning remains usable with reduced motion"
+    ]
+  },
+  "cat": "interaction"
+}

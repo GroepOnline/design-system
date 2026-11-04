@@ -241,3 +241,44 @@ export const AppShellRail = React.forwardRef(function AppShellRail({ as = "aside
 export const AppShellMain = React.forwardRef(function AppShellMain({ as = "main", className, children, ...props }, ref) {
   return LayoutPrimitive({ as, slot: "app-shell-main", className: cx("sg-app-shell__main", className), children, ...props }, ref);
 });
+
+export const Accordion = React.forwardRef(function Accordion({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "accordion", className: cx("sg-accordion", className), ...props }, children);
+});
+export const AccordionItem = React.forwardRef(function AccordionItem({ className, children, ...props }, ref) {
+  return React.createElement("details", { ref, "data-slot": "accordion-item", className: cx("sg-accordion-item", className), ...props }, children);
+});
+export const AccordionTrigger = React.forwardRef(function AccordionTrigger({ className, children, ...props }, ref) {
+  return React.createElement("summary", { ref, "data-slot": "accordion-trigger", className: cx("sg-accordion-trigger", className), ...props }, children);
+});
+export const AccordionPanel = React.forwardRef(function AccordionPanel({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "accordion-panel", className: cx("sg-accordion-panel", className), ...props }, children);
+});
+export const Disclosure = React.forwardRef(function Disclosure({ className, children, ...props }, ref) {
+  return React.createElement("details", { ref, "data-slot": "disclosure", className: cx("sg-disclosure", className), ...props }, children);
+});
+export const Combobox = React.forwardRef(function Combobox({ expanded = false, controls, className, ...props }, ref) {
+  return React.createElement("input", { ref, role: "combobox", "aria-autocomplete": props["aria-autocomplete"] || "list", "aria-expanded": expanded, "aria-controls": controls, "data-slot": "combobox", className: cx("sg-input", "sg-combobox-input", className), ...props });
+});
+export const Listbox = React.forwardRef(function Listbox({ label, className, children, ...props }, ref) {
+  return React.createElement("div", { ref, role: "listbox", "aria-label": label, "data-slot": "listbox", className: cx("sg-listbox", className), ...props }, children);
+});
+export const Option = React.forwardRef(function Option({ selected = false, className, children, ...props }, ref) {
+  return React.createElement("button", { ref, type: props.type || "button", role: "option", "aria-selected": selected, "data-slot": "option", className: cx("sg-option", className), ...props }, children);
+});
+export const CommandPalette = React.forwardRef(function CommandPalette({ label = "Command palette", className, children, ...props }, ref) {
+  return React.createElement("dialog", { ref, "aria-label": label, "data-slot": "command-palette", className: cx("sg-command-palette", className), ...props }, children);
+});
+export const ToggleGroup = React.forwardRef(function ToggleGroup({ label, className, children, ...props }, ref) {
+  return React.createElement("div", { ref, role: "group", "aria-label": label, "data-slot": "toggle-group", className: cx("sg-toggle-group", className), ...props }, children);
+});
+export const ToggleItem = React.forwardRef(function ToggleItem({ pressed = false, className, children, ...props }, ref) {
+  return React.createElement("button", { ref, type: props.type || "button", "aria-pressed": pressed, "data-slot": "toggle-item", className: cx("sg-toggle-item", className), ...props }, children);
+});
+export const Chip = React.forwardRef(function Chip({ selected, className, children, ...props }, ref) {
+  const pressed = selected === undefined ? undefined : Boolean(selected);
+  return React.createElement("button", { ref, type: props.type || "button", "aria-pressed": pressed, "data-slot": "chip", className: cx("sg-chip", className), ...props }, children);
+});
+export const Slider = React.forwardRef(function Slider({ className, ...props }, ref) {
+  return React.createElement("input", { ref, type: "range", "data-slot": "slider", className: cx("sg-slider", className), ...props });
+});

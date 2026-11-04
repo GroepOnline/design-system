@@ -1,0 +1,40 @@
+{
+  "component": "disclosure",
+  "title": "disclosure",
+  "desc": "small reveal control for secondary detail",
+  "entries": [
+    {
+      "id": "default",
+      "file": "self/default.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "native details disclosure"
+    },
+    {
+      "id": "inline",
+      "file": "self/inline.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "compact inline disclosure"
+    }
+  ],
+  "docs": {
+    "use": [
+      "make state and available choices explicit",
+      "prefer native semantics and keyboard behavior"
+    ],
+    "avoid": [
+      "hiding required actions behind unexplained motion",
+      "coupling selection behavior to product state"
+    ],
+    "contract": [
+      "keyboard and accessible-name semantics are first-class",
+      "interaction meaning remains usable with reduced motion"
+    ]
+  },
+  "cat": "interaction"
+}

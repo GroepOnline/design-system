@@ -1,0 +1,49 @@
+{
+  "component": "chip",
+  "title": "chip",
+  "desc": "compact filter or selection action",
+  "entries": [
+    {
+      "id": "filter",
+      "file": "self/filter.html",
+      "origin": "self",
+      "source": null,
+      "status": "active",
+      "added": "2026-09-11",
+      "note": "filter chips with pressed state"
+    },
+    {
+      "id": "selected",
+      "file": "self/selected.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "selected chip state"
+    },
+    {
+      "id": "removable",
+      "file": "self/removable.html",
+      "origin": "self",
+      "source": null,
+      "status": "locked",
+      "added": "2026-09-11",
+      "note": "single-action removable chip"
+    }
+  ],
+  "docs": {
+    "use": [
+      "make state and available choices explicit",
+      "prefer native semantics and keyboard behavior"
+    ],
+    "avoid": [
+      "hiding required actions behind unexplained motion",
+      "coupling selection behavior to product state"
+    ],
+    "contract": [
+      "keyboard and accessible-name semantics are first-class",
+      "interaction meaning remains usable with reduced motion"
+    ]
+  },
+  "cat": "interaction"
+}
