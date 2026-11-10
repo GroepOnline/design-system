@@ -62,6 +62,7 @@ Skins: `styles.json` (één `data-style`-attribuut wisselt de hele feel).
 ./ds brain new research <titel>            # scaffold research-note
 ./ds brain signal "tekst"                  # expliciete signal (geen auto-write)
 ./ds brain eval                            # scorecard → brain/eval/scorecard.json
+./ds brain eval --write-refresh-signal     # scorecard + score_refresh-signal (reset freshness-klok)
 ./ds brain gate                            # eval + hard fail bij drempels
 ./ds upstream list                         # gepinde externe UI-bronnen
 ./ds upstream show <id>                    # provenance + rendererbeleid + kandidaten
@@ -124,6 +125,13 @@ Signals (`brain/signals/signals.yaml`) alleen via `./ds brain signal`.
 Scorecard (`brain/eval/scorecard.json`) via `./ds brain eval`; CI hard-failt
 met `./ds brain gate`. Zie decision
 `brain/Decisions/2026-07-30 Brain signals eval dual gate.md`.
+
+De freshness-metric `days_since_score_refresh` telt alleen `score_refresh`-signals.
+Een gewone `./ds brain eval` schrijft die niet, dus de klok loopt alleen terug met
+`./ds brain eval --write-refresh-signal` na een echte brain-review, gevolgd door een
+commit van `brain/signals/signals.yaml`. CI doet bewust geen auto-commit
+(`contents: read`), dus de nightly gate kan een freshness-fail nooit zelf oplossen
+en de drempel in `brain/eval/thresholds.yaml` nooit zelf halen.
 
 Optioneel lokaal (Obsidian GUI moet open zijn, vault **brain**):
 `XDG_RUNTIME_DIR=/run/user/$UID obsidian vault=brain files|search|read …`.
