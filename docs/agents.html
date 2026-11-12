@@ -406,6 +406,7 @@
 ./ds brain new research &lt;titel&gt;            # scaffold research-note
 ./ds brain signal &quot;tekst&quot;                  # expliciete signal (geen auto-write)
 ./ds brain eval                            # scorecard → brain/eval/scorecard.json
+./ds brain eval --write-refresh-signal     # scorecard + score_refresh-signal (reset freshness-klok)
 ./ds brain gate                            # eval + hard fail bij drempels
 ./ds upstream list                         # gepinde externe UI-bronnen
 ./ds upstream show &lt;id&gt;                    # provenance + rendererbeleid + kandidaten
@@ -460,6 +461,12 @@
 <p>Scorecard (<code>brain/eval/scorecard.json</code>) via <code>./ds brain eval</code>; CI hard-failt</p>
 <p>met <code>./ds brain gate</code>. Zie decision</p>
 <p><code>brain/Decisions/2026-07-30 Brain signals eval dual gate.md</code>.</p>
+<p>De freshness-metric <code>days_since_score_refresh</code> telt alleen <code>score_refresh</code>-signals.</p>
+<p>Een gewone <code>./ds brain eval</code> schrijft die niet, dus de klok loopt alleen terug met</p>
+<p><code>./ds brain eval --write-refresh-signal</code> na een echte brain-review, gevolgd door een</p>
+<p>commit van <code>brain/signals/signals.yaml</code>. CI doet bewust geen auto-commit</p>
+<p>(<code>contents: read</code>), dus de nightly gate kan een freshness-fail nooit zelf oplossen</p>
+<p>en de drempel in <code>brain/eval/thresholds.yaml</code> nooit zelf halen.</p>
 <p>Optioneel lokaal (Obsidian GUI moet open zijn, vault <strong>brain</strong>):</p>
 <p><code>XDG_RUNTIME_DIR=/run/user/$UID obsidian vault=brain files|search|read …</code>.</p>
 <p>Zie <code>brain/README.md</code>.</p>
