@@ -46,3 +46,9 @@ The repository root `package.json` is upstream research material, not a Signaal 
 `@signaal/react` exposes generic composition primitives: `Stack`, `Cluster`, `Grid`, `Page`, `Section`, `SplitPane`, `AppShell`, `AppShellRail` and `AppShellMain`. They own layout behavior only. Navigation meaning, product state and business semantics remain in the consumer.
 
 The layout contract is responsive by default: fixed grids collapse at 620px, split panes become one column, and an `AppShell` with `collapse="top"` moves its rail above the main region.
+
+## Interaction primitives
+
+`@signaal/react` exposes semantic interaction building blocks for Accordion/Disclosure, Combobox/Listbox/Option, CommandPalette, ToggleGroup/ToggleItem, Chip and Slider. These APIs own semantic state surfaces and reusable geometry only. Filtering data, command execution, exclusivity rules, permissions and domain state stay in the consumer.
+
+The interaction layer is independent from motion. A component may opt into a motion primitive, but keyboard operation, accessible naming and programmatic state must remain complete when motion is removed or reduced. See `INTERACTIONS.md` for the full contracts and catalog discovery path.

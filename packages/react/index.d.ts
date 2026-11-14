@@ -63,3 +63,22 @@ export const Diff: React.ForwardRefExoticComponent<DiffProps & React.RefAttribut
 export const Timeline: React.ForwardRefExoticComponent<React.OlHTMLAttributes<HTMLOListElement> & React.RefAttributes<HTMLOListElement>>;
 export type DataGridProps = React.TableHTMLAttributes<HTMLTableElement> & { label?: string };
 export const DataGrid: React.ForwardRefExoticComponent<DataGridProps & React.RefAttributes<HTMLTableElement>>;
+
+export const Accordion: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+export const AccordionItem: React.ForwardRefExoticComponent<React.DetailsHTMLAttributes<HTMLDetailsElement> & React.RefAttributes<HTMLDetailsElement>>;
+export const AccordionTrigger: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>>;
+export const AccordionPanel: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+export const Disclosure: typeof AccordionItem;
+export const Combobox: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+export const ComboboxInput: React.ForwardRefExoticComponent<React.InputHTMLAttributes<HTMLInputElement> & React.RefAttributes<HTMLInputElement>>;
+export const Listbox: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
+export type OptionProps = React.ButtonHTMLAttributes<HTMLButtonElement> & { selected?: boolean };
+export const Option: React.ForwardRefExoticComponent<OptionProps & React.RefAttributes<HTMLButtonElement>>;
+export const CommandPalette: React.ForwardRefExoticComponent<React.DialogHTMLAttributes<HTMLDialogElement> & React.RefAttributes<HTMLDialogElement>>;
+export type ToggleGroupProps = React.HTMLAttributes<HTMLDivElement> & { label?: string };
+export const ToggleGroup: React.ForwardRefExoticComponent<ToggleGroupProps & React.RefAttributes<HTMLDivElement>>;
+export type ToggleItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> & { pressed?: boolean };
+export const ToggleItem: React.ForwardRefExoticComponent<ToggleItemProps & React.RefAttributes<HTMLButtonElement>>;
+export type ChipProps = React.ButtonHTMLAttributes<HTMLButtonElement> & { pressed?: boolean; as?: React.ElementType };
+export const Chip: React.ForwardRefExoticComponent<ChipProps & React.RefAttributes<HTMLElement>>;
+export const Slider: React.ForwardRefExoticComponent<React.InputHTMLAttributes<HTMLInputElement> & React.RefAttributes<HTMLInputElement>>;

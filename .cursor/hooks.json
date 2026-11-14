@@ -1,23 +1,5 @@
 {
   "version": 1,
-  "hooks": {
-    "preToolUse": [
-      {
-        "command": ".agents/hooks/signaal-context.sh",
-        "matcher": "Write",
-        "timeout": 5
-      },
-      {
-        "command": ".agents/hooks/guard-generated.sh",
-        "matcher": "Write",
-        "timeout": 10
-      }
-    ],
-    "afterFileEdit": [
-      {
-        "command": ".agents/hooks/brain-build.sh",
-        "timeout": 30
-      }
-    ]
-  }
+  "autopilot_disabled_note": "Autopilot keep-busy is OFF. The portable ~/.agents/skills/chef-autopilot skill is default OFF; do not add hooks unless explicitly enabled.",
+  "hooks": {}
 }

@@ -1,13 +1,40 @@
 {
   "schema": 1,
   "counts": {
-    "components": 50,
-    "variants": 139,
+    "components": 57,
+    "variants": 155,
     "profiles": 4,
     "patterns": 8,
     "extensions": 2
   },
   "components": [
+    {
+      "id": "accordion",
+      "title": "accordion",
+      "description": "expandable groups with native disclosure semantics",
+      "category": "interaction",
+      "manifest": "components/accordion/catalog.json",
+      "catalog": "components/accordion/index.html",
+      "active": [
+        "single"
+      ],
+      "variants": [
+        {
+          "id": "single",
+          "file": "self/single.html",
+          "status": "active",
+          "origin": "self",
+          "note": "single item"
+        },
+        {
+          "id": "multiple",
+          "file": "self/multiple.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "multiple independent items"
+        }
+      ]
+    },
     {
       "id": "alert",
       "title": "alert",
@@ -462,6 +489,40 @@
       ]
     },
     {
+      "id": "chip",
+      "title": "chip",
+      "description": "compact filter, selection or removable value control",
+      "category": "interaction",
+      "manifest": "components/chip/catalog.json",
+      "catalog": "components/chip/index.html",
+      "active": [
+        "filter"
+      ],
+      "variants": [
+        {
+          "id": "filter",
+          "file": "self/filter.html",
+          "status": "active",
+          "origin": "self",
+          "note": "pressed filter chip"
+        },
+        {
+          "id": "removable",
+          "file": "self/removable.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "removable value chip"
+        },
+        {
+          "id": "status",
+          "file": "self/status.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "non-interactive status chip"
+        }
+      ]
+    },
+    {
       "id": "cluster",
       "title": "cluster",
       "description": "wrapping inline group for actions, tags and controls",
@@ -512,6 +573,67 @@
           "status": "locked",
           "origin": "self",
           "note": "inline code tokens"
+        }
+      ]
+    },
+    {
+      "id": "combobox",
+      "title": "combobox",
+      "description": "search and select from a filtered option set",
+      "category": "interaction",
+      "manifest": "components/combobox/catalog.json",
+      "catalog": "components/combobox/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "searchable listbox"
+        },
+        {
+          "id": "grouped",
+          "file": "self/grouped.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "grouped searchable options"
+        },
+        {
+          "id": "empty",
+          "file": "self/empty.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "empty result state"
+        }
+      ]
+    },
+    {
+      "id": "command-palette",
+      "title": "command palette",
+      "description": "keyboard-first command discovery and execution surface",
+      "category": "interaction",
+      "manifest": "components/command-palette/catalog.json",
+      "catalog": "components/command-palette/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "searchable command dialog"
+        },
+        {
+          "id": "grouped",
+          "file": "self/grouped.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "grouped command sections"
         }
       ]
     },
@@ -629,6 +751,33 @@
           "status": "locked",
           "origin": "self",
           "note": "before / after columns"
+        }
+      ]
+    },
+    {
+      "id": "disclosure",
+      "title": "disclosure",
+      "description": "one compact reveal control for secondary content",
+      "category": "interaction",
+      "manifest": "components/disclosure/catalog.json",
+      "catalog": "components/disclosure/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "plain disclosure"
+        },
+        {
+          "id": "actions",
+          "file": "self/actions.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "disclosure with secondary actions"
         }
       ]
     },
@@ -1315,6 +1464,33 @@
       ]
     },
     {
+      "id": "slider",
+      "title": "slider",
+      "description": "native continuous or stepped value selection",
+      "category": "interaction",
+      "manifest": "components/slider/catalog.json",
+      "catalog": "components/slider/index.html",
+      "active": [
+        "default"
+      ],
+      "variants": [
+        {
+          "id": "default",
+          "file": "self/default.html",
+          "status": "active",
+          "origin": "self",
+          "note": "continuous range"
+        },
+        {
+          "id": "steps",
+          "file": "self/steps.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "stepped range with value output"
+        }
+      ]
+    },
+    {
       "id": "split-pane",
       "title": "split pane",
       "description": "two-region composition that collapses intentionally",
@@ -1617,6 +1793,33 @@
           "status": "locked",
           "origin": "self",
           "note": "toast with undo action"
+        }
+      ]
+    },
+    {
+      "id": "toggle-group",
+      "title": "toggle group",
+      "description": "choose one or more compact modes with pressed-state semantics",
+      "category": "interaction",
+      "manifest": "components/toggle-group/catalog.json",
+      "catalog": "components/toggle-group/index.html",
+      "active": [
+        "single"
+      ],
+      "variants": [
+        {
+          "id": "single",
+          "file": "self/single.html",
+          "status": "active",
+          "origin": "self",
+          "note": "single selection"
+        },
+        {
+          "id": "multiple",
+          "file": "self/multiple.html",
+          "status": "locked",
+          "origin": "self",
+          "note": "multiple selection"
         }
       ]
     },

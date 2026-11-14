@@ -1,64 +1,153 @@
-# Tool-local Command Code state. The generated taste.md is tracked explicitly.
-.commandcode/settings.json
-.commandcode/taste/*/
-.commandcode/design/
+# Parent is the ChefFactory git repo (control-center docs + catalog SSOT).
+# Sibling product checkouts and local scratch stay untracked.
 
-# Debug-dump screenshots (fout/)
-/fout/
+# Nested product / UDO checkouts (never vendor into ChefFactory).
+# Tracked subtrees are apps/chefapp/ and control/ — do not ignore those prefixes.
+chefgroep-os/
+chefbar/
+chefbar-worktrees/
+chefos-vault/
+chefgroep-vault/
+chefgroep-infra/
+chefgroep-skills/
+kater-dev-tools/
+herdr-ops/
+Utrecht-kater/
+worktrees/
 
-# IDE/tool configs die niet bij dit repo horen
-.mcp.json
-.prettierignore
-bun.lock
-customEditor/
-eslint.config.mjs
-package.json
-postcss.config.js
-
-# Node/Playwright tooling (niet dit repo zijn dependencies)
-node_modules/
-.scratchshots/
-.codex/
-
-# ChefGroep standard ignores (OS / Xcode / local env / CE)
-.compound-engineering/*.local.yaml
-
-# OS / editors
+# Local-only / scratch
+.auto/
+.codebase-index/
+Netwerk/
+archive/
+!schemas/archive/
+!schemas/archive/**
+MCP - beheer/
+linear_target_only_reconstruction_2026-08-01/
+linear_target_only_reconstruction_2026-08-01.zip
+linear_target_only_reconstruction_2026-08-01s.zip
+.pytest_cache/
+*.coverage
+coverage.xml
 .DS_Store
-.AppleDouble
-.LSOverride
-._*
-Thumbs.db
-Desktop.ini
-.idea/
 *.swp
-*.swo
 *~
-
-# Xcode / iOS
-DerivedData/
-xcuserdata/
-*.xcuserstate
-*.xccheckout
-*.xcscmblueprint
-*.xcodeproj/
-*.xcworkspace/
-*.ipa
-*.dSYM
-*.dSYM.zip
-Pods/
-
-# Local env
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+**/*credentials*
+**/*secret*
+# Names-only operator checklist (no values) — exception to **/*secret*
+!docs/runbooks/company-control-deploy-secrets.md
+!docs/runbooks/ephemeral-pr-runners-operator-secret.md
+!deploy/ephemeral-pr-runners/scripts/apply-scale-set-when-secret.sh
+!tests/test_apply_scale_set_when_secret.sh
 
-# Python interpreter caches (parallel verification lanes)
-__pycache__/
-*.py[cod]
+# Local-only ~/.agents mirror — repo-canonical portable skill bodies are negated below
+.agents/*
+!.agents/skills/
+.agents/skills/*
+# Intentionally tracked long-term (GitHub SSOT → operator rsync); add siblings here only
+!.agents/skills/desktop-commander-fleet/
+!.agents/skills/desktop-commander-fleet/**
 
-# Runtime distribution packages are tracked; only the legacy root package.json stays ignored.
-!packages/**/package.json
+# Fail-closed: re-ignore sensitive payloads under tracked skill subtree (negation
+# above overrides global .env / PEM / secrets / secret-name ignores).
+.agents/skills/desktop-commander-fleet/**/.env
+.agents/skills/desktop-commander-fleet/**/.env.*
+.agents/skills/desktop-commander-fleet/**/*.pem
+.agents/skills/desktop-commander-fleet/**/*.key
+.agents/skills/desktop-commander-fleet/**/secrets/
+.agents/skills/desktop-commander-fleet/**/secrets/**
+.agents/skills/desktop-commander-fleet/**/*secret*
+.agents/skills/desktop-commander-fleet/**/*token*
+.agents/skills/desktop-commander-fleet/**/*credential*
+.agents/skills/desktop-commander-fleet/**/*credentials*
+.agents/skills/desktop-commander-fleet/**/device.json
+.agents/skills/desktop-commander-fleet/**/runtime.env
+.agents/skills/desktop-commander-fleet/**/*session*.json
+.agents/skills/desktop-commander-fleet/**/*session*.yaml
+.agents/skills/desktop-commander-fleet/**/*session*.yml
+.agents/skills/desktop-commander-fleet/**/*credentials*.json
+.agents/skills/desktop-commander-fleet/**/*credentials*.yaml
+.agents/skills/desktop-commander-fleet/**/*credentials*.yml
 
-# Local release bundles are reproducible CI artifacts, not source.
-/dist/
+# Compound Engineering checkout-local settings (tracked: config.yaml + example)
+.compound-engineering/*.local.yaml
+# Compound Engineering runtime cache (npm cache for OpenAPI Spectral, etc.)
+.compound-engineering/runtime/
+
+# IDE / agent noise (project .cursor may contain local mcp; keep pointers only if committed carefully)
+.cursor/mcp.json
+**/node_modules/
+**/__pycache__/
+*.pyc
+.venv/
+
+# Parked handoff — never stage
+GROEPONLINE_HANDOFF_HERDR.md
+.cursor/hooks/state/
+
+# Local-only satellite symlinks into ~/.agents/skills or sibling checkouts (machine-specific, not portable)
+.cursor/skills/agent-browser
+.cursor/skills/ast-grep-find
+.cursor/skills/autonomous-ci-loop
+.cursor/skills/autonomous-pr-ship
+.cursor/skills/browser-act
+.cursor/skills/browser-act-skill-forge
+.cursor/skills/chef-company-loops
+.cursor/skills/chefgroep-browser
+.cursor/skills/chefgroep-kater
+.cursor/skills/chefgroep-linear
+.cursor/skills/chefgroep-mail
+.cursor/skills/chefgroep-org-inventory
+.cursor/skills/chefgroep-share
+.cursor/skills/chefgroep-signaal-ui
+.cursor/skills/chefgroep-skills-governance
+.cursor/skills/chefgroep-upcloud
+.cursor/skills/chefgroep-vault
+.cursor/skills/chef-observability
+.cursor/skills/chef-skill-forge
+.cursor/skills/cli-search-tools
+.cursor/skills/company-infra-graph
+.cursor/skills/computer-use
+.cursor/skills/context7-docs
+.cursor/skills/designmd-linear-raycast
+.cursor/skills/find-bugs
+.cursor/skills/firecrawl
+.cursor/skills/firecrawl-interact
+.cursor/skills/fish-shell-setup
+.cursor/skills/fleet-langgraph-map
+.cursor/skills/graph-swarm-mining
+.cursor/skills/groeponline-org-migratie
+.cursor/skills/herdr-plugin-panes
+.cursor/skills/herdr-thermos-audit
+.cursor/skills/infra-graph-mapping
+.cursor/skills/joep-brain
+.cursor/skills/joep-chains
+.cursor/skills/joep-fleet-constraints
+.cursor/skills/joep-mode
+.cursor/skills/joep-workflow-templates
+.cursor/skills/linear-meta
+.cursor/skills/linux-audio-pipewire
+.cursor/skills/linux-desktop-tooling
+.cursor/skills/monid
+.cursor/skills/no-ai-slop
+.cursor/skills/opentui
+.cursor/skills/opentui-herdr
+.cursor/skills/pathfinder
+.cursor/skills/playwright-automation-fill-in-form
+.cursor/skills/playwright-best-practices
+.cursor/skills/playwright-cli
+.cursor/skills/playwright-explore-website
+.cursor/skills/playwright-generate-test
+.cursor/skills/post-pr-eval-reinforce
+.cursor/skills/review-means-fix
+.cursor/skills/skill-ticket-lifecycle
+.cursor/skills/ubuntu-gnome-wayland
+.cursor/skills/utrecht-cloudflare-ops
+.cursor/skills/verify-chefgroep-vault
+.blackboxcli/

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
-# CodeRabbit for design-system — Signaal tokens/copy authority.
+# CodeRabbit for ChefFactory — GroepOnline company-control SSOT.
+# Version this file; do not rely on dashboard-only settings.
 
 language: en-US
 
@@ -11,19 +12,47 @@ reviews:
   review_status: false
   collapse_walkthrough: true
   path_filters:
-    - "!**/node_modules/**"
+    - "!inventory/.dsh/**"
+    - "!deploy/dsh-home/**"
     - "!**/*.lock"
   auto_review:
     enabled: true
     drafts: false
   path_instructions:
-    - path: "**/*.{css,md}"
+    - path: "catalog/**"
       instructions: >-
-        DESIGN.md wins. Flag token drift, second design systems, and banned
-        metaphors. Do not invent hex/px outside tokens.
-  instructions: |
-    This is the OpenCodex Signaal design-system. Focus on contract breaks, not
-    naming nits. Surfaces bind here; do not mix Huly Vault dialect into this tree.
+        Observability catalog is a versioned contract. Flag non-additive
+        event changes, missing schema counterparts, and VERSIONING.md drift.
+    - path: "schemas/**"
+      instructions: >-
+        JSON schemas must stay aligned with catalog/observability-event-catalog.yaml.
+        Flag breaking required-field changes without a version bump.
+    - path: "contracts/**"
+      instructions: >-
+        Publish/sync contracts govern the chefgroep-vault mirror PR. On catalog
+        changes, flag missing CHANGELOG.md or catalog/VERSIONING.md companions and
+        drift from contracts/publish-sync-observability.md.
+    - path: "inventory/**"
+      instructions: >-
+        Live fleet inventory. Flag UDO/company-control mixing, laptop daemon
+        additions, and secrets or DSNs. Prefer fingerprints over plaintext.
+    - path: ".github/**"
+      instructions: >-
+        Security boundary. Flag new secrets, permission escalation, mutable
+        third-party action refs, and merge-gate weakening.
+    - path: "scripts/ci-local.sh"
+      instructions: >-
+        ci-local.sh is the laptop merge-gate. Flag changes that skip unittest
+        discovery or schema validators.
+    - path: "scripts/**"
+      instructions: >-
+        Flag deploy or helper scripts that skip validators or print secrets.
+    - path: "**"
+      instructions: >-
+        ChefFactory is company-control SSOT (docs, inventory, observability catalog),
+        not a product runtime. Focus on secrets in git, UDO vs company-control mixing,
+        catalog/schema contract breaks, and CI merge-gate drift.
+        Do not block on naming, formatting, or docs tone. Keep comments actionable.
 
 chat:
   auto_reply: false

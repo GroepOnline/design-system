@@ -106,6 +106,7 @@ CATS = [
     ("feedback", "Feedback"),
     ("data", "Data display"),
     ("layout", "Layout"),
+    ("interaction", "Interaction"),
 ]
 ICONS = {
     "approval": "i-alert", "artifact": "i-panel", "badge": "i-tag",
@@ -121,6 +122,8 @@ ICONS = {
     "code": "i-file-code", "diff": "i-git-branch", "timeline": "i-clock", "data-grid": "i-list",
     "stack": "i-list", "cluster": "i-blocks", "grid": "i-blocks", "page": "i-file", "section": "i-panel",
     "split-pane": "i-panel", "app-shell": "i-panel",
+    "accordion": "i-chevrons-updown", "disclosure": "i-chevron", "combobox": "i-search",
+    "command-palette": "i-terminal", "toggle-group": "i-sliders", "chip": "i-tag", "slider": "i-sliders",
 }
 SYS_LINKS = [
     ("/components/studio/", "i-sparkle", "studio", "visueel"),
@@ -143,6 +146,7 @@ DOCS = [
     ("hoe-wat.md", "hoe-wat", "overzicht", "de grote gids: vier tools, starten, als agent, als mens, fouten, FAQ"),
     ("motion-spec.md", "motion-spec", "taal", "bewegingsfysica (gelockt)"),
     ("RUNTIME-LIBRARY.md", "runtime-library", "systeem", "runtime packages, promotiepad en productgrenzen"),
+    ("INTERACTIONS.md", "interactions", "systeem", "semantische interaction primitives en hun contracts"),
     ("surfaces/session.md", "surface-session", "surface", "sessie-surface brief"),
     ("surfaces/composer.md", "surface-composer", "surface", "composer-surface brief"),
     ("surfaces/palette.md", "surface-palette", "surface", "command-palette brief"),
@@ -2559,9 +2563,11 @@ DOC_PAGE_BODY = """<div class="pagehead" data-reg="kop">
 
 def styleseg_html():
     st = load_styles()
-    return "".join(
-        f'<button{" class=\"on\"" if i == 0 else ""} data-s="{x["id"]}">{x["label"]}</button>'
-        for i, x in enumerate(st))
+    parts = []
+    for i, x in enumerate(st):
+        active = ' class="on"' if i == 0 else ''
+        parts.append(f'<button{active} data-s="{x["id"]}">{x["label"]}</button>')
+    return "".join(parts)
 
 def _shell(title, body, mdcss="", rel_root="..", plate="doc"):
     return (SHELL_HEAD.replace("{title}", title)
@@ -2589,7 +2595,7 @@ def build_docs():
             f.write(_shell(title, body, MD_CSS))
         cats.setdefault(cat, []).append((slug, title, desc))
     groups = []
-    for cat in ["overzicht", "taal", "proces", "voor ai", "surface"]:
+    for cat in ["overzicht", "taal", "proces", "voor ai", "systeem", "surface"]:
         if cat not in cats:
             continue
         items = "".join(

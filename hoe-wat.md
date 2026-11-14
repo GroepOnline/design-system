@@ -16,7 +16,7 @@ feel zonder afhankelijk te worden van een runtime-package.
 De kern in een paar zinnen:
 
 - Warm off-white ondergrond (`rgb(247,246,245)`), een enkel blauw accent (`--accent`)
-- shadcn/ui-componenten als basis, Lucide-iconen (29 symbols)
+- shadcn/ui-componenten als basis, Lucide-iconen via de gedeelde SVG-sprite
 - Geen spinners, activiteit toont als live timers + tool-ripples
 - Nederlandse copy op gebruikersvlakken
 - Light- en dark-mode (Basalt) zijn first-class

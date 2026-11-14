@@ -1,35 +1,1131 @@
 name: validate
-on: [push, pull_request]
+
+# Always run on PR + push to main. Path filters must not make required checks disappear.
+# Job names schema-catalog-compat + merge-gate must not be renamed.
+# Ruleset required check is merge-gate only (20628592).
+# Lanes live in this workflow (not duplicate chefapp-rust.yml / control-python.yml).
+# Path lanes use job-level if: unselected jobs skip and do not occupy a runner.
+# CI-first load shedding: cancel superseded PR heads and main pushes; PR →
+# pr-isolated, main → heavy. The ref, not run_id, groups successive main
+# revisions so a merge burst cannot queue obsolete full validations.
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
 
 concurrency:
-  group: validate-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+
+env:
+  PYTHON_VERSION: "3.12.14"
+  NODE_VERSION: "20"
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
+  pr_trust_gate:
+    name: pr-trust-gate
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 2
+    outputs:
+      trusted: ${{ steps.eval.outputs.trusted }}
+    steps:
+      - name: Evaluate same-repository PR (GitHub context only)
+        id: eval
+        env:
+          # Env indirection, not interpolation: the trust gate is the one job that
+          # must never take PR-controlled text as shell source, even though GitHub
+          # restricts repository slugs to [A-Za-z0-9._-].
+          EVENT_NAME: ${{ github.event_name }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          event="$EVENT_NAME"
+          head="$HEAD_REPO"
+          base="$BASE_REPO"
+          if [[ "$event" != "pull_request" ]]; then
+            echo "trusted=true" >> "$GITHUB_OUTPUT"
+            echo "non-PR event ($event): same-repository gate not applicable"
+            exit 0
+          fi
+          if [[ -z "$head" || -z "$base" ]]; then
+            echo "trusted=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::missing head/base repository identity (fail closed)"
+            exit 0
+          fi
+          if [[ "$head" == "$base" ]]; then
+            echo "trusted=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "trusted=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::cross-repo head $head != base $base"
+          fi
+
+  affected:
+    name: affected-paths
+    needs: [pr_trust_gate]
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 5
+    outputs:
+      full_suite: ${{ steps.plan.outputs.full_suite }}
+      fail_open: ${{ steps.plan.outputs.fail_open }}
+      reason: ${{ steps.plan.outputs.reason }}
+      root_contracts: ${{ steps.plan.outputs.root_contracts }}
+      control: ${{ steps.plan.outputs.control }}
+      chefapp: ${{ steps.plan.outputs.chefapp }}
+      vault: ${{ steps.plan.outputs.vault }}
+      infra: ${{ steps.plan.outputs.infra }}
+      docs_graphs_indexes: ${{ steps.plan.outputs.docs_graphs_indexes }}
+      control_present: ${{ steps.plan.outputs.control_present }}
+      chefapp_present: ${{ steps.plan.outputs.chefapp_present }}
+      vault_present: ${{ steps.plan.outputs.vault_present }}
+      infra_present: ${{ steps.plan.outputs.infra_present }}
+      control_removed: ${{ steps.plan.outputs.control_removed }}
+      chefapp_removed: ${{ steps.plan.outputs.chefapp_removed }}
+      vault_removed: ${{ steps.plan.outputs.vault_removed }}
+      infra_removed: ${{ steps.plan.outputs.infra_removed }}
+    steps:
+      - name: Block untrusted PR before checkout
+        id: guard
+        run: |
+          # Symmetry with the catalog guard and the five lane gates: check the job
+          # result too, so an empty `trusted` output can never read as "blocked,
+          # exit 0 success" if this job ever gains an always()/!cancelled() override.
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate result is '${{ needs.pr_trust_gate.result }}' (need success); planner fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::cross-repo PR blocked before checkout (GRO-1209)"
+            exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+      # actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.guard.outputs.run == 'true'
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      # actions/setup-python@v7.0.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.guard.outputs.run == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      # actions/cache/restore@v6.1.0 — PR restore-only
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.guard.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-planner
+
+      # Per-job venv under RUNNER_TEMP, same reasoning as scripts/ci-local.sh:
+      # the persistent pr-isolated host must not have concurrent jobs pip-install
+      # into one shared setup-python site-packages. PATH is exported so the
+      # following steps' python3 is this venv.
+      - name: Install planner deps
+        if: steps.guard.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          venv="${RUNNER_TEMP:-/tmp}/cf-ci-venv-planner"
+          rm -rf "$venv"
+          python3 -m venv "$venv"
+          "$venv/bin/python" -m pip install -q -r requirements-dev.txt
+          echo "$venv/bin" >> "$GITHUB_PATH"
+      - name: Plan affected paths (fail-open to full_suite)
+        id: plan
+        run: |
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "full_suite=false" >> "$GITHUB_OUTPUT"
+            echo "fail_open=false" >> "$GITHUB_OUTPUT"
+            echo "reason=cross-repo-blocked-before-checkout" >> "$GITHUB_OUTPUT"
+            echo "root_contracts=false" >> "$GITHUB_OUTPUT"
+            echo "control=false" >> "$GITHUB_OUTPUT"
+            echo "chefapp=false" >> "$GITHUB_OUTPUT"
+            echo "vault=false" >> "$GITHUB_OUTPUT"
+            echo "infra=false" >> "$GITHUB_OUTPUT"
+            echo "docs_graphs_indexes=false" >> "$GITHUB_OUTPUT"
+            echo "control_present=false" >> "$GITHUB_OUTPUT"
+            echo "chefapp_present=false" >> "$GITHUB_OUTPUT"
+            echo "vault_present=false" >> "$GITHUB_OUTPUT"
+            echo "infra_present=false" >> "$GITHUB_OUTPUT"
+            echo "control_removed=false" >> "$GITHUB_OUTPUT"
+            echo "chefapp_removed=false" >> "$GITHUB_OUTPUT"
+            echo "vault_removed=false" >> "$GITHUB_OUTPUT"
+            echo "infra_removed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python3 scripts/plan_affected_paths.py \
+            --base "${{ github.event.pull_request.base.sha || github.event.before }}" \
+            --head "${{ github.event.pull_request.head.sha || github.sha }}" \
+            --github-output
+      # actions/cache/save@v6.1.0 — trusted main/heavy save-only
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.guard.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-planner
+
+  cold_checkout:
+    name: cold-checkout
+    # The trust decision is a prerequisite for the first checkout in this job.
+    # The checked-out tree is always the immutable PR head/main/tag SHA, never a
+    # GitHub pull_request merge ref.
+    needs: [pr_trust_gate]
+    if: >-
+      needs.pr_trust_gate.result == 'success' &&
+      needs.pr_trust_gate.outputs.trusted == 'true'
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 30
+    env:
+      TARGET_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      TARGET_REF: ${{ github.event.pull_request.head.sha || github.ref }}
+      REQUIRE_MAIN_ANCESTOR: ${{ startsWith(github.ref, 'refs/tags/v') && 'true' || 'false' }}
+    steps:
+      # actions/checkout@v7.0.1 — exact immutable target; no merge-ref fallback.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          # Keep the trusted checkout's remote-tracking origin/main and release
+          # tag refs available while still checking out the exact event SHA.
+          fetch-depth: 0
+          persist-credentials: false
+      # actions/setup-python@v7.0.0 — provides a self-contained CPython with a
+      # working ensurepip so scripts/ci-local.sh can build its venv. The
+      # persistent self-hosted runner's system python3 lacks python3-venv. Use
+      # pythonLocation explicitly: some runner images leave an older python3
+      # earlier on PATH even after setup-python succeeds.
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Exact-SHA disposable checkout verification
+        env:
+          EVIDENCE_PATH: ${{ runner.temp }}/cf-cold-checkout-evidence.json
+        run: |
+          set -euo pipefail
+          if [[ ! "$TARGET_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::TARGET_SHA is not an exact lowercase 40-character SHA"
+            exit 1
+          fi
+          actual_python_version=$("$pythonLocation/bin/python" -c 'import platform; print(platform.python_version())')
+          if [[ "$actual_python_version" != "$PYTHON_VERSION" ]]; then
+            echo "::error::setup-python cache mismatch: expected $PYTHON_VERSION, got $actual_python_version"
+            exit 1
+          fi
+          ancestry_args=()
+          if [[ "$REQUIRE_MAIN_ANCESTOR" == "true" ]]; then
+            ancestry_args+=(--require-main-ancestor)
+          fi
+          "$pythonLocation/bin/python" scripts/cold_checkout.py \
+            --repository "$GITHUB_WORKSPACE" \
+            --repository-id "$GITHUB_REPOSITORY" \
+            --sha "$TARGET_SHA" \
+            --ref "$TARGET_REF" \
+            --evidence-path "$EVIDENCE_PATH" \
+            "${ancestry_args[@]}" \
+            --command "$pythonLocation/bin/python" -m unittest tests.test_cold_checkout -q
+      - name: Upload cold-checkout evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: cold-checkout-verification-evidence
+          path: ${{ runner.temp }}/cf-cold-checkout-evidence.json
+          if-no-files-found: error
+
+  catalog:
+    name: schema-catalog-compat
+    # PR → pr-isolated (no docker/secrets). Push to main → trusted-heavy.
+    # Trust model: docs/runbooks/ci-runner-trust-boundaries.md (GRO-1221).
+    # Always runs (required check name). Do not path-skip this job.
+    # !cancelled() keeps the required check from turning into a green "skipped"
+    # when pr-trust-gate errors out; it fails closed (red) in the guard instead.
+    needs: [pr_trust_gate]
+    if: ${{ !cancelled() }}
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with: { python-version: "3.12" }
-      - uses: actions/setup-node@v7
-        with: { node-version: "20" }
-      - run: python -m pip install ruff
-        name: "Installeer Ruff voor Python"
-      - run: npm install --global markdownlint-cli
-        name: "Installeer markdownlint voor Markdown"
-      - run: ./scripts/lint.sh
-        name: "Lint per bestandstype"
-      - run: python3 ds build --check
-        name: "ds build --check (failt als gegenereerde output drift vertoont)"
-      - run: python3 ds check
-        name: "ds check (catalogus, sprites, em-dash, brain wikilinks)"
-      - run: python3 scripts/a11y-audit.py && python3 scripts/validate-quality-contract.py
-        name: "accessibility + quality contract"
-      - run: python3 scripts/verify-runtime-packages.py
-        name: "runtime package contract + npm pack dry-run"
-      - run: python3 scripts/build-release-bundle.py && python3 scripts/smoke-runtime-bundle.py
-        name: "packed runtime consumer smoke"
-      - run: python3 ds brain gate
-        name: "ds brain gate (signals + scorecard)"
+      - name: Block untrusted PR before checkout
+        id: guard
+        run: |
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate result is '${{ needs.pr_trust_gate.result }}' (need success); required catalog check fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "::error::cross-repo PR blocked before checkout (GRO-1209); this required check fails closed rather than reporting green without running ci-local.sh"
+            exit 1
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+      # actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.guard.outputs.run == 'true'
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      # actions/setup-python@v7.0.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.guard.outputs.run == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.guard.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-control-root
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.guard.outputs.run == 'true' && hashFiles('uv.lock') != ''
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-${{ runner.arch }}-uv-${{ hashFiles('uv.lock') }}-control-root
+      # ci-local.sh is the single truth for python AND node-backed contract
+      # tests (status-wall snapshot-view-state, playwright shots). PR runners
+      # happen to have a system node; the heavy main lane does not, which made
+      # main red with FileNotFoundError: 'node' (run 34673289200).
+      # actions/setup-node@v7.0.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        if: steps.guard.outputs.run == 'true'
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Local CI single truth
+        if: steps.guard.outputs.run == 'true'
+        run: bash scripts/ci-local.sh
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.guard.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-control-root
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.guard.outputs.run == 'true' && hashFiles('uv.lock') != ''
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-${{ runner.arch }}-uv-${{ hashFiles('uv.lock') }}-control-root
+
+  control_python:
+    name: control-python
+    needs: [pr_trust_gate, affected]
+    if: >-
+      needs.pr_trust_gate.result == 'success' &&
+      needs.affected.result == 'success' &&
+      needs.pr_trust_gate.outputs.trusted == 'true' &&
+      (
+        needs.affected.outputs.control == 'true' ||
+        needs.affected.outputs.full_suite == 'true' ||
+        needs.affected.outputs.control_removed == 'true'
+      )
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 20
+    steps:
+      - name: Applicability
+        id: gate
+        env:
+          # Planner reason embeds diff paths: never interpolate it into the script body.
+          REASON: ${{ needs.affected.outputs.reason }}
+        run: |
+          # Symmetry with the catalog guard: check the job result, not only the
+          # output. A failed/cancelled pr-trust-gate skips this job today, but an
+          # empty `trusted` output must never read as "not applicable, success".
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate result is '${{ needs.pr_trust_gate.result }}' (need success); lane fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "::notice::not-applicable: cross-repo PR blocked before checkout (GRO-1209)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          present="${{ needs.affected.outputs.control_present }}"
+          removed="${{ needs.affected.outputs.control_removed }}"
+          want="${{ needs.affected.outputs.control }}"
+          full="${{ needs.affected.outputs.full_suite }}"
+          printf 'present=%s removed=%s want=%s full_suite=%s reason=%s\n' \
+            "$present" "$removed" "$want" "$full" "$REASON"
+          if [[ -z "$want" && -z "$full" ]]; then
+            echo "::warning::planner produced no lane outputs; failing open to run this lane (subtree present=$present) — expect a directory error rather than N/A if the subtree is absent"
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$present" != "true" ]]; then
+            if [[ "$removed" == "true" ]]; then
+              echo "::error::control/ subtree removed by this change; a destructive subtree deletion must not pass as not-applicable"
+              exit 1
+            fi
+            echo "::notice::not-applicable: control/ subtree absent (pre-import)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$full" != "true" && "$want" != "true" ]]; then
+            echo "::notice::not-applicable: control paths unchanged"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.gate.outputs.run == 'true'
+        with:
+          persist-credentials: false
+      # actions/setup-node@v7.0.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      # Skipped when the control/ manifests are absent (fail-open lane run without the
+      # subtree): an empty hash would collapse the key into one lockfile-independent bucket.
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.gate.outputs.run == 'true' && hashFiles('control/api/package-lock.json', 'control/packages/app-factory/package.json', 'control/pr-autopilot-mcp/package-lock.json', 'control/capability-mcp/package-lock.json') != ''
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ runner.arch }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('control/api/package-lock.json', 'control/packages/app-factory/package.json', 'control/pr-autopilot-mcp/package-lock.json', 'control/capability-mcp/package-lock.json') }}-control
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Control ci-local (single truth)
+        if: steps.gate.outputs.run == 'true'
+        working-directory: control
+        run: bash scripts/ci-local.sh
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.gate.outputs.run == 'true' && hashFiles('control/api/package-lock.json', 'control/packages/app-factory/package.json', 'control/pr-autopilot-mcp/package-lock.json', 'control/capability-mcp/package-lock.json') != ''
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ runner.arch }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('control/api/package-lock.json', 'control/packages/app-factory/package.json', 'control/pr-autopilot-mcp/package-lock.json', 'control/capability-mcp/package-lock.json') }}-control
+
+  chefapp_rust:
+    name: chefapp-rust
+    needs: [pr_trust_gate, affected]
+    if: >-
+      needs.pr_trust_gate.result == 'success' &&
+      needs.affected.result == 'success' &&
+      needs.pr_trust_gate.outputs.trusted == 'true' &&
+      (
+        needs.affected.outputs.chefapp == 'true' ||
+        needs.affected.outputs.full_suite == 'true' ||
+        needs.affected.outputs.chefapp_removed == 'true' ||
+        (
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          needs.affected.outputs.chefapp_present == 'true'
+        )
+      )
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf","native-rust"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf","native-rust"]') }}
+    timeout-minutes: 30
+    concurrency:
+      group: cheffactory-chefapp-rust-disk
+      # Keep up to 100 waiting jobs; the default single slot evicts other PRs.
+      queue: max
+      cancel-in-progress: false
+    env:
+      CARGO_TERM_COLOR: always
+      CARGO_BUILD_JOBS: "1"
+    steps:
+      - name: Applicability
+        id: gate
+        env:
+          # Planner reason embeds diff paths: never interpolate it into the script body.
+          REASON: ${{ needs.affected.outputs.reason }}
+        run: |
+          # Symmetry with the catalog guard: check the job result, not only the
+          # output. A failed/cancelled pr-trust-gate skips this job today, but an
+          # empty `trusted` output must never read as "not applicable, success".
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate result is '${{ needs.pr_trust_gate.result }}' (need success); lane fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "::notice::not-applicable: cross-repo PR blocked before checkout (GRO-1209)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "release_build=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          present="${{ needs.affected.outputs.chefapp_present }}"
+          removed="${{ needs.affected.outputs.chefapp_removed }}"
+          want="${{ needs.affected.outputs.chefapp }}"
+          full="${{ needs.affected.outputs.full_suite }}"
+          printf 'present=%s removed=%s want=%s full_suite=%s reason=%s\n' \
+            "$present" "$removed" "$want" "$full" "$REASON"
+          if [[ -z "$want" && -z "$full" ]]; then
+            echo "::warning::planner produced no lane outputs; failing open to run this lane (subtree present=$present) — expect a directory error rather than N/A if the subtree is absent"
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "release_build=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$present" != "true" ]]; then
+            if [[ "$removed" == "true" ]]; then
+              echo "::error::apps/chefapp subtree removed by this change; a destructive subtree deletion must not pass as not-applicable"
+              exit 1
+            fi
+            echo "::notice::not-applicable: apps/chefapp subtree absent (pre-import)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "release_build=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$full" != "true" && "$want" != "true" ]]; then
+            if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+              echo "::notice::main-push release-only: chefapp paths unchanged; publish chefbar-release from current main SHA"
+              echo "run=false" >> "$GITHUB_OUTPUT"
+              echo "release_build=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "::notice::not-applicable: chefapp paths unchanged"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "release_build=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "::notice::NOT_PRODUCTION_SAFE: chefapp-rust GRO-1209 ephemeral latch unproven (inventory/ephemeral-pr-runners.yaml)"
+          echo "run=true" >> "$GITHUB_OUTPUT"
+          echo "release_build=false" >> "$GITHUB_OUTPUT"
+      - name: Set Cargo target dir under runner temp
+        run: echo "CARGO_TARGET_DIR=${{ runner.temp }}/chefapp-target" >> "$GITHUB_ENV"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        with:
+          persist-credentials: false
+      - name: Resolve runner Rust toolchain
+        id: rust_toolchain
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        run: |
+          set -euo pipefail
+          if [[ -f "$HOME/.cargo/env" ]]; then
+            # shellcheck disable=SC1091
+            source "$HOME/.cargo/env"
+          fi
+          command -v rustc >/dev/null
+          command -v cargo >/dev/null
+          # Persist the runner toolchain on PATH: each later step runs in a fresh
+          # shell, so sourcing .cargo/env here alone leaves `cargo` unresolvable.
+          for bin in "$(dirname "$(command -v cargo)")" "$(dirname "$(command -v rustc)")"; do
+            case ":${PATH}:" in
+              *":${bin}:"*) ;;
+              *) PATH="${bin}:${PATH}" ;;
+            esac
+            if ! grep -qxF "$bin" "$GITHUB_PATH" 2>/dev/null; then
+              echo "$bin" >> "$GITHUB_PATH"
+            fi
+          done
+          export PATH
+          raw="$(rustc --version)"
+          echo "version=$raw" >> "$GITHUB_OUTPUT"
+          sanitized="$(printf '%s' "$raw" | tr ' /' '--' | tr -cd '[:alnum:]._-')"
+          echo "cache_key=$sanitized" >> "$GITHUB_OUTPUT"
+          echo "rustc: $raw"
+          cargo --version
+          if ! cargo fmt --version >/dev/null 2>&1; then
+            echo "::error::runner missing cargo fmt; provision rustfmt on the self-hosted CI runner (labels pr-isolated/heavy). HISTORICAL UpCloud chef-runner-01 is retired — PR jobs must not install rustup components"
+            exit 1
+          fi
+          if ! cargo clippy --version >/dev/null 2>&1; then
+            echo "::error::runner missing cargo clippy; provision clippy on the self-hosted CI runner (labels pr-isolated/heavy). HISTORICAL UpCloud chef-runner-01 is retired — PR jobs must not install rustup components"
+            exit 1
+          fi
+      # Skipped when apps/chefapp/Cargo.lock is absent (fail-open lane run without the
+      # subtree): an empty hash would collapse the key into one lockfile-independent bucket.
+      # Cache restore also runs on main release-only (release_build) so release paths
+      # reuse the same target/deps as full validation runs.
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: >-
+          (
+            steps.gate.outputs.run == 'true' ||
+            steps.gate.outputs.release_build == 'true'
+          ) &&
+          hashFiles('apps/chefapp/Cargo.lock') != ''
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: ${{ runner.os }}-${{ runner.arch }}-cargo-registryv2-${{ steps.rust_toolchain.outputs.cache_key }}-${{ hashFiles('apps/chefapp/Cargo.lock') }}-chefapp
+      # Validation gates (check/fmt/clippy/shellcheck/test/smoke/updater-tests) run when
+      # chefapp paths changed (run) OR on main release-only (release_build). An installable
+      # chefbar-release artifact must never publish from a run that skipped these gates.
+      - name: Native UI boundary
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: ./scripts/check-ui-boundary.sh
+      - name: Cargo check
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: cargo check --all-targets
+      - name: Format
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: cargo fmt --all -- --check
+      - name: Clippy
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: cargo clippy --all-targets -- -D warnings
+      - name: Shellcheck
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: |
+          shellcheck install.sh scripts/*.sh
+          if compgen -G '.cursor/*.sh' >/dev/null; then
+            shellcheck .cursor/*.sh
+          fi
+      - name: Updater script tests
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        env:
+          CHEF_UPDATE_SKIP_SYSTEMD: "1"
+        run: ./scripts/test-update.sh
+      - name: Test
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: cargo test --all-targets
+      - name: GTK shared-primitive fixture baseline
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        env:
+          BASELINE_DIR: ${{ runner.temp }}/chefapp-gtk-fixture-baseline
+        run: |
+          set -euo pipefail
+          mkdir -p "$BASELINE_DIR"
+          {
+            echo "sha=$GITHUB_SHA"
+            echo "run_id=$GITHUB_RUN_ID"
+            echo "run_attempt=$GITHUB_RUN_ATTEMPT"
+            echo "host=$(hostname)"
+            echo "xvfb_run=$(command -v xvfb-run)"
+          } >"$BASELINE_DIR/runner.txt"
+          cargo run --locked --bin chefapp-fixtures -- --pretty \
+            >"$BASELINE_DIR/fixtures.json"
+          # xvfb-run joins its child stderr into stdout. Build outside that
+          # wrapper, then redirect the binary's stderr inside the child shell
+          # so Cargo/GTK diagnostics cannot corrupt the JSON report.
+          cargo build --locked --bin chefapp-gtk-fixture-baseline
+          env -u WAYLAND_DISPLAY GDK_BACKEND=x11 xvfb-run -a \
+            -e "$BASELINE_DIR/xvfb.stderr" \
+            -s "-screen 0 1440x1000x24 -nolisten tcp" \
+            sh -c 'exec "$1" --pretty 2>"$2"' baseline-child \
+            "$CARGO_TARGET_DIR/debug/chefapp-gtk-fixture-baseline" \
+            "$BASELINE_DIR/baseline.stderr" \
+            >"$BASELINE_DIR/baseline.json"
+          if [[ ! -s "$BASELINE_DIR/fixtures.json" ]]; then
+            echo "GTK fixture baseline: fixtures.json is empty" >&2
+            exit 1
+          fi
+          if [[ ! -s "$BASELINE_DIR/baseline.json" ]]; then
+            echo "GTK fixture baseline: baseline.json is empty" >&2
+            exit 1
+          fi
+          python3 - "$BASELINE_DIR/fixtures.json" "$BASELINE_DIR/baseline.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              fixture_export = json.load(handle)
+          with open(sys.argv[2], encoding="utf-8") as handle:
+              report = json.load(handle)
+
+          assert type(fixture_export["schema_version"]) is int and fixture_export["schema_version"] == 1
+          assert type(report["schema_version"]) is int and report["schema_version"] == 1
+          assert report["renderer"] == "gtk3"
+          assert report["measurement"] == "shared-primitive-fixture-baseline"
+          assert report["display_backend"] == "x11"
+          assert report["first_usable_frame"] == "not_measured"
+          expected = {
+              "inbox-healthy", "inbox-empty", "inbox-stale-last-good", "inbox-error",
+              "fleet-50-input-capped", "fleet-500-input-capped",
+              "containers-healthy", "containers-empty",
+              "containers-stale-last-good", "containers-error",
+          }
+          portable_fixtures = fixture_export["fixtures"]
+          assert {fixture["id"] for fixture in portable_fixtures} == expected
+          fixtures = report["fixtures"]
+          assert {fixture["id"] for fixture in fixtures} == expected
+          assert len(fixtures) == len(expected)
+          for fixture in fixtures:
+              assert type(fixture["raw_input_count"]) is int
+              assert type(fixture["rendered_row_count"]) is int
+              assert fixture["raw_input_count"] >= fixture["rendered_row_count"] >= 0
+              assert type(fixture["construction_wall_us"]) is int
+              assert type(fixture["pending_gtk_wall_us"]) is int
+              assert type(fixture["pending_gtk_iterations"]) is int
+              assert fixture["construction_wall_us"] >= 0
+              assert fixture["pending_gtk_wall_us"] >= 0
+              assert 0 <= fixture["pending_gtk_iterations"] <= 10_000
+              rss = fixture["rss_bytes_after_render"]
+              assert rss is None or (type(rss) is int and rss > 0)
+          fleet_500 = next(fixture for fixture in fixtures if fixture["id"] == "fleet-500-input-capped")
+          assert fleet_500["raw_input_count"] == 500
+          assert fleet_500["rendered_row_count"] == 8
+          stale = next(fixture for fixture in fixtures if fixture["id"] == "containers-stale-last-good")
+          assert stale["source_status"] == "stale"
+          assert stale["source_reason"] == "poll-budget verlopen"
+          PY
+          (
+            cd "$BASELINE_DIR"
+            sha256sum fixtures.json baseline.json >checksums.sha256
+          )
+      - name: Upload GTK fixture baseline
+        if: >-
+          success() &&
+          (
+            steps.gate.outputs.run == 'true' ||
+            steps.gate.outputs.release_build == 'true'
+          )
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: chefapp-gtk-fixture-baseline-${{ github.sha }}
+          path: ${{ runner.temp }}/chefapp-gtk-fixture-baseline/
+          retention-days: 30
+          if-no-files-found: error
+      - name: GTK row identity and focus regression
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: bash scripts/test-keyed-rows.sh
+      # The candidate consumes the same semantic export, but is never part of
+      # the installable ChefBar artifact. Avoid rebuilding it on unrelated
+      # main release-only runs; changes to ChefApp/full-suite still fail closed.
+      - name: GTK4 Relm4 candidate gates
+        id: gtk4_candidate
+        if: steps.gate.outputs.run == 'true'
+        working-directory: apps/chefapp/renderer-candidates/gtk4-relm4
+        env:
+          CANDIDATE_OUTPUT: ${{ runner.temp }}/chefapp-gtk4-fixture
+          SHARED_FIXTURES: ${{ runner.temp }}/chefapp-gtk-fixture-baseline/fixtures.json
+        run: ./scripts/check.sh "$SHARED_FIXTURES" "$CANDIDATE_OUTPUT"
+      - name: Upload GTK4 candidate evidence
+        if: success() && steps.gtk4_candidate.outcome == 'success'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: chefapp-gtk4-fixture-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/chefapp-gtk4-fixture/*.json
+            ${{ runner.temp }}/chefapp-gtk4-fixture/*.log
+            ${{ runner.temp }}/chefapp-gtk4-fixture/*.txt
+            ${{ runner.temp }}/chefapp-gtk4-fixture/checksums.sha256
+          retention-days: 30
+          if-no-files-found: error
+      - name: Smoke install dry-run
+        if: steps.gate.outputs.run == 'true' || steps.gate.outputs.release_build == 'true'
+        working-directory: apps/chefapp
+        run: |
+          bash -n install.sh
+          ./install.sh --help
+          ls -la config/endpoints.example.json config/endpoints.tailnet.example.json chefbar.service
+      # Release artifact feeds apps/chefapp/scripts/update.sh (laptop update path,
+      # GRO-1463). Main-push only: PR lanes stay fast and untrusted PR heads never
+      # publish an installable binary. release_build=true covers main commits that
+      # do not touch apps/chefapp — validation gates above still run first; only then
+      # does this job build/upload chefbar-release embedding the push SHA.
+      - name: Release build
+        if: >-
+          success() &&
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          (
+            steps.gate.outputs.run == 'true' ||
+            steps.gate.outputs.release_build == 'true'
+          )
+        working-directory: apps/chefapp
+        env:
+          CHEFBAR_BUILD_SHA: ${{ github.sha }}
+          CHEFBAR_BUILD_CHANNEL: main
+        run: cargo build --release --locked
+      - name: Ensure chefbar artifact is executable
+        if: >-
+          success() &&
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          (
+            steps.gate.outputs.run == 'true' ||
+            steps.gate.outputs.release_build == 'true'
+          )
+        run: chmod +x "$CARGO_TARGET_DIR/release/chefbar"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: >-
+          success() &&
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          (
+            steps.gate.outputs.run == 'true' ||
+            steps.gate.outputs.release_build == 'true'
+          )
+        with:
+          name: chefbar-release
+          path: ${{ env.CARGO_TARGET_DIR }}/release/chefbar
+          retention-days: 30
+          if-no-files-found: error
+      - name: Cleanup Rust build workspace
+        if: always()
+        run: |
+          rm -rf -- "$CARGO_TARGET_DIR"
+          df -h /
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: >-
+          success() &&
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          (
+            steps.gate.outputs.run == 'true' ||
+            steps.gate.outputs.release_build == 'true'
+          ) &&
+          hashFiles('apps/chefapp/Cargo.lock') != ''
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: ${{ runner.os }}-${{ runner.arch }}-cargo-registryv2-${{ steps.rust_toolchain.outputs.cache_key }}-${{ hashFiles('apps/chefapp/Cargo.lock') }}-chefapp
+
+  node_web_vault:
+    name: node-web-vault
+    needs: [pr_trust_gate, affected]
+    if: >-
+      needs.pr_trust_gate.result == 'success' &&
+      needs.affected.result == 'success' &&
+      needs.pr_trust_gate.outputs.trusted == 'true' &&
+      (
+        needs.affected.outputs.vault == 'true' ||
+        needs.affected.outputs.full_suite == 'true' ||
+        needs.affected.outputs.vault_removed == 'true'
+      )
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 15
+    steps:
+      - name: Applicability
+        id: gate
+        env:
+          # Planner reason embeds diff paths: never interpolate it into the script body.
+          REASON: ${{ needs.affected.outputs.reason }}
+        run: |
+          # Symmetry with the catalog guard: check the job result, not only the
+          # output. A failed/cancelled pr-trust-gate skips this job today, but an
+          # empty `trusted` output must never read as "not applicable, success".
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate result is '${{ needs.pr_trust_gate.result }}' (need success); lane fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "::notice::not-applicable: cross-repo PR blocked before checkout (GRO-1209)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          present="${{ needs.affected.outputs.vault_present }}"
+          removed="${{ needs.affected.outputs.vault_removed }}"
+          want="${{ needs.affected.outputs.vault }}"
+          full="${{ needs.affected.outputs.full_suite }}"
+          printf 'present=%s removed=%s want=%s full_suite=%s reason=%s\n' \
+            "$present" "$removed" "$want" "$full" "$REASON"
+          if [[ -z "$want" && -z "$full" ]]; then
+            echo "::warning::planner produced no lane outputs; failing open to run this lane (subtree present=$present) — expect a directory error rather than N/A if the subtree is absent"
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$present" != "true" ]]; then
+            if [[ "$removed" == "true" ]]; then
+              echo "::error::vault/web subtree removed by this change; a destructive subtree deletion must not pass as not-applicable"
+              exit 1
+            fi
+            echo "::notice::not-applicable: vault/web subtree absent (future import)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$full" != "true" && "$want" != "true" ]]; then
+            echo "::notice::not-applicable: vault/web paths unchanged"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "::notice::NOT_PRODUCTION_SAFE: node-web-vault GRO-1209 ephemeral latch unproven (inventory/ephemeral-pr-runners.yaml)"
+          echo "run=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.gate.outputs.run == 'true'
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      # run_subtree_ci.py parses the YAML lane contract: PyYAML must be explicit,
+      # never inherited from whatever the persistent runner happens to have.
+      # actions/setup-python@v7.0.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.gate.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-vault
+      # Per-job venv under RUNNER_TEMP (see the planner job): no shared
+      # site-packages writes on the persistent runner.
+      - name: Install lane contract deps
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          venv="${RUNNER_TEMP:-/tmp}/cf-ci-venv-vault"
+          rm -rf "$venv"
+          python3 -m venv "$venv"
+          "$venv/bin/python" -m pip install -q -r requirements-dev.txt
+          echo "$venv/bin" >> "$GITHUB_PATH"
+      # pnpm's store dir is pinned to ~/.pnpm-store by run_subtree_ci.py, so this
+      # path is the real store (pnpm 7+ defaults to ~/.local/share/pnpm/store).
+      # Skipped when no vault lockfile exists yet: an empty hash would make the
+      # key collapse to a single lockfile-independent bucket.
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.gate.outputs.run == 'true' && hashFiles('apps/vault/pnpm-lock.yaml', 'apps/vault/package-lock.json', 'apps/vault/yarn.lock', 'vault/pnpm-lock.yaml', 'vault/package-lock.json', 'vault/yarn.lock') != ''
+        with:
+          path: |
+            ~/.npm
+            ~/.pnpm-store
+          key: ${{ runner.os }}-${{ runner.arch }}-pnpm-${{ hashFiles('apps/vault/pnpm-lock.yaml', 'apps/vault/package-lock.json', 'apps/vault/yarn.lock', 'vault/pnpm-lock.yaml', 'vault/package-lock.json', 'vault/yarn.lock') }}-vault
+      - name: Vault/web CI (structural contract)
+        if: steps.gate.outputs.run == 'true'
+        run: python3 scripts/run_subtree_ci.py --lane vault
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.gate.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-vault
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.gate.outputs.run == 'true' && hashFiles('apps/vault/pnpm-lock.yaml', 'apps/vault/package-lock.json', 'apps/vault/yarn.lock', 'vault/pnpm-lock.yaml', 'vault/package-lock.json', 'vault/yarn.lock') != ''
+        with:
+          path: |
+            ~/.npm
+            ~/.pnpm-store
+          key: ${{ runner.os }}-${{ runner.arch }}-pnpm-${{ hashFiles('apps/vault/pnpm-lock.yaml', 'apps/vault/package-lock.json', 'apps/vault/yarn.lock', 'vault/pnpm-lock.yaml', 'vault/package-lock.json', 'vault/yarn.lock') }}-vault
+
+  infra_contracts:
+    name: infra-contracts
+    needs: [pr_trust_gate, affected]
+    if: >-
+      needs.pr_trust_gate.result == 'success' &&
+      needs.affected.result == 'success' &&
+      needs.pr_trust_gate.outputs.trusted == 'true' &&
+      (
+        needs.affected.outputs.infra == 'true' ||
+        needs.affected.outputs.full_suite == 'true' ||
+        needs.affected.outputs.infra_removed == 'true'
+      )
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 15
+    steps:
+      - name: Applicability
+        id: gate
+        env:
+          # Planner reason embeds diff paths: never interpolate it into the script body.
+          REASON: ${{ needs.affected.outputs.reason }}
+        run: |
+          # Symmetry with the catalog guard: check the job result, not only the
+          # output. A failed/cancelled pr-trust-gate skips this job today, but an
+          # empty `trusted` output must never read as "not applicable, success".
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate result is '${{ needs.pr_trust_gate.result }}' (need success); lane fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "::notice::not-applicable: cross-repo PR blocked before checkout (GRO-1209)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          present="${{ needs.affected.outputs.infra_present }}"
+          removed="${{ needs.affected.outputs.infra_removed }}"
+          want="${{ needs.affected.outputs.infra }}"
+          full="${{ needs.affected.outputs.full_suite }}"
+          printf 'present=%s removed=%s want=%s full_suite=%s reason=%s\n' \
+            "$present" "$removed" "$want" "$full" "$REASON"
+          if [[ -z "$want" && -z "$full" ]]; then
+            echo "::warning::planner produced no lane outputs; failing open to run this lane (subtree present=$present) — expect a directory error rather than N/A if the subtree is absent"
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$present" != "true" ]]; then
+            if [[ "$removed" == "true" ]]; then
+              echo "::error::infra/ subtree removed by this change; a destructive subtree deletion must not pass as not-applicable"
+              exit 1
+            fi
+            echo "::notice::not-applicable: infra/ subtree absent (future import)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$full" != "true" && "$want" != "true" ]]; then
+            echo "::notice::not-applicable: infra paths unchanged"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.gate.outputs.run == 'true'
+        with:
+          persist-credentials: false
+      # run_subtree_ci.py parses the YAML lane contract: PyYAML must be explicit,
+      # never inherited from whatever the persistent runner happens to have.
+      # actions/setup-python@v7.0.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.gate.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-infra
+      # Per-job venv under RUNNER_TEMP (see the planner job): no shared
+      # site-packages writes on the persistent runner.
+      - name: Install lane contract deps
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          venv="${RUNNER_TEMP:-/tmp}/cf-ci-venv-infra"
+          rm -rf "$venv"
+          python3 -m venv "$venv"
+          "$venv/bin/python" -m pip install -q -r requirements-dev.txt
+          echo "$venv/bin" >> "$GITHUB_PATH"
+      - name: Infra CI (catalog entrypoint)
+        if: steps.gate.outputs.run == 'true'
+        run: python3 scripts/run_subtree_ci.py --lane infra
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.gate.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-infra
+
+  docs_graphs:
+    name: docs-graphs-indexes
+    needs: [pr_trust_gate, affected]
+    if: >-
+      needs.pr_trust_gate.result == 'success' &&
+      needs.affected.result == 'success' &&
+      needs.pr_trust_gate.outputs.trusted == 'true' &&
+      (
+        needs.affected.outputs.docs_graphs_indexes == 'true' ||
+        needs.affected.outputs.full_suite == 'true'
+      )
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 10
+    steps:
+      - name: Applicability
+        id: gate
+        env:
+          # Planner reason embeds diff paths: never interpolate it into the script body.
+          REASON: ${{ needs.affected.outputs.reason }}
+        run: |
+          # Symmetry with the catalog guard: check the job result, not only the
+          # output. A failed/cancelled pr-trust-gate skips this job today, but an
+          # empty `trusted` output must never read as "not applicable, success".
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate result is '${{ needs.pr_trust_gate.result }}' (need success); lane fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "::notice::not-applicable: cross-repo PR blocked before checkout (GRO-1209)"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          want="${{ needs.affected.outputs.docs_graphs_indexes }}"
+          full="${{ needs.affected.outputs.full_suite }}"
+          printf 'want=%s full_suite=%s reason=%s\n' "$want" "$full" "$REASON"
+          if [[ -z "$want" && -z "$full" ]]; then
+            echo "::warning::planner produced no lane outputs; failing open to run this lane"
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$full" != "true" && "$want" != "true" ]]; then
+            echo "::notice::not-applicable: docs/graphs/indexes paths unchanged"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.gate.outputs.run == 'true'
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'pull_request' && steps.gate.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-docs
+      # Per-job venv under RUNNER_TEMP (see the planner job): no shared
+      # site-packages writes on the persistent runner.
+      - name: Graph/index/RAG freshness
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          venv="${RUNNER_TEMP:-/tmp}/cf-ci-venv-docs"
+          rm -rf "$venv"
+          python3 -m venv "$venv"
+          "$venv/bin/python" -m pip install -q -r requirements-dev.txt
+          "$venv/bin/python" scripts/validate_graphs_indexes.py
+          "$venv/bin/python" scripts/validate_ci_lanes.py
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.gate.outputs.run == 'true'
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-python-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements-dev.txt') }}-docs
+
+  merge_gate:
+    name: merge-gate
+    # Cheap aggregator; keep on pr-isolated for PRs, heavy for push-main.
+    runs-on: ${{ github.event_name == 'pull_request' && fromJSON('["self-hosted","Linux","X64","pr-isolated","cf"]') || fromJSON('["self-hosted","Linux","X64","heavy","cf"]') }}
+    timeout-minutes: 5
+    needs: [pr_trust_gate, affected, cold_checkout, catalog, control_python, chefapp_rust, node_web_vault, infra_contracts, docs_graphs]
+    # always(), NOT !cancelled(): a skipped required check satisfies branch
+    # protection, so the merge authority must still report red when the run is
+    # cancelled. The catalog job can use !cancelled() because its own guard step
+    # fails closed; the aggregator has no such fallback. Cost of a cancelled,
+    # superseded head is one short aggregator job on a stale SHA.
+    if: always()
+    steps:
+      - name: Reject untrusted PR (no checkout)
+        run: |
+          if [[ "${{ needs.pr_trust_gate.result }}" != "success" ]]; then
+            echo "::error::pr-trust-gate did not succeed; merge gate fails closed"
+            exit 1
+          fi
+          if [[ "${{ needs.pr_trust_gate.outputs.trusted }}" != "true" ]]; then
+            echo "::error::cross-repo PR blocked before any repo checkout (GRO-1209)"
+            exit 1
+          fi
+      # actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: needs.pr_trust_gate.outputs.trusted == 'true'
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      # actions/setup-python@v7.0.0 — the merge authority must not depend on
+      # whatever python3 happens to exist on the persistent self-hosted runner.
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: needs.pr_trust_gate.outputs.trusted == 'true'
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Aggregate required lanes
+        if: needs.pr_trust_gate.outputs.trusted == 'true'
+        env:
+          # Env indirection for PR-controlled identity, same rule as pr-trust-gate:
+          # expression substitution happens before the shell parses the script.
+          EVENT_NAME: ${{ github.event_name }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPO: ${{ github.repository }}
+        run: |
+          python3 scripts/merge_gate_aggregate.py \
+            --trusted "${{ needs.pr_trust_gate.outputs.trusted }}" \
+            --pr-trust-gate "${{ needs.pr_trust_gate.result }}" \
+            --cold-checkout "${{ needs.cold_checkout.result }}" \
+            --affected "${{ needs.affected.result }}" \
+            --catalog "${{ needs.catalog.result }}" \
+            --control-python "${{ needs.control_python.result }}" \
+            --chefapp-rust "${{ needs.chefapp_rust.result }}" \
+            --node-web-vault "${{ needs.node_web_vault.result }}" \
+            --infra-contracts "${{ needs.infra_contracts.result }}" \
+            --docs-graphs-indexes "${{ needs.docs_graphs.result }}" \
+            --allow-unselected-skip \
+            --full-suite "${{ needs.affected.outputs.full_suite }}" \
+            --select-control "${{ needs.affected.outputs.control }}" \
+            --select-chefapp "${{ needs.affected.outputs.chefapp }}" \
+            --select-vault "${{ needs.affected.outputs.vault }}" \
+            --select-infra "${{ needs.affected.outputs.infra }}" \
+            --select-docs "${{ needs.affected.outputs.docs_graphs_indexes }}" \
+            --removed-control "${{ needs.affected.outputs.control_removed }}" \
+            --removed-chefapp "${{ needs.affected.outputs.chefapp_removed }}" \
+            --removed-vault "${{ needs.affected.outputs.vault_removed }}" \
+            --removed-infra "${{ needs.affected.outputs.infra_removed }}" \
+            --event-name "$EVENT_NAME" \
+            --head-repo "$HEAD_REPO" \
+            --base-repo "$BASE_REPO"

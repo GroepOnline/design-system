@@ -241,3 +241,46 @@ export const AppShellRail = React.forwardRef(function AppShellRail({ as = "aside
 export const AppShellMain = React.forwardRef(function AppShellMain({ as = "main", className, children, ...props }, ref) {
   return LayoutPrimitive({ as, slot: "app-shell-main", className: cx("sg-app-shell__main", className), children, ...props }, ref);
 });
+
+export const Accordion = React.forwardRef(function Accordion({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "accordion", className: cx("sg-accordion", className), ...props }, children);
+});
+export const AccordionItem = React.forwardRef(function AccordionItem({ open, className, children, ...props }, ref) {
+  return React.createElement("details", { ref, open, "data-slot": "accordion-item", className: cx("sg-accordion__item", className), ...props }, children);
+});
+export const AccordionTrigger = React.forwardRef(function AccordionTrigger({ className, children, ...props }, ref) {
+  return React.createElement("summary", { ref, "data-slot": "accordion-trigger", className: cx("sg-accordion__trigger", className), ...props }, children);
+});
+export const AccordionPanel = React.forwardRef(function AccordionPanel({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "accordion-panel", className: cx("sg-accordion__panel", className), ...props }, children);
+});
+export const Disclosure = AccordionItem;
+export const Combobox = React.forwardRef(function Combobox({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, "data-slot": "combobox", className: cx("sg-combobox", className), ...props }, children);
+});
+export const ComboboxInput = React.forwardRef(function ComboboxInput({ className, ...props }, ref) {
+  return React.createElement("input", { ref, role: "combobox", "aria-autocomplete": props["aria-autocomplete"] || "list", "data-slot": "combobox-input", className: cx("sg-input", className), ...props });
+});
+export const Listbox = React.forwardRef(function Listbox({ className, children, ...props }, ref) {
+  return React.createElement("div", { ref, role: "listbox", "data-slot": "listbox", className: cx("sg-listbox", className), ...props }, children);
+});
+export const Option = React.forwardRef(function Option({ selected = false, className, children, ...props }, ref) {
+  return React.createElement("button", { ref, type: props.type || "button", role: "option", "aria-selected": selected, "data-slot": "option", className: cx("sg-option", className), ...props }, children);
+});
+export const CommandPalette = React.forwardRef(function CommandPalette({ className, children, ...props }, ref) {
+  return React.createElement("dialog", { ref, "data-slot": "command-palette", className: cx("sg-command-palette", className), ...props }, children);
+});
+export const ToggleGroup = React.forwardRef(function ToggleGroup({ label, className, children, ...props }, ref) {
+  return React.createElement("div", { ref, role: "group", "aria-label": label, "data-slot": "toggle-group", className: cx("sg-toggle-group", className), ...props }, children);
+});
+export const ToggleItem = React.forwardRef(function ToggleItem({ pressed = false, className, children, ...props }, ref) {
+  return React.createElement("button", { ref, type: props.type || "button", "aria-pressed": pressed, "data-slot": "toggle-item", className: cx("sg-toggle-item", className), ...props }, children);
+});
+export const Chip = React.forwardRef(function Chip({ as = "button", pressed, className, children, ...props }, ref) {
+  const Tag = as;
+  const extra = Tag === "button" ? { type: props.type || "button", ...(pressed !== undefined ? { "aria-pressed": pressed } : {}) } : {};
+  return React.createElement(Tag, { ref, "data-slot": "chip", className: cx("sg-chip", className), ...extra, ...props }, children);
+});
+export const Slider = React.forwardRef(function Slider({ className, ...props }, ref) {
+  return React.createElement("input", { ref, type: "range", "data-slot": "slider", className: cx("sg-slider", className), ...props });
+});

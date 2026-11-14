@@ -1,103 +1,75 @@
-# design-system
+# ChefFactory
 
-Standalone design language + componentencatalogus + tools. Geen product;
-de taal en het systeem waar producten mee gebouwd worden. Signaal is de huidige taal. Stroom en de Devin-kalibratie blijven alleen als
-historie; runtime packages krijgen normale semver-releases.
+> **Current truth contract · 2026-09-02.** `main` plus exact-head GitHub PR/CI evidence is code truth. Linear `chefgroepp` / GRO is execution truth. Notion is context/navigation and dated evidence, never live-runtime proof. Live runtime/edge state requires a direct read-only probe. `control/` and `apps/chefapp/` on ChefFactory `main` are the current company-control code authority; separate `chefgroep-os` / `chefbar` repositories may remain as migration/history/satellite surfaces but are not competing current SSOTs.
 
-**Live (tailnet):** `https://joep.tail86a8f2.ts.net:8443/`
+> Display title: **Chef Factory control center** · GitHub: [`GroepOnline/ChefFactory`](https://github.com/GroepOnline/ChefFactory) (exact spelling). Local checkout may historically have been typed `ChefFactoy`; canonical name is **ChefFactory**.
 
-## De vijf tools
+Private **company-control** SSOT for GroepOnline:
 
-| Tool | Waar | Wat |
-|---|---|---|
-| **catalogus** | `components/` + `./ds` | alle varianten ooit: self + external. Honderden varianten per familie zijn toegestaan; extensions maken optionele subsets |
-| **studio** | `/components/studio/` | visueel afstellen zonder code: presets (incl. **Vanaf nul**), accent, warmte, radius, tekstgrootte. Tabs: Afstellen + **Docs** (de taal lezen terwijl je stelt). Export: Kopieer tokens |
-| **docs** | `/docs/` | alle .md-documenten gerenderd als lees-laag. De .md blijft de bron |
-| **taste** | `/taste-site/` | het lerende smaak-systeem: bindende regels + observatie-log. Onderhoud via de `joep-design-taste` skill, gekoppeld aan alles via het propagatie-contract |
-| **brain** | `/brain-site/` + `brain/` | niet-bindende context: research, decisions, concept-graph (Obsidian vault). Productregels lopen nog steeds via taste |
+1. Daily Cursor control-center docs, inventory, and operator runbooks
+2. Canonical **observability event catalog** + governance/validation
+3. Publish/sync contract toward runtime `@chefgroep/observability` (implementation stays in `chefgroep-vault`)
 
-## Snelstart
+This repository is Joep's **operator control center** documentation plane. It is **not** 24/7 runtime — fleet hosts (`chef-control-az-01`, `chef-platform-aws-01`) own continuous services. Do **not** duplicate capture/scrub SDK code here. UpCloud `chef-control-01` / `chef-runner-01` are **retired_unreachable** — never rollback.
+
+**Start here:** [CONTROL-CENTER.md](./CONTROL-CENTER.md) · [docs/README.md](docs/README.md)  
+**Truth authority:** [docs/TRUTH-AUTHORITY.md](docs/TRUTH-AUTHORITY.md)
+**Catalog SSOT:** [catalog/observability-event-catalog.yaml](catalog/observability-event-catalog.yaml)  
+**Ownership:** [docs/platform/observability-ownership.md](docs/platform/observability-ownership.md)  
+**Sync contract:** [contracts/publish-sync-observability.md](contracts/publish-sync-observability.md)
+
+## Layout (versioned in git)
+
+| Path | Role |
+|------|------|
+| `apps/chefapp/` | Tracked ChefApp / ChefBar GTK cockpit (monorepo wave 2) |
+| `control/` | `chef` CLI control plane, Core API, cloud VM artifacts |
+| `brain/` | Engineering home docs for Joep Brain recall (not live Brain runtime) |
+| `docs/`, `inventory/` | Runbooks, CRM architecture, machine-readable inventory |
+| `catalog/` | Event catalog SSOT + versioning policy |
+| `schemas/` | JSON Schemas for the catalog and fleet placement |
+| `scripts/validate_catalog.py` | Catalog local + CI validation |
+| `scripts/validate_fleet_workload_placement.py` | Fleet placement local + CI validation |
+| `tests/` | Catalog governance tests |
+| `contracts/` | Publish/sync contracts (runtime packages) |
+| `lib/` | Small Python helpers used by control-center docs (Linear tooling) |
+| `CONTROL-CENTER.md` | Daily ops entry |
+| `scripts/release_sync_status.py` | Read-only checkout/version/release drift status |
+
+## Source of truth vs remotes
+
+The completed core-monorepo convergence put `control/` and `apps/chefapp/` on Factory `main`. **Compose / control-plane source of truth is `control/` in this repo; ChefApp code authority is `apps/chefapp/`.** Separate `GroepOnline/chefgroep-os` and `GroepOnline/chefbar` repositories may remain reachable for migration/history/satellite work, but they must not be treated as parallel current SSOTs. Archive/rename/removal is a separate explicit decision; do not infer it from old Wave numbering.
+
+## Not in this git tree
+
+Sibling product checkouts stay **outside** ChefFactory commits (local-only, gitignored):
+
+- `chefbar/` (legacy visual-Pi checkout; tracked SSOT is `apps/chefapp/` until GRO-1310)
+- `chefgroep-vault`, `kater-dev-tools`, `herdr-ops`, `chefgroep-infra`
+- `Utrecht-kater`, `chefgroep-skills` (UDO boundary)
+- `worktrees/`, secrets, `.env`, large Linear reconstruction zips
+
+Laptop checkouts of `chefgroep-os/` may still exist as gitignored siblings for migration safety. They are **not** compose SSOT.
+
+## Local CI (preflight + merge-gate)
+
+Preflight (single executable truth for local and remote `schema-catalog-compat`):
 
 ```bash
-./ds list                    # overzicht van alles
-./ds button list             # één component in detail
-./ds button list --extension chefgroep  # alleen de ChefGroep-view
-./ds extension list          # optionele consumer-contexten
-./s.sh context dsh           # DESIGN/TASTE-context, advisory en fail-open
-./ds build                   # web herbouwen (catalogus + docs + taste + brain)
-./ds brain new decision "…"  # decision-note in de vault
-./ds upstream list            # gepinde externe UI-bronnen + rendererbeleid
-./new-project.sh mijn-app    # nieuw product scaffolden vanuit dit systeem
+./scripts/ci-local.sh
+# optional: CI_LOCAL_VENV=/tmp/cf-ci-venv ./scripts/ci-local.sh
 ```
 
-## Linters en formattering
+Merge authority check name: `merge-gate` (fails unless `schema-catalog-compat` succeeds). General CI uses self-hosted `pr-isolated`+`cf` on pull requests and `heavy`+`cf` on main; private ARC targets `company-ci`, measured heavy work targets `company-ci-heavy`, and trusted deploy/release work targets `company-deploy`. Host labels remain only for inherently host-local operations. Enforcement: `docs/runbooks/ci-merge-enforcement.md`. Eval: `docs/maintenance/ci-eval-local-2026-08-10.md`.
+
+## Open in Cursor
 
 ```bash
-npm install --global markdownlint-cli prettier  # eenmalig voor Zed + CLI
-python3 -m pip install --user ruff              # eenmalig voor Python
-./scripts/lint.sh                               # Ruff + markdownlint per bestandstype
-make lint                                       # alias
+cursor ~/ChefFactory/ChefFactory.code-workspace
 ```
 
-Zed formatteert bij opslaan per taal: Ruff voor Python, Prettier voor Markdown,
-JavaScript/TypeScript, JSON, YAML, CSS en HTML. Ruff sorteert imports en voert
-veilige fixes uit via Code Actions. Markdownlint blijft beschikbaar voor
-warnings en quick fixes. Gegenereerde mappen en `.commandcode/` worden niet
-meegenomen in de repo-lint.
+Delegate daily ops to agent **chef-control-center** or skill **chef-control-center**.
 
-Nieuw component of variant:
+## Contributing
 
-```bash
-# 1. experimenteer in playground/ (vrij, relatieve paden ok)
-# 2. promoveer naar de catalogus
-./ds button add playground/mijn-knop.html --id mijn-knop --origin self --note "wat en waarom"
-# 3. selecteer als dé knop
-./ds button select mijn-knop
-```
-
-## Mappen
-
-| Pad | Rol |
-|---|---|
-| `ds` | CLI + web-generator (python3, geen deps) |
-| `tokens.css` | tokens + primitives + typografie-schaal + icon-maten |
-| `components/<naam>/` | catalog.json (bron) + self/ + external/ + index.html (gegenereerd) |
-| `components/icons.svg` | 31 Lucide symbols |
-| `playground/` | experimentzone -- kan de catalogus nooit corrupt maken |
-| `docs/` | gerenderde .md-pagina's (gegenereerd) |
-| `taste-site/` | taste-regels + log als site (gegenereerd uit taste/*.md) |
-| `brain/` | Obsidian Second Brain (bron) |
-| `brain-site/` | brain-notes als site (gegenereerd) |
-| `.agents/` | agent-skills + hooks (canoniek; `.cursor/` wijst hierheen) |
-| `.commandcode/taste/taste.md` | gegenereerde agent-taste uit `kater-dev-tools` |
-| `.cursor/rules/taste.mdc` | gegenereerde Cursor agent-taste uit `kater-dev-tools` |
-| `CLAUDE.md` | gegenereerde Claude taste-sectie uit `kater-dev-tools` |
-| `templates/` + `new-project.sh` | scaffold voor nieuwe producten |
-| `references/` | meetlat-screenshots (Devin-product, eigen states) |
-| `upstreams/` | immutable externe UI-bronnen + rendererbeleid; nooit runtime dependency |
-| `extensions/` | optionele consumer-subsets met eigen `DESIGN.md` + `TASTE.md`; core importeert ze nooit |
-| `s.sh` | zero-dependency contextresolver voor base/extension design+taste |
-
-Curated upstream entries blijven `locked` en leggen naast de exacte bronpin ook
-`take`, `reject` en rendererbeleid vast. `react-web` en `mcp-apps` mogen een
-component als kandidaat gebruiken; `gtk-native` blijft `contract-only`. Een
-ChefGroep-aanpassing wordt altijd een nieuwe `self-modified` variant en wordt
-nooit automatisch actief.
-| `surfaces/` | per-surface ontwerpbriefs |
-| `prototype-v2.html` | volledige referentie-app (3-pane sessie) |
-
-## Regels in het kort
-
-- Geen spinners (activiteit = worked-row + ripples), geen emoji-iconen (Lucide),
-  geen em-dashes, één accent, groen/amber/rood gereserveerd, light én dark
-  first-class. Volledig: `DESIGN.md` §10-13.
-- Catalogus is **vast**: entries veranderen nooit stilletjes. Selecteren en
-  verwijderen zijn de enige mutaties, altijd via `ds`. Er is geen kunstmatige limiet per componentfamilie.
-- Extensions zijn views, geen forks: ze refereren catalogus-id's en mogen nooit een dependency van de Signaal-core worden.
-- Gegenereerde bestanden (`components/*/index.html`, `docs/`, `taste-site/`,
-  `brain-site/`) nooit handmatig bewerken.
-- Pushen gaat via `origin-ssh` (SSH, volledige scope); `origin` (HTTPS) heeft
-  geen workflow-scope. Zie `AGENTS.md` → Remotes.
-
-Meer: `hoe-wat.md` (grote gids) · `AGENTS.md` (agent-contract) ·
-`WORKFLOW.md` (processen) · `DESIGN.md` (de taal)
+See [CONTRIBUTING.md](CONTRIBUTING.md). Auth: `chef-gh` (MisterWanted) for API; sheesh / ChefGroep for git push. Never `gh auth switch`. Independent APPROVE: [ADR 2026-08-24](docs/adr/2026-08-24-independent-approval-architecture.md).
